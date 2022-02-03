@@ -16,6 +16,7 @@ class OOPlugin
 
         $this->load_dependencies();
         $this->set_locale();
+        $this->define_admin_hooks();
         $this->define_public_hooks();
         $this->init_settings();
     }
@@ -25,9 +26,11 @@ class OOPlugin
 
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-loader.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-i18n.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/onlyoffice-admin.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'public/onlyoffice-public.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-settings.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-document-helper.php';
+
         $this->loader = new OOP_Loader();
     }
 
@@ -37,6 +40,15 @@ class OOPlugin
         $plugin_i18n = new OOP_i18n();
 
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
+    }
+
+    private function define_admin_hooks()
+    {
+
+        $plugin_admin = new OOP_Admin($this->get_plugin_name(), $this->get_version());
+
+        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
     }
 
     private function define_public_hooks()
