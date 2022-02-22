@@ -3,8 +3,8 @@
 
     if (!$('.attachments-browser')) return;
 
-    var checkExist = setInterval(function () { // ToDo: change to something better
-        if (wp.media.frames.browse) {
+    var checkExist = setInterval(function () {
+        if (wp.media && wp.media.frames.browse) {
             clearInterval(checkExist);
             bindEditAction();
         }
@@ -24,13 +24,20 @@
     }
 
     function addButton() {
-        // ToDo: check model to see if we can edit that
+        var filename = wp.media.frames.edit.model.attributes.filename;
+        var ext = filename.substring(filename.lastIndexOf('.'))
 
-        $(wp.media.frames.edit.el).find("div.actions > a.view-attachment").prepend("<div><a class=\"oo-edit\" href=\"#\">Edit in ONLYOFFICE</a></div");
-        $(wp.media.frames.edit.el).find("div.actions a.oo-edit").click(function () {
-            var url = "/wp-json/onlyoffice/editor/" + wp.media.frames.edit.model.id + "?_wpnonce=" + oo_media.nonce;
-            window.open(url,'_blank');
-        });
+        if (oo_media.openable.includes(ext)) {
+
+            $(wp.media.frames.edit.el).find("div.actions > a.view-attachment").prepend("<div><a class=\"oo-editor\" href=\"#\">Edit in ONLYOFFICE</a></div");
+            $(wp.media.frames.edit.el).find("div.actions a.oo-editor").click(function () {
+                var url = "/wp-json/onlyoffice/editor/" + wp.media.frames.edit.model.id + "?_wpnonce=" + oo_media.nonce;
+                if (oo_media.permalinkStructure === '') {
+                    url = "/index.php?rest_route=/onlyoffice/editor/" + wp.media.frames.edit.model.id + "&_wpnonce=" + oo_media.nonce;
+                }
+                window.open(url, '_blank');
+            });
+        }
     }
 
 })(jQuery);

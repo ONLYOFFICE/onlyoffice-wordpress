@@ -24,7 +24,10 @@ class OOP_Admin
 
         wp_enqueue_script($this->plugin_name.'-media-script', plugin_dir_url(__FILE__) . 'js/onlyoffice-admin-media.js', array('jquery'), $this->version, true);
         wp_localize_script($this->plugin_name.'-media-script', 'oo_media', array(
-            'nonce' => wp_create_nonce('wp_rest')
+            'nonce' => wp_create_nonce('wp_rest'),
+            'permalinkStructure' => get_option('permalink_structure'),
+            'editable' => OOP_Document_Helper::DOC_SERV_EDITED,
+            'openable' => array_merge(OOP_Document_Helper::EXTS_CELL, OOP_Document_Helper::EXTS_SLIDE, OOP_Document_Helper::EXTS_WORD)
         ));
     }
 }
