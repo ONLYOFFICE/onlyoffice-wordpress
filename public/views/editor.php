@@ -47,6 +47,10 @@ class OOP_Editor
 
         $can_edit = current_user_can('edit_post', $attachemnt_id) && OOP_Document_Helper::is_editable($filename);
 
+        $permalink_structure = get_option('permalink_structure');
+        $callback_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/callback/' . $attachemnt_id
+            : get_option('siteurl') . '/wp-json/onlyoffice/callback/' . $attachemnt_id; // ToDo: hide attachment id
+
         $config = [
             "type" => 'desktop',
             "documentType" => OOP_Document_Helper::get_document_type($filename),
@@ -67,7 +71,7 @@ class OOP_Editor
             "editorConfig" => [
                 "mode" => $can_edit ? 'edit' : 'view',
                 "lang" => 'en',
-                "callbackUrl" => get_option('siteurl') . '/wp-json/onlyoffice/callback/' . $attachemnt_id, // ToDo: hide attachment id
+                "callbackUrl" =>  $callback_url,
                 "user" => [
                     "id" => $user->ID,
                     "name" => $user->display_name
@@ -131,12 +135,6 @@ class OOP_Editor
 
                     config.width = "100%";
                     config.height = "100%";
-
-                    if ((config.document.fileType === "docxf" || config.document.fileType === "oform") &&
-                        DocsAPI.DocEditor.version().split(".")[0] < 7) {
-                        innerAlert("<?php __('Please update ONLYOFFICE Docs to version 7.0 to work on fillable forms online.', 'onlyoffce-plugin') ?>");
-                        return;
-                    }
 
                     docEditor = new DocsAPI.DocEditor("iframeEditor", config);
                 };

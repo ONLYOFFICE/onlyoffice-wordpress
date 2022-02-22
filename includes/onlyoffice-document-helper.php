@@ -2,9 +2,8 @@
 
 class OOP_Document_Helper
 {
-    const DOC_SERV_FILLFORMS = array(".oform", ".docx");
     const DOC_SERV_VIEWD = array(".pdf", ".djvu", ".xps", ".oxps");
-    const DOC_SERV_EDITED = array(".docx", ".xlsx", ".csv", ".pptx", ".txt", ".docxf");
+    const DOC_SERV_EDITED = array(".docx", ".xlsx", ".pptx",);
     const DOC_SERV_CONVERT = array(".docm", ".doc", ".dotx", ".dotm", ".dot", ".odt", ".fodt", ".ott", ".xlsm", ".xls", ".xltx", ".xltm", ".xlt", ".ods", ".fods", ".ots", ".pptm", ".ppt", ".ppsx", ".ppsm", ".pps", ".potx", ".potm", ".pot", ".odp", ".fodp", ".otp", ".rtf", ".mht", ".html", ".htm", ".xml", ".epub", ".fb2");
 
     const EXTS_CELL = array(
@@ -25,7 +24,7 @@ class OOP_Document_Helper
         ".dot", ".dotx", ".dotm",
         ".odt", ".fodt", ".ott", ".rtf", ".txt",
         ".html", ".htm", ".mht", ".xml",
-        ".pdf", ".djvu", ".fb2", ".epub", ".xps", ".oxps", ".oform"
+        ".pdf", ".djvu", ".fb2", ".epub", ".xps", ".oxps"
     );
 
     public static function get_document_type($filename) {
