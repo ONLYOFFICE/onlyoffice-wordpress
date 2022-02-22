@@ -18,7 +18,7 @@ class OOP_Editor
         $post = get_post($attachemnt_id);
 
         if ($post->post_type != 'attachment') {
-            wp_die(__('Post is not an attachment', 'onlyoffce-plugin'));
+            wp_die(__('Post is not an attachment', 'onlyoffice-plugin'));
         }
 
         return true;
@@ -134,7 +134,7 @@ class OOP_Editor
 
                     if ((config.document.fileType === "docxf" || config.document.fileType === "oform") &&
                         DocsAPI.DocEditor.version().split(".")[0] < 7) {
-                        innerAlert("<?php __('Please update ONLYOFFICE Docs to version 7.0 to work on fillable forms online.', 'onlyoffce-plugin') ?>");
+                        innerAlert("<?php __('Please update ONLYOFFICE Docs to version 7.0 to work on fillable forms online.', 'onlyoffice-plugin') ?>");
                         return;
                     }
 

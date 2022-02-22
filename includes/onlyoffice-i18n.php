@@ -7,7 +7,7 @@ class OOP_i18n
     {
 
         load_plugin_textdomain(
-            'onlyoffce-plugin',
+            'onlyoffice-plugin',
             false,
             dirname(dirname(plugin_basename(__FILE__))) . '/languages/'
         );

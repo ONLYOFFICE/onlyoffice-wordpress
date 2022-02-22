@@ -1,0 +1,36 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "General Settings"
+msgstr ""
+
+msgid "Document Editing Service address"
+msgstr ""
+
+msgid "Document server JWT secret key"
+msgstr ""
+
+msgid "Secret key (leave blank to disable)"
+msgstr ""
+
+msgid "Settings Saved"
+msgstr ""
+
+msgid "Open in ONLYOFFICE"
+msgstr ""
+
+msgid "Edit in ONLYOFFICE"
+msgstr ""
+
+msgid "Save Settings"
+msgstr ""
+
+msgid "Post is not an attachment"
+msgstr ""
+
+msgid "ONLYOFFICE Settings"
+msgstr ""
+
+msgid "General settings section"
+msgstr ""
