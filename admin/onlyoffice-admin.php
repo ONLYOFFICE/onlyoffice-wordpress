@@ -27,7 +27,11 @@ class OOP_Admin
             'nonce' => wp_create_nonce('wp_rest'),
             'permalinkStructure' => get_option('permalink_structure'),
             'editable' => OOP_Document_Helper::DOC_SERV_EDITED,
-            'openable' => array_merge(OOP_Document_Helper::EXTS_CELL, OOP_Document_Helper::EXTS_SLIDE, OOP_Document_Helper::EXTS_WORD)
+            'openable' => array_merge(OOP_Document_Helper::EXTS_CELL, OOP_Document_Helper::EXTS_SLIDE, OOP_Document_Helper::EXTS_WORD),
+            'localization' => [
+                'edit' => __('Edit in ONLYOFFICE', 'onlyoffice-plugin'),
+                'open' => __('Open in ONLYOFFICE', 'onlyoffice-plugin')
+            ]
         ));
     }
 }

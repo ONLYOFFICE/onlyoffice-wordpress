@@ -28,8 +28,8 @@
         var ext = filename.substring(filename.lastIndexOf('.'))
 
         if (oo_media.openable.includes(ext)) {
-
-            $(wp.media.frames.edit.el).find("div.actions > a.view-attachment").prepend("<div><a class=\"oo-editor\" href=\"#\">Edit in ONLYOFFICE</a></div");
+            var buttonText = oo_media.editable.includes(ext) ? oo_media.localization.edit : oo_media.localization.open;
+            $(wp.media.frames.edit.el).find("div.actions > a.view-attachment").prepend(`<div><a class=\"oo-editor\" href=\"#\">${buttonText}</a></div`);
             $(wp.media.frames.edit.el).find("div.actions a.oo-editor").click(function () {
                 var url = "/wp-json/onlyoffice/editor/" + wp.media.frames.edit.model.id + "?_wpnonce=" + oo_media.nonce;
                 if (oo_media.permalinkStructure === '') {

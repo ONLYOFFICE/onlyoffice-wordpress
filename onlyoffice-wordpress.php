@@ -11,7 +11,7 @@
  * Author URI:        https://www.onlyoffice.com
  * License:           Apache License 2.0
  * License URI:       https://www.apache.org/licenses/LICENSE-2.0
- * Text Domain:       onlyoffce-plugin
+ * Text Domain:       onlyoffice-plugin
  * Domain Path:       /languages
  */
 

@@ -18,7 +18,7 @@ class OOP_Editor
         $post = get_post($attachemnt_id);
 
         if ($post->post_type != 'attachment') {
-            wp_die(__('Post is not an attachment', 'onlyoffce-plugin'));
+            wp_die(__('Post is not an attachment', 'onlyoffice-plugin'));
         }
 
         return true;
