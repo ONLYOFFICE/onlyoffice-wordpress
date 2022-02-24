@@ -73,13 +73,16 @@ class OOP_Editor
                 "lang" => 'en',
                 "callbackUrl" =>  $callback_url,
                 "user" => [
-                    "id" => $user->ID,
+                    "id" => (string)$user->ID,
                     "name" => $user->display_name
                 ]
             ]
         ];
 
-        // ToDo: JWT
+        if (OOP_JWT_Manager::is_jwt_enabled()) {
+            $config["token"] = OOP_JWT_Manager::jwt_encode($config);
+        }
+
 ?>
         <!DOCTYPE html>
         <html <?php language_attributes(); ?> class="no-js">
@@ -90,7 +93,7 @@ class OOP_Editor
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui" />
             <meta name="apple-mobile-web-app-capable" content="yes" />
             <meta name="mobile-web-app-capable" content="yes" />
-            <link rel="icon" href="/wp-content/plugins/onlyoffice-wordpress/public/images/<?php echo 'cell' ?>.ico" type="image/x-icon" />
+            <link rel="icon" href="/wp-content/plugins/onlyoffice-wordpress/public/images/<?php echo $config["documentType"] ?>.ico" type="image/x-icon" />
 
             <style>
                 html {
@@ -160,8 +163,12 @@ class OOP_Editor
 
         $attachemnt_id = $req->get_params()['id'];
 
-        $body = json_decode($req->get_body(), true); // ToDo: JWT
-        // ToDo: check if null etc
+        $body = OOP_Callback_Helper::read_body($req->get_body());
+        if (!empty($body["error"])){
+            $response_json["message"] = $body["error"];
+            $response->data = $response_json;
+            return $response;
+        }
 
         wp_set_current_user($body["actions"][0]["userid"]);
 
@@ -173,7 +180,7 @@ class OOP_Editor
                 break;
             case "MustSave":
             case "Corrupted":
-                $response_json['error'] = $this->proccess_save($body, $attachemnt_id);
+                $response_json['error'] = OOP_Callback_Helper::proccess_save($body, $attachemnt_id);
                 break;
             case "MustForceSave":
             case "CorruptedForceSave":
@@ -183,24 +190,5 @@ class OOP_Editor
         $response->data = $response_json;
 
         return $response;
-    }
-
-    function proccess_save($body, $attachemnt_id)
-    {
-        $download_url = $body["url"];
-        if ($download_url === null) {
-            return 1;
-        }
-
-        $new_data = file_get_contents($download_url);
-        if ($new_data === null) return 1;
-
-        $filepath = get_attached_file($attachemnt_id);
-        file_put_contents($filepath, $new_data, LOCK_EX);
-        $id = wp_update_post(array('id' => $attachemnt_id, 'file' => 'file'));
-
-        if ($id === 0) return 1;
-
-        return 0;
     }
 }
