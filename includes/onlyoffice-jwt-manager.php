@@ -8,7 +8,7 @@ class OOP_JWT_Manager
         return !empty($options[OOP_Settings::docserver_jwt]);
     }
 
-    public static function jwt_encode($payload)
+    public static function jwt_encode($payload, $secret)
     {
         $header = [
             "alg" => "HS256",
@@ -16,28 +16,27 @@ class OOP_JWT_Manager
         ];
         $enc_header = self::base64_url_encode(json_encode($header));
         $enc_payload = self::base64_url_encode(json_encode($payload));
-        $hash = self::base64_url_encode(self::calculate_hash($enc_header, $enc_payload));
+        $hash = self::base64_url_encode(self::calculate_hash($enc_header, $enc_payload, $secret));
 
         return "$enc_header.$enc_payload.$hash";
     }
 
-    public static function jwt_decode($token)
+    public static function jwt_decode($token, $secret, $for_callback = false)
     {
-        if (!self::is_jwt_enabled()) return "";
+        if (!self::is_jwt_enabled() && !$for_callback) return "";
 
         $split = explode(".", $token);
         if (count($split) != 3) return "";
 
-        $hash = self::base64_url_encode(self::calculate_hash($split[0], $split[1]));
+        $hash = self::base64_url_encode(self::calculate_hash($split[0], $split[1], $secret));
 
         if (strcmp($hash, $split[2]) != 0) return "";
         return self::base64_url_decode($split[1]);
     }
 
-    public static function calculate_hash($enc_header, $enc_payload)
+    public static function calculate_hash($enc_header, $enc_payload, $secret)
     {
-        $options = get_option('onlyoffice_settings');
-        return hash_hmac("sha256", "$enc_header.$enc_payload", $options[OOP_Settings::docserver_jwt], true);
+        return hash_hmac("sha256", "$enc_header.$enc_payload", $secret, true);
     }
 
     public static function base64_url_encode($str)

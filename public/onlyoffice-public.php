@@ -39,7 +39,7 @@ class OOP_Public
             'permission_callback' => array($editor, 'check_attachment_id'),
         ));
 
-        register_rest_route('onlyoffice', '/callback/(?P<id>\d+)', array(
+        register_rest_route('onlyoffice', '/callback/(?P<id>[^\/\n\r]+)', array(
             'methods' => WP_REST_Server::CREATABLE,
             'callback' => array($editor, 'callback'),
             'permission_callback' => array($editor, 'check_attachment_id'),

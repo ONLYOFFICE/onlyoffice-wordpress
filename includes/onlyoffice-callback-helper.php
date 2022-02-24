@@ -16,11 +16,13 @@ class OOP_Callback_Helper
         if (OOP_JWT_Manager::is_jwt_enabled()) {
             $in_header = false;
             $jwt_header = "Authorization";
+            $options = get_option('onlyoffice_settings');
+            $secret = $options[OOP_Settings::docserver_jwt];
 
             if (!empty($data["token"])) {
-                $token = OOP_JWT_Manager::jwt_decode($data["token"]);
+                $token = OOP_JWT_Manager::jwt_decode($data["token"], $secret);
             } elseif (!empty(apache_request_headers()[$jwt_header])) {
-                $token = OOP_JWT_Manager::jwt_decode(substr(apache_request_headers()[$jwt_header], strlen("Bearer ")));
+                $token = OOP_JWT_Manager::jwt_decode(substr(apache_request_headers()[$jwt_header], strlen("Bearer ")), $secret);
                 $in_header = true;
             } else {
                 $result["error"] = "Expected JWT";

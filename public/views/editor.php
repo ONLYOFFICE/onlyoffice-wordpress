@@ -14,7 +14,10 @@ class OOP_Editor
 
     function check_attachment_id($req)
     {
-        $attachemnt_id = $req->get_params()['id'];
+        $attachemnt_param = $req->get_params()['id'];
+        $attachemnt_id = $req->get_method() === "GET" ? $attachemnt_param :
+            json_decode(OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $attachemnt_param), get_option("onlyoffice-plugin-uuid"), true), true)['attachment_id'];
+
         $post = get_post($attachemnt_id);
 
         if ($post->post_type != 'attachment') {
@@ -48,8 +51,10 @@ class OOP_Editor
         $can_edit = current_user_can('edit_post', $attachemnt_id) && OOP_Document_Helper::is_editable($filename);
 
         $permalink_structure = get_option('permalink_structure');
-        $callback_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/callback/' . $attachemnt_id
-            : get_option('siteurl') . '/wp-json/onlyoffice/callback/' . $attachemnt_id; // ToDo: hide attachment id
+        $hidden_id = str_replace('.', ',', OOP_JWT_Manager::jwt_encode(["attachment_id" => $attachemnt_id], get_option("onlyoffice-plugin-uuid")));
+
+        $callback_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/callback/' . $hidden_id
+            : get_option('siteurl') . '/wp-json/onlyoffice/callback/' . $hidden_id;
 
         $config = [
             "type" => 'desktop',
@@ -80,7 +85,9 @@ class OOP_Editor
         ];
 
         if (OOP_JWT_Manager::is_jwt_enabled()) {
-            $config["token"] = OOP_JWT_Manager::jwt_encode($config);
+            $options = get_option('onlyoffice_settings');
+            $secret = $options[OOP_Settings::docserver_jwt];
+            $config["token"] = OOP_JWT_Manager::jwt_encode($config, $secret);
         }
 
 ?>
@@ -161,7 +168,7 @@ class OOP_Editor
             'error' => 0
         );
 
-        $attachemnt_id = $req->get_params()['id'];
+        $attachemnt_id = json_decode(OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $req->get_params()['id']), get_option("onlyoffice-plugin-uuid"), true), true)['attachment_id'];
 
         $body = OOP_Callback_Helper::read_body($req->get_body());
         if (!empty($body["error"])){
@@ -176,7 +183,7 @@ class OOP_Editor
 
         switch ($status) {
             case "Editing":
-                // ToDo: wp_set_post_lock() wp_check_post_lock() ? 
+                // ToDo: wp_set_post_lock() wp_check_post_lock() ?
                 break;
             case "MustSave":
             case "Corrupted":
