@@ -7,7 +7,8 @@ class OOP_Settings
 
     public function init_menu()
     {
-        add_menu_page('ONLYOFFICE Settings', 'ONLYOFFICE', 'manage_options', 'onlyoffice-settings', array($this, 'options_page'), 'dashicons-media-document'); // ToDo: change to our icon url
+        $logo_svg = file_get_contents(plugin_dir_path(dirname(__FILE__)) . '/public/images/logo.svg');
+        add_menu_page('ONLYOFFICE Settings', 'ONLYOFFICE', 'manage_options', 'onlyoffice-settings', array($this, 'options_page'), 'data:image/svg+xml;base64,' . base64_encode($logo_svg));
     }
 
     public function init()
