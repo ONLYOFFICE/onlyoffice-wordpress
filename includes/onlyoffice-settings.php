@@ -25,43 +25,34 @@ class OOP_Settings
         add_settings_field(
             'onlyoffice_settings_docserver_url',
             __('Document Editing Service address', 'onlyoffice-plugin'),
-            array($this, 'doc_url_cb'),
+            array($this, 'input_cb'),
             'onlyoffice_settings_group',
             'onlyoffice_settings_general_section',
             array(
-                'label_for'         => OOP_Settings::docserver_url
+                'label_for'         => OOP_Settings::docserver_url,
+                'desc' => ''
             )
         );
 
         add_settings_field(
             'onlyoffice_settings_docserver_jwt',
             __('Document server JWT secret key', 'onlyoffice-plugin'),
-            array($this, 'doc_jwt_cb'),
+            array($this, 'input_cb'),
             'onlyoffice_settings_group',
             'onlyoffice_settings_general_section',
             array(
-                'label_for'         => OOP_Settings::docserver_jwt
+                'label_for'         => OOP_Settings::docserver_jwt,
+                'desc' => 'Secret key (leave blank to disable)'
             )
         );
     }
 
-    // ToDo: callbacks are mostly the same, refactor
-
-    public function doc_url_cb($args)
-    {
-        $options = get_option('onlyoffice_settings');
-?>
-        <input id="<?php echo esc_attr($args['label_for']) ?>" type="text" name="onlyoffice_settings[<?php echo esc_attr($args['label_for']); ?>]" value="<?php echo $options[$args['label_for']]; ?>">
-    <?php
-    }
-
-    public function doc_jwt_cb($args)
-    {
+    public function input_cb($args) {
         $options = get_option('onlyoffice_settings');
     ?>
         <input id="<?php echo esc_attr($args['label_for']) ?>" type="text" name="onlyoffice_settings[<?php echo esc_attr($args['label_for']); ?>]" value="<?php echo $options[$args['label_for']]; ?>">
         <p class="description">
-            <?php esc_html_e('Secret key (leave blank to disable)', 'onlyoffice-plugin'); ?>
+            <?php esc_html_e($args['desc'], 'onlyoffice-plugin'); ?>
         </p>
     <?php
     }
