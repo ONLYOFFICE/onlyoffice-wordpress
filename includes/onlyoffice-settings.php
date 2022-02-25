@@ -8,7 +8,7 @@ class OOP_Settings
     public function init_menu()
     {
         $logo_svg = file_get_contents(plugin_dir_path(dirname(__FILE__)) . '/public/images/logo.svg');
-        add_menu_page('ONLYOFFICE Settings', 'ONLYOFFICE', 'manage_options', 'onlyoffice-settings', array($this, 'options_page'), 'data:image/svg+xml;base64,' . base64_encode($logo_svg));
+        add_menu_page(__('ONLYOFFICE Settings', 'onlyoffice-plugin'), 'ONLYOFFICE', 'manage_options', 'onlyoffice-settings', array($this, 'options_page'), 'data:image/svg+xml;base64,' . base64_encode($logo_svg));
     }
 
     public function init()
@@ -17,14 +17,14 @@ class OOP_Settings
 
         add_settings_section(
             'onlyoffice_settings_general_section',
-            __('General Settings', 'onlyoffce-plugin'),
+            __('General Settings', 'onlyoffice-plugin'),
             array($this, 'general_section_callback'),
             'onlyoffice_settings_group'
         );
 
         add_settings_field(
             'onlyoffice_settings_docserver_url',
-            __('Document server url', 'onlyoffce-plugin'),
+            __('Document Editing Service address', 'onlyoffice-plugin'),
             array($this, 'doc_url_cb'),
             'onlyoffice_settings_group',
             'onlyoffice_settings_general_section',
@@ -35,7 +35,7 @@ class OOP_Settings
 
         add_settings_field(
             'onlyoffice_settings_docserver_jwt',
-            __('JWT Secret', 'onlyoffce-plugin'),
+            __('Document server JWT secret key', 'onlyoffice-plugin'),
             array($this, 'doc_jwt_cb'),
             'onlyoffice_settings_group',
             'onlyoffice_settings_general_section',
@@ -52,9 +52,6 @@ class OOP_Settings
         $options = get_option('onlyoffice_settings');
 ?>
         <input id="<?php echo esc_attr($args['label_for']) ?>" type="text" name="onlyoffice_settings[<?php echo esc_attr($args['label_for']); ?>]" value="<?php echo $options[$args['label_for']]; ?>">
-        <p class="description">
-            <?php esc_html_e('document server url', 'onlyoffce-plugin'); ?>
-        </p>
     <?php
     }
 
@@ -64,7 +61,7 @@ class OOP_Settings
     ?>
         <input id="<?php echo esc_attr($args['label_for']) ?>" type="text" name="onlyoffice_settings[<?php echo esc_attr($args['label_for']); ?>]" value="<?php echo $options[$args['label_for']]; ?>">
         <p class="description">
-            <?php esc_html_e('docuemnt server jwt', 'onlyoffce-plugin'); ?>
+            <?php esc_html_e('Secret key (leave blank to disable)', 'onlyoffice-plugin'); ?>
         </p>
     <?php
     }
@@ -72,7 +69,7 @@ class OOP_Settings
     public function general_section_callback($args)
     {
     ?>
-        <p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('General settings section', 'onlyoffce-plugin'); ?></p>
+        <p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('General settings section', 'onlyoffice-plugin'); ?></p>
     <?php
     }
 
@@ -84,7 +81,7 @@ class OOP_Settings
         }
 
         if (isset($_GET['settings-updated'])) {
-            add_settings_error('onlyoffice_settings_messages', 'onlyoffice_message', __('Settings Saved', 'onlyoffce-plugin'), 'updated'); // ToDo: can also check if settings are valid e.g. make connection to docServer
+            add_settings_error('onlyoffice_settings_messages', 'onlyoffice_message', __('Settings Saved', 'onlyoffice-plugin'), 'updated'); // ToDo: can also check if settings are valid e.g. make connection to docServer
         }
 
         settings_errors('onlyoffice_settings_messages');
@@ -95,7 +92,7 @@ class OOP_Settings
                 <?php
                 settings_fields('onlyoffice_settings_group');
                 do_settings_sections('onlyoffice_settings_group');
-                submit_button('Save Settings');
+                submit_button(__('Save Settings', 'onlyoffice-plugin'));
                 ?>
             </form>
         </div>
