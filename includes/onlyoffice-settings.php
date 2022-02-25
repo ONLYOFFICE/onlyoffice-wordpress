@@ -8,7 +8,14 @@ class OOP_Settings
     public function init_menu()
     {
         $logo_svg = file_get_contents(plugin_dir_path(dirname(__FILE__)) . '/public/images/logo.svg');
-        add_menu_page(__('ONLYOFFICE Settings', 'onlyoffice-plugin'), 'ONLYOFFICE', 'manage_options', 'onlyoffice-settings', array($this, 'options_page'), 'data:image/svg+xml;base64,' . base64_encode($logo_svg));
+        add_menu_page(__('ONLYOFFICE', 'onlyoffice-plugin'), 'ONLYOFFICE', 'manage_options', 'onlyoffice-settings',
+            array($this, 'options_page'), 'data:image/svg+xml;base64,' . base64_encode($logo_svg));
+
+        add_submenu_page('onlyoffice-settings', __('ONLYOFFICE', 'onlyoffice-plugin'),
+            __('Settings', 'onlyoffice-plugin'), 'manage_options', 'onlyoffice-settings');
+
+        add_submenu_page('onlyoffice-settings', 'ONLYOFFICE',
+            __('Files', 'onlyoffice-plugin'), 'manage_options', 'onlyoffice-files', array($this, 'files_page'));
     }
 
     public function init()
@@ -17,7 +24,7 @@ class OOP_Settings
 
         add_settings_section(
             'onlyoffice_settings_general_section',
-            __('General Settings', 'onlyoffice-plugin'),
+            '',
             array($this, 'general_section_callback'),
             'onlyoffice_settings_group'
         );
@@ -60,7 +67,7 @@ class OOP_Settings
     public function general_section_callback($args)
     {
     ?>
-        <p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('General settings section', 'onlyoffice-plugin'); ?></p>
+        <p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('Configure ONLYOFFICE connector settings', 'onlyoffice-plugin'); ?></p>
     <?php
     }
 
@@ -88,5 +95,18 @@ class OOP_Settings
             </form>
         </div>
 <?php
+    }
+
+    public function files_page(){
+
+        if (!current_user_can('manage_options')) {
+            return;
+        }
+
+        ?>
+            <div class="wrap">
+                <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+            </div>
+        <?php
     }
 }

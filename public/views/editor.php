@@ -131,7 +131,8 @@ class OOP_Editor
                 }
             </style>
 
-            <script type="text/javascript" src="<?php echo $options[OOP_Settings::docserver_url] . 'web-apps/apps/api/documents/api.js' ?>"></script>
+            <script type="text/javascript" src="<?php echo $options[OOP_Settings::docserver_url] .
+                (substr($options[OOP_Settings::docserver_url] , -1) === '/' ? '' : '/') . 'web-apps/apps/api/documents/api.js' ?>"></script>
         </head>
 
         <body <?php body_class(); ?>>

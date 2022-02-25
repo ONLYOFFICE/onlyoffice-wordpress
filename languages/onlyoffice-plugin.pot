@@ -29,8 +29,14 @@ msgstr ""
 msgid "Post is not an attachment"
 msgstr ""
 
-msgid "ONLYOFFICE Settings"
+msgid "Settings"
 msgstr ""
 
 msgid "General settings section"
+msgstr ""
+
+msgid "Files"
+msgstr ""
+
+msgid "Configure ONLYOFFICE connector settings"
 msgstr ""

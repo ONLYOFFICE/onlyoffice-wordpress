@@ -39,8 +39,14 @@ msgstr "Сохранить настройки"
 msgid "Post is not an attachment"
 msgstr "Пост не является вложением"
 
-msgid "ONLYOFFICE Settings"
-msgstr "Настройки ONLYOFFICE"
+msgid "Settings"
+msgstr "Настройки"
 
 msgid "General settings section"
 msgstr "Раздел основных настроек"
+
+msgid "Files"
+msgstr "Файлы"
+
+msgid "Configure ONLYOFFICE connector settings"
+msgstr "Настройка параметров коннектора ONLYOFFICE"
