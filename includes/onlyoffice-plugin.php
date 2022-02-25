@@ -30,6 +30,8 @@ class OOPlugin
         require_once plugin_dir_path(dirname(__FILE__)) . 'public/onlyoffice-public.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-settings.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-document-helper.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-callback-helper.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-jwt-manager.php';
 
         $this->loader = new OOP_Loader();
     }

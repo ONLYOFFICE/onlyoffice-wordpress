@@ -14,7 +14,10 @@ class OOP_Editor
 
     function check_attachment_id($req)
     {
-        $attachemnt_id = $req->get_params()['id'];
+        $attachemnt_param = $req->get_params()['id'];
+        $attachemnt_id = $req->get_method() === "GET" ? $attachemnt_param :
+            json_decode(OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $attachemnt_param), get_option("onlyoffice-plugin-uuid"), true), true)['attachment_id'];
+
         $post = get_post($attachemnt_id);
 
         if ($post->post_type != 'attachment') {
@@ -47,6 +50,12 @@ class OOP_Editor
 
         $can_edit = current_user_can('edit_post', $attachemnt_id) && OOP_Document_Helper::is_editable($filename);
 
+        $permalink_structure = get_option('permalink_structure');
+        $hidden_id = str_replace('.', ',', OOP_JWT_Manager::jwt_encode(["attachment_id" => $attachemnt_id], get_option("onlyoffice-plugin-uuid")));
+
+        $callback_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/callback/' . $hidden_id
+            : get_option('siteurl') . '/wp-json/onlyoffice/callback/' . $hidden_id;
+
         $config = [
             "type" => 'desktop',
             "documentType" => OOP_Document_Helper::get_document_type($filename),
@@ -67,15 +76,20 @@ class OOP_Editor
             "editorConfig" => [
                 "mode" => $can_edit ? 'edit' : 'view',
                 "lang" => 'en',
-                "callbackUrl" => get_option('siteurl') . '/wp-json/onlyoffice/callback/' . $attachemnt_id, // ToDo: hide attachment id
+                "callbackUrl" =>  $callback_url,
                 "user" => [
-                    "id" => $user->ID,
+                    "id" => (string)$user->ID,
                     "name" => $user->display_name
                 ]
             ]
         ];
 
-        // ToDo: JWT
+        if (OOP_JWT_Manager::is_jwt_enabled()) {
+            $options = get_option('onlyoffice_settings');
+            $secret = $options[OOP_Settings::docserver_jwt];
+            $config["token"] = OOP_JWT_Manager::jwt_encode($config, $secret);
+        }
+
 ?>
         <!DOCTYPE html>
         <html <?php language_attributes(); ?> class="no-js">
@@ -86,7 +100,7 @@ class OOP_Editor
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui" />
             <meta name="apple-mobile-web-app-capable" content="yes" />
             <meta name="mobile-web-app-capable" content="yes" />
-            <link rel="icon" href="/wp-content/plugins/onlyoffice-wordpress/public/images/<?php echo 'cell' ?>.ico" type="image/x-icon" />
+            <link rel="icon" href="/wp-content/plugins/onlyoffice-wordpress/public/images/<?php echo $config["documentType"] ?>.ico" type="image/x-icon" />
 
             <style>
                 html {
@@ -132,12 +146,6 @@ class OOP_Editor
                     config.width = "100%";
                     config.height = "100%";
 
-                    if ((config.document.fileType === "docxf" || config.document.fileType === "oform") &&
-                        DocsAPI.DocEditor.version().split(".")[0] < 7) {
-                        innerAlert("<?php __('Please update ONLYOFFICE Docs to version 7.0 to work on fillable forms online.', 'onlyoffice-plugin') ?>");
-                        return;
-                    }
-
                     docEditor = new DocsAPI.DocEditor("iframeEditor", config);
                 };
 
@@ -160,10 +168,14 @@ class OOP_Editor
             'error' => 0
         );
 
-        $attachemnt_id = $req->get_params()['id'];
+        $attachemnt_id = json_decode(OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $req->get_params()['id']), get_option("onlyoffice-plugin-uuid"), true), true)['attachment_id'];
 
-        $body = json_decode($req->get_body(), true); // ToDo: JWT
-        // ToDo: check if null etc
+        $body = OOP_Callback_Helper::read_body($req->get_body());
+        if (!empty($body["error"])){
+            $response_json["message"] = $body["error"];
+            $response->data = $response_json;
+            return $response;
+        }
 
         wp_set_current_user($body["actions"][0]["userid"]);
 
@@ -171,11 +183,11 @@ class OOP_Editor
 
         switch ($status) {
             case "Editing":
-                // ToDo: wp_set_post_lock() wp_check_post_lock() ? 
+                // ToDo: wp_set_post_lock() wp_check_post_lock() ?
                 break;
             case "MustSave":
             case "Corrupted":
-                $response_json['error'] = $this->proccess_save($body, $attachemnt_id);
+                $response_json['error'] = OOP_Callback_Helper::proccess_save($body, $attachemnt_id);
                 break;
             case "MustForceSave":
             case "CorruptedForceSave":
@@ -185,24 +197,5 @@ class OOP_Editor
         $response->data = $response_json;
 
         return $response;
-    }
-
-    function proccess_save($body, $attachemnt_id)
-    {
-        $download_url = $body["url"];
-        if ($download_url === null) {
-            return 1;
-        }
-
-        $new_data = file_get_contents($download_url);
-        if ($new_data === null) return 1;
-
-        $filepath = get_attached_file($attachemnt_id);
-        file_put_contents($filepath, $new_data, LOCK_EX);
-        $id = wp_update_post(array('id' => $attachemnt_id, 'file' => 'file'));
-
-        if ($id === 0) return 1;
-
-        return 0;
     }
 }
