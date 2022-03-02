@@ -47,8 +47,22 @@ class OOP_Editor
         $filepath = get_attached_file($attachemnt_id);
         $filetype = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
         $filename = pathinfo($filepath, PATHINFO_FILENAME) . '.' . $filetype;
+        $edit_capabilities = array(
+            'edit_others_pages',
+            'edit_others_posts',
+            'edit_pages',
+            'edit_posts',
+            'edit_private_pages',
+            'edit_private_posts',
+            'edit_published_pages',
+            'edit_published_posts',
+        );
+        $has_edit_cap = false;
+        foreach ($edit_capabilities as $capability) {
+            $has_edit_cap = $has_edit_cap || current_user_can($capability, $attachemnt_id);
+        }
 
-        $can_edit = current_user_can('edit_post', $attachemnt_id) && OOP_Document_Helper::is_editable($filename);
+        $can_edit = $has_edit_cap && OOP_Document_Helper::is_editable($filename);
 
         $permalink_structure = get_option('permalink_structure');
         $hidden_id = str_replace('.', ',', OOP_JWT_Manager::jwt_encode(["attachment_id" => $attachemnt_id], get_option("onlyoffice-plugin-uuid")));
