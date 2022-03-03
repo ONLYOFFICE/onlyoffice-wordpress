@@ -37,6 +37,7 @@ class OOP_Editor
 
     function editor_render($params, $opened_from_admin_panel)
     {
+        ob_start();
         $options = get_option('onlyoffice_settings');
         $attachemnt_id = $params['id'];
 
