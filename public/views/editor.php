@@ -29,12 +29,13 @@ class OOP_Editor
 
     function editor($req)
     {
-        $response = new WP_REST_Response($this->editor_render($req->get_params()));
+        $opened_from_admin_panel = str_contains($req->get_headers()['referer'][0], 'wp-admin');
+        $response = new WP_REST_Response($this->editor_render($req->get_params(), $opened_from_admin_panel));
         $response->header('Content-Type', 'text/html; charset=utf-8');
         return $response;
     }
 
-    function editor_render($params)
+    function editor_render($params, $opened_from_admin_panel)
     {
         $options = get_option('onlyoffice_settings');
         $attachemnt_id = $params['id'];
@@ -94,6 +95,12 @@ class OOP_Editor
                 "user" => [
                     "id" => (string)$user->ID,
                     "name" => $user->display_name
+                ],
+                "customization" => [
+                        "hideRightMenu" => $opened_from_admin_panel ? false : true,
+                        "hideRulers" => $opened_from_admin_panel ? false : true,
+                        "compactToolbar" => $opened_from_admin_panel ? false : true,
+                        "statusBar" => $opened_from_admin_panel
                 ]
             ]
         ];
