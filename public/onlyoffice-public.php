@@ -44,5 +44,11 @@ class OOP_Public
             'callback' => array($editor, 'callback'),
             'permission_callback' => array($editor, 'check_attachment_id'),
         ));
-    } 
+
+        register_rest_route('onlyoffice', '/getfile/(?P<id>\d+)', array(
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => array($editor, 'get_file'),
+            'permission_callback' => array($editor, 'check_attachment_id'),
+        ));
+    }
 }

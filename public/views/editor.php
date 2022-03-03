@@ -72,12 +72,15 @@ class OOP_Editor
         $callback_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/callback/' . $hidden_id
             : get_option('siteurl') . '/wp-json/onlyoffice/callback/' . $hidden_id;
 
+        $file_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/getfile/' . $attachemnt_id
+            : get_option('siteurl') . '/wp-json/onlyoffice/getfile/' . $attachemnt_id;
+
         $config = [
             "type" => 'desktop',
             "documentType" => OOP_Document_Helper::get_document_type($filename),
             "document" => [
                 "title" => $filename,
-                "url" => wp_get_attachment_url($attachemnt_id),
+                "url" => $file_url,
                 "fileType" => $filetype,
                 "key" => base64_encode($post->post_modified),
                 "info" => [
@@ -182,6 +185,41 @@ class OOP_Editor
 
         </html>
 <?php
+    }
+
+    function get_file($req) {
+        $attachment_id = $req->get_params()['id'];
+
+        if (OOP_JWT_Manager::is_jwt_enabled()) {
+            $jwt_header = "Authorization";
+            if (!empty(apache_request_headers()[$jwt_header])) {
+                $options = get_option('onlyoffice_settings');
+                $secret = $options[OOP_Settings::docserver_jwt];
+                $token = OOP_JWT_Manager::jwt_decode(substr(apache_request_headers()[$jwt_header], strlen("Bearer ")), $secret);
+                if (empty($token)) {
+                    http_response_code(403);
+                    die("Invalid JWT signature");
+                }
+            }
+        }
+
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        $filepath = get_attached_file($attachment_id);
+
+        @header('Content-Length: ' . filesize($filepath));
+        @header('Content-Disposition: attachment; filename*=UTF-8\'\'' . urldecode(basename($filepath)));
+        @header('Content-Type: ' . mime_content_type($filepath));
+
+        if ($fd = fopen($filepath, 'rb')) {
+            while (!feof($fd)) {
+                print fread($fd, 1024);
+            }
+            fclose($fd);
+        }
+        exit;
     }
 
     function callback($req)
