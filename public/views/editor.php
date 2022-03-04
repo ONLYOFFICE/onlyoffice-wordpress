@@ -12,6 +12,16 @@ class OOP_Editor
         7 => 'CorruptedForceSave'
     );
 
+    function check_api_js($url) {
+        $ch = curl_init($url);
+        curl_exec($ch);
+        if ($http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE) !== 200) {
+            return false;
+        }
+        curl_close($ch);
+        return true;
+    }
+
     function check_attachment_id($req)
     {
         $attachemnt_param = $req->get_params()['id'];
@@ -37,8 +47,14 @@ class OOP_Editor
 
     function editor_render($params, $opened_from_admin_panel)
     {
-        ob_start();
         $options = get_option('onlyoffice_settings');
+        $api_js_url = $options[OOP_Settings::docserver_url] .
+            (substr($options[OOP_Settings::docserver_url] , -1) === '/' ? '' : '/') . 'web-apps/apps/api/documents/api.js';
+        ob_start();
+        $api_js_status = $this->check_api_js($api_js_url);
+        ob_clean();
+        if (!$api_js_status) wp_die(__('ONLYOFFICE cannot be reached. Please contact admin', 'onlyoffice-plugin'));
+
         $attachemnt_id = $params['id'];
 
         $post = get_post($attachemnt_id);
@@ -110,7 +126,6 @@ class OOP_Editor
         ];
 
         if (OOP_JWT_Manager::is_jwt_enabled()) {
-            $options = get_option('onlyoffice_settings');
             $secret = $options[OOP_Settings::docserver_jwt];
             $config["token"] = OOP_JWT_Manager::jwt_encode($config, $secret);
         }
@@ -156,8 +171,7 @@ class OOP_Editor
                 }
             </style>
 
-            <script type="text/javascript" src="<?php echo $options[OOP_Settings::docserver_url] .
-                (substr($options[OOP_Settings::docserver_url] , -1) === '/' ? '' : '/') . 'web-apps/apps/api/documents/api.js' ?>"></script>
+            <script type="text/javascript" src="<?php echo $api_js_url ?>"></script>
         </head>
 
         <body <?php body_class(); ?>>

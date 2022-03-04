@@ -50,3 +50,6 @@ msgstr "Files"
 
 msgid "Configure ONLYOFFICE connector settings"
 msgstr "Configure ONLYOFFICE connector settings"
+
+msgid "ONLYOFFICE cannot be reached. Please contact admin"
+msgstr "ONLYOFFICE cannot be reached. Please contact admin"

@@ -50,3 +50,6 @@ msgstr "Файлы"
 
 msgid "Configure ONLYOFFICE connector settings"
 msgstr "Настройка параметров коннектора ONLYOFFICE"
+
+msgid "ONLYOFFICE cannot be reached. Please contact admin"
+msgstr "Приложение ONLYOFFICE недоступно. Пожалуйста, свяжитесь с администратором"
