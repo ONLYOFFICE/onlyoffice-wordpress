@@ -18,7 +18,7 @@ class OOPlugin
         $this->set_locale();
         $this->define_admin_hooks();
         $this->define_public_hooks();
-        $this->init_settings();
+        $this->init_plugin();
     }
 
     private function load_dependencies()
@@ -64,7 +64,7 @@ class OOPlugin
         $this->loader->add_action('rest_api_init', $plugin_public, 'register_routes');
     }
 
-    private function init_settings()
+    private function init_plugin()
     {
 
         $plugin_settings = new OOP_Settings($this->get_plugin_name(), $this->get_version());

@@ -43,3 +43,6 @@ msgstr ""
 
 msgid "ONLYOFFICE cannot be reached. Please contact admin"
 msgstr ""
+
+msgid "Files that can be edited and opened in ONLYOFFYCE will be displayed here"
+msgstr ""

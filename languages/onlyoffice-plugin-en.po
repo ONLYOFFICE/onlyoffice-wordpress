@@ -53,3 +53,6 @@ msgstr "Configure ONLYOFFICE connector settings"
 
 msgid "ONLYOFFICE cannot be reached. Please contact admin"
 msgstr "ONLYOFFICE cannot be reached. Please contact admin"
+
+msgid "Files that can be edited and opened in ONLYOFFICE will be displayed here"
+msgstr "Files that can be edited and opened in ONLYOFFICE will be displayed here"

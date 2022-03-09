@@ -8,14 +8,19 @@ class OOP_Settings
     public function init_menu()
     {
         $logo_svg = file_get_contents(plugin_dir_path(dirname(__FILE__)) . '/public/images/logo.svg');
-        add_menu_page(__('ONLYOFFICE', 'onlyoffice-plugin'), 'ONLYOFFICE', 'manage_options', 'onlyoffice-settings',
-            array($this, 'options_page'), 'data:image/svg+xml;base64,' . base64_encode($logo_svg));
+        $can_manage_settings =  current_user_can('manage_options');
 
-        add_submenu_page('onlyoffice-settings', __('ONLYOFFICE', 'onlyoffice-plugin'),
-            __('Settings', 'onlyoffice-plugin'), 'manage_options', 'onlyoffice-settings');
+        add_menu_page(__('ONLYOFFICE', 'onlyoffice-plugin'), 'ONLYOFFICE', $can_manage_settings ? 'manage_options' : 'upload_files',
+            $can_manage_settings ? 'onlyoffice-settings' : 'onlyoffice-files',
+            array($this, $can_manage_settings ? 'options_page' : 'files_page'), 'data:image/svg+xml;base64,' . base64_encode($logo_svg));
 
-        add_submenu_page('onlyoffice-settings', 'ONLYOFFICE',
-            __('Files', 'onlyoffice-plugin'), 'manage_options', 'onlyoffice-files', array($this, 'files_page'));
+        if ($can_manage_settings) {
+            add_submenu_page('onlyoffice-settings', 'ONLYOFFICE',
+                __('Settings', 'onlyoffice-plugin'), 'manage_options', 'onlyoffice-settings');
+        }
+
+        add_submenu_page($can_manage_settings ? 'onlyoffice-settings' : 'onlyoffice-files', 'ONLYOFFICE',
+            __('Files', 'onlyoffice-plugin'), 'upload_files', 'onlyoffice-files', $can_manage_settings ? array($this, 'files_page') : null);
     }
 
     public function init()
@@ -99,13 +104,14 @@ class OOP_Settings
 
     public function files_page(){
 
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can('upload_files')) {
             return;
         }
 
         ?>
             <div class="wrap">
                 <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+                <p><?php  _e( 'Files that can be edited and opened in ONLYOFFICE will be displayed here', 'onlyoffice-plugin'); ?></p>
             </div>
         <?php
     }

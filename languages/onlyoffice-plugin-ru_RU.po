@@ -53,3 +53,6 @@ msgstr "Настройка параметров коннектора ONLYOFFICE"
 
 msgid "ONLYOFFICE cannot be reached. Please contact admin"
 msgstr "Приложение ONLYOFFICE недоступно. Пожалуйста, свяжитесь с администратором"
+
+msgid "Files that can be edited and opened in ONLYOFFICE will be displayed here"
+msgstr "Здесь будут отражены файлы, которые можно редактировать и открывать в ONLYOFFICE"
