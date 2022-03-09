@@ -216,8 +216,7 @@ class OOP_Editor
                 $secret = $options[OOP_Settings::docserver_jwt];
                 $token = OOP_JWT_Manager::jwt_decode(substr(apache_request_headers()[$jwt_header], strlen("Bearer ")), $secret);
                 if (empty($token)) {
-                    http_response_code(403);
-                    die("Invalid JWT signature");
+                    wp_die("Invalid JWT signature", '', array('response' => 403));
                 }
             }
         }
@@ -243,6 +242,8 @@ class OOP_Editor
 
     function callback($req)
     {
+        require_once ABSPATH . 'wp-admin/includes/post.php';
+
         $response = new WP_REST_Response();
         $response_json = array(
             'error' => 0
@@ -261,13 +262,43 @@ class OOP_Editor
 
         $status = OOP_Editor::CALLBACK_STATUS[$body["status"]];
 
+        $user_id = null;
+        if (!empty($body['users'])) {
+            $users = $body['users'];
+            if (count($users) > 0) {
+                $user_id = $users[0];
+            }
+        }
+
+        if ($user_id === null && !empty($body['actions'])) {
+            $actions = $body['actions'];
+            if (count($actions) > 0) {
+                $user_id = $actions[0]['userid'];
+            }
+        }
+
+        $user = get_user_by( 'id', $user_id );
+        if ($user_id !== null && $user) {
+            wp_set_current_user( $user_id, $user->user_login );
+            wp_set_auth_cookie( $user_id );
+            do_action( 'wp_login', $user->user_login );
+        } else {
+            wp_die("No user information", '', array('response' => 403));
+        }
+
         switch ($status) {
             case "Editing":
-                // ToDo: wp_set_post_lock() wp_check_post_lock() ?
                 break;
             case "MustSave":
-            case "Corrupted":
+                $locked = wp_check_post_lock($attachemnt_id);
+                if (!$locked) wp_set_post_lock($attachemnt_id);
+
                 $response_json['error'] = OOP_Callback_Helper::proccess_save($body, $attachemnt_id);
+                break;
+            case "Corrupted":
+            case "Closed":
+            case "NotFound":
+                delete_post_meta($attachemnt_id, '_edit_lock');
                 break;
             case "MustForceSave":
             case "CorruptedForceSave":
