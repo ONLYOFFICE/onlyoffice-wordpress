@@ -2,6 +2,17 @@
 
 class OOP_Editor
 {
+    const EDIT_CAPS = array(
+        'edit_others_pages',
+        'edit_others_posts',
+        'edit_pages',
+        'edit_posts',
+        'edit_private_pages',
+        'edit_private_posts',
+        'edit_published_pages',
+        'edit_published_posts',
+    );
+
     const CALLBACK_STATUS = array(
         0 => 'NotFound',
         1 => 'Editing',
@@ -25,8 +36,7 @@ class OOP_Editor
     function check_attachment_id($req)
     {
         $attachemnt_param = $req->get_params()['id'];
-        $attachemnt_id = $req->get_method() === "GET" ? $attachemnt_param :
-            json_decode(OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $attachemnt_param), get_option("onlyoffice-plugin-uuid"), true), true)['attachment_id'];
+        $attachemnt_id = json_decode(OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $attachemnt_param), get_option("onlyoffice-plugin-uuid"), true), true)['attachment_id'];
 
         $post = get_post($attachemnt_id);
 
@@ -45,6 +55,14 @@ class OOP_Editor
         return $response;
     }
 
+    function has_edit_capability($attachment_id) {
+        $has_edit_cap = false;
+        foreach (self::EDIT_CAPS as $capability) {
+            $has_edit_cap = $has_edit_cap || current_user_can($capability, $attachment_id);
+        }
+        return $has_edit_cap;
+    }
+
     function editor_render($params, $opened_from_admin_panel)
     {
         $options = get_option('onlyoffice_settings');
@@ -55,7 +73,7 @@ class OOP_Editor
         ob_clean();
         if (!$api_js_status) wp_die(__('ONLYOFFICE cannot be reached. Please contact admin', 'onlyoffice-plugin'));
 
-        $attachemnt_id = $params['id'];
+        $attachemnt_id = json_decode(OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $params['id']), get_option("onlyoffice-plugin-uuid"), true), true)['attachment_id'];
 
         $post = get_post($attachemnt_id);
 
@@ -65,31 +83,20 @@ class OOP_Editor
         $filepath = get_attached_file($attachemnt_id);
         $filetype = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
         $filename = pathinfo($filepath, PATHINFO_FILENAME) . '.' . $filetype;
-        $edit_capabilities = array(
-            'edit_others_pages',
-            'edit_others_posts',
-            'edit_pages',
-            'edit_posts',
-            'edit_private_pages',
-            'edit_private_posts',
-            'edit_published_pages',
-            'edit_published_posts',
-        );
-        $has_edit_cap = false;
-        foreach ($edit_capabilities as $capability) {
-            $has_edit_cap = $has_edit_cap || current_user_can($capability, $attachemnt_id);
-        }
+
+        $has_edit_cap = $this->has_edit_capability($attachemnt_id);
 
         $can_edit = $has_edit_cap && OOP_Document_Helper::is_editable($filename);
 
         $permalink_structure = get_option('permalink_structure');
         $hidden_id = str_replace('.', ',', OOP_JWT_Manager::jwt_encode(["attachment_id" => $attachemnt_id], get_option("onlyoffice-plugin-uuid")));
+        $hidden_data = str_replace('.', ',', OOP_JWT_Manager::jwt_encode(["attachment_id" => $attachemnt_id, 'user_id' => $user->ID], get_option("onlyoffice-plugin-uuid")));
 
         $callback_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/callback/' . $hidden_id
             : get_option('siteurl') . '/wp-json/onlyoffice/callback/' . $hidden_id;
 
-        $file_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/getfile/' . $attachemnt_id
-            : get_option('siteurl') . '/wp-json/onlyoffice/getfile/' . $attachemnt_id;
+        $file_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/getfile/' . $hidden_data
+            : get_option('siteurl') . '/wp-json/onlyoffice/getfile/' . $hidden_data;
 
         $config = [
             "type" => 'desktop',
@@ -207,7 +214,22 @@ class OOP_Editor
     }
 
     function get_file($req) {
-        $attachment_id = $req->get_params()['id'];
+        $decoded = json_decode(OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $req->get_params()['id']), get_option("onlyoffice-plugin-uuid"), true), true);
+
+        $attachment_id = $decoded['attachment_id'];
+        $user_id = $decoded['user_id'];
+
+        $user = get_user_by( 'id', $user_id );
+        if ($user_id !== null && $user) {
+            wp_set_current_user( $user_id, $user->user_login );
+            wp_set_auth_cookie( $user_id );
+            do_action( 'wp_login', $user->user_login );
+        } else {
+            wp_die("No user information", '', array('response' => 403));
+        }
+
+        $has_read_capability = current_user_can('read');
+        if (!$has_read_capability) wp_die('No read capability', '', array('response' => 403));
 
         if (OOP_JWT_Manager::is_jwt_enabled()) {
             $jwt_header = "Authorization";
@@ -290,6 +312,9 @@ class OOP_Editor
             case "Editing":
                 break;
             case "MustSave":
+                $can_edit = $this->has_edit_capability($attachemnt_id);
+                if (!$can_edit) wp_die("No edit capability", '', array('response' => 403));
+
                 $locked = wp_check_post_lock($attachemnt_id);
                 if (!$locked) wp_set_post_lock($attachemnt_id);
 

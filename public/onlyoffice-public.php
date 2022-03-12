@@ -33,7 +33,7 @@ class OOP_Public
 
         $editor = new OOP_Editor();
 
-        register_rest_route('onlyoffice', '/editor/(?P<id>\d+)', array(
+        register_rest_route('onlyoffice', '/editor/(?P<id>[^\/\n\r]+)', array(
             'methods' => WP_REST_Server::READABLE,
             'callback' => array($editor, 'editor'),
             'permission_callback' => array($editor, 'check_attachment_id'),
@@ -45,7 +45,7 @@ class OOP_Public
             'permission_callback' => array($editor, 'check_attachment_id'),
         ));
 
-        register_rest_route('onlyoffice', '/getfile/(?P<id>\d+)', array(
+        register_rest_route('onlyoffice', '/getfile/(?P<id>[^\/\n\r]+)', array(
             'methods' => WP_REST_Server::READABLE,
             'callback' => array($editor, 'get_file'),
             'permission_callback' => array($editor, 'check_attachment_id'),
