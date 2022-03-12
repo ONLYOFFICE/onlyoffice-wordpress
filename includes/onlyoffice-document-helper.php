@@ -29,15 +29,20 @@ class OOP_Document_Helper
 
     public static function get_document_type($filename) {
         $ext = strtolower('.' . pathinfo($filename, PATHINFO_EXTENSION));
-    
+
         if (in_array($ext, OOP_Document_Helper::EXTS_WORD)) return "word";
         if (in_array($ext, OOP_Document_Helper::EXTS_CELL)) return "cell";
         if (in_array($ext, OOP_Document_Helper::EXTS_SLIDE)) return "slide";
         return "word";
     }
-    
+
     public static function is_editable($filename) {
         $ext = strtolower('.' . pathinfo($filename, PATHINFO_EXTENSION));
         return in_array($ext, OOP_Document_Helper::DOC_SERV_EDITED);
+    }
+
+    public static function is_openable($filename) {
+        $ext = strtolower('.' . pathinfo($filename, PATHINFO_EXTENSION));
+        return in_array($ext, array_merge(self::EXTS_WORD, self::EXTS_SLIDE, self::EXTS_CELL));
     }
 }

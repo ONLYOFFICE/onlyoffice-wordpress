@@ -32,6 +32,8 @@ class OOPlugin
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-document-helper.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-callback-helper.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-jwt-manager.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-files.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-class-files-list-table.php';
 
         $this->loader = new OOP_Loader();
     }
@@ -67,10 +69,13 @@ class OOPlugin
     private function init_plugin()
     {
 
-        $plugin_settings = new OOP_Settings($this->get_plugin_name(), $this->get_version());
+        $plugin_settings = new OOP_Settings();
 
         $this->loader->add_action('admin_menu', $plugin_settings, 'init_menu');
         $this->loader->add_action('admin_init', $plugin_settings, 'init');
+
+        $plugin_files = new OOP_Files();
+        $this->loader->add_action('admin_menu', $plugin_files, 'init_menu');
     }
 
     public function run()
