@@ -46,3 +46,6 @@ msgstr ""
 
 msgid "Files that can be edited and opened in ONLYOFFYCE will be displayed here"
 msgstr ""
+
+msgid "No files found for editing or viewing in ONLYOFFICE."
+msgstr ""

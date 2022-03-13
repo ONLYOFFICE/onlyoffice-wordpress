@@ -132,6 +132,12 @@ class OOP_Editor
             ]
         ];
 
+        if ($opened_from_admin_panel) {
+            $config['editorConfig']['customization']['goback'] = array(
+                    'url' => get_option('siteurl') . '/wp-admin/upload.php'
+            );
+        }
+
         if (OOP_JWT_Manager::is_jwt_enabled()) {
             $secret = $options[OOP_Settings::docserver_jwt];
             $config["token"] = OOP_JWT_Manager::jwt_encode($config, $secret);
