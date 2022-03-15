@@ -49,8 +49,9 @@ class OOP_Editor
 
     function editor($req)
     {
+        $go_back_url = $_SERVER['HTTP_REFERER'];
         $opened_from_admin_panel = str_contains($req->get_headers()['referer'][0], 'wp-admin');
-        $response = new WP_REST_Response($this->editor_render($req->get_params(), $opened_from_admin_panel));
+        $response = new WP_REST_Response($this->editor_render($req->get_params(), $opened_from_admin_panel, $go_back_url));
         $response->header('Content-Type', 'text/html; charset=utf-8');
         return $response;
     }
@@ -63,7 +64,7 @@ class OOP_Editor
         return $has_edit_cap;
     }
 
-    function editor_render($params, $opened_from_admin_panel)
+    function editor_render($params, $opened_from_admin_panel, $go_back_url)
     {
         $options = get_option('onlyoffice_settings');
         $api_js_url = $options[OOP_Settings::docserver_url] .
@@ -128,7 +129,7 @@ class OOP_Editor
 
         if ($opened_from_admin_panel) {
             $config['editorConfig']['customization']['goback'] = array(
-                    'url' => get_option('siteurl') . '/wp-admin/upload.php'
+                    'url' => $go_back_url
             );
         }
 
