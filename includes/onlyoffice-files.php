@@ -18,7 +18,7 @@ class OOP_Files
                 __('Files', 'onlyoffice-plugin'), 'upload_files', 'onlyoffice-files', array($this, 'files_page'));
         }
 
-        if (!empty($_REQUEST['_wp_http_referer'])) {
+        if (!empty($_REQUEST['_wp_http_referer']) && str_contains($_REQUEST['_wp_http_referer'], 'onlyoffice-files')) {
             $redirect_url = remove_query_arg(array('_wp_http_referer', '_wpnonce'), wp_unslash($_SERVER['REQUEST_URI']));
             $redirect_url = str_replace('/wp-admin/admin.php?', $_REQUEST['_wp_http_referer'] . '&', $redirect_url);
             wp_redirect($redirect_url);
