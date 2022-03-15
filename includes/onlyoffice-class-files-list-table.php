@@ -84,7 +84,7 @@ class OOP_Files_List_Table extends WP_List_Table
         $attachments = array();
         foreach (get_posts(array('post_type' => 'attachment')) as $attachment) {
             $filename = substr($attachment->guid, strrpos($attachment->guid, '/') + 1);
-            if ($post_search !== '' && !str_contains($filename, $post_search )) continue;
+            if ($post_search !== '' && !str_contains(strtolower($filename), strtolower($post_search))) continue;
             if (OOP_Document_Helper::is_editable($filename) || OOP_Document_Helper::is_openable($filename)) {
                 array_push($attachments, array(
                         'id' => $attachment->ID,

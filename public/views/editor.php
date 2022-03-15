@@ -99,7 +99,7 @@ class OOP_Editor
             : get_option('siteurl') . '/wp-json/onlyoffice/getfile/' . $hidden_data;
 
         $config = [
-            "type" => 'desktop',
+            "type" => $opened_from_admin_panel ? 'desktop' : 'embedded',
             "documentType" => OOP_Document_Helper::get_document_type($filename),
             "document" => [
                 "title" => $filename,
@@ -116,18 +116,12 @@ class OOP_Editor
                 ]
             ],
             "editorConfig" => [
-                "mode" => $can_edit ? 'edit' : 'view',
+                "mode" => $can_edit && $opened_from_admin_panel ? 'edit' : 'view',
                 "lang" => 'en',
                 "callbackUrl" =>  $callback_url,
                 "user" => [
                     "id" => (string)$user->ID,
                     "name" => $user->display_name
-                ],
-                "customization" => [
-                        "hideRightMenu" => $opened_from_admin_panel ? false : true,
-                        "hideRulers" => $opened_from_admin_panel ? false : true,
-                        "compactToolbar" => $opened_from_admin_panel ? false : true,
-                        "statusBar" => $opened_from_admin_panel
                 ]
             ]
         ];
