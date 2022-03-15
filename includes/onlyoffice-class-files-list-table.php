@@ -7,16 +7,18 @@ if (!class_exists('WP_List_Table')) {
 class OOP_Files_List_Table extends WP_List_Table
 {
 
-    function __construct()
-    {
-
+    function __construct($args = array()){
         parent::__construct(array(
             'singular' => 'onlyoffice_file',
             'plural' => 'onlyoffice_files',
-            'ajax' => false
+            'screen' => isset( $args['screen'] ) ? $args['screen'] : null,
         ));
 
         add_action('admin_head', array(&$this, 'admin_header'));
+    }
+
+    public function ajax_user_can() {
+        return current_user_can( 'upload_files' );
     }
 
     function admin_header()
@@ -78,13 +80,15 @@ class OOP_Files_List_Table extends WP_List_Table
 
     function prepare_items()
     {
+        $post_search = isset($_REQUEST['s']) ? wp_unslash(trim($_REQUEST['s'])) : '';
         $attachments = array();
         foreach (get_posts(array('post_type' => 'attachment')) as $attachment) {
             $filename = substr($attachment->guid, strrpos($attachment->guid, '/') + 1);
+            if ($post_search !== '' && !str_contains($filename, $post_search )) continue;
             if (OOP_Document_Helper::is_editable($filename) || OOP_Document_Helper::is_openable($filename)) {
                 array_push($attachments, array(
                         'id' => $attachment->ID,
-                        'title' => $filename,
+                        'title' => pathinfo($filename, PATHINFO_FILENAME),
                         'post_date' => $attachment->post_date,
                         'format' => strtoupper(pathinfo($filename, PATHINFO_EXTENSION))
                 ));
@@ -97,7 +101,7 @@ class OOP_Files_List_Table extends WP_List_Table
         $this->_column_headers = array($columns, $hidden, $sortable);
         usort($attachments, array(&$this, 'usort_reorder'));
 
-        $per_page = 15;
+        $per_page = 20;
         $current_page = $this->get_pagenum();
 
         $found_data = array_slice($attachments, (($current_page - 1) * $per_page), $per_page);
@@ -120,7 +124,7 @@ class OOP_Files_List_Table extends WP_List_Table
         $link_start = '';
         $link_end = '';
 
-        if (current_user_can('edit_post', $file['id'])) {
+        if (current_user_can('upload_files')) {
             $permalink_structure = get_option('permalink_structure');
             $hidden_id = str_replace('.', ',', OOP_JWT_Manager::jwt_encode(["attachment_id" => $file['id']],
                 get_option("onlyoffice-plugin-uuid")));

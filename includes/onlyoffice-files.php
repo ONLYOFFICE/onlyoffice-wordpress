@@ -18,6 +18,13 @@ class OOP_Files
                 __('Files', 'onlyoffice-plugin'), 'upload_files', 'onlyoffice-files', array($this, 'files_page'));
         }
 
+        if (!empty($_REQUEST['_wp_http_referer'])) {
+            $redirect_url = remove_query_arg(array('_wp_http_referer', '_wpnonce'), wp_unslash($_SERVER['REQUEST_URI']));
+            $redirect_url = str_replace('/wp-admin/admin.php?', $_REQUEST['_wp_http_referer'] . '&', $redirect_url);
+            wp_redirect($redirect_url);
+            exit;
+        }
+
         add_action("load-$hook", [$this, 'add_files_page']);
     }
 
@@ -30,17 +37,18 @@ class OOP_Files
     public function files_page()
     {
         global $OOP_Files_List_Table;
+        $OOP_Files_List_Table->prepare_items();
 
         ?>
         <div class="wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
             <p><?php _e('Files that can be edited and opened in ONLYOFFICE will be displayed here', 'onlyoffice-plugin'); ?></p>
-                <form method="get">
-                    <?php
-                    $OOP_Files_List_Table->prepare_items();
-                    $OOP_Files_List_Table->display();
-                    ?>
-                </form>
+            <form method="get">
+                <?php $OOP_Files_List_Table->search_box(__('Search'), 'onlyoffice_file'); ?>
+                <?php
+                $OOP_Files_List_Table->display();
+                ?>
+            </form>
         </div>
         <?php
     }
