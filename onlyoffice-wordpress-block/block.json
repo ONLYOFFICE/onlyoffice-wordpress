@@ -1,0 +1,9 @@
+{
+	"apiVersion": 2,
+	"name": "onlyoffice-wordpress/onlyoffice-wordpress-block",
+	"title": "ONLYOFFICE",
+	"category": "media",
+	"editorScript": "file:./build/index.js",
+	"description": "Add ONLYOFFICE editor on page",
+	"keywords": ["onlyoffice"]
+}

@@ -1,0 +1,24 @@
+{
+	"name": "onlyoffice-wordpress",
+	"version": "1.0.0",
+	"private": true,
+	"description": "ONLYOFFICE desc.",
+	"author": "",
+	"license": "",
+	"homepage": "",
+	"repository": "",
+	"main": "build/index.js",
+	"devDependencies": {
+		"@wordpress/block-editor": "file:../block-editor",
+		"@wordpress/blocks": "file:../blocks",
+		"@wordpress/i18n": "file:../i18n",
+		"@wordpress/scripts": "file:../scripts"
+	},
+	"scripts": {
+		"build": "wp-scripts build",
+		"format:js": "wp-scripts format-js",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"start": "wp-scripts start"
+	}
+}
