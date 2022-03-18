@@ -23,6 +23,22 @@ class OOP_Editor
         7 => 'CorruptedForceSave'
     );
 
+    function get_onlyoffice_editor_url($req) {
+        $permalink_structure = get_option('permalink_structure');
+        $response = new WP_REST_Response();
+        $attachment_id = $req->get_params()['id'];
+        $hidden_id = str_replace('.', ',', OOP_JWT_Manager::jwt_encode(["attachment_id" => $attachment_id],
+            get_option("onlyoffice-plugin-uuid")));
+
+        $wp_nonce = wp_create_nonce('wp_rest');
+        $editor_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editor/' . $hidden_id . '&_wpnonce=' . $wp_nonce
+            : get_option('siteurl') . '/wp-json/onlyoffice/editor/' . $hidden_id . '?_wpnonce=' . $wp_nonce;
+        $response->set_data(array(
+                'url' => $editor_url
+        ));
+        return $response;
+    }
+
     function check_api_js($url) {
         $ch = curl_init($url);
         curl_exec($ch);
