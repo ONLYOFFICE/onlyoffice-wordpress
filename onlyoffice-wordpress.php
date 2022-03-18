@@ -40,6 +40,12 @@ function run_plugin_name() {
 run_plugin_name();
 
 function onlyoffice_custom_block() {
-    register_block_type( __DIR__ . '/onlyoffice-wordpress-block');
+    register_block_type( __DIR__ . '/onlyoffice-wordpress-block', array(
+        'description' => __('Add ONLYOFFICE editor on page', 'onlyoffice-plugin')
+    ));
+
+    if (function_exists('wp_set_script_translations')) {
+        wp_set_script_translations('onlyoffice-plugin', 'onlyoffice-plugin');
+    }
 }
 add_action( 'init', 'onlyoffice_custom_block' );

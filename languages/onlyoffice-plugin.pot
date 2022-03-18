@@ -49,3 +49,6 @@ msgstr ""
 
 msgid "No files found for editing or viewing in ONLYOFFICE."
 msgstr ""
+
+msgid "Add ONLYOFFICE editor on page"
+msgstr ""

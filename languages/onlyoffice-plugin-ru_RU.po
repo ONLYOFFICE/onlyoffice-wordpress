@@ -59,3 +59,6 @@ msgstr "Здесь будут отражены файлы, которые мож
 
 msgid "No files found for editing or viewing in ONLYOFFICE."
 msgstr "Не найдены файлы для редактирования или просмотра в ONLYOFFICE."
+
+msgid "Add ONLYOFFICE editor on page"
+msgstr "Добавить редактор ONLYOFFICE на страницу"

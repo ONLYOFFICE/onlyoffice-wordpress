@@ -4,7 +4,7 @@ import json from '../block.json';
 import edit from './edit';
 import save from './save';
 
-const onlyofficeIcon = (
+export const onlyofficeIcon = (
 	<svg
 		width="66"
 		height="60"
