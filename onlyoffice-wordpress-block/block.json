@@ -11,6 +11,18 @@
 		"selectedAttachment": {
 			"type": "object",
 			"default": null
+		},
+		"getEditorUrl": {
+			"type": "string",
+			"default": null
+		},
+		"nonce": {
+			"type": "string",
+			"default": null
+		},
+		"url": {
+			"type": "string",
+			"default": null
 		}
 	}
 }
