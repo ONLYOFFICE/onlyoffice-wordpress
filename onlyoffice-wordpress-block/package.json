@@ -5,14 +5,19 @@
 	"description": "ONLYOFFICE desc.",
 	"author": "",
 	"license": "",
+	"keywords": [
+		"WordPress",
+		"block"
+	],
 	"homepage": "",
 	"repository": "",
 	"main": "build/index.js",
 	"devDependencies": {
-		"@wordpress/block-editor": "file:../block-editor",
-		"@wordpress/blocks": "file:../blocks",
-		"@wordpress/i18n": "file:../i18n",
-		"@wordpress/scripts": "file:../scripts"
+		"@wordpress/block-editor": "^7.0.2",
+		"@wordpress/blocks": "^11.1.0",
+		"@wordpress/i18n": "^4.2.2",
+		"@wordpress/scripts": "^18.0.1",
+		"mime": "^3.0.0"
 	},
 	"scripts": {
 		"build": "wp-scripts build",
