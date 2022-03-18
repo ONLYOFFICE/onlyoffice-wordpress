@@ -4,7 +4,7 @@
 	"private": true,
 	"description": "ONLYOFFICE desc.",
 	"author": "",
-	"license": "",
+	"license": "Apache 2.0",
 	"keywords": [
 		"WordPress",
 		"block"
