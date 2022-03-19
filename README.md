@@ -30,34 +30,24 @@ Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffi
 
 #### Minimum version of WordPress for ONLYOFFICE integration plugin is 5.9.0.
 
-1. Download WordPress ONLYOFFICE integration plugin.
-   You can either clone the master branch or download the latest zipped version. Before installing, make sure that the WordPress instance is stopped.
-    ```
+1. Download the zipped plugin.
+2. Navigate to the **Plugins > Add new** screen in your WordPress administrative dashboard.
+3. Click **Add New** at the top of the page.
+4. Click **Upload Plugin** at the top of the page.
+5. Click **Choose File**, then select the downloaded plugin zip file.
+6. After the plugin finishes installing, click **Activate**.
+
+7. Or you can clone the master branch:
+   ```
+    cd wp-content/plugins
     git clone https://github.com/ONLYOFFICE/onlyoffice-wordpress
     ```
-   
-2. Put ONLYOFFICE integration plugin into WordPress plugins folder.
 
-3. Go to the directory:
-    ```
-    cd onlyoffice-wordpress/onlyoffice-wordpress-block
-    ```
-
-4. Install dependencies:
-    ```
-    npm install
-    ```
-
-5. Build:
-   ```
-   npm run build
-   ```
-
-5. Activate plugin from admin panel.
+8. Activate plugin from WordPress administrative dashboard.
 
 ## Configuring WordPress ONLYOFFICE integration plugin
 
-Configure the plugin via the WordPress interface. Go to **Admin panel -> ONLYOFFICE -> Settings** and specify the following parameters:
+Configure the plugin via the WordPress interface. Go to **WordPress administrative dashboard -> ONLYOFFICE -> Settings** and specify the following parameters:
 
 - **Document Editing Service address**:
   The URL and port of the installed ONLYOFFICE Document Server.
