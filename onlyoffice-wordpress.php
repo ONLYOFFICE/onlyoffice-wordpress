@@ -35,12 +35,12 @@
 define( 'ONLYOFFICE_PLUGIN_VERSION', '1.0.0' );
 
 function activate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/onlyoffice-activator.php';
-	OOP_Activator::activate();
+    require_once plugin_dir_path( __FILE__ ) . 'includes/onlyoffice-activator.php';
+    OOP_Activator::activate();
 }
 function deactivate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/onlyoffice-deactivator.php';
-	OOP_Deactivator::deactivate();
+    require_once plugin_dir_path( __FILE__ ) . 'includes/onlyoffice-deactivator.php';
+    OOP_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_plugin_name' );
@@ -50,8 +50,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/onlyoffice-plugin.php';
 
 function run_plugin_name() {
 
-	$plugin = new OOPlugin();
-	$plugin->run();
+    $plugin = new OOPlugin();
+    $plugin->run();
 
 }
 run_plugin_name();
