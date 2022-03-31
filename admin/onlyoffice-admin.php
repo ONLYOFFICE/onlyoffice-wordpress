@@ -31,10 +31,7 @@ class OOP_Admin
     }
 
     public function enqueue_styles()
-    {
-
-        //wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/onlyoffice-admin.css', array(), $this->version, 'all');
-    }
+    {}
 
     public function enqueue_scripts()
     {
