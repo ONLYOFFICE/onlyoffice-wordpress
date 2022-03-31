@@ -19,3 +19,7 @@ License File:   wordpress-scripts.license
 Mime            - A comprehensive, compact MIME type module. (https://github.com/broofa/mime)
 License:        MIT
 License File:   mime.license
+
+PHP-JWT       - A simple library to encode and decode JSON Web Tokens (JWT) in PHP. (https://github.com/firebase/php-jwt)
+License:        BSD-3-Clause License
+License File:   jwt.license

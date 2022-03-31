@@ -51,6 +51,10 @@ class OOPlugin
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-jwt-manager.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-files.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-class-files-list-table.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . '3rdparty/JWT.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . '3rdparty/BeforeValidException.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . '3rdparty/ExpiredException.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . '3rdparty/SignatureInvalidException.php';
 
         $this->loader = new OOP_Loader();
     }

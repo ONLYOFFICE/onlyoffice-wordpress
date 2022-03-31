@@ -50,7 +50,7 @@ class OOP_Callback_Helper
                 return $result;
             }
 
-            $data = json_decode($token, true);
+            $data = json_decode(json_encode($token), true);
             if ($in_header) $data = $data["payload"];
         }
 

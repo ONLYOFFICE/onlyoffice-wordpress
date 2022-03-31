@@ -69,8 +69,7 @@ class OOP_Editor
     function check_attachment_id($req)
     {
         $attachemnt_param = $req->get_params()['id'];
-        $attachemnt_id = json_decode(OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $attachemnt_param), get_option("onlyoffice-plugin-uuid"), true), true)['attachment_id'];
-
+        $attachemnt_id = OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $attachemnt_param), get_option("onlyoffice-plugin-uuid"), true)->attachment_id;
         $post = get_post($attachemnt_id);
 
         if ($post->post_type != 'attachment') {
@@ -107,8 +106,7 @@ class OOP_Editor
         ob_clean();
         if (!$api_js_status) wp_die(__('ONLYOFFICE cannot be reached. Please contact admin', 'onlyoffice-plugin'));
 
-        $attachemnt_id = json_decode(OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $params['id']), get_option("onlyoffice-plugin-uuid"), true), true)['attachment_id'];
-
+        $attachemnt_id = OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $params['id']), get_option("onlyoffice-plugin-uuid"), true)->attachment_id;
         $post = get_post($attachemnt_id);
 
         $author = get_user_by('id', $post->post_author)->display_name;
@@ -248,10 +246,10 @@ class OOP_Editor
     }
 
     function get_file($req) {
-        $decoded = json_decode(OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $req->get_params()['id']), get_option("onlyoffice-plugin-uuid"), true), true);
+        $decoded = OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $req->get_params()['id']), get_option("onlyoffice-plugin-uuid"), true);
 
-        $attachment_id = $decoded['attachment_id'];
-        $user_id = $decoded['user_id'];
+        $attachment_id = $decoded->attachment_id;
+        $user_id = $decoded->user_id;
 
         $user = get_user_by( 'id', $user_id );
         if ($user_id !== null && $user) {
@@ -305,7 +303,7 @@ class OOP_Editor
             'error' => 0
         );
 
-        $attachemnt_id = json_decode(OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $req->get_params()['id']), get_option("onlyoffice-plugin-uuid"), true), true)['attachment_id'];
+        $attachemnt_id = OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $req->get_params()['id']), get_option("onlyoffice-plugin-uuid"), true);
 
         $body = OOP_Callback_Helper::read_body($req->get_body());
         if (!empty($body["error"])){
