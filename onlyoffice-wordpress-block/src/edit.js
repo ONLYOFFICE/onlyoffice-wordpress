@@ -20,60 +20,10 @@ import {onlyofficeIcon} from "./index";
 import {blockStyle} from "./index";
 const mime = require('mime');
 
-const OO_WORD_FORMATS = [
-    '.doc',
-    '.docx',
-    '.docm',
-    '.dot',
-    '.dotx',
-    '.dotm',
-    '.odt',
-    '.fodt',
-    '.ott',
-    '.rtf',
-    '.txt',
-    '.html',
-    '.htm',
-    '.mht',
-    '.xml',
-    '.pdf',
-    '.djvu',
-    '.fb2',
-    '.epub',
-    '.xps',
-    '.oxps',
-];
-const OO_CELL_FORMATS = [
-    '.xls',
-    '.xlsx',
-    '.xlsm',
-    '.xlt',
-    '.xltx',
-    '.xltm',
-    '.ods',
-    '.fods',
-    '.ots',
-    '.csv',
-];
-const OO_SLIDE_FORMATS = [
-    '.pps',
-    '.ppsx',
-    '.ppsm',
-    '.ppt',
-    '.pptx',
-    '.pptm',
-    '.pot',
-    '.potx',
-    '.potm',
-    '.odp',
-    '.fodp',
-    '.otp',
-];
-
 const Edit = ({attributes, setAttributes}) => {
     const [url, setUrl] = useState(attributes.url);
 
-    const onlyofficeAllowedExts = OO_SLIDE_FORMATS.concat(OO_CELL_FORMATS).concat(OO_WORD_FORMATS);
+    const onlyofficeAllowedExts = attributes.formats || oo_media.formats;
     let onlyofficeAllowedMimes = [];
 
     for (let ext of onlyofficeAllowedExts) {
@@ -81,8 +31,7 @@ const Edit = ({attributes, setAttributes}) => {
     }
 
     if (!url && attributes.selectedAttachment) {
-        const editorUrl = attributes.getEditorUrl + attributes.selectedAttachment.id + (attributes.getEditorUrl.indexOf('wp-json') === -1 ? '&_wpnonce=' : '?_wpnonce=')
-            + attributes.nonce;
+        const editorUrl = attributes.getEditorUrl + attributes.selectedAttachment.id;
 
         fetch(editorUrl).then((r) => r.json()).then((data) => {
             setUrl(data.url);
@@ -105,7 +54,7 @@ const Edit = ({attributes, setAttributes}) => {
                 labels={{title: 'ONLYOFFICE'}}
                 allowedTypes={onlyofficeAllowedMimes}
                 onSelect={(el) => {
-                    setAttributes({selectedAttachment: el, nonce: oo_media.nonce, getEditorUrl: oo_media.getEditorUrl});
+                    setAttributes({selectedAttachment: el, getEditorUrl: oo_media.getEditorUrl, formats: oo_media.formats});
                 }}
             />
     );

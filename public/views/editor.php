@@ -47,9 +47,8 @@ class OOP_Editor
         $hidden_id = str_replace('.', ',', OOP_JWT_Manager::jwt_encode(["attachment_id" => $attachment_id],
             get_option("onlyoffice-plugin-uuid")));
 
-        $wp_nonce = wp_create_nonce('wp_rest');
-        $editor_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editor/' . $hidden_id . '&_wpnonce=' . $wp_nonce
-            : get_option('siteurl') . '/wp-json/onlyoffice/editor/' . $hidden_id . '?_wpnonce=' . $wp_nonce;
+        $editor_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editor/' . $hidden_id
+            : get_option('siteurl') . '/wp-json/onlyoffice/editor/' . $hidden_id;
         $response->set_data(array(
                 'url' => $editor_url
         ));

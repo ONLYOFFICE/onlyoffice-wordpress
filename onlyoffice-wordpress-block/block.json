@@ -16,12 +16,12 @@
 			"type": "string",
 			"default": null
 		},
-		"nonce": {
+		"url": {
 			"type": "string",
 			"default": null
 		},
-		"url": {
-			"type": "string",
+		"formats": {
+			"type": "array",
 			"default": null
 		}
 	}

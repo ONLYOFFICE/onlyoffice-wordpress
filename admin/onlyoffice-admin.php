@@ -38,11 +38,10 @@ class OOP_Admin
         wp_enqueue_script($this->plugin_name . '-media-script', plugin_dir_url(__FILE__) . 'js/onlyoffice-admin-media.js', array('jquery'),
             $this->version, true);
 
-        $wp_nonce = wp_create_nonce('wp_rest');
         wp_localize_script($this->plugin_name . '-media-script', 'oo_media', array(
-            'nonce' => $wp_nonce,
             'getEditorUrl' => get_option('permalink_structure') === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editorurl/'
-                : get_option('siteurl') . '/wp-json/onlyoffice/editorurl/'
+                : get_option('siteurl') . '/wp-json/onlyoffice/editorurl/',
+            'formats' => OOP_Document_Helper::all_formats()
         ));
     }
 }

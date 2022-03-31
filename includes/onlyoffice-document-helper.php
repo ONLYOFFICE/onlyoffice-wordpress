@@ -62,4 +62,8 @@ class OOP_Document_Helper
         $ext = strtolower('.' . pathinfo($filename, PATHINFO_EXTENSION));
         return in_array($ext, array_merge(self::EXTS_WORD, self::EXTS_SLIDE, self::EXTS_CELL));
     }
+
+    public static function all_formats() {
+        return array_merge(self::EXTS_WORD, self::EXTS_SLIDE, self::EXTS_CELL);
+    }
 }
