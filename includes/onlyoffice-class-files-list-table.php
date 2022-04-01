@@ -101,7 +101,7 @@ class OOP_Files_List_Table extends WP_List_Table
     {
         $post_search = isset($_REQUEST['s']) ? wp_unslash(trim($_REQUEST['s'])) : '';
         $attachments = array();
-        foreach (get_posts(array('post_type' => 'attachment')) as $attachment) {
+        foreach (get_posts(array('post_type' => 'attachment', 'posts_per_page' => -1)) as $attachment) {
             $filename = substr($attachment->guid, strrpos($attachment->guid, '/') + 1);
             if ($post_search !== '' && !str_contains(strtolower($filename), strtolower($post_search))) continue;
             if (OOP_Document_Helper::is_editable($filename) || OOP_Document_Helper::is_openable($filename)) {
