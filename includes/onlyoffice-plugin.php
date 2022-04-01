@@ -91,14 +91,12 @@ class OOPlugin
 
     private function init_plugin()
     {
-
-        $plugin_settings = new OOP_Settings();
-
-        $this->loader->add_action('admin_menu', $plugin_settings, 'init_menu');
-        $this->loader->add_action('admin_init', $plugin_settings, 'init');
-
         $plugin_files = new OOP_Files();
         $this->loader->add_action('admin_menu', $plugin_files, 'init_menu');
+
+        $plugin_settings = new OOP_Settings();
+        $this->loader->add_action('admin_menu', $plugin_settings, 'init_menu');
+        $this->loader->add_action('admin_init', $plugin_settings, 'init');
     }
 
     public function run()

@@ -26,14 +26,13 @@ class OOP_Files
     {
         $hook = null;
         $logo_svg = file_get_contents(plugin_dir_path(dirname(__FILE__)) . '/public/images/logo.svg');
-        $can_manage_settings = current_user_can('manage_options');
         $can_upload_files = current_user_can('upload_files');
 
-        if (!$can_manage_settings && $can_upload_files) {
-            $hook = add_menu_page(__('ONLYOFFICE', 'onlyoffice-plugin'), 'ONLYOFFICE', 'upload_files', 'onlyoffice-files',
+        if ($can_upload_files) {
+            add_menu_page(__('ONLYOFFICE', 'onlyoffice-plugin'), 'ONLYOFFICE', 'upload_files', 'onlyoffice-files',
                 array($this, 'files_page'), 'data:image/svg+xml;base64,' . base64_encode($logo_svg));
-        } elseif ($can_manage_settings && $can_upload_files) {
-            $hook = add_submenu_page('onlyoffice-settings', 'ONLYOFFICE',
+
+            $hook = add_submenu_page('onlyoffice-files', 'ONLYOFFICE',
                 __('Files', 'onlyoffice-plugin'), 'upload_files', 'onlyoffice-files', array($this, 'files_page'));
         }
 

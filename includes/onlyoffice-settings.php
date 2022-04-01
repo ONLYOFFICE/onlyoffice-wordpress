@@ -27,12 +27,17 @@ class OOP_Settings
     public function init_menu()
     {
         $logo_svg = file_get_contents(plugin_dir_path(dirname(__FILE__)) . '/public/images/logo.svg');
+        $can_manage_settings = current_user_can('manage_options');
+        $can_upload_files = current_user_can('upload_files');
 
-        add_menu_page(__('ONLYOFFICE', 'onlyoffice-plugin'), 'ONLYOFFICE', 'manage_options', 'onlyoffice-settings',
-            array($this, 'options_page'), 'data:image/svg+xml;base64,' . base64_encode($logo_svg));
-
-        add_submenu_page('onlyoffice-settings', 'ONLYOFFICE',
-            __('Settings', 'onlyoffice-plugin'), 'manage_options', 'onlyoffice-settings');
+        if ($can_manage_settings && !$can_upload_files) {
+            add_menu_page(__('ONLYOFFICE', 'onlyoffice-plugin'), 'ONLYOFFICE', 'manage_options', 'onlyoffice-settings',
+                array($this, 'options_page'), 'data:image/svg+xml;base64,' . base64_encode($logo_svg));
+        }
+        if ($can_manage_settings && $can_upload_files) {
+            add_submenu_page('onlyoffice-files', 'ONLYOFFICE',
+                __('Settings', 'onlyoffice-plugin'), 'manage_options', 'onlyoffice-settings', array($this, 'options_page'));
+        }
     }
 
     public function init()
