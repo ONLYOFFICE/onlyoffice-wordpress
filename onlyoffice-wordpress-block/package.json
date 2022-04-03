@@ -2,9 +2,9 @@
 	"name": "onlyoffice-wordpress",
 	"version": "1.0.0",
 	"private": true,
-	"description": "ONLYOFFICE desc.",
-	"author": "",
-	"license": "Apache 2.0",
+	"description": "This app enables users to edit and view office documents from WordPress pages on site and admin panel using ONLYOFFICE Docs packaged as Document Server",
+	"author": "Ascensio System SIA",
+	"license": "GPL-2.0",
 	"keywords": [
 		"WordPress",
 		"block"

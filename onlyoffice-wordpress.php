@@ -28,8 +28,8 @@
  * Requires PHP:      7.2
  * Author:            Ascensio System SIA
  * Author URI:        https://www.onlyoffice.com
- * License:           Apache License 2.0
- * License URI:       https://www.apache.org/licenses/LICENSE-2.0
+ * License:           GNU General Public License v2.0
+ * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Text Domain:       onlyoffice-plugin
  * Domain Path:       /languages
  */

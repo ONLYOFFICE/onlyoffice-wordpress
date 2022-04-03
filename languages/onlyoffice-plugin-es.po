@@ -1,0 +1,64 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+msgid "General Settings"
+msgstr "Ajustes generales"
+
+msgid "Document Editing Service address"
+msgstr "Dirección de servicio de edición de documentos"
+
+msgid "Document server JWT secret key"
+msgstr "Clave secreta JWT del Servidor de documentos"
+
+msgid "Secret key (leave blank to disable)"
+msgstr "Clave secreta (deje en blanco o desactive)"
+
+msgid "Settings Saved"
+msgstr "Los ajustes se han guardado"
+
+msgid "Open in ONLYOFFICE"
+msgstr "Abrir en ONLYOFFICE"
+
+msgid "Edit in ONLYOFFICE"
+msgstr "Editar en ONLYOFFICE"
+
+msgid "Save Settings"
+msgstr "Guardar ajustes"
+
+msgid "Post is not an attachment"
+msgstr "El post no es un archivo adjunto"
+
+msgid "Settings"
+msgstr "Ajustes"
+
+msgid "General settings section"
+msgstr "Sección de ajustes generales"
+
+msgid "Files"
+msgstr "Archivos"
+
+msgid "Configure ONLYOFFICE connector settings"
+msgstr "Configurar los ajustes del conector de ONLYOFFICE"
+
+msgid "ONLYOFFICE cannot be reached. Please contact admin"
+msgstr "No se puede establecer contacto con ONLYOFFICE. Por favor, contacte con admin"
+
+msgid "Files that can be edited and opened in ONLYOFFICE will be displayed here"
+msgstr "Los archivos que se pueden editar y abrir en ONLYOFFICE se mostrarán aquí"
+
+msgid "No files found for editing or viewing in ONLYOFFICE."
+msgstr "No se han encontrado archivos para editar o ver en ONLYOFFICE."
+
+msgid "Add ONLYOFFICE editor on page"
+msgstr "Añadir el editor de ONLYOFFICE en la página"
