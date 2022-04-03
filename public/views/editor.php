@@ -131,6 +131,7 @@ class OOP_Editor
         $file_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/getfile/' . $hidden_data
             : get_option('siteurl') . '/wp-json/onlyoffice/getfile/' . $hidden_data;
 
+        $lang = $opened_from_admin_panel ? get_user_locale($user->ID) : get_locale();
         $config = [
             "type" => $opened_from_admin_panel ? 'desktop' : 'embedded',
             "documentType" => OOP_Document_Helper::get_document_type($filename),
@@ -150,18 +151,20 @@ class OOP_Editor
             ],
             "editorConfig" => [
                 "mode" => $can_edit && $opened_from_admin_panel ? 'edit' : 'view',
-                "lang" => 'en',
-                "callbackUrl" =>  $callback_url,
-                "user" => [
-                    "id" => (string)$user->ID,
-                    "name" => $user->display_name
-                ]
+                "lang" => str_contains($lang, '_') ? explode('_', $lang)[0] : $lang,
+                "callbackUrl" =>  $callback_url
             ]
         ];
 
         if ($opened_from_admin_panel) {
             $config['editorConfig']['customization']['goback'] = array(
                     'url' => $go_back_url
+            );
+        }
+        if ($user->ID !== 0) {
+            $config['editorConfig']["user"] =  array(
+                "id" => (string)$user->ID,
+                "name" => $user->display_name
             );
         }
 
@@ -252,18 +255,19 @@ class OOP_Editor
         $attachment_id = $decoded->attachment_id;
         $user_id = $decoded->user_id;
 
-        $user = get_user_by( 'id', $user_id );
-        if ($user_id !== null && $user) {
-            wp_set_current_user( $user_id, $user->user_login );
-            wp_set_auth_cookie( $user_id );
-            do_action( 'wp_login', $user->user_login );
-        } else {
-            wp_die("No user information", '', array('response' => 403));
+        if ($user_id !== 0) {
+            $user = get_user_by('id', $user_id);
+            if ($user_id !== null && $user) {
+                wp_set_current_user($user_id, $user->user_login);
+                wp_set_auth_cookie($user_id);
+                do_action('wp_login', $user->user_login);
+            } else {
+                wp_die("No user information", '', array('response' => 403));
+            }
+
+            $has_read_capability = current_user_can('read');
+            if (!$has_read_capability) wp_die('No read capability', '', array('response' => 403));
         }
-
-        $has_read_capability = current_user_can('read');
-        if (!$has_read_capability) wp_die('No read capability', '', array('response' => 403));
-
         if (OOP_JWT_Manager::is_jwt_enabled()) {
             $jwt_header = "Authorization";
             if (!empty(apache_request_headers()[$jwt_header])) {

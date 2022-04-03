@@ -32,7 +32,7 @@ const Edit = ({attributes, setAttributes}) => {
         onlyofficeAllowedMimes.push(mime.getType(ext));
     }
 
-    if (!url && attributes.selectedAttachment) {
+    if (!url && attributes.selectedAttachment && attributes.selectedAttachment.id) {
         const editorUrl = attributes.getEditorUrl + attributes.selectedAttachment.id;
 
         fetch(editorUrl).then((r) => r.json()).then((data) => {
@@ -43,12 +43,12 @@ const Edit = ({attributes, setAttributes}) => {
 
     const blockProps = useBlockProps( { style: blockStyle } );
     return (
-        attributes.selectedAttachment ?
+        attributes.selectedAttachment && attributes.selectedAttachment.id ?
             <div {...blockProps}>
                 <p style={{display: 'flex'}}>
                     {onlyofficeIcon}
                     <p contentEditable={true}
-                       style={{marginLeft: '25px'}}> {attributes.selectedAttachment.filename}</p>
+                       style={{marginLeft: '25px'}}> {attributes.selectedAttachment.filename || `${attributes.selectedAttachment.title}.${mime.getExtension(attributes.selectedAttachment.mime_type)}`}</p>
                 </p>
             </div>
             :
