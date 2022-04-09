@@ -160,6 +160,12 @@ class OOP_Editor
             $config['editorConfig']['customization']['goback'] = array(
                     'url' => $go_back_url
             );
+            add_action('onlyoffice_wordpress_editor_favicon', function ($doctype) {
+                ?>
+                    <link rel="shortcut icon" href="/wp-content/plugins/onlyoffice-wordpress/public/images/<?php echo $doctype ?>.ico" type="image/vnd.microsoft.icon" />
+                <?php
+            });
+            do_action('onlyoffice_wordpress_editor_favicon', $config['documentType']);
         }
         if ($user->ID !== 0) {
             $config['editorConfig']["user"] =  array(
@@ -178,12 +184,11 @@ class OOP_Editor
         <html <?php language_attributes(); ?> class="no-js">
 
         <head>
-            <title><?php echo 'doctitle' . ' ‹ ' . wp_get_document_title(); ?></title>
+            <title><?php echo $config['document']['title'] . ' - ONLYOFFICE'; ?></title>
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui" />
             <meta name="apple-mobile-web-app-capable" content="yes" />
             <meta name="mobile-web-app-capable" content="yes" />
-            <link rel="icon" href="/wp-content/plugins/onlyoffice-wordpress/public/images/<?php echo $config["documentType"] ?>.ico" type="image/x-icon" />
 
             <style>
                 html {
