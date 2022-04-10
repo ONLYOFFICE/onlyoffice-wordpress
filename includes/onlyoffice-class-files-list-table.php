@@ -139,7 +139,7 @@ class OOP_Files_List_Table extends WP_List_Table
 
     public function column_title($file)
     {
-        $title = $file['title'];
+        $title = _draft_or_post_title($file['id']);
         $link_start = '';
         $link_end = '';
 
