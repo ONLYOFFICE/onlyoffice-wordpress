@@ -45,8 +45,14 @@ function deactivate_plugin_name() {
     OOP_Deactivator::deactivate();
 }
 
+function uninstall_onlyoffice_wordpress_plugin() {
+    delete_option( 'onlyoffice_settings' );
+    delete_option( 'onlyoffice-plugin-uuid' );
+}
+
 register_activation_hook( __FILE__, 'activate_plugin_name' );
 register_deactivation_hook( __FILE__, 'deactivate_plugin_name' );
+register_uninstall_hook(__FILE__, 'uninstall_onlyoffice_wordpress_plugin');
 
 require plugin_dir_path( __FILE__ ) . 'includes/onlyoffice-plugin.php';
 
