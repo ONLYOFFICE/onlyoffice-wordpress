@@ -298,7 +298,7 @@ class OOP_Editor
 
         if ($fd = fopen($filepath, 'rb')) {
             while (!feof($fd)) {
-                print fread($fd, 1024);
+                print fread($fd, 512);
             }
             fclose($fd);
         }
