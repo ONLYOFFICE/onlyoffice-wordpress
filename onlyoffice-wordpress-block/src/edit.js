@@ -47,8 +47,7 @@ const Edit = ({attributes, setAttributes}) => {
             <div {...blockProps}>
                 <p style={{display: 'flex'}}>
                     {onlyofficeIcon}
-                    <p contentEditable={true}
-                       style={{marginLeft: '25px'}}> {attributes.selectedAttachment.filename || `${attributes.selectedAttachment.title}.${mime.getExtension(attributes.selectedAttachment.mime_type)}`}</p>
+                    <p style={{marginLeft: '25px'}}> {attributes.selectedAttachment.filename || `${attributes.selectedAttachment.title}.${mime.getExtension(attributes.selectedAttachment.mime_type)}`}</p>
                 </p>
             </div>
             :
