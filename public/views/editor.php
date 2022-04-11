@@ -59,6 +59,7 @@ class OOP_Editor
 
     function check_api_js($url) {
         $ch = curl_init($url);
+        curl_setopt($ch,CURLOPT_TIMEOUT,5);
         curl_exec($ch);
         if ($http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE) !== 200) {
             return false;
