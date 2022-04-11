@@ -115,15 +115,16 @@ class OOP_Files_List_Table extends WP_List_Table
         $post_search = isset($_REQUEST['s']) ? wp_unslash(trim($_REQUEST['s'])) : '';
         $attachments = array();
         foreach (get_posts(array('post_type' => 'attachment', 'posts_per_page' => -1)) as $attachment) {
-            $filename = substr($attachment->guid, strrpos($attachment->guid, '/') + 1);
+            $attached_file = get_attached_file($attachment->ID);
+            $filename = pathinfo($attached_file, PATHINFO_BASENAME);
             if ($post_search !== '' && !str_contains(strtolower($filename), strtolower($post_search))) continue;
             if (OOP_Document_Helper::is_editable($filename) || OOP_Document_Helper::is_openable($filename)) {
                 array_push($attachments, array(
                         'id' => $attachment->ID,
-                        'title' => pathinfo($filename, PATHINFO_FILENAME),
+                        'title' => pathinfo($attached_file, PATHINFO_FILENAME),
                         'date' => $attachment->post_date,
-                        'format' => strtoupper(pathinfo($filename, PATHINFO_EXTENSION)),
-                        'size' => size_format(filesize(get_attached_file($attachment->ID)))
+                        'format' => strtoupper(pathinfo($attached_file, PATHINFO_EXTENSION)),
+                        'size' => size_format(filesize($attached_file))
                 ));
             }
         }
@@ -153,7 +154,7 @@ class OOP_Files_List_Table extends WP_List_Table
 
     public function column_title($file)
     {
-        $title = _draft_or_post_title($file['id']);
+        $title = $file['title'];
         $link_start = '';
         $link_end = '';
 
