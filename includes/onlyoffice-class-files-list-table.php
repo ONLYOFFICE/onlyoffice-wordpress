@@ -49,6 +49,7 @@ class OOP_Files_List_Table extends WP_List_Table
         echo '.wp-list-table .column-title { width: 40%; }';
         echo '.wp-list-table .column-format { width: 15%; }';
         echo '.wp-list-table .column-date { width: 15%;}';
+        echo '.wp-list-table .column-size { width: 15%;}';
         echo '</style>';
     }
 
@@ -63,6 +64,7 @@ class OOP_Files_List_Table extends WP_List_Table
             case 'title':
             case 'format':
             case 'date':
+            case 'size':
                 return $item[$column_name];
             default:
                 return print_r($item, true);
@@ -71,12 +73,12 @@ class OOP_Files_List_Table extends WP_List_Table
 
     function get_sortable_columns()
     {
-        $sortable_columns = array(
+        return array(
             'title' => array('title', false),
             'format' => array('format', false),
-            'date' => array('date', false)
+            'date' => array('date', false),
+            'size' => array('size', false)
         );
-        return $sortable_columns;
     }
 
     function get_columns()
@@ -84,7 +86,8 @@ class OOP_Files_List_Table extends WP_List_Table
         $columns = array(
             'title' => __('Name'),
             'format' => __('Extension'),
-            'date' => __('Date')
+            'date' => __('Date'),
+            'size' => __('Size')
         );
         return $columns;
     }
@@ -93,7 +96,17 @@ class OOP_Files_List_Table extends WP_List_Table
     {
         $orderby = (!empty($_GET['orderby'])) ? $_GET['orderby'] : 'title';
         $order = (!empty($_GET['order'])) ? $_GET['order'] : 'asc';
-        $result = strcmp($a[$orderby], $b[$orderby]);
+        $first = $a[$orderby];
+        $second = $b[$orderby];
+        if ($orderby === 'title') {
+            $first = strtolower($first);
+            $second = strtolower($second);
+        }
+        if ($orderby === 'size') {
+            $first = wp_convert_hr_to_bytes($first);
+            $second = wp_convert_hr_to_bytes($second);
+        }
+        $result = $orderby === 'size' ? $first <=> $second : strcmp($first, $second);
         return ($order === 'asc') ? $result : -$result;
     }
 
@@ -108,8 +121,9 @@ class OOP_Files_List_Table extends WP_List_Table
                 array_push($attachments, array(
                         'id' => $attachment->ID,
                         'title' => pathinfo($filename, PATHINFO_FILENAME),
-                        'post_date' => $attachment->post_date,
-                        'format' => strtoupper(pathinfo($filename, PATHINFO_EXTENSION))
+                        'date' => $attachment->post_date,
+                        'format' => strtoupper(pathinfo($filename, PATHINFO_EXTENSION)),
+                        'size' => size_format(filesize(get_attached_file($attachment->ID)))
                 ));
             }
         }
