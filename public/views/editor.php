@@ -121,7 +121,7 @@ class OOP_Editor
         if (!$api_js_status) wp_die(__('ONLYOFFICE cannot be reached. Please contact admin', 'onlyoffice-plugin'));
 
         $passphrase = get_option("onlyoffice-plugin-uuid");
-        $attachemnt_id = intval($this->decode_openssl_data($params['id'], $passphrase));
+        $attachemnt_id = intval($this->decode_openssl_data(urldecode(str_replace(',', '%', $params['id'])), $passphrase));
         $post = get_post($attachemnt_id);
 
         $author = get_user_by('id', $post->post_author)->display_name;
