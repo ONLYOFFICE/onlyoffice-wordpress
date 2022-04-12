@@ -46,8 +46,8 @@ class OOP_Editor
         $permalink_structure = get_option('permalink_structure');
         $response = new WP_REST_Response();
         $attachment_id = $req->get_params()['id'];
-        $hidden_id = str_replace('.', ',', OOP_JWT_Manager::jwt_encode(["attachment_id" => $attachment_id],
-            get_option("onlyoffice-plugin-uuid")));
+        $passphrase = get_option("onlyoffice-plugin-uuid");
+        $hidden_id = urlencode($this->encode_openssl_data($attachment_id, $passphrase));
 
         $editor_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editor/' . $hidden_id
             : get_option('siteurl') . '/wp-json/onlyoffice/editor/' . $hidden_id;
@@ -68,13 +68,25 @@ class OOP_Editor
         return true;
     }
 
+    function encode_openssl_data($data, $passphrase) {
+        $iv = hex2bin(get_option("onlyoffice-plugin-bytes"));
+        return openssl_encrypt($data, 'aes-256-ctr', $passphrase, $options=0, $iv);
+    }
+
+    function decode_openssl_data($data, $passphrase) {
+        $iv = hex2bin(get_option("onlyoffice-plugin-bytes"));
+        return openssl_decrypt($data, 'aes-256-ctr', $passphrase, $options=0, $iv);
+    }
+
     function check_attachment_id($req)
     {
-        $attachemnt_param = $req->get_params()['id'];
-        $attachemnt_id = OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $attachemnt_param), get_option("onlyoffice-plugin-uuid"), true)->attachment_id;
+        $attachemnt_param = urldecode(str_replace(',', '%', $req->get_params()['id']));
+        $passphrase = get_option("onlyoffice-plugin-uuid");
+        $decoded = $this->decode_openssl_data($attachemnt_param, $passphrase);
+        $attachemnt_id = substr($decoded, 0, 1) !== '{' ? intval($decoded) : json_decode($decoded)->attachment_id;
         $post = get_post($attachemnt_id);
 
-        if ($post->post_type != 'attachment') {
+        if ($post == null || $post->post_type != 'attachment') {
             wp_die(__('Post is not an attachment', 'onlyoffice-plugin'));
         }
 
@@ -108,7 +120,8 @@ class OOP_Editor
         ob_clean();
         if (!$api_js_status) wp_die(__('ONLYOFFICE cannot be reached. Please contact admin', 'onlyoffice-plugin'));
 
-        $attachemnt_id = OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $params['id']), get_option("onlyoffice-plugin-uuid"), true)->attachment_id;
+        $passphrase = get_option("onlyoffice-plugin-uuid");
+        $attachemnt_id = intval($this->decode_openssl_data($params['id'], $passphrase));
         $post = get_post($attachemnt_id);
 
         $author = get_user_by('id', $post->post_author)->display_name;
@@ -123,8 +136,8 @@ class OOP_Editor
         $can_edit = $has_edit_cap && OOP_Document_Helper::is_editable($filename);
 
         $permalink_structure = get_option('permalink_structure');
-        $hidden_id = str_replace('.', ',', OOP_JWT_Manager::jwt_encode(["attachment_id" => $attachemnt_id], get_option("onlyoffice-plugin-uuid")));
-        $hidden_data = str_replace('.', ',', OOP_JWT_Manager::jwt_encode(["attachment_id" => $attachemnt_id, 'user_id' => $user->ID], get_option("onlyoffice-plugin-uuid")));
+        $hidden_id = str_replace('%', ',', urlencode($this->encode_openssl_data($attachemnt_id, $passphrase)));
+        $hidden_data = str_replace('%', ',', urlencode($this->encode_openssl_data(json_encode(["attachment_id" => $attachemnt_id, 'user_id' => $user->ID]), $passphrase)));
 
         $callback_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/callback/' . $hidden_id
             : get_option('siteurl') . '/wp-json/onlyoffice/callback/' . $hidden_id;
@@ -256,7 +269,8 @@ class OOP_Editor
     }
 
     function get_file($req) {
-        $decoded = OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $req->get_params()['id']), get_option("onlyoffice-plugin-uuid"), true);
+        $param = urldecode(str_replace(',', '%', $req->get_params()['id']));
+        $decoded = json_decode($this->decode_openssl_data($param, get_option("onlyoffice-plugin-uuid")));
 
         $attachment_id = $decoded->attachment_id;
         $user_id = $decoded->user_id;
@@ -298,7 +312,7 @@ class OOP_Editor
 
         if ($fd = fopen($filepath, 'rb')) {
             while (!feof($fd)) {
-                print fread($fd, 512);
+                print fread($fd, 1024);
             }
             fclose($fd);
         }
@@ -314,8 +328,8 @@ class OOP_Editor
             'error' => 0
         );
 
-        $attachemnt_id = OOP_JWT_Manager::jwt_decode(str_replace(',', '.', $req->get_params()['id']), get_option("onlyoffice-plugin-uuid"), true);
-
+        $param = urldecode(str_replace(',', '%', $req->get_params()['id']));
+        $attachemnt_id = intval($this->decode_openssl_data($param, get_option("onlyoffice-plugin-uuid")));
         $body = OOP_Callback_Helper::read_body($req->get_body());
         if (!empty($body["error"])){
             $response_json["message"] = $body["error"];

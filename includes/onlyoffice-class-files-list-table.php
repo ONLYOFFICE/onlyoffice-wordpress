@@ -160,8 +160,8 @@ class OOP_Files_List_Table extends WP_List_Table
 
         if (current_user_can('upload_files')) {
             $permalink_structure = get_option('permalink_structure');
-            $hidden_id = str_replace('.', ',', OOP_JWT_Manager::jwt_encode(["attachment_id" => $file['id']],
-                get_option("onlyoffice-plugin-uuid")));
+            $iv = hex2bin(get_option("onlyoffice-plugin-bytes"));
+            $hidden_id = urlencode(openssl_encrypt($file['id'], 'aes-256-ctr', get_option("onlyoffice-plugin-uuid"), $options=0, $iv));
 
             $wp_nonce = wp_create_nonce('wp_rest');
             $editor_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editor/' . $hidden_id . '&_wpnonce=' . $wp_nonce
