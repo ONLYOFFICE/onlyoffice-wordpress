@@ -154,7 +154,8 @@ class OOP_Files_List_Table extends WP_List_Table
 
     public function column_title($file)
     {
-        $title = $file['title'];
+        $attached = get_attached_file($file['id']);
+        $title = wp_basename($attached);
         $link_start = '';
         $link_end = '';
 
@@ -180,7 +181,7 @@ class OOP_Files_List_Table extends WP_List_Table
         <strong>
             <?php
             echo $link_start;
-            echo $title . $link_end;
+            echo esc_html($title) . $link_end;
             ?>
         </strong>
         <?php

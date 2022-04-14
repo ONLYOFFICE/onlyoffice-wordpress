@@ -129,7 +129,7 @@ class OOP_Editor
 
         $filepath = get_attached_file($attachemnt_id);
         $filetype = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
-        $filename = pathinfo($filepath, PATHINFO_FILENAME) . '.' . $filetype;
+        $filename = wp_basename($filepath);
 
         $has_edit_cap = $this->has_edit_capability($attachemnt_id);
 
@@ -153,7 +153,7 @@ class OOP_Editor
                 "title" => $filename,
                 "url" => $file_url,
                 "fileType" => $filetype,
-                "key" => base64_encode($post->post_modified . $filename),
+                "key" => base64_encode($post->post_modified) . $attachemnt_id,
                 "info" => [
                     "owner" => $author,
                     "uploaded" => $post->post_date
