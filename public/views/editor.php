@@ -153,7 +153,7 @@ class OOP_Editor
                 "title" => $filename,
                 "url" => $file_url,
                 "fileType" => $filetype,
-                "key" => base64_encode($post->post_modified),
+                "key" => base64_encode($post->post_modified . $filename),
                 "info" => [
                     "owner" => $author,
                     "uploaded" => $post->post_date
