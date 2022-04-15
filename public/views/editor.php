@@ -48,6 +48,7 @@ class OOP_Editor
         $attachment_id = $req->get_params()['id'];
         $passphrase = get_option("onlyoffice-plugin-uuid");
         $hidden_id = urlencode($this->encode_openssl_data($attachment_id, $passphrase));
+        $hidden_id = str_replace('%', ',', $hidden_id);
 
         $editor_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editor/' . $hidden_id
             : get_option('siteurl') . '/wp-json/onlyoffice/editor/' . $hidden_id;
