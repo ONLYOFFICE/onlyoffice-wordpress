@@ -70,7 +70,7 @@ class OOP_Callback_Helper
 
         $filepath = get_attached_file($attachemnt_id);
         file_put_contents($filepath, $new_data, LOCK_EX);
-        $id = wp_update_post(array('id' => $attachemnt_id, 'file' => 'file'));
+        $id = wp_update_post(array('ID' => $attachemnt_id, 'edit_date' => true));
 
         if ($id === 0) return 1;
 

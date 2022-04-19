@@ -173,6 +173,7 @@ class OOP_Editor
 
         if ($opened_from_admin_panel) {
             $config['editorConfig']['customization']['goback'] = array(
+                    'blank' => false,
                     'url' => $go_back_url
             );
             add_action('onlyoffice_wordpress_editor_favicon', function ($doctype) {

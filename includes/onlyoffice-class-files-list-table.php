@@ -122,7 +122,6 @@ class OOP_Files_List_Table extends WP_List_Table
                 array_push($attachments, array(
                         'id' => $attachment->ID,
                         'title' => pathinfo($attached_file, PATHINFO_FILENAME),
-                        'date' => $attachment->post_date,
                         'format' => strtoupper(pathinfo($attached_file, PATHINFO_EXTENSION)),
                         'size' => size_format(filesize($attached_file))
                 ));
@@ -170,7 +169,7 @@ class OOP_Files_List_Table extends WP_List_Table
                 : get_option('siteurl') . '/wp-json/onlyoffice/editor/' . $hidden_id . '?_wpnonce=' . $wp_nonce;
 
             $link_start = sprintf(
-                '<a href="%s" aria-label="%s">',
+                '<a target="_blank" href="%s" aria-label="%s">',
                 $editor_url,
                 esc_attr(sprintf(__('&#8220;%s&#8221;'), $title))
             );
@@ -190,10 +189,10 @@ class OOP_Files_List_Table extends WP_List_Table
     public function column_date($attachment)
     {
         $file = get_post($attachment['id']);
-        if ('0000-00-00 00:00:00' === $file->post_date) {
+        if ('0000-00-00 00:00:00' === $file->post_modified) {
             $h_time = __('Unpublished');
         } else {
-            $time = get_post_timestamp($file);
+            $time = get_post_timestamp($file, 'modified');
             $time_diff = time() - $time;
 
             if ($time && $time_diff > 0 && $time_diff < DAY_IN_SECONDS) {
