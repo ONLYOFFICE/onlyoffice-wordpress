@@ -22,7 +22,7 @@
 class OOP_Document_Helper
 {
     const DOC_SERV_VIEWD = array(".pdf", ".djvu", ".xps", ".oxps");
-    const DOC_SERV_EDITED = array(".docx", ".xlsx", ".pptx");
+    const DOC_SERV_EDITED = array(".docx", ".xlsx", ".pptx", ".docxf", ".oform");
     const DOC_SERV_CONVERT = array(".docm", ".doc", ".dotx", ".dotm", ".dot", ".odt", ".fodt", ".ott", ".xlsm", ".xls", ".xltx", ".xltm", ".xlt", ".ods", ".fods", ".ots", ".pptm", ".ppt", ".ppsx", ".ppsm", ".pps", ".potx", ".potm", ".pot", ".odp", ".fodp", ".otp", ".rtf", ".mht", ".html", ".htm", ".xml", ".epub", ".fb2");
 
     const EXTS_CELL = array(

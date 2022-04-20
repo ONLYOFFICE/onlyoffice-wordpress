@@ -23,7 +23,7 @@
  * Plugin Name:       ONLYOFFICE Wordpress plugin
  * Plugin URI:        https://github.com/ONLYOFFICE/onlyoffice-wordpress
  * Description:       ONLYOFFICE Description
- * Version:           1.0.0
+ * Version:           2.0.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Ascensio System SIA
@@ -34,7 +34,7 @@
  * Domain Path:       /languages
  */
 
-define( 'ONLYOFFICE_PLUGIN_VERSION', '1.0.0' );
+define( 'ONLYOFFICE_PLUGIN_VERSION', '2.0.0' );
 
 function activate_plugin_name() {
     require_once plugin_dir_path( __FILE__ ) . 'includes/onlyoffice-activator.php';
@@ -64,6 +64,31 @@ function run_plugin_name() {
 
 }
 run_plugin_name();
+function onlyoffice_forms_mime_types($mimes) {
+    $mimes['oform'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.oform';
+    $mimes['docxf'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.docxf';
+    return $mimes;
+}
+
+function onlyoffice_add_allow_upload_extension_exception($data, $file, $filename, $mimes, $real_mime = null) {
+    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+    switch ($ext) {
+        case 'oform': {
+            $data['ext'] = 'oform';
+            $data['type'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.oform';
+            break;
+        }
+        case 'docxf': {
+            $data['ext'] = 'docxf';
+            $data['type'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.docxf';
+            break;
+        }
+    }
+    return $data;
+}
+
+add_filter('upload_mimes', 'onlyoffice_forms_mime_types');
+add_filter( 'wp_check_filetype_and_ext', 'onlyoffice_add_allow_upload_extension_exception', 10, 5);
 
 function onlyoffice_custom_block() {
     register_block_type( __DIR__ . '/onlyoffice-wordpress-block', array(
