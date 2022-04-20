@@ -181,7 +181,8 @@ class OOP_Editor
                     <link rel="shortcut icon" href="/wp-content/plugins/onlyoffice-wordpress/public/images/<?php echo $doctype ?>.ico" type="image/vnd.microsoft.icon" />
                 <?php
             });
-            do_action('onlyoffice_wordpress_editor_favicon', $config['documentType']);
+            $favicon = $config['document']['fileType'] === 'docxf' || $config['document']['fileType'] === 'oform' ? $config['document']['fileType'] : $config['documentType'];
+            do_action('onlyoffice_wordpress_editor_favicon', $favicon);
         }
         if ($user->ID !== 0) {
             $config['editorConfig']["user"] =  array(
