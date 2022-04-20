@@ -1,15 +1,14 @@
 === Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: https://example.com/
-Tags: tag1, tag2
-Requires at least: 4.7
-Tested up to: 5.4
-Stable tag: 4.3
-Requires PHP: 7.0
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Contributors: onlyoffice
+Tags: onlyoffice, integration, collaborative, editor, office, document, spreadsheet, presentation
+?Requires at least: 4.7
+?Tested up to: 5.4
+?Stable tag: 4.3
+?Requires PHP: 7.0
+License: GPLv2
+License URI: https://github.com/ONLYOFFICE/onlyoffice-wordpress/blob/main/LICENSE
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+The plugin which enables the users to edit office documents from WordPress using ONLYOFFICE Document Server.
 
 == Description ==
 
@@ -50,11 +49,13 @@ Answer to foo bar dilemma.
 == Changelog ==
 
 = 1.0 =
-* A change since the previous version.
-* Another change.
-
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
+* added configuration page of plugin
+* added coediting docx, xlsx, pptx by authors
+* added embedded view xls, xlsx, xlsm, xlt, xltx, xltm, ods, fods, ots, csv, pps, ppsx, ppsm, ppt, pptx, pptm, pot, potx, potm, odp, fodp, otp, doc, docx, docm, dot, dotx, dotm, odt, fodt, ott, rtf, txt, html, htm, mht, xml, pdf, djvu, fb2, epub, xps, oxps on public page
+* JWT support
+* detecting mobile browser
+* set favicon on editor page
+* added goBack url for document editor
 
 == Upgrade Notice ==
 
