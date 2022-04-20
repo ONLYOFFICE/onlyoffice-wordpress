@@ -161,7 +161,8 @@ class OOP_Editor
                 ],
                 "permissions" => [
                     "download" => true,
-                    "edit" => $can_edit
+                    "edit" => $can_edit,
+                    "fillForms" => $can_edit && $filetype === 'oform'
                 ]
             ],
             "editorConfig" => [
