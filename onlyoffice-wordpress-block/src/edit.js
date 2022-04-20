@@ -29,7 +29,22 @@ const Edit = ({attributes, setAttributes}) => {
     let onlyofficeAllowedMimes = [];
 
     for (let ext of onlyofficeAllowedExts) {
-        onlyofficeAllowedMimes.push(mime.getType(ext));
+        let mimeType = null;
+        switch (ext) {
+            case '.docxf': {
+                mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.docxf';
+                break;
+            }
+            case '.oform': {
+                mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.oform';
+                break;
+            }
+            default: {
+                mimeType = mime.getType(ext);
+                break;
+            }
+        }
+        onlyofficeAllowedMimes.push(mimeType);
     }
 
     if (!url && attributes.selectedAttachment && attributes.selectedAttachment.id) {

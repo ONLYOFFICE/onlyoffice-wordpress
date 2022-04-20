@@ -43,7 +43,7 @@ class OOP_Document_Helper
         ".dot", ".dotx", ".dotm",
         ".odt", ".fodt", ".ott", ".rtf", ".txt",
         ".html", ".htm", ".mht", ".xml",
-        ".pdf", ".djvu", ".fb2", ".epub", ".xps", ".oxps"
+        ".pdf", ".djvu", ".fb2", ".epub", ".xps", ".oxps", ".docxf", ".oform"
     );
 
     public static function get_document_type($filename) {
