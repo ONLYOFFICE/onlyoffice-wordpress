@@ -126,7 +126,16 @@ class OOP_Editor
         $post = get_post($attachemnt_id);
 
         $author = get_user_by('id', $post->post_author)->display_name;
+        $user_id = apply_filters( 'determine_current_user', false );
         $user = wp_get_current_user();
+        if (!$opened_from_admin_panel && $user_id) {
+            $user = get_user_by('id', $user_id);
+            if ($user) {
+                wp_set_current_user($user_id, $user->user_login);
+                wp_set_auth_cookie($user_id);
+                do_action('wp_login', $user->user_login);
+            }
+        }
 
         $filepath = get_attached_file($attachemnt_id);
         $filetype = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
@@ -137,11 +146,11 @@ class OOP_Editor
         $can_edit = $has_edit_cap && OOP_Document_Helper::is_editable($filename);
 
         $permalink_structure = get_option('permalink_structure');
-        $hidden_id = str_replace('%', ',', urlencode($this->encode_openssl_data($attachemnt_id, $passphrase)));
+        $hidden_id = str_replace('%', ',', urlencode($this->encode_openssl_data(json_encode(["attachment_id" => $attachemnt_id, 'opened_on_public' => false]), $passphrase)));
         $hidden_data = str_replace('%', ',', urlencode($this->encode_openssl_data(json_encode(["attachment_id" => $attachemnt_id, 'user_id' => $user->ID]), $passphrase)));
 
-        $callback_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/callback/' . $hidden_id
-            : get_option('siteurl') . '/wp-json/onlyoffice/callback/' . $hidden_id;
+        $callback_url_base = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/callback/'
+            : get_option('siteurl') . '/wp-json/onlyoffice/callback/';
 
         $file_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/getfile/' . $hidden_data
             : get_option('siteurl') . '/wp-json/onlyoffice/getfile/' . $hidden_data;
@@ -166,9 +175,9 @@ class OOP_Editor
                 ]
             ],
             "editorConfig" => [
-                "mode" => $can_edit && $opened_from_admin_panel ? 'edit' : 'view',
+                "mode" => $can_edit ? 'edit' : 'view',
                 "lang" => str_contains($lang, '_') ? explode('_', $lang)[0] : $lang,
-                "callbackUrl" =>  $callback_url
+                "callbackUrl" =>  $callback_url_base . $hidden_id
             ]
         ];
 
@@ -184,7 +193,21 @@ class OOP_Editor
             });
             $favicon = $config['document']['fileType'] === 'docxf' || $config['document']['fileType'] === 'oform' ? $config['document']['fileType'] : $config['documentType'];
             do_action('onlyoffice_wordpress_editor_favicon', $favicon);
+        } else {
+            if ($config['document']['fileType'] === 'oform') {
+                $hidden_data = str_replace('%', ',', urlencode($this->encode_openssl_data(json_encode(["attachment_id" => $attachemnt_id, 'opened_on_public' => true]), $passphrase)));
+                $config['type'] = 'desktop';
+                $config['editorConfig']['callbackUrl'] = $callback_url_base . $hidden_data;
+                $config['editorConfig']['coEditing'] = array(
+                  'mode' => 'strict',
+                  'change' => false
+                );
+                $config['document']['key'] = $config['document']['key'] . wp_generate_uuid4();
+                $config['document']['permissions']['fillForms'] = true;
+                $config['editorConfig']['mode'] = 'edit';
+            }
         }
+
         if ($user->ID !== 0) {
             $config['editorConfig']["user"] =  array(
                 "id" => (string)$user->ID,
@@ -333,62 +356,67 @@ class OOP_Editor
         );
 
         $param = urldecode(str_replace(',', '%', $req->get_params()['id']));
-        $attachemnt_id = intval($this->decode_openssl_data($param, get_option("onlyoffice-plugin-uuid")));
-        $body = OOP_Callback_Helper::read_body($req->get_body());
-        if (!empty($body["error"])){
-            $response_json["message"] = $body["error"];
-            $response->data = $response_json;
-            return $response;
-        }
+        $decoded = json_decode($this->decode_openssl_data($param, get_option("onlyoffice-plugin-uuid")));
+        $attachemnt_id = intval($decoded->attachment_id);
+        $opened_on_public = $decoded->opened_on_public;
 
-        wp_set_current_user($body["actions"][0]["userid"]);
-
-        $status = OOP_Editor::CALLBACK_STATUS[$body["status"]];
-
-        $user_id = null;
-        if (!empty($body['users'])) {
-            $users = $body['users'];
-            if (count($users) > 0) {
-                $user_id = $users[0];
+        if (!$opened_on_public) {
+            $body = OOP_Callback_Helper::read_body($req->get_body());
+            if (!empty($body["error"])) {
+                $response_json["message"] = $body["error"];
+                $response->data = $response_json;
+                return $response;
             }
-        }
 
-        if ($user_id === null && !empty($body['actions'])) {
-            $actions = $body['actions'];
-            if (count($actions) > 0) {
-                $user_id = $actions[0]['userid'];
+            wp_set_current_user($body["actions"][0]["userid"]);
+
+            $status = OOP_Editor::CALLBACK_STATUS[$body["status"]];
+
+            $user_id = null;
+            if (!empty($body['users'])) {
+                $users = $body['users'];
+                if (count($users) > 0) {
+                    $user_id = $users[0];
+                }
             }
-        }
 
-        $user = get_user_by( 'id', $user_id );
-        if ($user_id !== null && $user) {
-            wp_set_current_user( $user_id, $user->user_login );
-            wp_set_auth_cookie( $user_id );
-            do_action( 'wp_login', $user->user_login );
-        } else {
-            wp_die("No user information", '', array('response' => 403));
-        }
+            if ($user_id === null && !empty($body['actions'])) {
+                $actions = $body['actions'];
+                if (count($actions) > 0) {
+                    $user_id = $actions[0]['userid'];
+                }
+            }
 
-        switch ($status) {
-            case "Editing":
-                break;
-            case "MustSave":
-                $can_edit = $this->has_edit_capability($attachemnt_id);
-                if (!$can_edit) wp_die("No edit capability", '', array('response' => 403));
+            $user = get_user_by('id', $user_id);
+            if ($user_id !== null && $user) {
+                wp_set_current_user($user_id, $user->user_login);
+                wp_set_auth_cookie($user_id);
+                do_action('wp_login', $user->user_login);
+            } else {
+                wp_die("No user information", '', array('response' => 403));
+            }
 
-                $locked = wp_check_post_lock($attachemnt_id);
-                if (!$locked) wp_set_post_lock($attachemnt_id);
+            switch ($status) {
+                case "Editing":
+                    break;
+                case "MustSave":
+                    $can_edit = $this->has_edit_capability($attachemnt_id);
+                    if (!$can_edit) wp_die("No edit capability", '', array('response' => 403));
 
-                $response_json['error'] = OOP_Callback_Helper::proccess_save($body, $attachemnt_id);
-                break;
-            case "Corrupted":
-            case "Closed":
-            case "NotFound":
-                delete_post_meta($attachemnt_id, '_edit_lock');
-                break;
-            case "MustForceSave":
-            case "CorruptedForceSave":
-                break;
+                    $locked = wp_check_post_lock($attachemnt_id);
+                    if (!$locked) wp_set_post_lock($attachemnt_id);
+
+                    $response_json['error'] = OOP_Callback_Helper::proccess_save($body, $attachemnt_id);
+                    break;
+                case "Corrupted":
+                case "Closed":
+                case "NotFound":
+                    delete_post_meta($attachemnt_id, '_edit_lock');
+                    break;
+                case "MustForceSave":
+                case "CorruptedForceSave":
+                    break;
+            }
         }
 
         $response->data = $response_json;
