@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: onlyoffice
 Tags: onlyoffice, integration, collaborative, editor, office, document, spreadsheet, presentation
-?Requires at least: 5.7
-?Tested up to: 5.9
-?Stable tag: 1.0.0
-?Requires PHP: 7.4
+Requires at least: 5.7
+Tested up to: 5.9
+Stable tag: 1.0.0
+Requires PHP: 7.4
 License: GPLv2
 License URI: https://github.com/ONLYOFFICE/onlyoffice-wordpress/blob/main/LICENSE
 
