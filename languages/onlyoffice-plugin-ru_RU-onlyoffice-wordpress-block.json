@@ -1,0 +1,31 @@
+{
+  "source": "src\/edit.js",
+  "domain": "onlyoffice-plugin",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "onlyoffice-plugin",
+        "lang": "ru_RU",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "Share settings": [
+        "Настройки прав"
+      ],
+      "Who can edit:": [
+        "Кто может редактировать:"
+      ],
+      "Use common rules:": [
+        "Использовать общие права:"
+      ],
+      "Define more specific rules:": [
+        "Определить более конкретные права:"
+      ],
+      "Add rule": [
+        "Добавить право"
+      ],
+      "Unauthorized and Read only roles will only be able to see the Read only view version of the file.": [
+        "Неавторизованные роли и роли только для чтения смогут видеть версию файла только для чтения."
+      ]
+    }
+  }
+}

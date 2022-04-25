@@ -66,12 +66,22 @@ function run_plugin_name() {
 run_plugin_name();
 
 function onlyoffice_custom_block() {
-    register_block_type( __DIR__ . '/onlyoffice-wordpress-block', array(
-        'description' => __('Add ONLYOFFICE editor on page', 'onlyoffice-plugin')
-    ));
+    wp_register_script(
+        'onlyoffice-wordpress-block',
+        plugin_dir_path( __FILE__ ) . 'onlyoffice-wordpress-block/build/index.js'
+    );
 
     if (function_exists('wp_set_script_translations')) {
-        wp_set_script_translations('onlyoffice-plugin', 'onlyoffice-plugin');
+        wp_set_script_translations(
+            'onlyoffice-wordpress-block',
+            'onlyoffice-plugin',
+            plugin_dir_path( __FILE__ ) . '/languages'
+        );
     }
+
+    register_block_type( __DIR__ . '/onlyoffice-wordpress-block', array(
+        'script' => 'onlyoffice-wordpress-block',
+        'description' => __('Add ONLYOFFICE editor on page', 'onlyoffice-plugin')
+    ));
 }
 add_action( 'init', 'onlyoffice_custom_block' );

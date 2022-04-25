@@ -16,7 +16,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import { MediaPlaceholder, useBlockProps } from '@wordpress/block-editor';
+import {
+    MediaPlaceholder,
+    useBlockProps,
+    InspectorControls
+} from '@wordpress/block-editor';
+import { PanelBody, RadioControl, Button } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import {onlyofficeIcon} from "./index";
 import {blockStyle} from "./index";
@@ -24,6 +30,7 @@ const mime = require('mime');
 
 const Edit = ({attributes, setAttributes}) => {
     const [url, setUrl] = useState(attributes.url);
+    const [ option, setOption ] = useState( 'common' );
 
     const onlyofficeAllowedExts = attributes.formats || oo_media.formats;
     let onlyofficeAllowedMimes = [];
@@ -45,6 +52,19 @@ const Edit = ({attributes, setAttributes}) => {
     return (
         attributes.selectedAttachment && attributes.selectedAttachment.id ?
             <div {...blockProps}>
+                <InspectorControls key="setting">
+                    <PanelBody title={__('Share Settings', 'onlyoffice-plugin')}>
+                        <RadioControl
+                            selected={ option }
+                            options={ [
+                                { label: __('Use common rules:', 'onlyoffice-plugin'), value: 'common' },
+                                { label: __('Define more specific rules:', 'onlyoffice-plugin'), value: 'specific' },
+                            ] }
+                            onChange={ ( value ) => setOption( value ) }
+                        />
+                        <Button variant={'link'} text={__('Add rule', 'onlyoffice-plugin')} disabled={option === 'common'}/>
+                    </PanelBody>
+                </InspectorControls>
                 <p style={{display: 'flex'}}>
                     {onlyofficeIcon}
                     <p style={{marginLeft: '25px'}}> {attributes.selectedAttachment.filename || `${attributes.selectedAttachment.title}.${mime.getExtension(attributes.selectedAttachment.mime_type)}`}</p>
