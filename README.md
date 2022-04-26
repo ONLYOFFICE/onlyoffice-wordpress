@@ -7,7 +7,7 @@ This app enables users to edit and view office documents from [WordPress](https:
 The app allows to:
 
 * Edit text documents, spreadsheets, and presentations.
-* Co-edit documents in real-time: use two co-editing modes (Fast and Strict), Track Changes, comments, and built-in chat.
+* Co-edit documents in real-time using two co-editing modes (Fast and Strict), Track Changes, comments, and built-in chat.
 
 Supported formats:
 
@@ -18,7 +18,7 @@ Supported formats:
 
 You will need an instance of ONLYOFFICE Docs (Document Server) that is resolvable and connectable both from WordPress and any end clients. ONLYOFFICE Document Server must also be able to POST to WordPress directly.
 
-You can install free Community version of ONLYOFFICE Docs or scalable Enterprise Edition with pro features.
+You can install free Community version of ONLYOFFICE Docs or scalable Enterprise Edition.
 
 To install free Community version, use [Docker](https://github.com/onlyoffice/Docker-DocumentServer) (recommended) or follow [these instructions](https://helpcenter.onlyoffice.com/installation/docs-community-install-ubuntu.aspx) for Debian, Ubuntu, or derivatives.
 
@@ -31,40 +31,40 @@ Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffi
 #### Minimum version of WordPress for ONLYOFFICE integration plugin is 5.9.0.
 
 1. Download the zipped plugin.
-2. Navigate to the **Plugins > Add new** screen in your WordPress administrative dashboard.
+2. Navigate to the **Plugins** section in your WordPress administrative dashboard.
 3. Click **Add New** at the top of the page.
 4. Click **Upload Plugin** at the top of the page.
-5. Click **Choose File**, then select the downloaded plugin zip file.
-6. After the plugin finishes installing, click **Activate**.
+5. Click **Choose File** and select the downloaded zipped plugin.
+6. Once the plugin is installed, click **Activate**.
 
-7. Or you can clone the master branch:
-   ```
-    cd wp-content/plugins
-    git clone https://github.com/ONLYOFFICE/onlyoffice-wordpress
-    ```
-
-8. Activate plugin from WordPress administrative dashboard.
+Alternatively, you can clone the master branch (and then activate the plugin from the WordPress administrative dashboard as well):
+ 
+```
+cd wp-content/plugins
+git clone https://github.com/ONLYOFFICE/onlyoffice-wordpress
+```
 
 ## Configuring WordPress ONLYOFFICE integration plugin
 
 Configure the plugin via the WordPress interface. Go to **WordPress administrative dashboard -> ONLYOFFICE -> Settings** and specify the following parameters:
 
 - **Document Editing Service address**:
-  The URL and port of the installed ONLYOFFICE Document Server.
+  The URL of the installed ONLYOFFICE Document Server.
 
-- **Secret key**:
+- **Document server JWT secret key**:
   Enables JWT to protect your documents from unauthorized access (further information can be found [here](https://api.onlyoffice.com/editors/signature/)).
 
-## How it works
+## Using WordPress ONLYOFFICE integration plugin
 
-The ONLYOFFICE integration follows the API documented [here](https://api.onlyoffice.com/editors/basic).
+ONLYOFFICE integration plugin allows WordPress administrators to open files for collaborative editing using ONLYOFFICE Docs (online document editors). In published posts, the editors are visible to all WordPress site visitors (both authorized and unauthorized) in the Embedded mode only.
 
-WordPress ONLYOFFICE integration plugin allows users with access to the Media Library opening files uploaded to Media Library for viewing and co-editing, 
-also you can insert ONLYOFFICE block on pages.
+**Editing files uploaded to WordPress**
 
-#### Saving changes
+All uploaded files from the Media section will appear on the ONLYOFFICE -> Files page. The editor opens in the same tab by clicking on the file name. Users with administrator rights are able to co-edit documents. All the changes are saved in the same file.
 
-All the changes made in the document are saved in the original file.
+**Creating a post**
+
+When creating a post, you can add the ONLYOFFICE element (block) and then upload a new file or select one from the Media Library. The added file will be displayed as the ONLYOFFICE logo with the file name in the currently edited post. After the post is published (when you press the Publish or Update button), your WordPress site visitors will have access to this file for viewing in the Embedded mode.
 
 ## ONLYOFFICE Docs editions
 
@@ -141,3 +141,5 @@ The table below will help you make the right choice.
 | | [Get it now](https://www.onlyoffice.com/download-docs.aspx#docs-community)  | [Start Free Trial](https://www.onlyoffice.com/download-docs.aspx#docs-enterprise)  |
 
 \* If supported by DMS.
+
+In case of technical problems, the best way to get help is to submit your issues [here](https://github.com/ONLYOFFICE/onlyoffice-wordpress/issues). Alternatively, you can contact ONLYOFFICE team on [forum.onlyoffice.com](https://forum.onlyoffice.com/).
