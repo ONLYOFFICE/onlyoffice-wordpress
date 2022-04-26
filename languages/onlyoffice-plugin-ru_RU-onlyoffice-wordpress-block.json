@@ -25,6 +25,18 @@
       ],
       "Unauthorized and Read only roles will only be able to see the Read only view version of the file.": [
         "Неавторизованные роли и роли только для чтения смогут видеть версию файла только для чтения."
+      ],
+      "Comment": [
+        "Комментирование"
+      ],
+      "Review": [
+        "Рецензирование"
+      ],
+      "Full Access": [
+        "Полный доступ"
+      ],
+      "Read Only": [
+        "Только чтение"
       ]
     }
   }
