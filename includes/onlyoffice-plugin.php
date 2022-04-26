@@ -57,6 +57,7 @@ class OOPlugin
         require_once plugin_dir_path(dirname(__FILE__)) . '3rdparty/BeforeValidException.php';
         require_once plugin_dir_path(dirname(__FILE__)) . '3rdparty/ExpiredException.php';
         require_once plugin_dir_path(dirname(__FILE__)) . '3rdparty/SignatureInvalidException.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/onlyoffice-editor-api.php';
 
         $this->loader = new OOP_Loader();
     }

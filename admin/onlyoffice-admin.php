@@ -40,10 +40,25 @@ class OOP_Admin
         wp_enqueue_script($this->plugin_name . '-media-script', plugin_dir_url(__FILE__) . 'js/onlyoffice-admin-media.js', array('jquery'),
             $this->version, true);
 
+        $roles = array();
+        $edit_caps = OOP_Editor::EDIT_CAPS;
+        foreach (get_editable_roles() as $role => $details) {
+            $name = translate_user_role($details['name']);
+            foreach ($edit_caps as $capability) {
+                if ($details['capabilities'][$capability]) {
+                    $roles[$details['name']] = $name;
+                    break;
+                }
+            }
+        }
+
         wp_localize_script($this->plugin_name . '-media-script', 'oo_media', array(
             'getEditorUrl' => get_option('permalink_structure') === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editorurl/'
                 : get_option('siteurl') . '/wp-json/onlyoffice/editorurl/',
-            'formats' => OOP_Document_Helper::all_formats()
+            'formats' => OOP_Document_Helper::all_formats(),
+            'saveShareSettingsUrl' => get_option('permalink_structure') === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/share/'
+                : get_option('siteurl') . '/wp-json/onlyoffice/share/',
+            'roles' => $roles
         ));
     }
 }

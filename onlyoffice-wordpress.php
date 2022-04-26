@@ -49,6 +49,7 @@ function uninstall_onlyoffice_wordpress_plugin() {
     delete_option( 'onlyoffice_settings' );
     delete_option( 'onlyoffice-plugin-uuid' );
     delete_option("onlyoffice-plugin-bytes");
+    delete_option("onlyoffice-plugin-share-settings");
 }
 
 register_activation_hook( __FILE__, 'activate_plugin_name' );
