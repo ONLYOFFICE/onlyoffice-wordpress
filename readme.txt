@@ -1,6 +1,6 @@
-=== Plugin Name ===
+=== ONLYOFFICE ===
 Contributors: onlyoffice
-Tags: onlyoffice, integration, collaborative, editor, office, document, spreadsheet, presentation
+Tags: onlyoffice, integration, collaboration, editor, office, document, spreadsheet, presentation
 Requires at least: 5.7
 Tested up to: 5.9
 Stable tag: 1.0.0
@@ -8,38 +8,33 @@ Requires PHP: 7.4
 License: GPLv2
 License URI: https://github.com/ONLYOFFICE/onlyoffice-wordpress/blob/main/LICENSE
 
-The plugin which enables the users to edit office documents from WordPress using ONLYOFFICE Document Server.
+ONLYOFFICE plugin allows users to edit and view office documents from WordPress using ONLYOFFICE Docs.
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+ONLYOFFICE integration plugin allows WordPress administrators to open documents, spreadsheets, and presentations for collaborative editing using ONLYOFFICE Docs (online document editors). In published posts, the editors are visible to all WordPress site visitors (both authorized and unauthorized) in the Embedded mode only.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+**Editing files uploaded to Wordpress**
 
-A few notes about the sections above:
+All uploaded files from the Media section will appear on the ONLYOFFICE -> Files page. The editor opens in the same tab by clicking on the file name. Users with administrator rights are able to co-edit documents. All the changes are saved in the same file.
 
-* "Contributors" is a comma separated list of wordpress.org usernames
-* "Tags" is a comma separated list of tags that apply to the plugin
-* "Requires at least" is the lowest version that the plugin will work on
-* "Tested up to" is the highest version that you've *successfully used to test the plugin*
-* Stable tag must indicate the Subversion "tag" of the latest stable version
+**Creating a post**
 
-Note that the `readme.txt` value of stable tag is the one that is the defining one for the plugin.  If the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used for displaying information about the plugin.
-
-If you develop in trunk, you can update the trunk `readme.txt` to reflect changes in your in-development version, without having that information incorrectly disclosed about the current stable version that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
-
-If no stable tag is provided, your users may not get the correct version of your code.
+When creating a post, you can add the ONLYOFFICE element (block) and then upload a new file or select one from the Media Library. The added file will be displayed as the ONLYOFFICE logo with the file name in the currently edited post. After the post is published (when you press the Publish or Update button), your WordPress site visitors will have access to this file for viewing in the Embedded mode.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= What should I know before using the plugin? =
 
-An answer to that question.
+You need to have [ONLYOFFICE Document Server](https://github.com/ONLYOFFICE/DocumentServer) installed. You can install free Community version or scalable Enterprise Edition.
 
-= What about foo bar? =
+= How to configure the plugin? =
 
-Answer to foo bar dilemma.
+Go to WordPress administrative dashboard -> ONLYOFFICE -> Settings. Specify the URL of the installed ONLYOFFICE Document Server and the Secret key.
+
+= What collaborative features do the editors provide? =
+
+You can co-author documents using real-time or paragraph-locking co-eding modes, Track Changes, comments, and built-in chat.
 
 == Screenshots ==
 
@@ -60,37 +55,4 @@ Answer to foo bar dilemma.
 == Upgrade Notice ==
 
 = 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
-== A brief Markdown Example ==
-
-Markdown is what the parser uses to process much of the readme file.
-
-[markdown syntax]: https://daringfireball.net/projects/markdown/syntax
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Links require brackets and parenthesis:
-
-Here's a link to [WordPress](https://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax]. Link titles are optional, naturally.
-
-Blockquotes are email style:
-
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-And Backticks for code:
-
-`<?php code(); ?>`
+This is the first version of the plugin.
