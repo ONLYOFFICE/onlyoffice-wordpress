@@ -16,9 +16,17 @@ WordPress/blocks - "Block" is the abstract term used to describe units of markup
 License:        GPL-2.0-or-later
 License File:   wordpress-blocks.license
 
+WordPress/components - This package includes a library of generic WordPress components to be used for creating common UI elements shared between screens and features of the WordPress dashboard. (https://github.com/WordPress/gutenberg)
+License:        GPL-2.0-or-later
+License File:   wordpress-components.license
+
 WordPress/element - Element is, quite simply, an abstraction layer atop React. (https://github.com/WordPress/gutenberg)
 License:        GPL-2.0-or-later
 License File:   wordpress-element.license
+
+WordPress/i18n  - Internationalization utilities for client-side localization. (https://github.com/WordPress/gutenberg)
+License:        GPL-2.0-or-later
+License File:   wordpress-i18n.license
 
 WordPress/scripts  - This is a collection of reusable scripts tailored for WordPress development. (https://github.com/WordPress/gutenberg)
 License:        GPL-2.0-or-later
