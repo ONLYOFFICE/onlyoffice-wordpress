@@ -20,7 +20,7 @@
  */
 
 /**
- * Plugin Name:       ONLYOFFICE Wordpress plugin
+ * Plugin Name:       ONLYOFFICE
  * Plugin URI:        https://github.com/ONLYOFFICE/onlyoffice-wordpress
  * Description:       ONLYOFFICE Description
  * Version:           1.0.0
