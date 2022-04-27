@@ -1,0 +1,29 @@
+{
+	"name": "onlyoffice-wordpress",
+	"version": "1.0.0",
+	"private": true,
+	"description": "This app enables users to edit and view office documents from WordPress pages on site and admin panel using ONLYOFFICE Docs packaged as Document Server",
+	"author": "Ascensio System SIA",
+	"license": "GPL-2.0",
+	"keywords": [
+		"WordPress",
+		"block"
+	],
+	"homepage": "",
+	"repository": "",
+	"main": "build/index.js",
+	"devDependencies": {
+		"@wordpress/block-editor": "^7.0.4",
+		"@wordpress/blocks": "^11.3.1",
+		"@wordpress/scripts": "^18.0.1",
+		"@wordpress/element": "4.0.0",
+		"mime": "^3.0.0"
+	},
+	"scripts": {
+		"build": "wp-scripts build",
+		"format:js": "wp-scripts format-js",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"start": "wp-scripts start"
+	}
+}

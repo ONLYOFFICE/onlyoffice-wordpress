@@ -1,0 +1,54 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "General Settings"
+msgstr ""
+
+msgid "Document Editing Service address"
+msgstr ""
+
+msgid "Document server JWT secret key"
+msgstr ""
+
+msgid "Secret key (leave blank to disable)"
+msgstr ""
+
+msgid "Settings Saved"
+msgstr ""
+
+msgid "Open in ONLYOFFICE"
+msgstr ""
+
+msgid "Edit in ONLYOFFICE"
+msgstr ""
+
+msgid "Save Settings"
+msgstr ""
+
+msgid "Post is not an attachment"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "General settings section"
+msgstr ""
+
+msgid "Files"
+msgstr ""
+
+msgid "Configure ONLYOFFICE connector settings"
+msgstr ""
+
+msgid "ONLYOFFICE cannot be reached. Please contact admin"
+msgstr ""
+
+msgid "Files that can be edited and opened in ONLYOFFYCE will be displayed here"
+msgstr ""
+
+msgid "No files found for editing or viewing in ONLYOFFICE."
+msgstr ""
+
+msgid "Add ONLYOFFICE editor on page"
+msgstr ""

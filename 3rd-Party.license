@@ -1,0 +1,25 @@
+ONLYOFFICE WordPress plugin uses code from the following 3rd party projects.
+
+JWT           - A simple library to encode and decode JSON Web Tokens (JWT) in PHP. (https://github.com/firebase/php-jwt)
+License:        BSD-3-Clause License
+License File:   jwt.license
+
+Mime          - A comprehensive, compact MIME type module. (https://github.com/broofa/mime)
+License:        MIT
+License File:   mime.license
+
+WordPress/block-editor - This module allows you to create and use standalone block editors. (https://github.com/WordPress/gutenberg)
+License:        GPL-2.0-or-later
+License File:   wordpress-block-editor.license
+
+WordPress/blocks - "Block" is the abstract term used to describe units of markup that, composed together, form the content or layout of a webpage. (https://github.com/WordPress/gutenberg)
+License:        GPL-2.0-or-later
+License File:   wordpress-blocks.license
+
+WordPress/element - Element is, quite simply, an abstraction layer atop React. (https://github.com/WordPress/gutenberg)
+License:        GPL-2.0-or-later
+License File:   wordpress-element.license
+
+WordPress/scripts  - This is a collection of reusable scripts tailored for WordPress development. (https://github.com/WordPress/gutenberg)
+License:        GPL-2.0-or-later
+License File:   wordpress-scripts.license
