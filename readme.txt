@@ -38,8 +38,13 @@ You can co-author documents using real-time or paragraph-locking co-eding modes,
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Screenshots are stored in the /assets directory.
-2. This is the second screen shot
+1. ONLYOFFICE plugin configuration settings within the WordPress administrative dashboard.
+2. ONLYOFFICE -> Files page within the WordPress administrative dashboard.
+3. ONLYOFFICE document editor opened from the WordPress admin dashboard.
+4. Adding ONLYOFFICE block when creating a post.
+5. Uploading a new file or selecting one from the Media Library to the ONLYOFFICE block.
+6. Added file displayed as the ONLYOFFICE logo with the file name in the currently edited post.
+7. ONLYOFFICE file available for viewing in the Embedded mode to the WordPress site visitors.
 
 == Changelog ==
 
