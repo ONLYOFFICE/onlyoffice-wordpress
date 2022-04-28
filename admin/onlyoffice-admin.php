@@ -41,7 +41,7 @@ class OOP_Admin
             $this->version, true);
 
         $roles = array();
-        $edit_caps = OOP_Editor::EDIT_CAPS;
+        $edit_caps = OOP_Document_Helper::EDIT_CAPS;
         foreach (get_editable_roles() as $role => $details) {
             $name = translate_user_role($details['name']);
             foreach ($edit_caps as $capability) {

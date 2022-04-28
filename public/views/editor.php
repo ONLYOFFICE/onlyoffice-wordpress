@@ -21,16 +21,6 @@
 
 class OOP_Editor
 {
-    const EDIT_CAPS = array(
-        'edit_others_pages',
-        'edit_others_posts',
-        'edit_pages',
-        'edit_posts',
-        'edit_private_pages',
-        'edit_private_posts',
-        'edit_published_pages',
-        'edit_published_posts',
-    );
 
     const CALLBACK_STATUS = array(
         0 => 'NotFound',
@@ -105,7 +95,7 @@ class OOP_Editor
 
     function has_edit_capability($attachment_id) {
         $has_edit_cap = false;
-        foreach (self::EDIT_CAPS as $capability) {
+        foreach (OOP_Document_Helper::EDIT_CAPS as $capability) {
             $has_edit_cap = $has_edit_cap || current_user_can($capability, $attachment_id);
         }
         return $has_edit_cap;
