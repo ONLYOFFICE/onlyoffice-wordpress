@@ -19,7 +19,7 @@
  *
  */
 
-class OOP_Editor
+class Onlyoffice_Plugin_Editor
 {
     const EDIT_CAPS = array(
         'edit_others_pages',
@@ -114,8 +114,8 @@ class OOP_Editor
     function editor_render($params, $opened_from_admin_panel, $go_back_url)
     {
         $options = get_option('onlyoffice_settings');
-        $api_js_url = $options[OOP_Settings::docserver_url] .
-            (substr($options[OOP_Settings::docserver_url] , -1) === '/' ? '' : '/') . 'web-apps/apps/api/documents/api.js';
+        $api_js_url = $options[Onlyoffice_Plugin_Settings::docserver_url] .
+            (substr($options[Onlyoffice_Plugin_Settings::docserver_url] , -1) === '/' ? '' : '/') . 'web-apps/apps/api/documents/api.js';
         ob_start();
         $api_js_status = $this->check_api_js($api_js_url);
         ob_clean();
@@ -134,7 +134,7 @@ class OOP_Editor
 
         $has_edit_cap = $this->has_edit_capability($attachemnt_id);
 
-        $can_edit = $has_edit_cap && OOP_Document_Helper::is_editable($filename);
+        $can_edit = $has_edit_cap && Onlyoffice_Plugin_Document_Helper::is_editable($filename);
 
         $permalink_structure = get_option('permalink_structure');
         $hidden_id = str_replace('%', ',', urlencode($this->encode_openssl_data($attachemnt_id, $passphrase)));
@@ -149,7 +149,7 @@ class OOP_Editor
         $lang = $opened_from_admin_panel ? get_user_locale($user->ID) : get_locale();
         $config = [
             "type" => $opened_from_admin_panel ? 'desktop' : 'embedded',
-            "documentType" => OOP_Document_Helper::get_document_type($filename),
+            "documentType" => Onlyoffice_Plugin_Document_Helper::get_document_type($filename),
             "document" => [
                 "title" => $filename,
                 "url" => $file_url,
@@ -189,9 +189,9 @@ class OOP_Editor
             );
         }
 
-        if (OOP_JWT_Manager::is_jwt_enabled()) {
-            $secret = $options[OOP_Settings::docserver_jwt];
-            $config["token"] = OOP_JWT_Manager::jwt_encode($config, $secret);
+        if (Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled()) {
+            $secret = $options[Onlyoffice_Plugin_Settings::docserver_jwt];
+            $config["token"] = Onlyoffice_Plugin_JWT_Manager::jwt_encode($config, $secret);
         }
 
 ?>
@@ -289,12 +289,12 @@ class OOP_Editor
             $has_read_capability = current_user_can('read');
             if (!$has_read_capability) wp_die('No read capability', '', array('response' => 403));
         }
-        if (OOP_JWT_Manager::is_jwt_enabled()) {
+        if (Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled()) {
             $jwt_header = "Authorization";
             if (!empty(apache_request_headers()[$jwt_header])) {
                 $options = get_option('onlyoffice_settings');
-                $secret = $options[OOP_Settings::docserver_jwt];
-                $token = OOP_JWT_Manager::jwt_decode(substr(apache_request_headers()[$jwt_header], strlen("Bearer ")), $secret);
+                $secret = $options[Onlyoffice_Plugin_Settings::docserver_jwt];
+                $token = Onlyoffice_Plugin_JWT_Manager::jwt_decode(substr(apache_request_headers()[$jwt_header], strlen("Bearer ")), $secret);
                 if (empty($token)) {
                     wp_die("Invalid JWT signature", '', array('response' => 403));
                 }
@@ -331,7 +331,7 @@ class OOP_Editor
 
         $param = urldecode(str_replace(',', '%', $req->get_params()['id']));
         $attachemnt_id = intval($this->decode_openssl_data($param, get_option("onlyoffice-plugin-uuid")));
-        $body = OOP_Callback_Helper::read_body($req->get_body());
+        $body = Onlyoffice_Plugin_Callback_Helper::read_body($req->get_body());
         if (!empty($body["error"])){
             $response_json["message"] = $body["error"];
             $response->data = $response_json;
@@ -340,7 +340,7 @@ class OOP_Editor
 
         wp_set_current_user($body["actions"][0]["userid"]);
 
-        $status = OOP_Editor::CALLBACK_STATUS[$body["status"]];
+        $status = Onlyoffice_Plugin_Editor::CALLBACK_STATUS[$body["status"]];
 
         $user_id = null;
         if (!empty($body['users'])) {
@@ -376,7 +376,7 @@ class OOP_Editor
                 $locked = wp_check_post_lock($attachemnt_id);
                 if (!$locked) wp_set_post_lock($attachemnt_id);
 
-                $response_json['error'] = OOP_Callback_Helper::proccess_save($body, $attachemnt_id);
+                $response_json['error'] = Onlyoffice_Plugin_Callback_Helper::proccess_save($body, $attachemnt_id);
                 break;
             case "Corrupted":
             case "Closed":

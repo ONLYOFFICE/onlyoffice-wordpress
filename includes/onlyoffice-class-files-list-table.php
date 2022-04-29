@@ -23,7 +23,7 @@ if (!class_exists('WP_List_Table')) {
     require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 }
 
-class OOP_Files_List_Table extends WP_List_Table
+class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table
 {
 
     function __construct($args = array()){
@@ -118,7 +118,7 @@ class OOP_Files_List_Table extends WP_List_Table
             $attached_file = get_attached_file($attachment->ID);
             $filename = pathinfo($attached_file, PATHINFO_BASENAME);
             if ($post_search !== '' && !str_contains(strtolower($filename), strtolower($post_search))) continue;
-            if (OOP_Document_Helper::is_editable($filename) || OOP_Document_Helper::is_openable($filename)) {
+            if (Onlyoffice_Plugin_Document_Helper::is_editable($filename) || Onlyoffice_Plugin_Document_Helper::is_openable($filename)) {
                 array_push($attachments, array(
                         'id' => $attachment->ID,
                         'title' => pathinfo($attached_file, PATHINFO_FILENAME),

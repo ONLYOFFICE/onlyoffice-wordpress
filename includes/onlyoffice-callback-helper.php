@@ -19,7 +19,7 @@
  *
  */
 
-class OOP_Callback_Helper
+class Onlyoffice_Plugin_Callback_Helper
 {
 
     public static function read_body($body) {
@@ -32,16 +32,16 @@ class OOP_Callback_Helper
             return $result;
         }
 
-        if (OOP_JWT_Manager::is_jwt_enabled()) {
+        if (Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled()) {
             $in_header = false;
             $jwt_header = "Authorization";
             $options = get_option('onlyoffice_settings');
-            $secret = $options[OOP_Settings::docserver_jwt];
+            $secret = $options[Onlyoffice_Plugin_Settings::docserver_jwt];
 
             if (!empty($data["token"])) {
-                $token = OOP_JWT_Manager::jwt_decode($data["token"], $secret);
+                $token = Onlyoffice_Plugin_JWT_Manager::jwt_decode($data["token"], $secret);
             } elseif (!empty(apache_request_headers()[$jwt_header])) {
-                $token = OOP_JWT_Manager::jwt_decode(substr(apache_request_headers()[$jwt_header], strlen("Bearer ")), $secret);
+                $token = Onlyoffice_Plugin_JWT_Manager::jwt_decode(substr(apache_request_headers()[$jwt_header], strlen("Bearer ")), $secret);
                 $in_header = true;
             } else {
                 $result["error"] = "Expected JWT";

@@ -19,7 +19,7 @@
  *
  */
 
-class OOP_Files
+class Onlyoffice_Plugin_Files
 {
 
     public function init_menu()
@@ -48,23 +48,23 @@ class OOP_Files
 
     function add_files_page()
     {
-        global $OOP_Files_List_Table;
-        $OOP_Files_List_Table = new OOP_Files_List_Table();
+        global $Onlyoffice_Plugin_Files_List_Table;
+        $Onlyoffice_Plugin_Files_List_Table = new Onlyoffice_Plugin_Files_List_Table();
     }
 
     public function files_page()
     {
-        global $OOP_Files_List_Table;
-        $OOP_Files_List_Table->prepare_items();
+        global $Onlyoffice_Plugin_Files_List_Table;
+        $Onlyoffice_Plugin_Files_List_Table->prepare_items();
 
         ?>
         <div class="wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
             <p><?php _e('Files that can be edited and opened in ONLYOFFICE will be displayed here', 'onlyoffice-plugin'); ?></p>
             <form method="get">
-                <?php $OOP_Files_List_Table->search_box(__('Search'), 'onlyoffice_file'); ?>
+                <?php $Onlyoffice_Plugin_Files_List_Table->search_box(__('Search'), 'onlyoffice_file'); ?>
                 <?php
-                $OOP_Files_List_Table->display();
+                $Onlyoffice_Plugin_Files_List_Table->display();
                 ?>
             </form>
         </div>

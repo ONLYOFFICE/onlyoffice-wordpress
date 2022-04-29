@@ -38,11 +38,11 @@ define( 'ONLYOFFICE_PLUGIN_VERSION', '1.0.0' );
 
 function activate_plugin_name() {
     require_once plugin_dir_path( __FILE__ ) . 'includes/onlyoffice-activator.php';
-    OOP_Activator::activate();
+    Onlyoffice_Plugin_Activator::activate();
 }
 function deactivate_plugin_name() {
     require_once plugin_dir_path( __FILE__ ) . 'includes/onlyoffice-deactivator.php';
-    OOP_Deactivator::deactivate();
+    Onlyoffice_Plugin_Deactivator::deactivate();
 }
 
 function uninstall_onlyoffice_wordpress_plugin() {
@@ -59,7 +59,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/onlyoffice-plugin.php';
 
 function run_plugin_name() {
 
-    $plugin = new OOPlugin();
+    $plugin = new Onlyoffice_Plugin();
     $plugin->run();
 
 }

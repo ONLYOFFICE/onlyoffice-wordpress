@@ -21,12 +21,12 @@
 
 use Firebase\JWT\JWT;
 
-class OOP_JWT_Manager
+class Onlyoffice_Plugin_JWT_Manager
 {
     public static function is_jwt_enabled()
     {
         $options = get_option('onlyoffice_settings');
-        return !empty($options[OOP_Settings::docserver_jwt]);
+        return !empty($options[Onlyoffice_Plugin_Settings::docserver_jwt]);
     }
 
     public static function jwt_encode($payload, $secret)

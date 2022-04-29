@@ -19,7 +19,7 @@
  *
  */
 
-class OOP_Document_Helper
+class Onlyoffice_Plugin_Document_Helper
 {
     const DOC_SERV_VIEWD = array(".pdf", ".djvu", ".xps", ".oxps");
     const DOC_SERV_EDITED = array(".docx", ".xlsx", ".pptx");
@@ -49,15 +49,15 @@ class OOP_Document_Helper
     public static function get_document_type($filename) {
         $ext = strtolower('.' . pathinfo($filename, PATHINFO_EXTENSION));
 
-        if (in_array($ext, OOP_Document_Helper::EXTS_WORD)) return "word";
-        if (in_array($ext, OOP_Document_Helper::EXTS_CELL)) return "cell";
-        if (in_array($ext, OOP_Document_Helper::EXTS_SLIDE)) return "slide";
+        if (in_array($ext, Onlyoffice_Plugin_Document_Helper::EXTS_WORD)) return "word";
+        if (in_array($ext, Onlyoffice_Plugin_Document_Helper::EXTS_CELL)) return "cell";
+        if (in_array($ext, Onlyoffice_Plugin_Document_Helper::EXTS_SLIDE)) return "slide";
         return "word";
     }
 
     public static function is_editable($filename) {
         $ext = strtolower('.' . pathinfo($filename, PATHINFO_EXTENSION));
-        return in_array($ext, OOP_Document_Helper::DOC_SERV_EDITED);
+        return in_array($ext, Onlyoffice_Plugin_Document_Helper::DOC_SERV_EDITED);
     }
 
     public static function is_openable($filename) {
