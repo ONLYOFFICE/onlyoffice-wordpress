@@ -19,7 +19,7 @@
  *
  */
 
-class OOP_i18n
+class Onlyoffice_Plugin_i18n
 {
 
     public function load_plugin_textdomain()

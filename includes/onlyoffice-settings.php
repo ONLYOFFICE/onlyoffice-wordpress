@@ -19,7 +19,7 @@
  *
  */
 
-class OOP_Settings
+class Onlyoffice_Plugin_Settings
 {
     const docserver_url = 'onlyoffice_settings_docserver_url';
     const docserver_jwt = 'onlyoffice_settings_docserver_jwt';
@@ -58,7 +58,7 @@ class OOP_Settings
             'onlyoffice_settings_group',
             'onlyoffice_settings_general_section',
             array(
-                'label_for'         => OOP_Settings::docserver_url,
+                'label_for'         => Onlyoffice_Plugin_Settings::docserver_url,
                 'desc' => ''
             )
         );
@@ -70,7 +70,7 @@ class OOP_Settings
             'onlyoffice_settings_group',
             'onlyoffice_settings_general_section',
             array(
-                'label_for'         => OOP_Settings::docserver_jwt,
+                'label_for'         => Onlyoffice_Plugin_Settings::docserver_jwt,
                 'desc' => 'Secret key (leave blank to disable)'
             )
         );

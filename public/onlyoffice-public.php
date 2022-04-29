@@ -19,7 +19,7 @@
  *
  */
 
-class OOP_Public
+class Onlyoffice_Plugin_Public
 {
 
 
@@ -44,7 +44,7 @@ class OOP_Public
     {
         require_once plugin_dir_path( __FILE__ ) . 'views/editor.php';
 
-        $editor = new OOP_Editor();
+        $editor = new Onlyoffice_Plugin_Editor();
 
         register_rest_route('onlyoffice', '/editor/(?P<id>[^\/\n\r]+)', array(
             'methods' => WP_REST_Server::READABLE,

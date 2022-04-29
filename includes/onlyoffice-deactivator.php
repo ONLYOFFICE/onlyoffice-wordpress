@@ -19,7 +19,7 @@
  *
  */
 
-class OOP_Deactivator {
+class Onlyoffice_Plugin_Deactivator {
 
     public static function deactivate() {
         delete_option("onlyoffice-plugin-uuid");
