@@ -69,6 +69,15 @@ class Onlyoffice_Plugin_Editor
         return true;
     }
 
+    function add_onlyoffice_api_js() {
+        add_action( 'wp_enqueue_scripts', function () {
+            $options = get_option('onlyoffice_settings');
+            $api_js_url = $options[Onlyoffice_Plugin_Settings::docserver_url] .
+                (substr($options[Onlyoffice_Plugin_Settings::docserver_url] , -1) === '/' ? '' : '/') . 'web-apps/apps/api/documents/api.js';
+            wp_enqueue_script('onlyoffice_editor_api', $api_js_url, array());
+        });
+    }
+
     function encode_openssl_data($data, $passphrase) {
         $iv = hex2bin(get_option("onlyoffice-plugin-bytes"));
         return openssl_encrypt($data, 'aes-256-ctr', $passphrase, $options=0, $iv);
@@ -193,10 +202,12 @@ class Onlyoffice_Plugin_Editor
             $secret = $options[Onlyoffice_Plugin_Settings::docserver_jwt];
             $config["token"] = Onlyoffice_Plugin_JWT_Manager::jwt_encode($config, $secret);
         }
+        $this->add_onlyoffice_api_js();
 
 ?>
         <!DOCTYPE html>
         <html <?php language_attributes(); ?> class="no-js">
+        <?php wp_head(); ?>
 
         <head>
             <title><?php echo $config['document']['title'] . ' - ONLYOFFICE'; ?></title>
@@ -234,7 +245,6 @@ class Onlyoffice_Plugin_Editor
                 }
             </style>
 
-            <script type="text/javascript" src="<?php echo $api_js_url ?>"></script>
         </head>
 
         <body <?php body_class(); ?>>
