@@ -177,7 +177,7 @@ class Onlyoffice_Plugin_Editor
             );
             add_action('onlyoffice_wordpress_editor_favicon', function ($doctype) {
                 ?>
-                    <link rel="shortcut icon" href="/wp-content/plugins/onlyoffice-wordpress/public/images/<?php echo $doctype ?>.ico" type="image/vnd.microsoft.icon" />
+                    <link rel="shortcut icon" href="<?php echo esc_url(str_replace('views', 'images', plugins_url( $doctype . '.ico', __FILE__ ))) ?>" type="image/vnd.microsoft.icon" />
                 <?php
             });
             do_action('onlyoffice_wordpress_editor_favicon', $config['documentType']);
