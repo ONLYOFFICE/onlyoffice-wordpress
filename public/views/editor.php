@@ -210,7 +210,7 @@ class Onlyoffice_Plugin_Editor
         <?php wp_head(); ?>
 
         <head>
-            <title><?php echo $config['document']['title'] . ' - ONLYOFFICE'; ?></title>
+            <title><?php echo esc_html($config['document']['title'] . ' - ONLYOFFICE'); ?></title>
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui" />
             <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -254,7 +254,7 @@ class Onlyoffice_Plugin_Editor
                 var docEditor;
 
                 var connectEditor = function() {
-                    var config = <?php echo json_encode($config) ?>;
+                    var config = <?php echo wp_json_encode($config) ?>;
 
                     config.width = "100%";
                     config.height = "100%";

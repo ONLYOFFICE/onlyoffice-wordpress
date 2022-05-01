@@ -79,7 +79,7 @@ class Onlyoffice_Plugin_Settings
     public function input_cb($args) {
         $options = get_option('onlyoffice_settings');
     ?>
-        <input id="<?php echo esc_attr($args['label_for']) ?>" type="text" name="onlyoffice_settings[<?php echo esc_attr($args['label_for']); ?>]" value="<?php echo $options[$args['label_for']]; ?>">
+        <input id="<?php echo esc_attr($args['label_for']) ?>" type="text" name="onlyoffice_settings[<?php echo esc_attr($args['label_for']); ?>]" value="<?php echo esc_attr($options[$args['label_for']]); ?>">
         <p class="description">
             <?php esc_html_e($args['desc'], 'onlyoffice-plugin'); ?>
         </p>

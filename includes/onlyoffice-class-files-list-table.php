@@ -33,24 +33,14 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table
             'screen' => isset( $args['screen'] ) ? $args['screen'] : null,
         ));
 
-        add_action('admin_head', array(&$this, 'admin_header'));
+        add_action( 'admin_enqueue_scripts', function ($hook) {
+            wp_enqueue_style('onlyoffice_files_table', str_replace('/includes/', '/admin/css/',
+                plugins_url('onlyoffice-wordpress-admin.css', __FILE__)));
+        });
     }
 
     public function ajax_user_can() {
         return current_user_can( 'upload_files' );
-    }
-
-    function admin_header()
-    {
-        $page = (isset($_GET['page'])) ? esc_attr($_GET['page']) : false;
-        if ('onlyoffice-files' != $page)
-            return;
-        echo '<style type="text/css">';
-        echo '.wp-list-table .column-title { width: 40%; }';
-        echo '.wp-list-table .column-format { width: 15%; }';
-        echo '.wp-list-table .column-date { width: 15%;}';
-        echo '.wp-list-table .column-size { width: 15%;}';
-        echo '</style>';
     }
 
     function no_items()
@@ -156,33 +146,23 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table
     {
         $attached = get_attached_file($file['id']);
         $title = wp_basename($attached);
-        $link_start = '';
-        $link_end = '';
 
-        if (current_user_can('upload_files')) {
-            $permalink_structure = get_option('permalink_structure');
-            $iv = hex2bin(get_option("onlyoffice-plugin-bytes"));
-            $hidden_id = urlencode(openssl_encrypt($file['id'], 'aes-256-ctr', get_option("onlyoffice-plugin-uuid"), $options=0, $iv));
-            $hidden_id = str_replace('%', ',', $hidden_id);
+        $permalink_structure = get_option('permalink_structure');
+        $iv = hex2bin(get_option("onlyoffice-plugin-bytes"));
+        $hidden_id = urlencode(openssl_encrypt($file['id'], 'aes-256-ctr', get_option("onlyoffice-plugin-uuid"), $options=0, $iv));
+        $hidden_id = str_replace('%', ',', $hidden_id);
 
-            $wp_nonce = wp_create_nonce('wp_rest');
-            $editor_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editor/' . $hidden_id . '&_wpnonce=' . $wp_nonce
-                : get_option('siteurl') . '/wp-json/onlyoffice/editor/' . $hidden_id . '?_wpnonce=' . $wp_nonce;
-
-            $link_start = sprintf(
-                '<a href="%s" aria-label="%s">',
-                $editor_url,
-                esc_attr(sprintf(__('&#8220;%s&#8221;'), $title))
-            );
-            $link_end = '</a>';
-        }
+        $wp_nonce = wp_create_nonce('wp_rest');
+        $editor_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editor/' . $hidden_id . '&_wpnonce=' . $wp_nonce
+            : get_option('siteurl') . '/wp-json/onlyoffice/editor/' . $hidden_id . '?_wpnonce=' . $wp_nonce;
 
         ?>
         <strong>
-            <?php
-            echo $link_start;
-            echo esc_html($title) . $link_end;
-            ?>
+            <a href="<?php echo esc_url($editor_url); ?>" aria-label="<?php echo esc_attr(sprintf(__('&#8220;%s&#8221;'), $title)); ?>">
+                <?php
+                echo esc_html($title);
+                ?>
+            </a>
         </strong>
         <?php
     }
@@ -203,7 +183,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table
             }
         }
 
-        echo $h_time;
+        echo esc_html($h_time);
     }
 
 }
