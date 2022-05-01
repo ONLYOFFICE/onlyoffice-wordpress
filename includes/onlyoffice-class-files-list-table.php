@@ -34,8 +34,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table
         ));
 
         add_action( 'admin_enqueue_scripts', function ($hook) {
-            wp_enqueue_style('onlyoffice_files_table', str_replace('/includes/', '/admin/css/',
-                plugins_url('onlyoffice-wordpress-admin.css', __FILE__)));
+            wp_enqueue_style('onlyoffice_files_table', plugins_url('admin/css/onlyoffice-wordpress-admin.css', dirname(__FILE__)));
         });
     }
 
