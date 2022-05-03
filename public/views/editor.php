@@ -105,7 +105,9 @@ class Onlyoffice_Plugin_Editor
 
     function editor($req)
     {
-        $go_back_url = $_SERVER['HTTP_REFERER'];
+        $go_back_url = !empty($_SERVER['HTTP_REFERER']) && str_contains(sanitize_url($_SERVER['HTTP_REFERER']), get_option('siteurl'))
+        && str_contains(sanitize_url($_SERVER['HTTP_REFERER']), 'onlyoffice-files') ? sanitize_url($_SERVER['HTTP_REFERER']) :
+            get_option('siteurl') . '/wp-admin/admin.php?page=onlyoffice-files';
         $opened_from_admin_panel = str_contains($req->get_headers()['referer'][0], 'wp-admin/admin.php');
         $response = new WP_REST_Response($this->editor_render($req->get_params(), $opened_from_admin_panel, $go_back_url));
         $response->header('Content-Type', 'text/html; charset=utf-8');

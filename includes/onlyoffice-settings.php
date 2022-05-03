@@ -100,7 +100,7 @@ class Onlyoffice_Plugin_Settings
             return;
         }
 
-        if (isset($_GET['settings-updated'])) {
+        if (isset($_GET['settings-updated']) && sanitize_key($_GET['settings-updated']) === 'true') {
             add_settings_error('onlyoffice_settings_messages', 'onlyoffice_message', __('Settings Saved', 'onlyoffice-plugin'), 'updated'); // ToDo: can also check if settings are valid e.g. make connection to docServer
         }
 

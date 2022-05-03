@@ -83,8 +83,9 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table
 
     function usort_reorder($a, $b)
     {
-        $orderby = (!empty($_GET['orderby'])) ? $_GET['orderby'] : 'title';
-        $order = (!empty($_GET['order'])) ? $_GET['order'] : 'asc';
+        $allowed_keys = ['title', 'format', 'date', 'size'];
+        $orderby = (!empty($_GET['orderby'])) && in_array(sanitize_sql_orderby($_GET['orderby']), $allowed_keys)? sanitize_sql_orderby($_GET['orderby']) : 'title';
+        $order = (!empty($_GET['order'])) && in_array(sanitize_key($_GET['order']), ['asc', 'desc']) ? sanitize_key($_GET['order']) : 'asc';
         $first = $a[$orderby];
         $second = $b[$orderby];
         if ($orderby === 'title') {
@@ -101,7 +102,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table
 
     function prepare_items()
     {
-        $post_search = isset($_REQUEST['s']) ? wp_unslash(trim($_REQUEST['s'])) : '';
+        $post_search = isset($_REQUEST['s']) ? wp_unslash(trim(sanitize_text_field($_REQUEST['s']))) : '';
         $attachments = array();
         foreach (get_posts(array('post_type' => 'attachment', 'posts_per_page' => -1)) as $attachment) {
             $attached_file = get_attached_file($attachment->ID);
