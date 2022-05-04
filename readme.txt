@@ -3,7 +3,7 @@ Contributors: onlyoffice
 Tags: onlyoffice, integration, collaboration, editor, office, document, spreadsheet, presentation
 Requires at least: 5.7
 Tested up to: 5.9
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 7.4
 License: GPLv2
 License URI: https://github.com/ONLYOFFICE/onlyoffice-wordpress/blob/main/LICENSE
@@ -47,6 +47,9 @@ You can co-author documents using real-time or paragraph-locking co-eding modes,
 7. ONLYOFFICE file available for viewing in the Embedded mode to the WordPress site visitors.
 
 == Changelog ==
+
+= 1.0.1 =
+* fixed issues for the marketplace release
 
 = 1.0 =
 * added configuration page of plugin

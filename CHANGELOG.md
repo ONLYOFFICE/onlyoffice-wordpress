@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.1
+## Changed
+- fixed issues for the marketplace release
+
 ## 1.0.0
 ## Added
 - configuration page of plugin
