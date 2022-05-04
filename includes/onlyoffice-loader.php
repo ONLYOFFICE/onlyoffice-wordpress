@@ -19,7 +19,7 @@
  *
  */
 
-class OOP_Loader
+class Onlyoffice_Plugin_Loader
 {
 
     protected $actions;

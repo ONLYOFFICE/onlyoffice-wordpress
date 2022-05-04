@@ -19,7 +19,7 @@
  *
  */
 
-class OOP_Files
+class Onlyoffice_Plugin_Files
 {
 
     public function init_menu()
@@ -36,9 +36,9 @@ class OOP_Files
                 __('Files', 'onlyoffice-plugin'), 'upload_files', 'onlyoffice-files', array($this, 'files_page'));
         }
 
-        if (!empty($_REQUEST['_wp_http_referer']) && str_contains($_REQUEST['_wp_http_referer'], 'onlyoffice-files')) {
-            $redirect_url = remove_query_arg(array('_wp_http_referer', '_wpnonce'), wp_unslash($_SERVER['REQUEST_URI']));
-            $redirect_url = str_replace('/wp-admin/admin.php?', $_REQUEST['_wp_http_referer'] . '&', $redirect_url);
+        if (!empty($_REQUEST['_wp_http_referer']) && str_contains(sanitize_url($_REQUEST['_wp_http_referer']), 'onlyoffice-files')) {
+            $redirect_url = remove_query_arg(array('_wp_http_referer', '_wpnonce'), sanitize_url(wp_unslash($_SERVER['REQUEST_URI'])));
+            $redirect_url = str_replace('/wp-admin/admin.php?', sanitize_url($_REQUEST['_wp_http_referer']) . '&', $redirect_url);
             wp_redirect($redirect_url);
             exit;
         }
@@ -48,23 +48,23 @@ class OOP_Files
 
     function add_files_page()
     {
-        global $OOP_Files_List_Table;
-        $OOP_Files_List_Table = new OOP_Files_List_Table();
+        global $Onlyoffice_Plugin_Files_List_Table;
+        $Onlyoffice_Plugin_Files_List_Table = new Onlyoffice_Plugin_Files_List_Table();
     }
 
     public function files_page()
     {
-        global $OOP_Files_List_Table;
-        $OOP_Files_List_Table->prepare_items();
+        global $Onlyoffice_Plugin_Files_List_Table;
+        $Onlyoffice_Plugin_Files_List_Table->prepare_items();
 
         ?>
         <div class="wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
             <p><?php _e('Files that can be edited and opened in ONLYOFFICE will be displayed here', 'onlyoffice-plugin'); ?></p>
             <form method="get">
-                <?php $OOP_Files_List_Table->search_box(__('Search'), 'onlyoffice_file'); ?>
+                <?php $Onlyoffice_Plugin_Files_List_Table->search_box(__('Search'), 'onlyoffice_file'); ?>
                 <?php
-                $OOP_Files_List_Table->display();
+                $Onlyoffice_Plugin_Files_List_Table->display();
                 ?>
             </form>
         </div>

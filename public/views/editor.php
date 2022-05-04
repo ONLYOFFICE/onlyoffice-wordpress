@@ -19,7 +19,7 @@
  *
  */
 
-class OOP_Editor
+class Onlyoffice_Plugin_Editor
 {
     const EDIT_CAPS = array(
         'edit_others_pages',
@@ -69,6 +69,15 @@ class OOP_Editor
         return true;
     }
 
+    function add_onlyoffice_api_js() {
+        add_action( 'wp_enqueue_scripts', function () {
+            $options = get_option('onlyoffice_settings');
+            $api_js_url = $options[Onlyoffice_Plugin_Settings::docserver_url] .
+                (substr($options[Onlyoffice_Plugin_Settings::docserver_url] , -1) === '/' ? '' : '/') . 'web-apps/apps/api/documents/api.js';
+            wp_enqueue_script('onlyoffice_editor_api', $api_js_url, array());
+        });
+    }
+
     function encode_openssl_data($data, $passphrase) {
         $iv = hex2bin(get_option("onlyoffice-plugin-bytes"));
         return openssl_encrypt($data, 'aes-256-ctr', $passphrase, $options=0, $iv);
@@ -96,7 +105,9 @@ class OOP_Editor
 
     function editor($req)
     {
-        $go_back_url = $_SERVER['HTTP_REFERER'];
+        $go_back_url = !empty($_SERVER['HTTP_REFERER']) && str_contains(sanitize_url($_SERVER['HTTP_REFERER']), get_option('siteurl'))
+        && str_contains(sanitize_url($_SERVER['HTTP_REFERER']), 'onlyoffice-files') ? sanitize_url($_SERVER['HTTP_REFERER']) :
+            get_option('siteurl') . '/wp-admin/admin.php?page=onlyoffice-files';
         $opened_from_admin_panel = str_contains($req->get_headers()['referer'][0], 'wp-admin/admin.php');
         $response = new WP_REST_Response($this->editor_render($req->get_params(), $opened_from_admin_panel, $go_back_url));
         $response->header('Content-Type', 'text/html; charset=utf-8');
@@ -114,8 +125,8 @@ class OOP_Editor
     function editor_render($params, $opened_from_admin_panel, $go_back_url)
     {
         $options = get_option('onlyoffice_settings');
-        $api_js_url = $options[OOP_Settings::docserver_url] .
-            (substr($options[OOP_Settings::docserver_url] , -1) === '/' ? '' : '/') . 'web-apps/apps/api/documents/api.js';
+        $api_js_url = $options[Onlyoffice_Plugin_Settings::docserver_url] .
+            (substr($options[Onlyoffice_Plugin_Settings::docserver_url] , -1) === '/' ? '' : '/') . 'web-apps/apps/api/documents/api.js';
         ob_start();
         $api_js_status = $this->check_api_js($api_js_url);
         ob_clean();
@@ -134,7 +145,7 @@ class OOP_Editor
 
         $has_edit_cap = $this->has_edit_capability($attachemnt_id);
 
-        $can_edit = $has_edit_cap && OOP_Document_Helper::is_editable($filename);
+        $can_edit = $has_edit_cap && Onlyoffice_Plugin_Document_Helper::is_editable($filename);
 
         $permalink_structure = get_option('permalink_structure');
         $hidden_id = str_replace('%', ',', urlencode($this->encode_openssl_data($attachemnt_id, $passphrase)));
@@ -149,7 +160,7 @@ class OOP_Editor
         $lang = $opened_from_admin_panel ? get_user_locale($user->ID) : get_locale();
         $config = [
             "type" => $opened_from_admin_panel ? 'desktop' : 'embedded',
-            "documentType" => OOP_Document_Helper::get_document_type($filename),
+            "documentType" => Onlyoffice_Plugin_Document_Helper::get_document_type($filename),
             "document" => [
                 "title" => $filename,
                 "url" => $file_url,
@@ -177,7 +188,7 @@ class OOP_Editor
             );
             add_action('onlyoffice_wordpress_editor_favicon', function ($doctype) {
                 ?>
-                    <link rel="shortcut icon" href="/wp-content/plugins/onlyoffice-wordpress/public/images/<?php echo $doctype ?>.ico" type="image/vnd.microsoft.icon" />
+                    <link rel="shortcut icon" href="<?php echo esc_url(plugins_url('images/' . $doctype . '.ico', dirname(__FILE__) )); ?>" type="image/vnd.microsoft.icon" />
                 <?php
             });
             do_action('onlyoffice_wordpress_editor_favicon', $config['documentType']);
@@ -189,17 +200,19 @@ class OOP_Editor
             );
         }
 
-        if (OOP_JWT_Manager::is_jwt_enabled()) {
-            $secret = $options[OOP_Settings::docserver_jwt];
-            $config["token"] = OOP_JWT_Manager::jwt_encode($config, $secret);
+        if (Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled()) {
+            $secret = $options[Onlyoffice_Plugin_Settings::docserver_jwt];
+            $config["token"] = Onlyoffice_Plugin_JWT_Manager::jwt_encode($config, $secret);
         }
+        $this->add_onlyoffice_api_js();
 
 ?>
         <!DOCTYPE html>
         <html <?php language_attributes(); ?> class="no-js">
+        <?php wp_head(); ?>
 
         <head>
-            <title><?php echo $config['document']['title'] . ' - ONLYOFFICE'; ?></title>
+            <title><?php echo esc_html($config['document']['title'] . ' - ONLYOFFICE'); ?></title>
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui" />
             <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -234,7 +247,6 @@ class OOP_Editor
                 }
             </style>
 
-            <script type="text/javascript" src="<?php echo $api_js_url ?>"></script>
         </head>
 
         <body <?php body_class(); ?>>
@@ -244,7 +256,7 @@ class OOP_Editor
                 var docEditor;
 
                 var connectEditor = function() {
-                    var config = <?php echo json_encode($config) ?>;
+                    var config = <?php echo wp_json_encode($config) ?>;
 
                     config.width = "100%";
                     config.height = "100%";
@@ -289,12 +301,12 @@ class OOP_Editor
             $has_read_capability = current_user_can('read');
             if (!$has_read_capability) wp_die('No read capability', '', array('response' => 403));
         }
-        if (OOP_JWT_Manager::is_jwt_enabled()) {
+        if (Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled()) {
             $jwt_header = "Authorization";
             if (!empty(apache_request_headers()[$jwt_header])) {
                 $options = get_option('onlyoffice_settings');
-                $secret = $options[OOP_Settings::docserver_jwt];
-                $token = OOP_JWT_Manager::jwt_decode(substr(apache_request_headers()[$jwt_header], strlen("Bearer ")), $secret);
+                $secret = $options[Onlyoffice_Plugin_Settings::docserver_jwt];
+                $token = Onlyoffice_Plugin_JWT_Manager::jwt_decode(substr(apache_request_headers()[$jwt_header], strlen("Bearer ")), $secret);
                 if (empty($token)) {
                     wp_die("Invalid JWT signature", '', array('response' => 403));
                 }
@@ -331,7 +343,7 @@ class OOP_Editor
 
         $param = urldecode(str_replace(',', '%', $req->get_params()['id']));
         $attachemnt_id = intval($this->decode_openssl_data($param, get_option("onlyoffice-plugin-uuid")));
-        $body = OOP_Callback_Helper::read_body($req->get_body());
+        $body = Onlyoffice_Plugin_Callback_Helper::read_body($req->get_body());
         if (!empty($body["error"])){
             $response_json["message"] = $body["error"];
             $response->data = $response_json;
@@ -340,7 +352,7 @@ class OOP_Editor
 
         wp_set_current_user($body["actions"][0]["userid"]);
 
-        $status = OOP_Editor::CALLBACK_STATUS[$body["status"]];
+        $status = Onlyoffice_Plugin_Editor::CALLBACK_STATUS[$body["status"]];
 
         $user_id = null;
         if (!empty($body['users'])) {
@@ -376,7 +388,7 @@ class OOP_Editor
                 $locked = wp_check_post_lock($attachemnt_id);
                 if (!$locked) wp_set_post_lock($attachemnt_id);
 
-                $response_json['error'] = OOP_Callback_Helper::proccess_save($body, $attachemnt_id);
+                $response_json['error'] = Onlyoffice_Plugin_Callback_Helper::proccess_save($body, $attachemnt_id);
                 break;
             case "Corrupted":
             case "Closed":

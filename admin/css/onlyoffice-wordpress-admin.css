@@ -1,0 +1,15 @@
+.wp-list-table .column-title {
+    width: 40%;
+}
+
+.wp-list-table .column-format {
+    width: 15%;
+}
+
+.wp-list-table .column-date {
+    width: 15%;
+}
+
+.wp-list-table .column-size {
+    width: 15%;
+}

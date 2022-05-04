@@ -19,7 +19,7 @@
  *
  */
 
-class OOP_Settings
+class Onlyoffice_Plugin_Settings
 {
     const docserver_url = 'onlyoffice_settings_docserver_url';
     const docserver_jwt = 'onlyoffice_settings_docserver_jwt';
@@ -58,7 +58,7 @@ class OOP_Settings
             'onlyoffice_settings_group',
             'onlyoffice_settings_general_section',
             array(
-                'label_for'         => OOP_Settings::docserver_url,
+                'label_for'         => Onlyoffice_Plugin_Settings::docserver_url,
                 'desc' => ''
             )
         );
@@ -70,7 +70,7 @@ class OOP_Settings
             'onlyoffice_settings_group',
             'onlyoffice_settings_general_section',
             array(
-                'label_for'         => OOP_Settings::docserver_jwt,
+                'label_for'         => Onlyoffice_Plugin_Settings::docserver_jwt,
                 'desc' => 'Secret key (leave blank to disable)'
             )
         );
@@ -79,7 +79,7 @@ class OOP_Settings
     public function input_cb($args) {
         $options = get_option('onlyoffice_settings');
     ?>
-        <input id="<?php echo esc_attr($args['label_for']) ?>" type="text" name="onlyoffice_settings[<?php echo esc_attr($args['label_for']); ?>]" value="<?php echo $options[$args['label_for']]; ?>">
+        <input id="<?php echo esc_attr($args['label_for']) ?>" type="text" name="onlyoffice_settings[<?php echo esc_attr($args['label_for']); ?>]" value="<?php echo esc_attr($options[$args['label_for']]); ?>">
         <p class="description">
             <?php esc_html_e($args['desc'], 'onlyoffice-plugin'); ?>
         </p>
@@ -100,7 +100,7 @@ class OOP_Settings
             return;
         }
 
-        if (isset($_GET['settings-updated'])) {
+        if (isset($_GET['settings-updated']) && sanitize_key($_GET['settings-updated']) === 'true') {
             add_settings_error('onlyoffice_settings_messages', 'onlyoffice_message', __('Settings Saved', 'onlyoffice-plugin'), 'updated'); // ToDo: can also check if settings are valid e.g. make connection to docServer
         }
 
