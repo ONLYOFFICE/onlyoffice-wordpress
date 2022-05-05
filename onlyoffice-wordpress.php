@@ -23,7 +23,7 @@
  * Plugin Name:       ONLYOFFICE
  * Plugin URI:        https://github.com/ONLYOFFICE/onlyoffice-wordpress
  * Description:       ONLYOFFICE Description
- * Version:           1.0.1
+ * Version:           1.0.2
  * Requires at least: 5.7
  * Requires PHP:      7.4
  * Author:            Ascensio System SIA
@@ -34,7 +34,7 @@
  * Domain Path:       /languages
  */
 
-define( 'ONLYOFFICE_PLUGIN_VERSION', '1.0.1' );
+define( 'ONLYOFFICE_PLUGIN_VERSION', '1.0.2' );
 
 function activate_plugin_name() {
     require_once plugin_dir_path( __FILE__ ) . 'includes/onlyoffice-activator.php';
