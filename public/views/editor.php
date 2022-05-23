@@ -299,14 +299,19 @@ class Onlyoffice_Plugin_Editor
             if (!$has_read_capability) wp_die('No read capability', '', array('response' => 403));
         }
         if (Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled()) {
-            $jwt_header = "Authorization";
+            $options = get_option('onlyoffice_settings');
+            $jwt_header =  $options[Onlyoffice_Plugin_Settings::docserver_jwt_header];
+            if (empty($jwt_header)) {
+                $jwt_header = "Authorization";
+            }
             if (!empty(apache_request_headers()[$jwt_header])) {
-                $options = get_option('onlyoffice_settings');
                 $secret = $options[Onlyoffice_Plugin_Settings::docserver_jwt];
                 $token = Onlyoffice_Plugin_JWT_Manager::jwt_decode(substr(apache_request_headers()[$jwt_header], strlen("Bearer ")), $secret);
                 if (empty($token)) {
                     wp_die("Invalid JWT signature", '', array('response' => 403));
                 }
+            } else {
+                wp_die("Invalid JWT signature", '', array('response' => 403));
             }
         }
 

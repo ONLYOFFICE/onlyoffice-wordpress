@@ -23,6 +23,7 @@ class Onlyoffice_Plugin_Settings
 {
     const docserver_url = 'onlyoffice_settings_docserver_url';
     const docserver_jwt = 'onlyoffice_settings_docserver_jwt';
+    const docserver_jwt_header = 'onlyoffice_settings_docserver_jwt_header';
 
     public function init_menu()
     {
@@ -72,6 +73,18 @@ class Onlyoffice_Plugin_Settings
             array(
                 'label_for'         => Onlyoffice_Plugin_Settings::docserver_jwt,
                 'desc' => 'Secret key (leave blank to disable)'
+            )
+        );
+
+        add_settings_field(
+            'onlyoffice_settings_docserver_jwt_header',
+            __('Document server JWT header', 'onlyoffice-plugin'),
+            array($this, 'input_cb'),
+            'onlyoffice_settings_group',
+            'onlyoffice_settings_general_section',
+            array(
+                'label_for'         => Onlyoffice_Plugin_Settings::docserver_jwt_header,
+                'desc' => 'JWT Header (leave blank to use Authorization)'
             )
         );
     }
