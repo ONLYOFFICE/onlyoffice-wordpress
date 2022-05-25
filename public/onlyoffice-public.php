@@ -45,6 +45,7 @@ class OOP_Public
         require_once plugin_dir_path( __FILE__ ) . 'views/editor.php';
 
         $editor = new OOP_Editor();
+        $editorApi = new OOP_Editor_API();
 
         register_rest_route('onlyoffice', '/editor/(?P<id>[^\/\n\r]+)', array(
             'methods' => WP_REST_Server::READABLE,
@@ -67,6 +68,11 @@ class OOP_Public
         register_rest_route('onlyoffice', '/editorurl/(?P<id>\d+)', array(
             'methods' => WP_REST_Server::READABLE,
             'callback' => array($editor, 'get_onlyoffice_editor_url')
+        ));
+
+        register_rest_route('onlyoffice', '/share', array(
+            'methods' => WP_REST_Server::CREATABLE,
+            'callback' => array($editorApi, 'save_share_settings')
         ));
     }
 }

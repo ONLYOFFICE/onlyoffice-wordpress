@@ -32,11 +32,14 @@
       "Review": [
         "Рецензирование"
       ],
-      "Full Access": [
+      "Full access": [
         "Полный доступ"
       ],
-      "Read Only": [
+      "Read only": [
         "Только чтение"
+      ],
+      "Form filling": [
+        "Заполнение форм"
       ]
     }
   }

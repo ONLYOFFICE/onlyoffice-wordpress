@@ -23,6 +23,18 @@
 		"formats": {
 			"type": "array",
 			"default": null
+		},
+		"rule": {
+			"type": "string",
+			"default": "common"
+		},
+		"commonRule": {
+			"type": "string",
+			"default": "Administrator"
+		},
+		"specificRules": {
+			"type": "array",
+			"default": []
 		}
 	}
 }
