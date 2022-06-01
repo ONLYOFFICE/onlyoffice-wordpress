@@ -24,7 +24,7 @@
                 let frameOnlyoffice = wp.media.frames.onlyoffice;
 
                 if (frameOnlyoffice) {
-                    frame.open();
+                    frameOnlyoffice.open();
                     return;
                 }
 
