@@ -227,7 +227,7 @@ class Onlyoffice_Plugin_Editor
                     font-family: Arial, Tahoma, sans-serif;
                     font-size: 12px;
                     font-weight: normal;
-                    height: 100%;
+                    height: 100%!important;
                     margin: 0;
                     overflow-y: hidden;
                     padding: 0;
