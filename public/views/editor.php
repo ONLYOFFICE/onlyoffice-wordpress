@@ -318,7 +318,7 @@ class Onlyoffice_Plugin_Editor
 
         @header('Content-Length: ' . filesize($filepath));
         @header('Content-Disposition: attachment; filename*=UTF-8\'\'' . urldecode(basename($filepath)));
-        @header('Content-Type: ' . mime_content_type($filepath));
+        @header('Content-Type: ' . Onlyoffice_Plugin_Document_Helper::get_mime_type($filepath));
 
         if ($fd = fopen($filepath, 'rb')) {
             while (!feof($fd)) {
