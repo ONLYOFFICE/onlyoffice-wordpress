@@ -22,10 +22,14 @@
 class Onlyoffice_Plugin_Activator {
 
     public static function activate() {
-        add_option("onlyoffice-plugin-uuid", wp_generate_uuid4());
-        $ivlen = openssl_cipher_iv_length("aes-256-ctr");
-        $iv = openssl_random_pseudo_bytes($ivlen);
-        add_option("onlyoffice-plugin-bytes", bin2hex($iv));
+        if (empty(get_option("onlyoffice-plugin-uuid"))) {
+            add_option("onlyoffice-plugin-uuid", wp_generate_uuid4());
+        }
+        if (empty(get_option("onlyoffice-plugin-bytes"))) {
+            $ivlen = openssl_cipher_iv_length("aes-256-ctr");
+            $iv = openssl_random_pseudo_bytes($ivlen);
+            add_option("onlyoffice-plugin-bytes", bin2hex($iv));
+        }
     }
 
 }
