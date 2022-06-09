@@ -50,8 +50,8 @@ class Onlyoffice_Plugin_Editor
         $hidden_id = urlencode($this->encode_openssl_data($attachment_id, $passphrase));
         $hidden_id = str_replace('%', ',', $hidden_id);
 
-        $editor_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editor/' . $hidden_id
-            : get_option('siteurl') . '/wp-json/onlyoffice/editor/' . $hidden_id;
+        $editor_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/oo.editor/' . $hidden_id
+            : get_option('siteurl') . '/wp-json/onlyoffice/oo.editor/' . $hidden_id;
         $response->set_data(array(
                 'url' => $editor_url
         ));
@@ -148,11 +148,11 @@ class Onlyoffice_Plugin_Editor
         $hidden_id = str_replace('%', ',', urlencode($this->encode_openssl_data($attachemnt_id, $passphrase)));
         $hidden_data = str_replace('%', ',', urlencode($this->encode_openssl_data(json_encode(["attachment_id" => $attachemnt_id, 'user_id' => $user->ID]), $passphrase)));
 
-        $callback_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/callback/' . $hidden_id
-            : get_option('siteurl') . '/wp-json/onlyoffice/callback/' . $hidden_id;
+        $callback_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/oo.callback/' . $hidden_id
+            : get_option('siteurl') . '/wp-json/onlyoffice/oo.callback/' . $hidden_id;
 
-        $file_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/getfile/' . $hidden_data
-            : get_option('siteurl') . '/wp-json/onlyoffice/getfile/' . $hidden_data;
+        $file_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/oo.getfile/' . $hidden_data
+            : get_option('siteurl') . '/wp-json/onlyoffice/oo.getfile/' . $hidden_data;
 
         $lang = $opened_from_admin_panel ? get_user_locale($user->ID) : get_locale();
         $config = [

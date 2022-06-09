@@ -41,8 +41,8 @@ class Onlyoffice_Plugin_Admin
             $this->version, true);
 
         wp_localize_script($this->plugin_name . '-media-script', 'oo_media', array(
-            'getEditorUrl' => get_option('permalink_structure') === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editorurl/'
-                : get_option('siteurl') . '/wp-json/onlyoffice/editorurl/',
+            'getEditorUrl' => get_option('permalink_structure') === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/oo.editorurl/'
+                : get_option('siteurl') . '/wp-json/onlyoffice/oo.editorurl/',
             'formats' => Onlyoffice_Plugin_Document_Helper::all_formats()
         ));
     }

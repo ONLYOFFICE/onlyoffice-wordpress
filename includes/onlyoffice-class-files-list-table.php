@@ -153,8 +153,8 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table
         $hidden_id = str_replace('%', ',', $hidden_id);
 
         $wp_nonce = wp_create_nonce('wp_rest');
-        $editor_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/editor/' . $hidden_id . '&_wpnonce=' . $wp_nonce
-            : get_option('siteurl') . '/wp-json/onlyoffice/editor/' . $hidden_id . '?_wpnonce=' . $wp_nonce;
+        $editor_url = $permalink_structure === '' ? get_option('siteurl') . '/index.php?rest_route=/onlyoffice/oo.editor/' . $hidden_id . '&_wpnonce=' . $wp_nonce
+            : get_option('siteurl') . '/wp-json/onlyoffice/oo.editor/' . $hidden_id . '?_wpnonce=' . $wp_nonce;
 
         ?>
         <strong>

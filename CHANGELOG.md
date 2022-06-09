@@ -1,5 +1,8 @@
 # Change Log
 
+## Added
+- support for the connector to work in conjunction with the plugin "Force Lowercase URLs" (https://wordpress.org/plugins/force-lowercase-urls)
+
 ## 1.0.2
 ## Changed
 - fixed issues for the marketplace release
