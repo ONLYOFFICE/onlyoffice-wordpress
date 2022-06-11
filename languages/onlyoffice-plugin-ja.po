@@ -24,6 +24,12 @@ msgstr "ドキュメントサーバーのJWT秘密鍵"
 msgid "Secret key (leave blank to disable)"
 msgstr "シークレットキー (ブランクで無効)"
 
+msgid "JWT Header (leave blank to use Authorization)"
+msgstr "JWTヘッダー (Authorizationを使用するには空白のままにします)"
+
+msgid "Document server JWT header"
+msgstr "ドキュメント サーバーの JWT ヘッダー"
+
 msgid "Settings Saved"
 msgstr "設定が保存されました"
 

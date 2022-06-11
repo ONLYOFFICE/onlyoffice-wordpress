@@ -24,6 +24,12 @@ msgstr "Секретный ключ JWT сервера документов"
 msgid "Secret key (leave blank to disable)"
 msgstr "Секретный ключ (оставьте пустым для отключения)"
 
+msgid "JWT Header (leave blank to use Authorization)"
+msgstr "JWT заголовок (оставьте пустым, чтобы использовать Authorization)"
+
+msgid "Document server JWT header"
+msgstr "JWT заголовок сервера документов"
+
 msgid "Settings Saved"
 msgstr "Настройки сохранены"
 

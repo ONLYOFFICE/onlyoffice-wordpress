@@ -24,6 +24,12 @@ msgstr "文档服务器JWT秘钥"
 msgid "Secret key (leave blank to disable)"
 msgstr "秘钥(留空为关闭)"
 
+msgid "JWT Header (leave blank to use Authorization)"
+msgstr "JWT 标头 (留空以使用 Authorization)"
+
+msgid "Document server JWT header"
+msgstr "文档服务器 JWT 标头"
+
 msgid "Settings Saved"
 msgstr "设置已保存"
 

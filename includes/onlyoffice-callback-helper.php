@@ -34,8 +34,11 @@ class Onlyoffice_Plugin_Callback_Helper
 
         if (Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled()) {
             $in_header = false;
-            $jwt_header = "Authorization";
             $options = get_option('onlyoffice_settings');
+            $jwt_header = $options[Onlyoffice_Plugin_Settings::docserver_jwt_header];
+            if (empty($jwt_header)) {
+                $jwt_header = "Authorization";
+            }
             $secret = $options[Onlyoffice_Plugin_Settings::docserver_jwt];
 
             if (!empty($data["token"])) {

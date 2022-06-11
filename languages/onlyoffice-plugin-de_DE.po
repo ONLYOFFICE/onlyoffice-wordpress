@@ -24,6 +24,12 @@ msgstr "Geheimer JWT-Schlüssel vom Document Server"
 msgid "Secret key (leave blank to disable)"
 msgstr "Geheimer Schlüssel (freilassen, um zu deaktivieren)"
 
+msgid "JWT Header (leave blank to use Authorization)"
+msgstr "JWT-Kopfzeile (leer lassen, um die Authorization zu verwenden)"
+
+msgid "Document server JWT header"
+msgstr "JWT-Kopfzeile vom Document Server"
+
 msgid "Settings Saved"
 msgstr "Die Einstellungen werden gespeichert"
 
