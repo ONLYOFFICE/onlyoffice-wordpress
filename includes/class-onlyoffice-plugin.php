@@ -104,16 +104,16 @@ class Onlyoffice_Plugin {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-loader.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-i18n.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-onlyoffice-plugin-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/files/class-onlyoffice-plugin-files.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/files/class-onlyoffice-plugin-files-list-table.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-callback-manager.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-document-manager.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-jwt-manager.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/settings/class-onlyoffice-plugin-settings.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-onlyoffice-plugin-public.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-settings.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-document-helper.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-callback-helper.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-jwt-manager.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-files.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-files-list-table.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . '3rdparty/JWT.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . '3rdparty/BeforeValidException.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . '3rdparty/ExpiredException.php';

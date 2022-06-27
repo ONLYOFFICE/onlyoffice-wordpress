@@ -98,7 +98,7 @@ final class Onlyoffice_Plugin_Admin {
 			array(
 				'getEditorUrl' => get_option( 'permalink_structure' ) === '' ? get_option( 'siteurl' ) . '/index.php?rest_route=/onlyoffice/editorurl/'
 					: get_option( 'siteurl' ) . '/wp-json/onlyoffice/editorurl/',
-				'formats'      => Onlyoffice_Plugin_Document_Helper::all_formats(),
+				'formats'      => Onlyoffice_Plugin_Document_Manager::all_formats(),
 			)
 		);
 	}

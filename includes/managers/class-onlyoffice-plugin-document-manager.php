@@ -6,7 +6,7 @@
  * @since      1.0.0
  *
  * @package    Onlyoffice_Plugin
- * @subpackage Onlyoffice_Plugin/includes
+ * @subpackage Onlyoffice_Plugin/includes/managers
  */
 
 /**
@@ -34,10 +34,10 @@
  * This class defines all tools code for working with documents.
  *
  * @package    Onlyoffice_Plugin
- * @subpackage Onlyoffice_Plugin/includes
+ * @subpackage Onlyoffice_Plugin/includes/managers
  * @author     Ascensio System SIA <integration@onlyoffice.com>
  */
-class Onlyoffice_Plugin_Document_Helper {
+class Onlyoffice_Plugin_Document_Manager {
 
 	const DOC_SERV_VIEWD   = array( '.pdf', '.djvu', '.xps', '.oxps' );
 	const DOC_SERV_EDITED  = array( '.docx', '.xlsx', '.pptx' );

@@ -6,7 +6,7 @@
  * @since      1.0.0
  *
  * @package    Onlyoffice_Plugin
- * @subpackage Onlyoffice_Plugin/includes
+ * @subpackage Onlyoffice_Plugin/includes/managers
  */
 
 /**
@@ -34,7 +34,7 @@ use Firebase\JWT\JWT;
  * Set of tools for JWT.
  *
  * @package    Onlyoffice_Plugin
- * @subpackage Onlyoffice_Plugin/includes
+ * @subpackage Onlyoffice_Plugin/includes/managers
  * @author     Ascensio System SIA <integration@onlyoffice.com>
  */
 class Onlyoffice_Plugin_JWT_Manager {

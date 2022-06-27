@@ -6,7 +6,7 @@
  * @since      1.0.0
  *
  * @package    Onlyoffice_Plugin
- * @subpackage Onlyoffice_Plugin/includes
+ * @subpackage Onlyoffice_Plugin/includes/managers
  */
 
 /**
@@ -32,10 +32,10 @@
  * The set of tools for callback process.
  *
  * @package    Onlyoffice_Plugin
- * @subpackage Onlyoffice_Plugin/includes
+ * @subpackage Onlyoffice_Plugin/includes/managers
  * @author     Ascensio System SIA <integration@onlyoffice.com>
  */
-class Onlyoffice_Plugin_Callback_Helper {
+class Onlyoffice_Plugin_Callback_Manager {
 
 	/**
 	 * Method for read body from request.

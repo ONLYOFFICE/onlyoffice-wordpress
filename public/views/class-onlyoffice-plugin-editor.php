@@ -216,7 +216,7 @@ class Onlyoffice_Plugin_Editor {
 
 		$has_edit_cap = $this->has_edit_capability( $attachemnt_id );
 
-		$can_edit = $has_edit_cap && Onlyoffice_Plugin_Document_Helper::is_editable( $filename );
+		$can_edit = $has_edit_cap && Onlyoffice_Plugin_Document_Manager::is_editable( $filename );
 
 		$permalink_structure = get_option( 'permalink_structure' );
 		$hidden_id           = str_replace( '%', ',', rawurlencode( $this->encode_openssl_data( $attachemnt_id, $passphrase ) ) );
@@ -245,7 +245,7 @@ class Onlyoffice_Plugin_Editor {
 		$lang   = $opened_from_admin_panel ? get_user_locale( $user->ID ) : get_locale();
 		$config = array(
 			'type'         => $opened_from_admin_panel ? 'desktop' : 'embedded',
-			'documentType' => Onlyoffice_Plugin_Document_Helper::get_document_type( $filename ),
+			'documentType' => Onlyoffice_Plugin_Document_Manager::get_document_type( $filename ),
 			'document'     => array(
 				'title'       => $filename,
 				'url'         => $file_url,
@@ -446,7 +446,7 @@ class Onlyoffice_Plugin_Editor {
 
 		$param         = urldecode( str_replace( ',', '%', $req->get_params()['id'] ) );
 		$attachemnt_id = intval( $this->decode_openssl_data( $param, get_option( 'onlyoffice-plugin-uuid' ) ) );
-		$body          = Onlyoffice_Plugin_Callback_Helper::read_body( $req->get_body() );
+		$body          = Onlyoffice_Plugin_Callback_Manager::read_body( $req->get_body() );
 		if ( ! empty( $body['error'] ) ) {
 			$response_json['message'] = $body['error'];
 			$response->data           = $response_json;
@@ -495,7 +495,7 @@ class Onlyoffice_Plugin_Editor {
 					wp_set_post_lock( $attachemnt_id );
 				}
 
-				$response_json['error'] = Onlyoffice_Plugin_Callback_Helper::proccess_save( $body, $attachemnt_id );
+				$response_json['error'] = Onlyoffice_Plugin_Callback_Manager::proccess_save( $body, $attachemnt_id );
 				break;
 			case 'Corrupted':
 			case 'Closed':
