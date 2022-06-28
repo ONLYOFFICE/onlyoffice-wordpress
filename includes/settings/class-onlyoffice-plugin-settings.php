@@ -9,7 +9,7 @@
  * @since      1.0.0
  *
  * @package    Onlyoffice_Plugin
- * @subpackage Onlyoffice_Plugin/includes
+ * @subpackage Onlyoffice_Plugin/includes/settings
  */
 
 /**
@@ -35,7 +35,7 @@
  * Plugin settings for this site.
  *
  * @package    Onlyoffice_Plugin
- * @subpackage Onlyoffice_Plugin/includes
+ * @subpackage Onlyoffice_Plugin/includes/settings
  * @author     Ascensio System SIA <integration@onlyoffice.com>
  */
 class Onlyoffice_Plugin_Settings {
@@ -55,7 +55,7 @@ class Onlyoffice_Plugin_Settings {
 	 * @return void
 	 */
 	public function init_menu() {
-		$logo_svg            = file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . '/public/images/logo.svg' );
+		$logo_svg            = file_get_contents( plugin_dir_path( plugin_dir_path( dirname( __FILE__ ) ) ) . '/public/images/logo.svg' );
 		$can_manage_settings = current_user_can( 'manage_options' );
 		$can_upload_files    = current_user_can( 'upload_files' );
 

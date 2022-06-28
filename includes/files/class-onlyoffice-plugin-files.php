@@ -6,7 +6,7 @@
  * @since      1.0.0
  *
  * @package    Onlyoffice_Plugin
- * @subpackage Onlyoffice_Plugin/includes
+ * @subpackage Onlyoffice_Plugin/includes/files
  */
 
 /**
@@ -34,7 +34,7 @@
  * This class defines code necessary displaying a page with files supported by ONLYOFFICE.
  *
  * @package    Onlyoffice_Plugin
- * @subpackage Onlyoffice_Plugin/includes
+ * @subpackage Onlyoffice_Plugin/includes/files
  * @author     Ascensio System SIA <integration@onlyoffice.com>
  */
 class Onlyoffice_Plugin_Files {
@@ -45,7 +45,7 @@ class Onlyoffice_Plugin_Files {
 	 */
 	public function init_menu() {
 		$hook             = null;
-		$logo_svg         = file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . '/public/images/logo.svg' );
+		$logo_svg         = file_get_contents( plugin_dir_path( plugin_dir_path( dirname( __FILE__ ) ) ) . '/public/images/logo.svg' );
 		$can_upload_files = current_user_can( 'upload_files' );
 
 		if ( $can_upload_files ) {
