@@ -80,7 +80,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 	 * Output 'no files' message.
 	 */
 	public function no_items() {
-		_esc_html_e( 'No files found for editing or viewing in ONLYOFFICE.', 'onlyoffice-plugin' );
+		esc_html_e( 'No files found for editing or viewing in ONLYOFFICE.', 'onlyoffice-plugin' );
 	}
 	/**
 	 * Handles output for the default column.
@@ -98,7 +98,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 			case 'size':
 				return $item[ $column_name ];
 			default:
-				return print_r( $item, true );
+				return $item['title'];
 		}
 	}
 
@@ -138,36 +138,45 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 	/**
 	 * Get a list of sortable columns for the list table.
 	 *
+	 * @global string $orderby
+	 * @global string $order
 	 * @param array $a Param a.
 	 * @param array $b Param b.
 	 * @return array Array of sortable columns.
 	 * @since 1.0.0
 	 */
 	public function usort_reorder( $a, $b ) {
+		global $orderby, $order;
+		wp_reset_vars( array( 'orderby', 'order' ) );
+
 		$allowed_keys = array( 'title', 'format', 'date', 'size' );
-		$orderby      = ( ! empty( $_GET['orderby'] ) ) && in_array( sanitize_sql_orderby( $_GET['orderby'] ), $allowed_keys ) ? sanitize_sql_orderby( $_GET['orderby'] ) : 'title';
-		$order        = ( ! empty( $_GET['order'] ) ) && in_array( sanitize_key( $_GET['order'] ), array( 'asc', 'desc' ) ) ? sanitize_key( $_GET['order'] ) : 'asc';
-		$first        = $a[ $orderby ];
-		$second       = $b[ $orderby ];
-		if ( 'title' === $orderby ) {
+
+		$order_by = in_array( sanitize_sql_orderby( $orderby ), $allowed_keys, true ) ? sanitize_sql_orderby( $orderby ) : 'title';
+
+		$first  = $a[ $order_by ];
+		$second = $b[ $order_by ];
+		if ( 'title' === $order_by ) {
 			$first  = strtolower( $first );
 			$second = strtolower( $second );
 		}
-		if ( 'size' === $orderby ) {
+		if ( 'size' === $order_by ) {
 			$first  = wp_convert_hr_to_bytes( $first );
 			$second = wp_convert_hr_to_bytes( $second );
 		}
-		$result = 'size' === $orderby ? $first <=> $second : strcmp( $first, $second );
-		return ( 'asc' === $order ) ? $result : -$result;
+		$result = 'size' === $order_by ? $first <=> $second : strcmp( $first, $second );
+		return ( 'desc' === $order ) ? -$result : $result;
 	}
 
 	/**
 	 * Prepare the file list for display.
 	 *
-	 * @since 3.1.0
+	 * @since 1.0.0
+	 * @global string $s
 	 */
 	public function prepare_items() {
-		$post_search = isset( $_REQUEST['s'] ) ? wp_unslash( trim( sanitize_text_field( $_REQUEST['s'] ) ) ) : '';
+		global $s;
+		wp_reset_vars( array( 's' ) );
+
 		$attachments = array();
 		foreach ( get_posts(
 			array(
@@ -177,7 +186,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 		) as $attachment ) {
 			$attached_file = get_attached_file( $attachment->ID );
 			$filename      = pathinfo( $attached_file, PATHINFO_BASENAME );
-			if ( ( '' !== $post_search ) && ! str_contains( strtolower( $filename ), strtolower( $post_search ) ) ) {
+			if ( ( '' !== $s ) && ! str_contains( strtolower( $filename ), strtolower( $s ) ) ) {
 				continue;
 			}
 			if ( Onlyoffice_Plugin_Document_Manager::is_editable( $filename ) || Onlyoffice_Plugin_Document_Manager::is_openable( $filename ) ) {
@@ -229,19 +238,18 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 	 * Handles the title column output.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @param $file
+	 * @param array $item The item.
 	 */
-	public function column_title( $file ) {
-		$attached = get_attached_file( $file['id'] );
+	public function column_title( $item ) {
+		$attached = get_attached_file( $item['id'] );
 		$title    = wp_basename( $attached );
 
 		$wp_nonce   = wp_create_nonce( 'wp_rest' );
-		$editor_url = Onlyoffice_Plugin_Url_Manager::get_editor_url( $file['id'] ) . '&_wpnonce=' . $wp_nonce
+		$editor_url = Onlyoffice_Plugin_Url_Manager::get_editor_url( $item['id'] ) . '&_wpnonce=' . $wp_nonce
 
 		?>
 		<strong>
-			<a href="<?php echo esc_url( $editor_url ); ?>" aria-label="<?php echo esc_attr( sprintf( __( '&#8220;%s&#8221;' ), $title ) ); ?>">
+			<a href="<?php echo esc_url( $editor_url ); ?>" >
 				<?php
 				echo esc_html( $title );
 				?>
@@ -254,9 +262,10 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 	 * Handles the post date column output.
 	 *
 	 * @since 1.0.0
+	 * @param array $item The item.
 	 */
-	public function column_date( $attachment ) {
-		$file = get_post( $attachment['id'] );
+	public function column_date( $item ) {
+		$file = get_post( $item['id'] );
 		if ( '0000-00-00 00:00:00' === $file->post_date ) {
 			$h_time = __( 'Unpublished' );
 		} else {
@@ -264,6 +273,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 			$time_diff = time() - $time;
 
 			if ( $time && $time_diff > 0 && $time_diff < DAY_IN_SECONDS ) {
+				/* translators: %s: Attachment published or modified time . */
 				$h_time = sprintf( __( '%s ago' ), human_time_diff( $time ) );
 			} else {
 				$h_time = get_the_time( __( 'Y/m/d' ), $file );
@@ -271,6 +281,32 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 		}
 
 		echo esc_html( $h_time );
+	}
+
+	/**
+	 * Displays the search box.
+	 *
+	 * @since 1.0.2
+	 *
+	 * @param string $text     The 'submit' button label.
+	 * @param string $input_id ID attribute value for the search input field.
+	 * @global string $s
+	 * @global string $page
+	 */
+	public function search_box( $text, $input_id ) {
+		global $s, $page;
+		wp_reset_vars( array( 's', 'page' ) );
+
+		if ( empty( $s ) && ! $this->has_items() ) {
+			return;
+		}
+
+		if ( ! empty( $page ) ) {
+			echo '<input type="hidden" name="page" value="' . esc_attr( $page ) . '" />';
+		}
+
+		parent::search_box( $text, $input_id );
+
 	}
 
 }

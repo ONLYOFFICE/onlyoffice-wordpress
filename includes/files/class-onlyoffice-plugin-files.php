@@ -68,16 +68,6 @@ class Onlyoffice_Plugin_Files {
 			);
 		}
 
-		if ( ! empty( $_REQUEST['_wp_http_referer'] ) ) {
-			if ( str_contains( esc_url_raw( wp_unslash( $_REQUEST['_wp_http_referer'] ) ), 'onlyoffice-files' ) ) {
-				$redirect_url = remove_query_arg( array( '_wp_http_referer', '_wpnonce' ), esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
-				$redirect_url = str_replace( '/wp-admin/admin.php?', esc_url_raw( wp_unslash( $_REQUEST['_wp_http_referer'] ) ) . '&', $redirect_url );
-
-				wp_redirect( $redirect_url );
-				exit;
-			}
-		}
-
 		add_action( "load-$hook", array( $this, 'add_files_page' ) );
 	}
 
@@ -94,9 +84,18 @@ class Onlyoffice_Plugin_Files {
 	/**
 	 *  Files page.
 	 *
+	 * @global string $_wp_http_referer
 	 * @return void
 	 */
 	public function files_page() {
+		global $_wp_http_referer;
+		wp_reset_vars( array( '_wp_http_referer' ) );
+
+		if ( ! empty( $_wp_http_referer ) && isset( $_SERVER['REQUEST_URI'] ) ) {
+			wp_safe_redirect( remove_query_arg( array( '_wp_http_referer', '_wpnonce' ), esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ) );
+			exit;
+		}
+
 		global $onlyoffice_plugin_files_list_table;
 		$onlyoffice_plugin_files_list_table->prepare_items();
 
@@ -106,9 +105,7 @@ class Onlyoffice_Plugin_Files {
 			<p><?php esc_html_e( 'Files that can be edited and opened in ONLYOFFICE will be displayed here', 'onlyoffice-plugin' ); ?></p>
 			<form method="get">
 				<?php $onlyoffice_plugin_files_list_table->search_box( __( 'Search' ), 'onlyoffice_file' ); ?>
-				<?php
-				$onlyoffice_plugin_files_list_table->display();
-				?>
+				<?php $onlyoffice_plugin_files_list_table->display(); ?>
 			</form>
 		</div>
 		<?php
