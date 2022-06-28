@@ -65,20 +65,15 @@ class Onlyoffice_Plugin_Editor {
 	 * @return WP_REST_Response
 	 */
 	public function get_onlyoffice_editor_url( $req ) {
-		$permalink_structure = get_option( 'permalink_structure' );
-		$response            = new WP_REST_Response();
-		$attachment_id       = $req->get_params()['id'];
-		$passphrase          = get_option( 'onlyoffice-plugin-uuid' );
-		$hidden_id           = rawurlencode( $this->encode_openssl_data( $attachment_id, $passphrase ) );
-		$hidden_id           = str_replace( '%', ',', $hidden_id );
+		$attachment_id = $req->get_params()['id'];
 
-		$editor_url = '' === $permalink_structure ? get_option( 'siteurl' ) . '/index.php?rest_route=/onlyoffice/editor/' . $hidden_id
-			: get_option( 'siteurl' ) . '/wp-json/onlyoffice/editor/' . $hidden_id;
+		$response = new WP_REST_Response();
 		$response->set_data(
 			array(
-				'url' => $editor_url,
+				'url' => Onlyoffice_Plugin_Url_Manager::get_editor_url( $attachment_id ),
 			)
 		);
+
 		return $response;
 	}
 
@@ -104,23 +99,10 @@ class Onlyoffice_Plugin_Editor {
 			'wp_enqueue_scripts',
 			function () {
 				$options    = get_option( 'onlyoffice_settings' );
-				$api_js_url = $options[ Onlyoffice_Plugin_Settings::DOCSERVER_URL ] .
-				( substr( $options[ Onlyoffice_Plugin_Settings::DOCSERVER_URL ], -1 ) === '/' ? '' : '/' ) . 'web-apps/apps/api/documents/api.js';
+				$api_js_url = Onlyoffice_Plugin_Url_Manager::get_api_js_url();
 				wp_enqueue_script( 'onlyoffice_editor_api', $api_js_url, array(), ONLYOFFICE_PLUGIN_VERSION, false );
 			}
 		);
-	}
-
-	/**
-	 * Encode openssl data.
-	 *
-	 * @param string $data The data.
-	 * @param string $passphrase The password.
-	 * @return false|string
-	 */
-	public function encode_openssl_data( $data, $passphrase ) {
-		$iv = hex2bin( get_option( 'onlyoffice-plugin-bytes' ) );
-		return openssl_encrypt( $data, 'aes-256-ctr', $passphrase, $options = 0, $iv );
 	}
 
 	/**
@@ -142,11 +124,9 @@ class Onlyoffice_Plugin_Editor {
 	 * @return bool
 	 */
 	public function check_attachment_id( $req ) {
-		$attachemnt_param = urldecode( str_replace( ',', '%', $req->get_params()['id'] ) );
-		$passphrase       = get_option( 'onlyoffice-plugin-uuid' );
-		$decoded          = $this->decode_openssl_data( $attachemnt_param, $passphrase );
-		$attachemnt_id    = substr( $decoded, 0, 1 ) !== '{' ? intval( $decoded ) : json_decode( $decoded )->attachment_id;
-		$post             = get_post( $attachemnt_id );
+		$decoded       = Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $req->get_params()['id'] );
+		$attachemnt_id = str_starts_with( $decoded, '{' ) ? json_decode( $decoded )->attachment_id : intval( $decoded );
+		$post          = get_post( $attachemnt_id );
 
 		if ( null === $post || 'attachment' !== $post->post_type ) {
 			wp_die( __( 'Post is not an attachment', 'onlyoffice-plugin' ) );
@@ -193,18 +173,17 @@ class Onlyoffice_Plugin_Editor {
 	 * @param string $go_back_url Go back url.
 	 */
 	public function editor_render( $params, $opened_from_admin_panel, $go_back_url ) {
-		$options    = get_option( 'onlyoffice_settings' );
-		$api_js_url = $options[ Onlyoffice_Plugin_Settings::DOCSERVER_URL ] .
-			( str_ends_with( $options[ Onlyoffice_Plugin_Settings::DOCSERVER_URL ], '/' ) ? '' : '/' ) . 'web-apps/apps/api/documents/api.js';
+		$api_js_url = Onlyoffice_Plugin_Url_Manager::get_api_js_url();
+
 		ob_start();
 		$api_js_status = $this->check_api_js( $api_js_url );
 		ob_clean();
+
 		if ( ! $api_js_status ) {
 			wp_die( __( 'ONLYOFFICE cannot be reached. Please contact admin', 'onlyoffice-plugin' ) );
 		}
 
-		$passphrase    = get_option( 'onlyoffice-plugin-uuid' );
-		$attachemnt_id = intval( $this->decode_openssl_data( urldecode( str_replace( ',', '%', $params['id'] ) ), $passphrase ) );
+		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $params['id'] ) );
 		$post          = get_post( $attachemnt_id );
 
 		$author = get_user_by( 'id', $post->post_author )->display_name;
@@ -218,29 +197,8 @@ class Onlyoffice_Plugin_Editor {
 
 		$can_edit = $has_edit_cap && Onlyoffice_Plugin_Document_Manager::is_editable( $filename );
 
-		$permalink_structure = get_option( 'permalink_structure' );
-		$hidden_id           = str_replace( '%', ',', rawurlencode( $this->encode_openssl_data( $attachemnt_id, $passphrase ) ) );
-		$hidden_data         = str_replace(
-			'%',
-			',',
-			rawurlencode(
-				$this->encode_openssl_data(
-					json_encode(
-						array(
-							'attachment_id' => $attachemnt_id,
-							'user_id'       => $user->ID,
-						)
-					),
-					$passphrase
-				)
-			)
-		);
-
-		$callback_url = '' === $permalink_structure ? get_option( 'siteurl' ) . '/index.php?rest_route=/onlyoffice/callback/' . $hidden_id
-			: get_option( 'siteurl' ) . '/wp-json/onlyoffice/callback/' . $hidden_id;
-
-		$file_url = '' === $permalink_structure ? get_option( 'siteurl' ) . '/index.php?rest_route=/onlyoffice/getfile/' . $hidden_data
-			: get_option( 'siteurl' ) . '/wp-json/onlyoffice/getfile/' . $hidden_data;
+		$callback_url = Onlyoffice_Plugin_Url_Manager::get_callback_url( $attachemnt_id );
+		$file_url     = Onlyoffice_Plugin_Url_Manager::get_download_url( $attachemnt_id );
 
 		$lang   = $opened_from_admin_panel ? get_user_locale( $user->ID ) : get_locale();
 		$config = array(
@@ -289,6 +247,7 @@ class Onlyoffice_Plugin_Editor {
 		}
 
 		if ( Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled() ) {
+			$options         = get_option( 'onlyoffice_settings' );
 			$secret          = $options[ Onlyoffice_Plugin_Settings::DOCSERVER_JWT ];
 			$config['token'] = Onlyoffice_Plugin_JWT_Manager::jwt_encode( $config, $secret );
 		}
@@ -377,8 +336,7 @@ class Onlyoffice_Plugin_Editor {
 	 * @return void
 	 */
 	public function get_file( $req ) {
-		$param   = urldecode( str_replace( ',', '%', $req->get_params()['id'] ) );
-		$decoded = json_decode( $this->decode_openssl_data( $param, get_option( 'onlyoffice-plugin-uuid' ) ) );
+		$decoded = json_decode( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $req->get_params()['id'] ) );
 
 		$attachment_id = $decoded->attachment_id;
 		$user_id       = $decoded->user_id;
@@ -437,15 +395,14 @@ class Onlyoffice_Plugin_Editor {
 	 * @return WP_REST_Response
 	 */
 	public function callback( $req ) {
-        require_once ABSPATH . 'wp-admin/includes/post.php';
+		require_once ABSPATH . 'wp-admin/includes/post.php';
 
 		$response      = new WP_REST_Response();
 		$response_json = array(
 			'error' => 0,
 		);
 
-		$param         = urldecode( str_replace( ',', '%', $req->get_params()['id'] ) );
-		$attachemnt_id = intval( $this->decode_openssl_data( $param, get_option( 'onlyoffice-plugin-uuid' ) ) );
+		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $req->get_params()['id'] ) );
 		$body          = Onlyoffice_Plugin_Callback_Manager::read_body( $req->get_body() );
 		if ( ! empty( $body['error'] ) ) {
 			$response_json['message'] = $body['error'];

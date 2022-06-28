@@ -6,7 +6,7 @@
  * @since      1.0.0
  *
  * @package    Onlyoffice_Plugin
- * @subpackage Onlyoffice_Plugin/includes
+ * @subpackage Onlyoffice_Plugin/includes/files
  */
 
 /**
@@ -36,7 +36,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * Core class used to implement displaying files in a list table for the network admin.
  *
  * @package    Onlyoffice_Plugin
- * @subpackage Onlyoffice_Plugin/includes
+ * @subpackage Onlyoffice_Plugin/includes/files
  * @author     Ascensio System SIA <integration@onlyoffice.com>
  */
 class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
@@ -236,14 +236,8 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 		$attached = get_attached_file( $file['id'] );
 		$title    = wp_basename( $attached );
 
-		$permalink_structure = get_option( 'permalink_structure' );
-		$iv                  = hex2bin( get_option( 'onlyoffice-plugin-bytes' ) );
-		$hidden_id           = urlencode( openssl_encrypt( $file['id'], 'aes-256-ctr', get_option( 'onlyoffice-plugin-uuid' ), $options = 0, $iv ) );
-		$hidden_id           = str_replace( '%', ',', $hidden_id );
-
 		$wp_nonce   = wp_create_nonce( 'wp_rest' );
-		$editor_url = '' === $permalink_structure ? get_option( 'siteurl' ) . '/index.php?rest_route=/onlyoffice/editor/' . $hidden_id . '&_wpnonce=' . $wp_nonce
-			: get_option( 'siteurl' ) . '/wp-json/onlyoffice/editor/' . $hidden_id . '?_wpnonce=' . $wp_nonce;
+		$editor_url = Onlyoffice_Plugin_Url_Manager::get_editor_url( $file['id'] ) . '&_wpnonce=' . $wp_nonce
 
 		?>
 		<strong>

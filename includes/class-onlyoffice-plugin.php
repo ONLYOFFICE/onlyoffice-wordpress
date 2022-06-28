@@ -112,6 +112,7 @@ class Onlyoffice_Plugin {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-callback-manager.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-document-manager.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-jwt-manager.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-url-manager.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/settings/class-onlyoffice-plugin-settings.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-onlyoffice-plugin-public.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . '3rdparty/JWT.php';
