@@ -92,9 +92,15 @@ class Onlyoffice_Plugin_Public {
 	 * @since    1.0.0
 	 */
 	public function register_routes() {
+		require_once plugin_dir_path( __FILE__ ) . 'views/class-onlyoffice-plugin-callback.php';
+		require_once plugin_dir_path( __FILE__ ) . 'views/class-onlyoffice-plugin-download.php';
+		require_once plugin_dir_path( __FILE__ ) . 'views/class-onlyoffice-plugin-editor-url.php';
 		require_once plugin_dir_path( __FILE__ ) . 'views/class-onlyoffice-plugin-editor.php';
 
-		$editor = new Onlyoffice_Plugin_Editor();
+		$callback   = new Onlyoffice_Plugin_Callback();
+		$download   = new Onlyoffice_Plugin_Download();
+		$editor_url = new Onlyoffice_Plugin_Editor_Url();
+		$editor     = new Onlyoffice_Plugin_Editor();
 
 		register_rest_route(
 			'onlyoffice',
@@ -102,7 +108,7 @@ class Onlyoffice_Plugin_Public {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $editor, 'editor' ),
-				'permission_callback' => array( $editor, 'check_attachment_id' ),
+				'permission_callback' => array( $this, 'check_attachment_id' ),
 			)
 		);
 
@@ -111,8 +117,8 @@ class Onlyoffice_Plugin_Public {
 			'/callback/(?P<id>[^\/\n\r]+)',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $editor, 'callback' ),
-				'permission_callback' => array( $editor, 'check_attachment_id' ),
+				'callback'            => array( $callback, 'callback' ),
+				'permission_callback' => array( $this, 'check_attachment_id' ),
 			)
 		);
 
@@ -121,8 +127,8 @@ class Onlyoffice_Plugin_Public {
 			'/getfile/(?P<id>[^\/\n\r]+)',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $editor, 'get_file' ),
-				'permission_callback' => array( $editor, 'check_attachment_id' ),
+				'callback'            => array( $download, 'get_file' ),
+				'permission_callback' => array( $this, 'check_attachment_id' ),
 			)
 		);
 
@@ -131,8 +137,26 @@ class Onlyoffice_Plugin_Public {
 			'/editorurl/(?P<id>\d+)',
 			array(
 				'methods'  => WP_REST_Server::READABLE,
-				'callback' => array( $editor, 'get_onlyoffice_editor_url' ),
+				'callback' => array( $editor_url, 'get_onlyoffice_editor_url' ),
 			)
 		);
+	}
+
+	/**
+	 * Check valid attachment id.
+	 *
+	 * @param array $req The request.
+	 * @return bool
+	 */
+	public function check_attachment_id( $req ) {
+		$decoded       = Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $req->get_params()['id'] );
+		$attachemnt_id = str_starts_with( $decoded, '{' ) ? json_decode( $decoded )->attachment_id : intval( $decoded );
+		$post          = get_post( $attachemnt_id );
+
+		if ( null === $post || 'attachment' !== $post->post_type ) {
+			wp_die( __( 'Post is not an attachment', 'onlyoffice-plugin' ) );
+		}
+
+		return true;
 	}
 }

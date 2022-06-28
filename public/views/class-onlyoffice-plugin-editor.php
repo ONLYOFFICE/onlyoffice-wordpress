@@ -1,6 +1,6 @@
 <?php
 /**
- * The editor routes.
+ * The editor route.
  *
  * @link       https://github.com/ONLYOFFICE/onlyoffice-wordpress
  * @since      1.0.0
@@ -29,53 +29,13 @@
  */
 
 /**
- * The editor routes.
+ * The editor route.
  *
  * @package    Onlyoffice_Plugin
  * @subpackage Onlyoffice_Plugin/public/views
  * @author     Ascensio System SIA <integration@onlyoffice.com>
  */
 class Onlyoffice_Plugin_Editor {
-
-	const EDIT_CAPS = array(
-		'edit_others_pages',
-		'edit_others_posts',
-		'edit_pages',
-		'edit_posts',
-		'edit_private_pages',
-		'edit_private_posts',
-		'edit_published_pages',
-		'edit_published_posts',
-	);
-
-	const CALLBACK_STATUS = array(
-		0 => 'NotFound',
-		1 => 'Editing',
-		2 => 'MustSave',
-		3 => 'Corrupted',
-		4 => 'Closed',
-		6 => 'MustForceSave',
-		7 => 'CorruptedForceSave',
-	);
-
-	/**
-	 * Return editor url.
-	 *
-	 * @param array $req      The array of request data. All arguments are optional and may be empty.
-	 * @return WP_REST_Response
-	 */
-	public function get_onlyoffice_editor_url( $req ) {
-		$attachment_id = $req->get_params()['id'];
-
-		$response = new WP_REST_Response();
-		$response->set_data(
-			array(
-				'url' => Onlyoffice_Plugin_Url_Manager::get_editor_url( $attachment_id ),
-			)
-		);
-
-		return $response;
-	}
 
 	/**
 	 * Check availability api.js.
@@ -106,36 +66,6 @@ class Onlyoffice_Plugin_Editor {
 	}
 
 	/**
-	 * Decode openssl data.
-	 *
-	 * @param string $data The data.
-	 * @param string $passphrase The password.
-	 * @return false|string
-	 */
-	public function decode_openssl_data( $data, $passphrase ) {
-		$iv = hex2bin( get_option( 'onlyoffice-plugin-bytes' ) );
-		return openssl_decrypt( $data, 'aes-256-ctr', $passphrase, $options = 0, $iv );
-	}
-
-	/**
-	 * Check valid attachment id.
-	 *
-	 * @param array $req The request.
-	 * @return bool
-	 */
-	public function check_attachment_id( $req ) {
-		$decoded       = Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $req->get_params()['id'] );
-		$attachemnt_id = str_starts_with( $decoded, '{' ) ? json_decode( $decoded )->attachment_id : intval( $decoded );
-		$post          = get_post( $attachemnt_id );
-
-		if ( null === $post || 'attachment' !== $post->post_type ) {
-			wp_die( __( 'Post is not an attachment', 'onlyoffice-plugin' ) );
-		}
-
-		return true;
-	}
-
-	/**
 	 * Editor.
 	 *
 	 * @param array $req The request.
@@ -149,20 +79,6 @@ class Onlyoffice_Plugin_Editor {
 		$response                = new WP_REST_Response( $this->editor_render( $req->get_params(), $opened_from_admin_panel, $go_back_url ) );
 		$response->header( 'Content-Type', 'text/html; charset=utf-8' );
 		return $response;
-	}
-
-	/**
-	 * Returns true if user can edit attachment.
-	 *
-	 * @param string $attachment_id The request.
-	 * @return bool
-	 */
-	public function has_edit_capability( $attachment_id ) {
-		$has_edit_cap = false;
-		foreach ( self::EDIT_CAPS as $capability ) {
-			$has_edit_cap = $has_edit_cap || current_user_can( $capability, $attachment_id );
-		}
-		return $has_edit_cap;
 	}
 
 	/**
@@ -193,7 +109,7 @@ class Onlyoffice_Plugin_Editor {
 		$filetype = strtolower( pathinfo( $filepath, PATHINFO_EXTENSION ) );
 		$filename = wp_basename( $filepath );
 
-		$has_edit_cap = $this->has_edit_capability( $attachemnt_id );
+		$has_edit_cap = Onlyoffice_Plugin_Document_Manager::has_edit_capability( $attachemnt_id );
 
 		$can_edit = $has_edit_cap && Onlyoffice_Plugin_Document_Manager::is_editable( $filename );
 
@@ -328,144 +244,4 @@ class Onlyoffice_Plugin_Editor {
 		<?php
 	}
 
-	/**
-	 * Get file.
-	 *
-	 * @param array $req The request.
-	 *
-	 * @return void
-	 */
-	public function get_file( $req ) {
-		$decoded = json_decode( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $req->get_params()['id'] ) );
-
-		$attachment_id = $decoded->attachment_id;
-		$user_id       = $decoded->user_id;
-
-		if ( 0 !== $user_id ) {
-			$user = get_user_by( 'id', $user_id );
-			if ( ( null !== $user_id ) && $user ) {
-				wp_set_current_user( $user_id, $user->user_login );
-				wp_set_auth_cookie( $user_id );
-				do_action( 'wp_login', $user->user_login );
-			} else {
-				wp_die( 'No user information', '', array( 'response' => 403 ) );
-			}
-
-			$has_read_capability = current_user_can( 'read' );
-			if ( ! $has_read_capability ) {
-				wp_die( 'No read capability', '', array( 'response' => 403 ) );
-			}
-		}
-		if ( Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled() ) {
-			$jwt_header = 'Authorization';
-			if ( ! empty( apache_request_headers()[ $jwt_header ] ) ) {
-				$options = get_option( 'onlyoffice_settings' );
-				$secret  = $options[ Onlyoffice_Plugin_Settings::DOCSERVER_JWT ];
-				$token   = Onlyoffice_Plugin_JWT_Manager::jwt_decode( substr( apache_request_headers()[ $jwt_header ], strlen( 'Bearer ' ) ), $secret );
-				if ( empty( $token ) ) {
-					wp_die( 'Invalid JWT signature', '', array( 'response' => 403 ) );
-				}
-			}
-		}
-
-		if ( ob_get_level() ) {
-			ob_end_clean();
-		}
-
-		$filepath = get_attached_file( $attachment_id );
-
-		@header( 'Content-Length: ' . filesize( $filepath ) );
-		@header( 'Content-Disposition: attachment; filename*=UTF-8\'\'' . urldecode( basename( $filepath ) ) );
-		@header( 'Content-Type: ' . mime_content_type( $filepath ) );
-
-		if ( $fd = fopen( $filepath, 'rb' ) ) {
-			while ( ! feof( $fd ) ) {
-				print fread( $fd, 1024 );
-			}
-			fclose( $fd );
-		}
-		exit;
-	}
-
-	/**
-	 * Callback
-	 *
-	 * @param array $req Request.
-	 *
-	 * @return WP_REST_Response
-	 */
-	public function callback( $req ) {
-		require_once ABSPATH . 'wp-admin/includes/post.php';
-
-		$response      = new WP_REST_Response();
-		$response_json = array(
-			'error' => 0,
-		);
-
-		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $req->get_params()['id'] ) );
-		$body          = Onlyoffice_Plugin_Callback_Manager::read_body( $req->get_body() );
-		if ( ! empty( $body['error'] ) ) {
-			$response_json['message'] = $body['error'];
-			$response->data           = $response_json;
-			return $response;
-		}
-
-		wp_set_current_user( $body['actions'][0]['userid'] );
-
-		$status = self::CALLBACK_STATUS[ $body['status'] ];
-
-		$user_id = null;
-		if ( ! empty( $body['users'] ) ) {
-			$users = $body['users'];
-			if ( count( $users ) > 0 ) {
-				$user_id = $users[0];
-			}
-		}
-
-		if ( null === $user_id && ! empty( $body['actions'] ) ) {
-			$actions = $body['actions'];
-			if ( count( $actions ) > 0 ) {
-				$user_id = $actions[0]['userid'];
-			}
-		}
-
-		$user = get_user_by( 'id', $user_id );
-		if ( null !== $user_id && $user ) {
-			wp_set_current_user( $user_id, $user->user_login );
-			wp_set_auth_cookie( $user_id );
-			do_action( 'wp_login', $user->user_login );
-		} else {
-			wp_die( 'No user information', '', array( 'response' => 403 ) );
-		}
-
-		switch ( $status ) {
-			case 'Editing':
-				break;
-			case 'MustSave':
-				$can_edit = $this->has_edit_capability( $attachemnt_id );
-				if ( ! $can_edit ) {
-					wp_die( 'No edit capability', '', array( 'response' => 403 ) );
-				}
-
-				$locked = wp_check_post_lock( $attachemnt_id );
-				if ( ! $locked ) {
-					wp_set_post_lock( $attachemnt_id );
-				}
-
-				$response_json['error'] = Onlyoffice_Plugin_Callback_Manager::proccess_save( $body, $attachemnt_id );
-				break;
-			case 'Corrupted':
-			case 'Closed':
-			case 'NotFound':
-				delete_post_meta( $attachemnt_id, '_edit_lock' );
-				break;
-			case 'MustForceSave':
-			case 'CorruptedForceSave':
-				break;
-		}
-
-		$response->data = $response_json;
-
-		return $response;
-	}
 }
