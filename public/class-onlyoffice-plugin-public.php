@@ -154,7 +154,7 @@ class Onlyoffice_Plugin_Public {
 		$post          = get_post( $attachemnt_id );
 
 		if ( null === $post || 'attachment' !== $post->post_type ) {
-			wp_die( __( 'Post is not an attachment', 'onlyoffice-plugin' ) );
+			wp_die( esc_attr_e( 'Post is not an attachment', 'onlyoffice-plugin' ) );
 		}
 
 		return true;

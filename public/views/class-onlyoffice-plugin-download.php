@@ -83,16 +83,13 @@ class Onlyoffice_Plugin_Download {
 
 		$filepath = get_attached_file( $attachment_id );
 
-		@header( 'Content-Length: ' . filesize( $filepath ) );
-		@header( 'Content-Disposition: attachment; filename*=UTF-8\'\'' . urldecode( basename( $filepath ) ) );
-		@header( 'Content-Type: ' . mime_content_type( $filepath ) );
+		header( 'Content-Length: ' . filesize( $filepath ) );
+		header( 'Content-Disposition: attachment; filename*=UTF-8\'\'' . urldecode( basename( $filepath ) ) );
+		header( 'Content-Type: ' . mime_content_type( $filepath ) );
 
-		if ( $fd = fopen( $filepath, 'rb' ) ) {
-			while ( ! feof( $fd ) ) {
-				print fread( $fd, 1024 );
-			}
-			fclose( $fd );
-		}
+		flush();
+		readfile( $filepath );
+		unlink( $filepath );
 		exit;
 	}
 

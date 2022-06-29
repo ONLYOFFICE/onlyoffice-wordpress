@@ -100,7 +100,7 @@ class Onlyoffice_Plugin_Url_Manager {
 	 * @return string
 	 */
 	public static function get_download_url( $attachment_id ) {
-		$data = json_encode(
+		$data = wp_json_encode(
 			array(
 				'attachment_id' => $attachment_id,
 				'user_id'       => wp_get_current_user()->ID,

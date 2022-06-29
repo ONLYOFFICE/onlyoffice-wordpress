@@ -96,7 +96,7 @@ class Onlyoffice_Plugin_Editor {
 		ob_clean();
 
 		if ( ! $api_js_status ) {
-			wp_die( __( 'ONLYOFFICE cannot be reached. Please contact admin', 'onlyoffice-plugin' ) );
+			wp_die( esc_attr_e( 'ONLYOFFICE cannot be reached. Please contact admin', 'onlyoffice-plugin' ) );
 		}
 
 		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $params['id'] ) );
