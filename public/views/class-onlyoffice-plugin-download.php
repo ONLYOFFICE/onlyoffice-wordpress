@@ -87,9 +87,8 @@ class Onlyoffice_Plugin_Download {
 		header( 'Content-Disposition: attachment; filename*=UTF-8\'\'' . urldecode( basename( $filepath ) ) );
 		header( 'Content-Type: ' . mime_content_type( $filepath ) );
 
-		flush();
 		readfile( $filepath );
-		unlink( $filepath );
+		flush();
 		exit;
 	}
 
