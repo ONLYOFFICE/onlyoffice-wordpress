@@ -88,26 +88,33 @@ class Onlyoffice_Plugin_Callback_Manager {
 	 *
 	 * @param mixed  $body The body from request.
 	 * @param string $attachemnt_id The id of the attachment.
+	 * @global WP_Filesystem_Base $wp_filesystem WordPress filesystem subclass.
 	 * @return int
 	 * @since    1.0.0
 	 */
 	public static function proccess_save( $body, $attachemnt_id ) {
+		global $wp_filesystem;
+
 		$download_url = $body['url'];
 		if ( null === $download_url ) {
 			return 1;
 		}
 
-		$new_data = wp_remote_get( $download_url );
-		if ( null === $new_data ) {
+		$response = wp_remote_get( $download_url );
+
+		if ( is_wp_error( $response ) ) {
 			return 1;
 		}
 
+		$new_data = wp_remote_retrieve_body( $response );
+
 		$filepath = get_attached_file( $attachemnt_id );
-		WP_Filesystem( $filepath, $new_data, LOCK_EX );
+
+		$wp_filesystem->put_contents( $filepath, $new_data, FS_CHMOD_FILE );
+
 		$id = wp_update_post(
 			array(
-				'id'   => $attachemnt_id,
-				'file' => 'file',
+				'ID' => $attachemnt_id,
 			)
 		);
 
