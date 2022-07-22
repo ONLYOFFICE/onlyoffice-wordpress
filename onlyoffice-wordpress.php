@@ -22,7 +22,7 @@
 /**
  * Plugin Name:       ONLYOFFICE
  * Plugin URI:        https://github.com/ONLYOFFICE/onlyoffice-wordpress
- * Description:       ONLYOFFICE Description
+ * Description:       Add ONLYOFFICE editor on page
  * Version:           1.0.2
  * Requires at least: 5.7
  * Requires PHP:      7.4
