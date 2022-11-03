@@ -32,6 +32,8 @@ You need to have [ONLYOFFICE Document Server](https://github.com/ONLYOFFICE/Docu
 
 Go to WordPress administrative dashboard -> ONLYOFFICE -> Settings. Specify the URL of the installed ONLYOFFICE Document Server and the Secret key.
 
+Please note: Starting from version 7.2 of ONLYOFFICE Docs, JWT is enabled by default and the secret key is generated automatically to restrict the access to ONLYOFFICE Docs and for security reasons and data integrity. Specify your own secret key in the WordPress administrative configuration. In the ONLYOFFICE Docs [config file](https://api.onlyoffice.com/editors/signature/), specify the same secret key and enable the validation.
+
 = What collaborative features do the editors provide? =
 
 You can co-author documents using real-time or paragraph-locking co-eding modes, Track Changes, comments, and built-in chat.
