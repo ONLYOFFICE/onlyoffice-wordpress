@@ -68,4 +68,14 @@ class Onlyoffice_Plugin_Document_Helper
     public static function all_formats() {
         return array_merge(self::EXTS_WORD, self::EXTS_SLIDE, self::EXTS_CELL);
     }
+
+    public static function get_mime_type($filename){
+        $mime = wp_check_filetype($filename);
+
+        if ($mime['type'] === false && function_exists('mime_content_type')) {
+            $mime['type'] = mime_content_type($filename);
+        }
+
+       return $mime['type'] === false ? 'application/octet-stream' : $mime['type'];
+    }
 }
