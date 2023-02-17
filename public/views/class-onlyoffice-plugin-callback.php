@@ -79,7 +79,7 @@ class Onlyoffice_Plugin_Callback {
 			}
 
 			$options = get_option('onlyoffice_settings');
-			$secret = $options[Onlyoffice_Plugin_Settings::docserver_jwt];
+			$secret = $options[Onlyoffice_Plugin_Settings::DOCSERVER_JWT];
 
 			try {
 				$bodyFromToken = Onlyoffice_Plugin_JWT_Manager::jwt_decode($token, $secret);
