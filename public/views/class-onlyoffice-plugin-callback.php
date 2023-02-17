@@ -57,45 +57,64 @@ class Onlyoffice_Plugin_Callback {
 	public function callback( $req ) {
 		require_once ABSPATH . 'wp-admin/includes/post.php';
 
-		$body = json_decode($req->get_body(), TRUE);
+		$body = json_decode( $req->get_body(), true );
 
-		if ($body === NULL) {
-			wp_send_json(['error' => 1, 'message' => 'The request body is missing.'], 400);
+		if ( null === $body ) {
+			wp_send_json(
+				array(
+					'error'   => 1,
+					'message' => 'The request body is missing.',
+				),
+				400
+			);
 		}
 
-		if (Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled()) {
-			$token = $body["token"];
+		if ( Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled() ) {
+			$token   = $body['token'];
 			$in_body = true;
 
-			if (empty($token)) {
-				$jwt_header = "Authorization";
-				$authorization_header = apache_request_headers()[$jwt_header];
-				$token = $authorization_header !== NULL ? substr($authorization_header, strlen("Bearer ")) : $authorization_header;
-				$in_body = false;
+			if ( empty( $token ) ) {
+				$jwt_header           = 'Authorization';
+				$authorization_header = apache_request_headers()[ $jwt_header ];
+				$token                = null !== $authorization_header ? substr( $authorization_header, strlen( 'Bearer ' ) ) : $authorization_header;
+				$in_body              = false;
 			}
 
-			if (empty($token)) {
-				wp_send_json(['error' => 1, 'message' => 'The request token is missing.'], 401);
+			if ( empty( $token ) ) {
+				wp_send_json(
+					array(
+						'error'   => 1,
+						'message' => 'The request token is missing.',
+					),
+					401
+				);
 			}
 
-			$options = get_option('onlyoffice_settings');
-			$secret = $options[Onlyoffice_Plugin_Settings::DOCSERVER_JWT];
+			$options = get_option( 'onlyoffice_settings' );
+			$secret  = $options[ Onlyoffice_Plugin_Settings::DOCSERVER_JWT ];
 
 			try {
-				$bodyFromToken = Onlyoffice_Plugin_JWT_Manager::jwt_decode($token, $secret);
-				$body = json_decode(json_encode($bodyFromToken), true);
+				$body_from_token = Onlyoffice_Plugin_JWT_Manager::jwt_decode( $token, $secret );
+				$body            = json_decode( wp_json_encode( $body_from_token ), true );
 
-				if (!$in_body) $body = $body["payload"];
-			} catch (Exception $e) {
-				error_log($e);
-				wp_send_json(['error' => 1, 'message' => 'Invalid request token.'], 401);
+				if ( ! $in_body ) {
+					$body = $body['payload'];
+				}
+			} catch ( Exception $e ) {
+				wp_send_json(
+					array(
+						'error'   => 1,
+						'message' => 'Invalid request token.',
+					),
+					401
+				);
 			}
 		}
 
-		$param = urldecode(str_replace(',', '%', $req->get_params()['id']));
+		$param = urldecode( str_replace( ',', '%', $req->get_params()['id'] ) );
 
-		$attachemnt_id = intval(Onlyoffice_Plugin_Url_Manager::decode_openssl_data($param, get_option("onlyoffice-plugin-uuid")));
-		$user_id = isset($body["actions"]) ? $body["actions"][0]["userid"] : null;
+		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $param, get_option( 'onlyoffice-plugin-uuid' ) ) );
+		$user_id       = isset( $body['actions'] ) ? $body['actions'][0]['userid'] : null;
 
 		$user = get_user_by( 'id', $user_id );
 		if ( null !== $user_id && $user ) {
@@ -106,11 +125,11 @@ class Onlyoffice_Plugin_Callback {
 			wp_die( 'No user information', '', array( 'response' => 403 ) );
 		}
 
-		$status = Onlyoffice_Plugin_Callback::CALLBACK_STATUS[$body["status"]];
+		$status = self::CALLBACK_STATUS [ $body['status'] ];
 
-		$response = new WP_REST_Response();
+		$response      = new WP_REST_Response();
 		$response_json = array(
-			'error' => 0
+			'error' => 0,
 		);
 
 		switch ( $status ) {

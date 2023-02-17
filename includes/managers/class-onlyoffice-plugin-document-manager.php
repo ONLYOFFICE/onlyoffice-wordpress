@@ -173,14 +173,20 @@ class Onlyoffice_Plugin_Document_Manager {
 		return $has_edit_cap;
 	}
 
-    public static function get_mime_type($filename){
-        $mime = wp_check_filetype($filename);
+	/**
+	 * Return mime type by file name.
+	 *
+	 * @param string $filename The file name.
+	 * @return string
+	 */
+	public static function get_mime_type( $filename ) {
+		$mime = wp_check_filetype( $filename );
 
-        if ($mime['type'] === false && function_exists('mime_content_type')) {
-            $mime['type'] = mime_content_type($filename);
-        }
+		if ( false === $mime['type'] && function_exists( 'mime_content_type' ) ) {
+			$mime['type'] = mime_content_type( $filename );
+		}
 
-       return $mime['type'] === false ? 'application/octet-stream' : $mime['type'];
-    }
+		return false === $mime['type'] ? 'application/octet-stream' : $mime['type'];
+	}
 
 }

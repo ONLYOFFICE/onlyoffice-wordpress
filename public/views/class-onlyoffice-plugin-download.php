@@ -46,24 +46,23 @@ class Onlyoffice_Plugin_Download {
 	 */
 	public function get_file( $req ) {
 
-		if (Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled()) {
-			$jwt_header = "Authorization";
-			$authorization_header = apache_request_headers()[$jwt_header];
+		if ( Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled() ) {
+			$jwt_header           = 'Authorization';
+			$authorization_header = apache_request_headers()[ $jwt_header ];
 
-			$token = $authorization_header !== NULL ?  substr($authorization_header, strlen("Bearer ")) : $authorization_header;
+			$token = null !== $authorization_header ? substr( $authorization_header, strlen( 'Bearer ' ) ) : $authorization_header;
 
-			if (empty($token)) {
-				wp_die("The request token is missing.", '', array('response' => 401));
+			if ( empty( $token ) ) {
+				wp_die( 'The request token is missing.', '', array( 'response' => 401 ) );
 			}
 
-			$options = get_option('onlyoffice_settings');
-			$secret = $options[Onlyoffice_Plugin_Settings::DOCSERVER_JWT];
+			$options = get_option( 'onlyoffice_settings' );
+			$secret  = $options[ Onlyoffice_Plugin_Settings::DOCSERVER_JWT ];
 
 			try {
-				Onlyoffice_Plugin_JWT_Manager::jwt_decode($token, $secret);
-			} catch (Exception $e) {
-				error_log($e);
-				wp_die("Invalid JWT signature", '', array('response' => 401));
+				Onlyoffice_Plugin_JWT_Manager::jwt_decode( $token, $secret );
+			} catch ( Exception $e ) {
+				wp_die( 'Invalid JWT signature', '', array( 'response' => 401 ) );
 			}
 		}
 
