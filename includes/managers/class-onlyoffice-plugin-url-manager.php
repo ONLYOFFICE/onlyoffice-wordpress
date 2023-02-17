@@ -154,7 +154,7 @@ class Onlyoffice_Plugin_Url_Manager {
 	 * @param string $data The data.
 	 * @return false|string
 	 */
-	public function decode_openssl_data( $data ) {
+	public static function decode_openssl_data( $data ) {
 		$passphrase = get_option( 'onlyoffice-plugin-uuid' );
 		$iv         = hex2bin( get_option( 'onlyoffice-plugin-bytes' ) );
 

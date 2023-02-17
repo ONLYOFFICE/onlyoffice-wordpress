@@ -57,37 +57,45 @@ class Onlyoffice_Plugin_Callback {
 	public function callback( $req ) {
 		require_once ABSPATH . 'wp-admin/includes/post.php';
 
-		$response      = new WP_REST_Response();
-		$response_json = array(
-			'error' => 0,
-		);
+		$body = json_decode($req->get_body(), TRUE);
 
-		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $req->get_params()['id'] ) );
-		$body          = Onlyoffice_Plugin_Callback_Manager::read_body( $req->get_body() );
-		if ( ! empty( $body['error'] ) ) {
-			$response_json['message'] = $body['error'];
-			$response->data           = $response_json;
-			return $response;
+		if ($body === NULL) {
+			wp_send_json(['error' => 1, 'message' => 'The request body is missing.'], 400);
 		}
 
-		wp_set_current_user( $body['actions'][0]['userid'] );
+		if (Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled()) {
+			$token = $body["token"];
+			$in_body = true;
 
-		$status = self::CALLBACK_STATUS[ $body['status'] ];
+			if (empty($token)) {
+				$jwt_header = "Authorization";
+				$authorization_header = apache_request_headers()[$jwt_header];
+				$token = $authorization_header !== NULL ? substr($authorization_header, strlen("Bearer ")) : $authorization_header;
+				$in_body = false;
+			}
 
-		$user_id = null;
-		if ( ! empty( $body['users'] ) ) {
-			$users = $body['users'];
-			if ( count( $users ) > 0 ) {
-				$user_id = $users[0];
+			if (empty($token)) {
+				wp_send_json(['error' => 1, 'message' => 'The request token is missing.'], 401);
+			}
+
+			$options = get_option('onlyoffice_settings');
+			$secret = $options[Onlyoffice_Plugin_Settings::docserver_jwt];
+
+			try {
+				$bodyFromToken = Onlyoffice_Plugin_JWT_Manager::jwt_decode($token, $secret);
+				$body = json_decode(json_encode($bodyFromToken), true);
+
+				if (!$in_body) $body = $body["payload"];
+			} catch (Exception $e) {
+				error_log($e);
+				wp_send_json(['error' => 1, 'message' => 'Invalid request token.'], 401);
 			}
 		}
 
-		if ( null === $user_id && ! empty( $body['actions'] ) ) {
-			$actions = $body['actions'];
-			if ( count( $actions ) > 0 ) {
-				$user_id = $actions[0]['userid'];
-			}
-		}
+		$param = urldecode(str_replace(',', '%', $req->get_params()['id']));
+
+		$attachemnt_id = intval(Onlyoffice_Plugin_Url_Manager::decode_openssl_data($param, get_option("onlyoffice-plugin-uuid")));
+		$user_id = isset($body["actions"]) ? $body["actions"][0]["userid"] : null;
 
 		$user = get_user_by( 'id', $user_id );
 		if ( null !== $user_id && $user ) {
@@ -97,6 +105,13 @@ class Onlyoffice_Plugin_Callback {
 		} else {
 			wp_die( 'No user information', '', array( 'response' => 403 ) );
 		}
+
+		$status = Onlyoffice_Plugin_Callback::CALLBACK_STATUS[$body["status"]];
+
+		$response = new WP_REST_Response();
+		$response_json = array(
+			'error' => 0
+		);
 
 		switch ( $status ) {
 			case 'Editing':
