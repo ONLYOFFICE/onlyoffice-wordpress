@@ -1,5 +1,9 @@
 # Change Log
 
+
+## Added
+- compatible with classic editor TinyMCE
+
 ## 1.0.2
 ## Changed
 - fixed issues for the marketplace release
