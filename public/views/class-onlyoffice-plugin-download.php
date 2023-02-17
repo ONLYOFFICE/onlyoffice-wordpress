@@ -96,7 +96,7 @@ class Onlyoffice_Plugin_Download {
 
 		header( 'Content-Length: ' . filesize( $filepath ) );
 		header( 'Content-Disposition: attachment; filename*=UTF-8\'\'' . urldecode( basename( $filepath ) ) );
-		header( 'Content-Type: ' . mime_content_type( $filepath ) );
+		header( 'Content-Type: ' . Onlyoffice_Plugin_Document_Manager::get_mime_type( $filepath ) );
 
 		readfile( $filepath );
 		flush();
