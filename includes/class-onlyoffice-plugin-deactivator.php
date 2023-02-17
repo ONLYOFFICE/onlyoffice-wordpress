@@ -45,8 +45,6 @@ class Onlyoffice_Plugin_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-		delete_option( 'onlyoffice-plugin-uuid' );
-		delete_option( 'onlyoffice-plugin-bytes' );
 	}
 
 }

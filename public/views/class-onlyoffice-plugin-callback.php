@@ -93,7 +93,7 @@ class Onlyoffice_Plugin_Callback {
 		if ( null !== $user_id && $user ) {
 			wp_set_current_user( $user_id, $user->user_login );
 			wp_set_auth_cookie( $user_id );
-			do_action( 'wp_login', $user->user_login );
+			do_action( 'wp_login', $user->user_login, $user );
 		} else {
 			wp_die( 'No user information', '', array( 'response' => 403 ) );
 		}
