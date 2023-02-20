@@ -2,6 +2,7 @@
 
 
 ## Added
+- setting authorization header
 - compatible with classic editor TinyMCE
 
 ## 1.0.2
