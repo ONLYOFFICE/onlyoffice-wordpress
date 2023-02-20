@@ -24,6 +24,12 @@ msgstr "Clé secrète JWT de Document Server"
 msgid "Secret key (leave blank to disable)"
 msgstr "Clé secrète (laisser vide pour désactiver)"
 
+msgid "Authorization header"
+msgstr "En-tête d'autorisation"
+
+msgid "Leave blank to use default header"
+msgstr "Laissez vide pour utiliser l'en-tête par défaut"
+
 msgid "Settings Saved"
 msgstr "Paramètres sauvegardés"
 
