@@ -248,7 +248,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 
 		?>
 		<strong>
-			<a href="<?php echo esc_url( $editor_url ); ?>" >
+			<a target="_blank" href="<?php echo esc_url( $editor_url ); ?>" >
 				<?php
 				echo esc_html( $title );
 				?>
