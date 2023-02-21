@@ -50,10 +50,10 @@ class Onlyoffice_Plugin_JWT_Manager {
 	 * Returns jwt header.
 	 */
 	public static function get_jwt_header() {
-		$options = get_option( 'onlyoffice_settings' );
-		$jwt_header = "Authorization";
+		$options    = get_option( 'onlyoffice_settings' );
+		$jwt_header = 'Authorization';
 		if ( ! empty( $options[ Onlyoffice_Plugin_Settings::JWT_HEADER ] ) ) {
-			$jwt_header = $options[ Onlyoffice_Plugin_Settings::JWT_HEADER];
+			$jwt_header = $options[ Onlyoffice_Plugin_Settings::JWT_HEADER ];
 		}
 
 		return $jwt_header;
