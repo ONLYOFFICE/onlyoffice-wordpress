@@ -74,7 +74,7 @@ class Onlyoffice_Plugin_Callback {
 			$in_body = true;
 
 			if ( empty( $token ) ) {
-				$jwt_header           = 'Authorization';
+				$jwt_header           = Onlyoffice_Plugin_JWT_Manager::get_jwt_header();
 				$authorization_header = apache_request_headers()[ $jwt_header ];
 				$token                = null !== $authorization_header ? substr( $authorization_header, strlen( 'Bearer ' ) ) : $authorization_header;
 				$in_body              = false;

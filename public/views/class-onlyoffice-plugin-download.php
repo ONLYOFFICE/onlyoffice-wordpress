@@ -47,7 +47,7 @@ class Onlyoffice_Plugin_Download {
 	public function get_file( $req ) {
 
 		if ( Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled() ) {
-			$jwt_header           = 'Authorization';
+			$jwt_header           = Onlyoffice_Plugin_JWT_Manager::get_jwt_header();
 			$authorization_header = apache_request_headers()[ $jwt_header ];
 
 			$token = null !== $authorization_header ? substr( $authorization_header, strlen( 'Bearer ' ) ) : $authorization_header;
