@@ -49,6 +49,11 @@ class Onlyoffice_Plugin_Callback_Manager {
 	public static function proccess_save( $body, $attachemnt_id ) {
 		global $wp_filesystem;
 
+		if ( ! $wp_filesystem ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+
 		$download_url = $body['url'];
 		if ( null === $download_url ) {
 			return 1;
