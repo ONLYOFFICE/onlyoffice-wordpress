@@ -102,9 +102,12 @@ class Onlyoffice_Plugin_Public {
 		$editor_url = new Onlyoffice_Plugin_Editor_Url();
 		$editor     = new Onlyoffice_Plugin_Editor();
 
+		// "oo."-prefix is needed to keep the connector working in conjunction with the plugin "Force Lowercase URLs"
+		// (https://wordpress.org/plugins/force-lowercase-urls/)
+
 		register_rest_route(
 			'onlyoffice',
-			'/editor/(?P<id>[^\/\n\r]+)',
+			'/oo.editor/(?P<id>[^\/\n\r]+)',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $editor, 'editor' ),
@@ -114,7 +117,7 @@ class Onlyoffice_Plugin_Public {
 
 		register_rest_route(
 			'onlyoffice',
-			'/callback/(?P<id>[^\/\n\r]+)',
+			'/oo.callback/(?P<id>[^\/\n\r]+)',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $callback, 'callback' ),
@@ -124,7 +127,7 @@ class Onlyoffice_Plugin_Public {
 
 		register_rest_route(
 			'onlyoffice',
-			'/getfile/(?P<id>[^\/\n\r]+)',
+			'/oo.getfile/(?P<id>[^\/\n\r]+)',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $download, 'get_file' ),
@@ -134,7 +137,7 @@ class Onlyoffice_Plugin_Public {
 
 		register_rest_route(
 			'onlyoffice',
-			'/editorurl/(?P<id>\d+)',
+			'/oo.editorurl/(?P<id>\d+)',
 			array(
 				'methods'  => WP_REST_Server::READABLE,
 				'callback' => array( $editor_url, 'get_onlyoffice_editor_url' ),

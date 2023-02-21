@@ -37,10 +37,10 @@
  */
 class Onlyoffice_Plugin_Url_Manager {
 
-	private const PATH_EDITOR_URL = '/onlyoffice/editorurl/';
-	private const PATH_CALLBACK   = '/onlyoffice/callback/';
-	private const PATH_DOWNLOAD   = '/onlyoffice/getfile/';
-	private const PATH_EDITOR     = '/onlyoffice/editor/';
+	private const PATH_EDITOR_URL = '/onlyoffice/oo.editorurl/';
+	private const PATH_CALLBACK   = '/onlyoffice/oo.callback/';
+	private const PATH_DOWNLOAD   = '/onlyoffice/oo.getfile/';
+	private const PATH_EDITOR     = '/onlyoffice/oo.editor/';
 	private const PATH_API_JS     = 'web-apps/apps/api/documents/api.js';
 
 	/**
