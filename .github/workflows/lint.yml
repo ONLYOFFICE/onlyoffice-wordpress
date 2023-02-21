@@ -9,7 +9,6 @@ on:
 jobs:
   csscomb:
     runs-on: ubuntu-latest
-    needs: editorconfig
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -53,4 +52,4 @@ jobs:
           composer global show -P
           php phpcs.phar --config-set ignore_warnings_on_exit 1
           php phpcs.phar --config-set installed_paths /home/runner/work/onlyoffice-wordpress/onlyoffice-wordpress/wpcs
-          php phpcs.phar --standard=Wordpress --ignore=3rdparty,onlyoffice-wordpress-block,admin/js ./
+          php phpcs.phar --standard=Wordpress --ignore=3rdparty,onlyoffice-wordpress-block,admin/js,onlyoffice-tinymce/*.js,vendor,wpcs ./
