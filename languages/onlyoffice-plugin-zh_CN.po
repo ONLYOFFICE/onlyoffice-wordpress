@@ -24,6 +24,12 @@ msgstr "文档服务器JWT秘钥"
 msgid "Secret key (leave blank to disable)"
 msgstr "秘钥(留空为关闭)"
 
+msgid "Authorization header"
+msgstr ""
+
+msgid "Leave blank to use default header"
+msgstr ""
+
 msgid "Settings Saved"
 msgstr "设置已保存"
 
