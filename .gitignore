@@ -12,3 +12,6 @@ results
 node_modules
 .node_history
 /.idea
+/vendor
+/wpcs
+/composer.lock

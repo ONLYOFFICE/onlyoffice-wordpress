@@ -1,7 +1,14 @@
 <?php
 /**
+ * ONLYOFFICE scripts and styles for tinymce.
  *
- * (c) Copyright Ascensio System SIA 2022
+ * @package    Onlyoffice_Plugin
+ * @subpackage Onlyoffice_Plugin/onlyoffice-tinymce
+ */
+
+/**
+ *
+ * (c) Copyright Ascensio System SIA 2023
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,23 +23,40 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
  */
 
-function mce_onlyoffice_button($buttons) {
-	array_push($buttons, 'onlyoffice-tinymce');
+/**
+ * The fanction add ONLYOFFICE button
+ *
+ * @param array $buttons Buttons.
+ */
+function mce_onlyoffice_button( $buttons ) {
+	array_push( $buttons, 'onlyoffice-tinymce' );
 	return $buttons;
 }
-add_filter('mce_buttons', 'mce_onlyoffice_button');
 
-function mce_onlyoffice_js($plugin_array) {
-	$plugin_array["onlyoffice-tinymce"] = plugins_url("/onlyoffice-tinymce.js", __FILE__);
+/** The filter add ONLYOFFICE button*/
+add_filter( 'mce_buttons', 'mce_onlyoffice_button' );
+
+/**
+ * The function add ONLYOFFICE scripts
+ *
+ * @param array $plugin_array Array plugins.
+ */
+function mce_onlyoffice_js( $plugin_array ) {
+	$plugin_array['onlyoffice-tinymce'] = plugins_url( '/onlyoffice-tinymce.js', __FILE__ );
 	return $plugin_array;
 }
-add_filter("mce_external_plugins", "mce_onlyoffice_js");
+/** The filter add ONLYOFFICE scripts*/
+add_filter( 'mce_external_plugins', 'mce_onlyoffice_js' );
 
+/** The function add ONLYOFFICE styles*/
 function mce_onlyoffice_css() {
-	wp_enqueue_style("onlyoffice-tinymce", plugins_url("/onlyoffice-tinymce.css", __FILE__));
+	wp_enqueue_style( 'onlyoffice-tinymce', plugins_url( '/onlyoffice-tinymce.css', __FILE__ ), array(), ONLYOFFICE_PLUGIN_VERSION );
 }
-add_action("admin_enqueue_scripts", "mce_onlyoffice_css");
-add_action("wp_enqueue_scripts", "mce_onlyoffice_css");
+
+/** The action add ONLYOFFICE styles*/
+add_action( 'admin_enqueue_scripts', 'mce_onlyoffice_css' );
+
+/** The action add ONLYOFFICE styles*/
+add_action( 'wp_enqueue_scripts', 'mce_onlyoffice_css' );
