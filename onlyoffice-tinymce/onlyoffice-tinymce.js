@@ -32,7 +32,10 @@
                 let onlyofficeAllowedMimes = [];
 
                 for (let ext of onlyofficeAllowedExts) {
-                    onlyofficeAllowedMimes.push(acf.getMimeType(ext));
+                    var mimeType = getMimeType(ext);
+                    if (mimeType){
+                        onlyofficeAllowedMimes.push(mimeType);
+                    }
                 }
 
                 frameOnlyoffice = wp.media.frames.onlyoffice = wp.media({
@@ -71,4 +74,20 @@
             }
         });
     });
+
+    var getMimeType = function( name ) {
+        var allTypes = oo_media.mimeTypes;
+
+        if (allTypes[name] !== undefined) {
+            return allTypes[name];
+        }
+
+        for(var key in allTypes) {
+            if(key.indexOf(name) !== -1) {
+                return allTypes[key];
+            }
+        }
+
+        return false;
+    };
 })();

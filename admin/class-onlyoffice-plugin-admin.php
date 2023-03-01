@@ -98,6 +98,7 @@ final class Onlyoffice_Plugin_Admin {
 			array(
 				'getEditorUrl' => Onlyoffice_Plugin_Url_Manager::get_url_to_editor_url(),
 				'formats'      => Onlyoffice_Plugin_Document_Manager::all_formats(),
+				'mimeTypes'    => get_allowed_mime_types(),
 			)
 		);
 	}
