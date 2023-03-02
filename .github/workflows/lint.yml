@@ -10,10 +10,10 @@ jobs:
   csscomb:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: "14.x"
+          node-version: "16.15.1"
       - run: |
           npm init -y
           npm install csscomb --global
@@ -24,7 +24,7 @@ jobs:
     needs: csscomb
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
