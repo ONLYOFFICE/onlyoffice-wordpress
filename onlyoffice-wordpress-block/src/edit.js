@@ -17,37 +17,25 @@
 */
 
 import { MediaPlaceholder, useBlockProps } from '@wordpress/block-editor';
-import { useState } from '@wordpress/element';
 import {onlyofficeIcon} from "./index";
 import {blockStyle} from "./index";
 const mime = require('mime');
 
 const Edit = ({attributes, setAttributes}) => {
-    const [url, setUrl] = useState(attributes.url);
-
-    const onlyofficeAllowedExts = attributes.formats || oo_media.formats;
+    const onlyofficeAllowedExts = oo_media.formats;
     let onlyofficeAllowedMimes = [];
 
     for (let ext of onlyofficeAllowedExts) {
         onlyofficeAllowedMimes.push(mime.getType(ext));
     }
 
-    if (!url && attributes.selectedAttachment && attributes.selectedAttachment.id) {
-        const editorUrl = attributes.getEditorUrl + attributes.selectedAttachment.id;
-
-        fetch(editorUrl).then((r) => r.json()).then((data) => {
-            setUrl(data.url);
-            setAttributes({ url: data.url });
-        });
-    }
-
     const blockProps = useBlockProps( { style: blockStyle } );
     return (
-        attributes.selectedAttachment && attributes.selectedAttachment.id ?
+        attributes.id ?
             <div {...blockProps}>
                 <p style={{display: 'flex'}}>
                     {onlyofficeIcon}
-                    <p style={{marginLeft: '25px'}}> {attributes.selectedAttachment.filename || `${attributes.selectedAttachment.title}.${mime.getExtension(attributes.selectedAttachment.mime_type)}`}</p>
+                    <p style={{marginLeft: '25px'}}> {attributes.fileName || ""}</p>
                 </p>
             </div>
             :
@@ -55,7 +43,7 @@ const Edit = ({attributes, setAttributes}) => {
                 labels={{title: 'ONLYOFFICE'}}
                 allowedTypes={onlyofficeAllowedMimes}
                 onSelect={(el) => {
-                    setAttributes({selectedAttachment: el, getEditorUrl: oo_media.getEditorUrl, formats: oo_media.formats});
+                    setAttributes({ id: el.id, fileName: el.filename || el.title + "." + mime.getExtension(el.mime_type) });
                 }}
             />
     );
