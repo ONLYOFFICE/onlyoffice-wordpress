@@ -36,25 +36,10 @@
  * @author     Ascensio System SIA <integration@onlyoffice.com>
  */
 class Onlyoffice_Plugin_Url_Manager {
-
-	private const PATH_EDITOR_URL = '/onlyoffice/oo.editorurl/';
-	private const PATH_CALLBACK   = '/onlyoffice/oo.callback/';
-	private const PATH_DOWNLOAD   = '/onlyoffice/oo.getfile/';
-	private const PATH_EDITOR     = '/onlyoffice/oo.editor/';
-	private const PATH_API_JS     = 'web-apps/apps/api/documents/api.js';
-
-	/**
-	 * Return the URL to get the URL to the editor page.
-	 *
-	 * @return string
-	 */
-	public static function get_url_to_editor_url() {
-		if ( get_option( 'permalink_structure' ) ) {
-			return get_option( 'siteurl' ) . '/index.php?rest_route=' . self::PATH_EDITOR_URL;
-		} else {
-			return get_option( 'siteurl' ) . '/wp-json' . self::PATH_EDITOR_URL;
-		}
-	}
+	private const PATH_CALLBACK = '/onlyoffice/oo.callback/';
+	private const PATH_DOWNLOAD = '/onlyoffice/oo.getfile/';
+	private const PATH_EDITOR   = '/onlyoffice/oo.editor/';
+	private const PATH_API_JS   = 'web-apps/apps/api/documents/api.js';
 
 	/**
 	 * Return the URL to api.js.

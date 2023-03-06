@@ -96,9 +96,8 @@ final class Onlyoffice_Plugin_Admin {
 			$this->plugin_name . '-media-script',
 			'oo_media',
 			array(
-				'getEditorUrl' => Onlyoffice_Plugin_Url_Manager::get_url_to_editor_url(),
-				'formats'      => Onlyoffice_Plugin_Document_Manager::all_formats(),
-				'mimeTypes'    => get_allowed_mime_types(),
+				'formats'   => Onlyoffice_Plugin_Document_Manager::all_formats(),
+				'mimeTypes' => get_allowed_mime_types(),
 			)
 		);
 	}
