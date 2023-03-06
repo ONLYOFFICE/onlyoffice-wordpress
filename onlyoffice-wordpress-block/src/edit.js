@@ -23,10 +23,13 @@ const mime = require('mime');
 
 const Edit = ({attributes, setAttributes}) => {
     const onlyofficeAllowedExts = oo_media.formats;
-    let onlyofficeAllowedMimes = [];
+    let onlyofficeAllowedMimes = ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
 
     for (let ext of onlyofficeAllowedExts) {
-        onlyofficeAllowedMimes.push(mime.getType(ext));
+        var mimeType = mime.getType(ext);
+        if (mimeType) {
+            onlyofficeAllowedMimes.push(mimeType);
+        }
     }
 
     const blockProps = useBlockProps( { style: blockStyle } );
