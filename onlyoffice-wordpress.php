@@ -96,3 +96,49 @@ function run_plugin_name() {
 }
 run_plugin_name();
 
+/**
+ * Data about additional ONLYOFFICE formats.
+ *
+ * @since    2.0.0
+ *
+ * @param array $mimes The array of mime types.
+ * @return array
+ */
+function onlyoffice_forms_mime_types( $mimes ) {
+	$mimes['oform'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.oform';
+	$mimes['docxf'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.docxf';
+
+	return $mimes;
+}
+
+/**
+ * Function for `wp_check_filetype_and_ext` filter-hook.
+ *
+ * @since    2.0.0
+ *
+ * @param array        $data      Values for the extension, mime type, and corrected filename.
+ * @param string       $file      Full path to the file.
+ * @param string       $filename  The name of the file (may differ from $file due to $file being in a tmp directory).
+ * @param string[]     $mimes     Array of mime types keyed by their file extension regex.
+ * @param string|false $real_mime The actual mime type or false if the type cannot be determined.
+ *
+ * @return array
+ */
+function onlyoffice_add_allow_upload_extension_exception( $data, $file, $filename, $mimes, $real_mime = null ) {
+	$ext = pathinfo( $filename, PATHINFO_EXTENSION );
+	switch ( $ext ) {
+		case 'oform':
+			$data['ext']  = 'oform';
+			$data['type'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.oform';
+			break;
+		case 'docxf':
+			$data['ext']  = 'docxf';
+			$data['type'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.docxf';
+			break;
+	}
+
+	return $data;
+}
+
+add_filter( 'upload_mimes', 'onlyoffice_forms_mime_types' );
+add_filter( 'wp_check_filetype_and_ext', 'onlyoffice_add_allow_upload_extension_exception', 10, 5 );
