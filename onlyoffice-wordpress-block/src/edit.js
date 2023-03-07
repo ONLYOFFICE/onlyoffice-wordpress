@@ -16,9 +16,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import { MediaPlaceholder, useBlockProps } from '@wordpress/block-editor';
-import {onlyofficeIcon} from "./index";
-import {blockStyle} from "./index";
+import { MediaPlaceholder, useBlockProps, BlockControls, MediaReplaceFlow } from '@wordpress/block-editor';
+import { onlyofficeIcon } from "./index";
+import { blockStyle } from "./index";
 const mime = require('mime');
 
 const Edit = ({attributes, setAttributes}) => {
@@ -40,16 +40,28 @@ const Edit = ({attributes, setAttributes}) => {
                     {onlyofficeIcon}
                     <p style={{marginLeft: '25px'}}> {attributes.fileName || ""}</p>
                 </p>
+                <BlockControls>
+                    <MediaReplaceFlow
+                        mediaId={attributes.id }
+                        allowedTypes={onlyofficeAllowedMimes}
+                        accept={onlyofficeAllowedMimes.join()}
+                        onSelect={(el) => {
+                            setAttributes({ id: el.id, fileName: el.filename || el.title + "." + mime.getExtension(el.mime_type) });
+                        }}
+                        name="Replace"
+                    />
+                </BlockControls>
             </div>
             :
             <MediaPlaceholder
                 labels={{title: 'ONLYOFFICE'}}
                 allowedTypes={onlyofficeAllowedMimes}
+                accept={onlyofficeAllowedMimes.join()}
                 onSelect={(el) => {
                     setAttributes({ id: el.id, fileName: el.filename || el.title + "." + mime.getExtension(el.mime_type) });
                 }}
             />
-    );
+    )
 };
 
 export default Edit;
