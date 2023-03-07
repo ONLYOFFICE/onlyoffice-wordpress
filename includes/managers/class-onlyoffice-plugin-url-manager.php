@@ -36,10 +36,11 @@
  * @author     Ascensio System SIA <integration@onlyoffice.com>
  */
 class Onlyoffice_Plugin_Url_Manager {
-	private const PATH_CALLBACK = '/onlyoffice/oo.callback/';
-	private const PATH_DOWNLOAD = '/onlyoffice/oo.getfile/';
-	private const PATH_EDITOR   = '/onlyoffice/oo.editor/';
-	private const PATH_API_JS   = 'web-apps/apps/api/documents/api.js';
+	private const PATH_CALLBACK              = '/onlyoffice/oo.callback/';
+	private const PATH_CALLBACK_PUBLIC_FORMS = '/onlyoffice/oo.callback-public-forms/';
+	private const PATH_DOWNLOAD              = '/onlyoffice/oo.getfile/';
+	private const PATH_EDITOR                = '/onlyoffice/oo.editor/';
+	private const PATH_API_JS                = 'web-apps/apps/api/documents/api.js';
 
 	/**
 	 * Return the URL to api.js.
@@ -65,16 +66,23 @@ class Onlyoffice_Plugin_Url_Manager {
 	/**
 	 * Return the URL to saving attachment.
 	 *
-	 * @param string $attachment_id The attachment ID.
+	 * @param string  $attachment_id The attachment ID.
+	 * @param boolean $public_forms The flag for public forms.
 	 * @return string
 	 */
-	public static function get_callback_url( $attachment_id ) {
+	public static function get_callback_url( $attachment_id, $public_forms ) {
 		$hidden_id = self::encode_openssl_data( $attachment_id );
 
-		if ( get_option( 'permalink_structure' ) ) {
-			return get_option( 'siteurl' ) . '/index.php?rest_route=' . self::PATH_CALLBACK . $hidden_id;
+		if ( $public_forms ) {
+			$route = self::PATH_CALLBACK_PUBLIC_FORMS;
 		} else {
-			return get_option( 'siteurl' ) . '/wp-json' . self::PATH_CALLBACK . $hidden_id;
+			$route = self::PATH_CALLBACK;
+		}
+
+		if ( get_option( 'permalink_structure' ) ) {
+			return get_option( 'siteurl' ) . '/index.php?rest_route=' . $route . $hidden_id;
+		} else {
+			return get_option( 'siteurl' ) . '/wp-json' . $route . $hidden_id;
 		}
 	}
 

@@ -125,6 +125,16 @@ class Onlyoffice_Plugin_Public {
 
 		register_rest_route(
 			'onlyoffice',
+			'/oo.callback-public-forms/(?P<id>[^\/\n\r]+)',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $callback, 'callback_public_forms' ),
+				'permission_callback' => array( $this, 'check_attachment_id' ),
+			)
+		);
+
+		register_rest_route(
+			'onlyoffice',
 			'/oo.getfile/(?P<id>[^\/\n\r]+)',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
