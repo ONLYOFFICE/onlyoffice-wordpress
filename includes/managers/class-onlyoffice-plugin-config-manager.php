@@ -40,23 +40,23 @@ class Onlyoffice_Plugin_Config_Manager {
 	/**
 	 * Return the config for ONLYOFFICE Editor.
 	 *
-	 * @param string $attachement_id The attachment ID.
-	 * @param string $type The type of editor (desktop, mobile, embbeded).
-	 * @param string $go_back_url The go back URL.
+	 * @param string  $attachment_id The attachment ID.
+	 * @param string  $type The type of editor (desktop, mobile, embbeded).
+	 * @param string  $mode The mode of editor (view or edit).
+	 * @param boolean $perm_edit The permission for editing.
+	 * @param string  $callback_url The callback url.
+	 * @param string  $go_back_url The go back URL.
 	 * @return array
 	 */
-	public static function get_config( $attachement_id, $type, $go_back_url ) {
-		$post         = get_post( $attachement_id );
-		$user         = wp_get_current_user();
-		$author       = get_user_by( 'id', $post->post_author )->display_name;
-		$filepath     = get_attached_file( $attachement_id );
-		$filename     = wp_basename( $filepath );
-		$filetype     = strtolower( pathinfo( $filepath, PATHINFO_EXTENSION ) );
-		$file_url     = Onlyoffice_Plugin_Url_Manager::get_download_url( $attachement_id );
-		$callback_url = Onlyoffice_Plugin_Url_Manager::get_callback_url( $attachement_id );
-		$has_edit_cap = Onlyoffice_Plugin_Document_Manager::has_edit_capability( $attachement_id );
-		$can_edit     = $has_edit_cap && Onlyoffice_Plugin_Document_Manager::is_editable( $filename );
-		$lang         = get_user_locale( $user->ID );
+	public static function get_config( $attachment_id, $type, $mode, $perm_edit, $callback_url, $go_back_url ) {
+		$post     = get_post( $attachment_id );
+		$user     = wp_get_current_user();
+		$author   = get_user_by( 'id', $post->post_author )->display_name;
+		$filepath = get_attached_file( $attachment_id );
+		$filename = wp_basename( $filepath );
+		$filetype = strtolower( pathinfo( $filepath, PATHINFO_EXTENSION ) );
+		$file_url = Onlyoffice_Plugin_Url_Manager::get_download_url( $attachment_id );
+		$lang     = get_user_locale( $user->ID );
 
 		$config = array(
 			'type'         => $type,
@@ -65,18 +65,18 @@ class Onlyoffice_Plugin_Config_Manager {
 				'title'       => $filename,
 				'url'         => $file_url,
 				'fileType'    => $filetype,
-				'key'         => base64_encode( $post->post_modified ) . $attachement_id,
+				'key'         => base64_encode( $post->post_modified ) . $attachment_id,
 				'info'        => array(
 					'owner'    => $author,
 					'uploaded' => $post->post_date,
 				),
 				'permissions' => array(
 					'download' => true,
-					'edit'     => $can_edit,
+					'edit'     => $perm_edit,
 				),
 			),
 			'editorConfig' => array(
-				'mode'        => $can_edit && 'embedded' !== $type ? 'edit' : 'view',
+				'mode'        => $mode,
 				'lang'        => str_contains( $lang, '_' ) ? explode( '_', $lang )[0] : $lang,
 				'callbackUrl' => $callback_url,
 			),

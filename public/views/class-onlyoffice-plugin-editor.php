@@ -96,9 +96,20 @@ class Onlyoffice_Plugin_Editor {
 			wp_die( esc_attr_e( 'ONLYOFFICE cannot be reached. Please contact admin', 'onlyoffice-plugin' ) );
 		}
 
-		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $params['id'] ) );
+		$attachment_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $params['id'] ) );
+		$filepath      = get_attached_file( $attachment_id );
+		$filename      = wp_basename( $filepath );
+		$type          = 'desktop';
+		$mode          = 'view';
+		$has_edit_cap  = Onlyoffice_Plugin_Document_Manager::has_edit_capability( $attachment_id );
+		$edit_perm     = $has_edit_cap && ( Onlyoffice_Plugin_Document_Manager::is_editable( $filename ) || Onlyoffice_Plugin_Document_Manager::is_fillable( $filename ) );
 
-		$config = Onlyoffice_Plugin_Config_Manager::get_config( $attachemnt_id, 'desktop', $go_back_url );
+		if ( $edit_perm ) {
+			$mode         = 'edit';
+			$callback_url = Onlyoffice_Plugin_Url_Manager::get_callback_url( $attachment_id, false );
+		}
+
+		$config = Onlyoffice_Plugin_Config_Manager::get_config( $attachment_id, $type, $mode, $edit_perm, $callback_url, $go_back_url );
 
 		$this->add_onlyoffice_api_js();
 
