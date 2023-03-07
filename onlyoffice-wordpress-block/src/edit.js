@@ -48,8 +48,8 @@ const Edit = ({attributes, setAttributes}) => {
         attributes.id ?
             <div {...blockProps}>
                 <InspectorControls key="setting">
-                    <PanelBody title='Settings'>
-                        <InputControl label="Name" value={attributes.fileName} onChange={ ( value ) => setAttributes({ fileName: value }) }/>
+                    <PanelBody title={__('Settings')}>
+                        <InputControl label={__('Name')} value={attributes.fileName} onChange={ ( value ) => setAttributes({ fileName: value }) } />
                     </PanelBody>
                 </InspectorControls>
 
@@ -65,7 +65,7 @@ const Edit = ({attributes, setAttributes}) => {
                         onSelect={(el) => {
                             setAttributes({ id: el.id, fileName: el.filename || el.title + "." + mime.getExtension(el.mime_type) });
                         }}
-                        name="Replace"
+                        name={__('Replace')}
                     />
                 </BlockControls>
             </div>
