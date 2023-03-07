@@ -16,9 +16,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import { MediaPlaceholder, useBlockProps, BlockControls, MediaReplaceFlow } from '@wordpress/block-editor';
+import { 
+    MediaPlaceholder,
+    useBlockProps,
+    BlockControls,
+    MediaReplaceFlow,
+    InspectorControls,
+} from '@wordpress/block-editor';
+import {
+    PanelBody,
+    __experimentalInputControl as InputControl
+} from '@wordpress/components';
 import { onlyofficeIcon } from "./index";
 import { blockStyle } from "./index";
+import { __ } from '@wordpress/i18n';
 const mime = require('mime');
 
 const Edit = ({attributes, setAttributes}) => {
@@ -36,6 +47,12 @@ const Edit = ({attributes, setAttributes}) => {
     return (
         attributes.id ?
             <div {...blockProps}>
+                <InspectorControls key="setting">
+                    <PanelBody title='Settings'>
+                        <InputControl label="Name" value={attributes.fileName} onChange={ ( value ) => setAttributes({ fileName: value }) }/>
+                    </PanelBody>
+                </InspectorControls>
+
                 <p style={{display: 'flex'}}>
                     {onlyofficeIcon}
                     <p style={{marginLeft: '25px'}}> {attributes.fileName || ""}</p>
