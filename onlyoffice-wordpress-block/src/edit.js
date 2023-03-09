@@ -34,7 +34,7 @@ const mime = require('mime');
 
 const Edit = ({attributes, setAttributes}) => {
     const onlyofficeAllowedExts = oo_media.formats;
-    let onlyofficeAllowedMimes = ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    let onlyofficeAllowedMimes = [];
 
     for (let ext of onlyofficeAllowedExts) {
         var mimeType = mime.getType(ext);
