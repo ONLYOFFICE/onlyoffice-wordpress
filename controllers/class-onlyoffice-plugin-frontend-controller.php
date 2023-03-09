@@ -113,7 +113,7 @@ class Onlyoffice_Plugin_Frontend_Controller {
 			$callback  = Onlyoffice_Plugin_Url_Manager::get_callback_url( $attachment_id, true );
 		}
 
-		$config = Onlyoffice_Plugin_Config_Manager::get_config( $attachment_id, $type, $mode, $perm_edit, $callback, null );
+		$config = Onlyoffice_Plugin_Config_Manager::get_config( $attachment_id, $type, $mode, $perm_edit, $callback, null, true );
 
 		$output  = '<div style="height: 650px; maxWidth: inherit, padding: 20px">';
 		$output .= '<div id="editorOnlyoffice-' . $instance . '"></div>';

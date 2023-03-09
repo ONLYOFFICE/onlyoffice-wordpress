@@ -109,7 +109,7 @@ class Onlyoffice_Plugin_Editor {
 			$callback_url = Onlyoffice_Plugin_Url_Manager::get_callback_url( $attachment_id, false );
 		}
 
-		$config = Onlyoffice_Plugin_Config_Manager::get_config( $attachment_id, $type, $mode, $edit_perm, $callback_url, $go_back_url );
+		$config = Onlyoffice_Plugin_Config_Manager::get_config( $attachment_id, $type, $mode, $edit_perm, $callback_url, $go_back_url, false );
 
 		$this->add_onlyoffice_api_js();
 

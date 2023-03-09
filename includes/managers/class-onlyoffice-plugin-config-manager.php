@@ -46,9 +46,10 @@ class Onlyoffice_Plugin_Config_Manager {
 	 * @param boolean $perm_edit The permission for editing.
 	 * @param string  $callback_url The callback url.
 	 * @param string  $go_back_url The go back URL.
+	 * @param boolean  $unic_key The flag generate unic key.
 	 * @return array
 	 */
-	public static function get_config( $attachment_id, $type, $mode, $perm_edit, $callback_url, $go_back_url ) {
+	public static function get_config( $attachment_id, $type, $mode, $perm_edit, $callback_url, $go_back_url, $unic_key ) {
 		$post     = get_post( $attachment_id );
 		$user     = wp_get_current_user();
 		$author   = get_user_by( 'id', $post->post_author )->display_name;
@@ -81,6 +82,10 @@ class Onlyoffice_Plugin_Config_Manager {
 				'callbackUrl' => $callback_url,
 			),
 		);
+
+		if ( $unic_key ) {
+			$config['document']['key'] .= "_" . wp_generate_uuid4();
+		}
 
 		if ( $go_back_url ) {
 			$config['editorConfig']['customization']['goback'] = array(
