@@ -58,7 +58,6 @@ class Onlyoffice_Plugin_Editor {
 		add_action(
 			'wp_enqueue_scripts',
 			function () {
-				$options    = get_option( 'onlyoffice_settings' );
 				$api_js_url = Onlyoffice_Plugin_Url_Manager::get_api_js_url();
 				wp_enqueue_script( 'onlyoffice_editor_api', $api_js_url, array(), ONLYOFFICE_PLUGIN_VERSION, false );
 			}
@@ -72,11 +71,10 @@ class Onlyoffice_Plugin_Editor {
 	 * @return bool
 	 */
 	public function editor( $req ) {
-		$go_back_url             = ! empty( $_SERVER['HTTP_REFERER'] ) && str_contains( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ), get_option( 'siteurl' ) )
+		$go_back_url = ! empty( $_SERVER['HTTP_REFERER'] ) && str_contains( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ), get_option( 'siteurl' ) )
 		&& str_contains( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ), 'onlyoffice-files' ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) :
 			get_option( 'siteurl' ) . '/wp-admin/admin.php?page=onlyoffice-files';
-		$opened_from_admin_panel = str_contains( $req->get_headers()['referer'][0], 'wp-admin/admin.php' );
-		$response                = new WP_REST_Response( $this->editor_render( $req->get_params(), $opened_from_admin_panel, $go_back_url ) );
+		$response    = new WP_REST_Response( $this->editor_render( $req->get_params(), $go_back_url ) );
 		$response->header( 'Content-Type', 'text/html; charset=utf-8' );
 		return $response;
 	}
@@ -85,10 +83,9 @@ class Onlyoffice_Plugin_Editor {
 	 * Editor render
 	 *
 	 * @param array  $params The parameters.
-	 * @param bool   $opened_from_admin_panel Opened from admin panel.
 	 * @param string $go_back_url Go back url.
 	 */
-	public function editor_render( $params, $opened_from_admin_panel, $go_back_url ) {
+	public function editor_render( $params, $go_back_url ) {
 		$api_js_url = Onlyoffice_Plugin_Url_Manager::get_api_js_url();
 
 		ob_start();
@@ -100,73 +97,9 @@ class Onlyoffice_Plugin_Editor {
 		}
 
 		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $params['id'] ) );
-		$post          = get_post( $attachemnt_id );
 
-		$author = get_user_by( 'id', $post->post_author )->display_name;
-		$user   = wp_get_current_user();
+		$config = Onlyoffice_Plugin_Config_Manager::get_config( $attachemnt_id, 'desktop', $go_back_url );
 
-		$filepath = get_attached_file( $attachemnt_id );
-		$filetype = strtolower( pathinfo( $filepath, PATHINFO_EXTENSION ) );
-		$filename = wp_basename( $filepath );
-
-		$has_edit_cap = Onlyoffice_Plugin_Document_Manager::has_edit_capability( $attachemnt_id );
-
-		$can_edit = $has_edit_cap && Onlyoffice_Plugin_Document_Manager::is_editable( $filename );
-
-		$callback_url = Onlyoffice_Plugin_Url_Manager::get_callback_url( $attachemnt_id );
-		$file_url     = Onlyoffice_Plugin_Url_Manager::get_download_url( $attachemnt_id );
-
-		$lang   = $opened_from_admin_panel ? get_user_locale( $user->ID ) : get_locale();
-		$config = array(
-			'type'         => $opened_from_admin_panel ? 'desktop' : 'embedded',
-			'documentType' => Onlyoffice_Plugin_Document_Manager::get_document_type( $filename ),
-			'document'     => array(
-				'title'       => $filename,
-				'url'         => $file_url,
-				'fileType'    => $filetype,
-				'key'         => base64_encode( $post->post_modified ) . $attachemnt_id,
-				'info'        => array(
-					'owner'    => $author,
-					'uploaded' => $post->post_date,
-				),
-				'permissions' => array(
-					'download' => true,
-					'edit'     => $can_edit,
-				),
-			),
-			'editorConfig' => array(
-				'mode'        => $can_edit && $opened_from_admin_panel ? 'edit' : 'view',
-				'lang'        => str_contains( $lang, '_' ) ? explode( '_', $lang )[0] : $lang,
-				'callbackUrl' => $callback_url,
-			),
-		);
-
-		if ( $opened_from_admin_panel ) {
-			$config['editorConfig']['customization']['goback'] = array(
-				'url' => $go_back_url,
-			);
-			add_action(
-				'onlyoffice_wordpress_editor_favicon',
-				function ( $doctype ) {
-					?>
-					<link rel="shortcut icon" href="<?php echo esc_url( plugins_url( 'images/' . $doctype . '.ico', dirname( __FILE__ ) ) ); ?>" type="image/vnd.microsoft.icon" />
-					<?php
-				}
-			);
-			do_action( 'onlyoffice_wordpress_editor_favicon', $config['documentType'] );
-		}
-		if ( 0 !== $user->ID ) {
-			$config['editorConfig']['user'] = array(
-				'id'   => (string) $user->ID,
-				'name' => $user->display_name,
-			);
-		}
-
-		if ( Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled() ) {
-			$options         = get_option( 'onlyoffice_settings' );
-			$secret          = $options[ Onlyoffice_Plugin_Settings::DOCSERVER_JWT ];
-			$config['token'] = Onlyoffice_Plugin_JWT_Manager::jwt_encode( $config, $secret );
-		}
 		$this->add_onlyoffice_api_js();
 
 		?>

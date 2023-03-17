@@ -94,13 +94,11 @@ class Onlyoffice_Plugin_Public {
 	public function register_routes() {
 		require_once plugin_dir_path( __FILE__ ) . 'views/class-onlyoffice-plugin-callback.php';
 		require_once plugin_dir_path( __FILE__ ) . 'views/class-onlyoffice-plugin-download.php';
-		require_once plugin_dir_path( __FILE__ ) . 'views/class-onlyoffice-plugin-editor-url.php';
 		require_once plugin_dir_path( __FILE__ ) . 'views/class-onlyoffice-plugin-editor.php';
 
-		$callback   = new Onlyoffice_Plugin_Callback();
-		$download   = new Onlyoffice_Plugin_Download();
-		$editor_url = new Onlyoffice_Plugin_Editor_Url();
-		$editor     = new Onlyoffice_Plugin_Editor();
+		$callback = new Onlyoffice_Plugin_Callback();
+		$download = new Onlyoffice_Plugin_Download();
+		$editor   = new Onlyoffice_Plugin_Editor();
 
 		// "oo."-prefix is needed to keep the connector working in conjunction with the plugin "Force Lowercase URLs"
 		// (https://wordpress.org/plugins/force-lowercase-urls/)
@@ -135,14 +133,6 @@ class Onlyoffice_Plugin_Public {
 			)
 		);
 
-		register_rest_route(
-			'onlyoffice',
-			'/oo.editorurl/(?P<id>\d+)',
-			array(
-				'methods'  => WP_REST_Server::READABLE,
-				'callback' => array( $editor_url, 'get_onlyoffice_editor_url' ),
-			)
-		);
 	}
 
 	/**

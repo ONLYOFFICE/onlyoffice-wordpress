@@ -47,27 +47,19 @@
 
                 frameOnlyoffice.on("select", function() {
                     const selectedAttachment = frameOnlyoffice.state().get('selection').first();
-                    const editorUrl = oo_media.getEditorUrl + selectedAttachment.id;
 
-                    fetch(editorUrl).then((r) => r.json()).then((data) => {
+                    let params = {
+                        id: selectedAttachment.id,
+                        fileName: selectedAttachment.attributes.filename,
+                    }
 
-                        let params = {
-                            selectedAttachment: selectedAttachment,
-                            getEditorUrl: oo_media.getEditorUrl,
-                            url: data.url,
-                            formats: oo_media.formats
-                        }
+                    const wpOnlyofficeBlock = `<!-- wp:onlyoffice-wordpress/onlyoffice ${JSON.stringify(params)} -->`;
 
-                        const wpOnlyofficeBlock = `<!-- wp:onlyoffice-wordpress/onlyoffice-wordpress-block ${JSON.stringify(params)} -->`;
+                    let wpOnlyofficeBody = "[onlyoffice id=" + selectedAttachment.id + " /]";
 
-                        let wpOnlyofficeBody = "<div style='height:650px; max-width:inherit; padding:20px;'>" +
-                                                    "<iframe width='100%' height='100%' src='" + data.url + "'></iframe>" +
-                                                "</div>";
+                    let wpOnlyofficeBlockEnd = "<!-- /wp:onlyoffice-wordpress/onlyoffice -->"
 
-                        let wpOnlyofficeBlockEnd = "<!-- /wp:onlyoffice-wordpress/onlyoffice-wordpress-block -->"
-
-                        editor.insertContent(wpOnlyofficeBlock + wpOnlyofficeBody + wpOnlyofficeBlockEnd);
-                    });
+                    editor.insertContent(wpOnlyofficeBlock + wpOnlyofficeBody + wpOnlyofficeBlockEnd);
                 });
 
                 frameOnlyoffice.open();

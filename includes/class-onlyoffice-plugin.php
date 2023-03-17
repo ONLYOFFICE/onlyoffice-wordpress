@@ -105,11 +105,13 @@ class Onlyoffice_Plugin {
 	 */
 	private function load_dependencies() {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-onlyoffice-plugin-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/class-onlyoffice-plugin-frontend-controller.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-i18n.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-loader.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/files/class-onlyoffice-plugin-files.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/files/class-onlyoffice-plugin-files-list-table.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-callback-manager.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-config-manager.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-document-manager.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-jwt-manager.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-url-manager.php';
@@ -182,6 +184,10 @@ class Onlyoffice_Plugin {
 		$plugin_settings = new Onlyoffice_Plugin_Settings();
 		$this->loader->add_action( 'admin_menu', $plugin_settings, 'init_menu' );
 		$this->loader->add_action( 'admin_init', $plugin_settings, 'init' );
+
+		$plugin_frontend_controller = new Onlyoffice_Plugin_Frontend_Controller();
+		$this->loader->add_action( 'init', $plugin_frontend_controller, 'init_shortcodes' );
+		$this->loader->add_action( 'init', $plugin_frontend_controller, 'onlyoffice_custom_block' );
 	}
 
 	/**

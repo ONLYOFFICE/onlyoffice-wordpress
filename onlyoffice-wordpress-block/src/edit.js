@@ -16,49 +16,69 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import { MediaPlaceholder, useBlockProps } from '@wordpress/block-editor';
-import { useState } from '@wordpress/element';
-import {onlyofficeIcon} from "./index";
-import {blockStyle} from "./index";
+import { 
+    MediaPlaceholder,
+    useBlockProps,
+    BlockControls,
+    MediaReplaceFlow,
+    InspectorControls,
+} from '@wordpress/block-editor';
+import {
+    PanelBody,
+    __experimentalInputControl as InputControl
+} from '@wordpress/components';
+import { onlyofficeIcon } from "./index";
+import { blockStyle } from "./index";
+import { __ } from '@wordpress/i18n';
 const mime = require('mime');
 
 const Edit = ({attributes, setAttributes}) => {
-    const [url, setUrl] = useState(attributes.url);
-
-    const onlyofficeAllowedExts = attributes.formats || oo_media.formats;
+    const onlyofficeAllowedExts = oo_media.formats;
     let onlyofficeAllowedMimes = [];
 
     for (let ext of onlyofficeAllowedExts) {
-        onlyofficeAllowedMimes.push(mime.getType(ext));
-    }
-
-    if (!url && attributes.selectedAttachment && attributes.selectedAttachment.id) {
-        const editorUrl = attributes.getEditorUrl + attributes.selectedAttachment.id;
-
-        fetch(editorUrl).then((r) => r.json()).then((data) => {
-            setUrl(data.url);
-            setAttributes({ url: data.url });
-        });
+        var mimeType = mime.getType(ext);
+        if (mimeType) {
+            onlyofficeAllowedMimes.push(mimeType);
+        }
     }
 
     const blockProps = useBlockProps( { style: blockStyle } );
     return (
-        attributes.selectedAttachment && attributes.selectedAttachment.id ?
+        attributes.id ?
             <div {...blockProps}>
+                <InspectorControls key="setting">
+                    <PanelBody title={__('Settings')}>
+                        <InputControl label={__('Name')} value={attributes.fileName} onChange={ ( value ) => setAttributes({ fileName: value }) } />
+                    </PanelBody>
+                </InspectorControls>
+
                 <p style={{display: 'flex'}}>
                     {onlyofficeIcon}
-                    <p style={{marginLeft: '25px'}}> {attributes.selectedAttachment.filename || `${attributes.selectedAttachment.title}.${mime.getExtension(attributes.selectedAttachment.mime_type)}`}</p>
+                    <p style={{marginLeft: '25px'}}> {attributes.fileName || ""}</p>
                 </p>
+                <BlockControls>
+                    <MediaReplaceFlow
+                        mediaId={attributes.id }
+                        allowedTypes={onlyofficeAllowedMimes}
+                        accept={onlyofficeAllowedMimes.join()}
+                        onSelect={(el) => {
+                            setAttributes({ id: el.id, fileName: el.filename || el.title + "." + mime.getExtension(el.mime_type) });
+                        }}
+                        name={__('Replace')}
+                    />
+                </BlockControls>
             </div>
             :
             <MediaPlaceholder
                 labels={{title: 'ONLYOFFICE'}}
                 allowedTypes={onlyofficeAllowedMimes}
+                accept={onlyofficeAllowedMimes.join()}
                 onSelect={(el) => {
-                    setAttributes({selectedAttachment: el, getEditorUrl: oo_media.getEditorUrl, formats: oo_media.formats});
+                    setAttributes({ id: el.id, fileName: el.filename || el.title + "." + mime.getExtension(el.mime_type) });
                 }}
             />
-    );
+    )
 };
 
 export default Edit;
