@@ -195,7 +195,6 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 					array(
 						'id'     => $attachment->ID,
 						'title'  => pathinfo( $attached_file, PATHINFO_FILENAME ),
-						'date'   => $attachment->post_date,
 						'format' => strtoupper( pathinfo( $attached_file, PATHINFO_EXTENSION ) ),
 						'size'   => size_format( filesize( $attached_file ) ),
 					)
@@ -249,7 +248,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 
 		?>
 		<strong>
-			<a href="<?php echo esc_url( $editor_url ); ?>" >
+			<a target="_blank" href="<?php echo esc_url( $editor_url ); ?>" >
 				<?php
 				echo esc_html( $title );
 				?>
@@ -266,18 +265,14 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 	 */
 	public function column_date( $item ) {
 		$file = get_post( $item['id'] );
-		if ( '0000-00-00 00:00:00' === $file->post_date ) {
-			$h_time = __( 'Unpublished' );
-		} else {
-			$time      = get_post_timestamp( $file );
-			$time_diff = time() - $time;
 
-			if ( $time && $time_diff > 0 && $time_diff < DAY_IN_SECONDS ) {
-				/* translators: %s: Attachment published or modified time . */
-				$h_time = sprintf( __( '%s ago' ), human_time_diff( $time ) );
-			} else {
-				$h_time = get_the_time( __( 'Y/m/d' ), $file );
-			}
+		$last_user = get_userdata( get_post_meta( $item['id'], '_edit_last', true ) );
+		if ( $last_user ) {
+			/* translators: 1: Name of most recent post author, 2: Post edited date, 3: Post edited time. */
+			$h_time = sprintf( __( 'Last edited by %1$s on %2$s at %3$s' ), esc_html( $last_user->display_name ), mysql2date( __( 'F j, Y' ), $file->post_modified ), mysql2date( __( 'g:i a' ), $file->post_modified ) );
+		} else {
+			/* translators: 1: Post edited date, 2: Post edited time. */
+			$h_time = sprintf( __( 'Last edited on %1$s at %2$s' ), mysql2date( __( 'F j, Y' ), $file->post_modified ), mysql2date( __( 'g:i a' ), $file->post_modified ) );
 		}
 
 		echo esc_html( $h_time );
