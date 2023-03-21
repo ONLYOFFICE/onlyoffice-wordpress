@@ -20,10 +20,18 @@ jobs:
       - name: Generate Changelog
         run: |
           awk '/## [0-9]/{p++} p; /## [0-9]/{if (p > 1) exit}' CHANGELOG.md | awk 'NR>2 {print last} {last=$0}' > RELEASE.md
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
       - name: Install Zip
         run: sudo apt-get install zip
       - name: Build Plugin
         run: |
+          cd ${{ github.workspace }}/onlyoffice-wordpress-block
+          npm install
+          npm run build
+          rm -rf node_modules
           cd ${{ github.workspace }}
           mkdir -p ./onlyoffice
           rsync -av --exclude='onlyoffice' ./ ./onlyoffice
