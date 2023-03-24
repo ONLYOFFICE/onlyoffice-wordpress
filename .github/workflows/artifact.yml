@@ -12,8 +12,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
       - name: Build Artifact
         run: |
+          cd ${{ github.workspace }}/onlyoffice-wordpress-block
+          npm install
+          npm run build
+          rm -rf node_modules
           cd ${{ github.workspace }}
           mkdir -p ./deploy/onlyoffice
           rsync -av --exclude='deploy' ./ ./deploy/onlyoffice
