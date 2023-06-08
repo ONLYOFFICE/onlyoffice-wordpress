@@ -37,7 +37,22 @@ const Edit = ({attributes, setAttributes}) => {
     let onlyofficeAllowedMimes = [];
 
     for (let ext of onlyofficeAllowedExts) {
-        var mimeType = mime.getType(ext);
+        let mimeType = null;
+        switch (ext) {
+            case '.docxf': {
+                mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.docxf';
+                break;
+            }
+            case '.oform': {
+                mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.oform';
+                break;
+            }
+            default: {
+                mimeType = mime.getType(ext);
+                break;
+            }
+        }
+
         if (mimeType) {
             onlyofficeAllowedMimes.push(mimeType);
         }
@@ -59,10 +74,10 @@ const Edit = ({attributes, setAttributes}) => {
                 </p>
                 <BlockControls>
                     <MediaReplaceFlow
-                        mediaId={attributes.id }
-                        allowedTypes={onlyofficeAllowedMimes}
-                        accept={onlyofficeAllowedMimes.join()}
-                        onSelect={(el) => {
+                        mediaId={ attributes.id }
+                        allowedTypes={ onlyofficeAllowedMimes }
+                        accept={ onlyofficeAllowedMimes.join() }
+                        onSelect={ (el) => {
                             setAttributes({ id: el.id, fileName: el.filename || el.title + "." + mime.getExtension(el.mime_type) });
                         }}
                         name={__('Replace')}

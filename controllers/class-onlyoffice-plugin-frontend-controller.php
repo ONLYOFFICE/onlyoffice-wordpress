@@ -100,7 +100,20 @@ class Onlyoffice_Plugin_Frontend_Controller {
 			}
 		);
 
-		$config = Onlyoffice_Plugin_Config_Manager::get_config( $atts['id'], 'embedded', null );
+		$attachment_id = $atts['id'];
+		$type          = 'embedded';
+		$mode          = 'view';
+		$filepath      = get_attached_file( $attachment_id );
+		$filename      = wp_basename( $filepath );
+
+		if ( Onlyoffice_Plugin_Document_Manager::is_fillable( $filename ) ) {
+			$type      = 'desktop';
+			$mode      = 'edit';
+			$perm_edit = true;
+			$callback  = Onlyoffice_Plugin_Url_Manager::get_callback_url( $attachment_id, true );
+		}
+
+		$config = Onlyoffice_Plugin_Config_Manager::get_config( $attachment_id, $type, $mode, $perm_edit, $callback, null, true );
 
 		$output  = '<div style="height: 650px; maxWidth: inherit, padding: 20px">';
 		$output .= '<div id="editorOnlyoffice-' . $instance . '"></div>';

@@ -162,4 +162,21 @@ class Onlyoffice_Plugin_Callback {
 
 		return $response;
 	}
+
+	/**
+	 * Callback for public forms.
+	 *
+	 * @param array $req Request.
+	 *
+	 * @return WP_REST_Response
+	 */
+	public function callback_public_forms( $req ) {
+		$response = new WP_REST_Response();
+
+		$response->data = array(
+			'error' => 0,
+		);
+
+		return $response;
+	}
 }

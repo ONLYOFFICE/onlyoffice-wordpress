@@ -39,9 +39,10 @@
  */
 class Onlyoffice_Plugin_Document_Manager {
 
-	const DOC_SERV_VIEWD   = array( '.pdf', '.djvu', '.xps', '.oxps' );
-	const DOC_SERV_EDITED  = array( '.docx', '.xlsx', '.pptx' );
-	const DOC_SERV_CONVERT = array( '.docm', '.doc', '.dotx', '.dotm', '.dot', '.odt', '.fodt', '.ott', '.xlsm', '.xls', '.xltx', '.xltm', '.xlt', '.ods', '.fods', '.ots', '.pptm', '.ppt', '.ppsx', '.ppsm', '.pps', '.potx', '.potm', '.pot', '.odp', '.fodp', '.otp', '.rtf', '.mht', '.html', '.htm', '.xml', '.epub', '.fb2' );
+	const DOC_SERV_VIEWD     = array( '.pdf', '.djvu', '.xps', '.oxps' );
+	const DOC_SERV_EDITED    = array( '.docx', '.xlsx', '.pptx', '.docxf' );
+	const DOC_SERV_FILL_FORM = array( '.oform' );
+	const DOC_SERV_CONVERT   = array( '.docm', '.doc', '.dotx', '.dotm', '.dot', '.odt', '.fodt', '.ott', '.xlsm', '.xls', '.xltx', '.xltm', '.xlt', '.ods', '.fods', '.ots', '.pptm', '.ppt', '.ppsx', '.ppsm', '.pps', '.potx', '.potm', '.pot', '.odp', '.fodp', '.otp', '.rtf', '.mht', '.html', '.htm', '.xml', '.epub', '.fb2' );
 
 	const EXTS_CELL = array(
 		'.xls',
@@ -93,6 +94,8 @@ class Onlyoffice_Plugin_Document_Manager {
 		'.epub',
 		'.xps',
 		'.oxps',
+		'.docxf',
+		'.oform',
 	);
 
 	const EDIT_CAPS = array(
@@ -138,6 +141,18 @@ class Onlyoffice_Plugin_Document_Manager {
 	public static function is_editable( $filename ) {
 		$ext = strtolower( '.' . pathinfo( $filename, PATHINFO_EXTENSION ) );
 		return in_array( $ext, self::DOC_SERV_EDITED, true );
+	}
+
+	/**
+	 * Returns true if the format is supported for filling.
+	 *
+	 * @param string $filename The file name.
+	 *
+	 * @return bool
+	 */
+	public static function is_fillable( $filename ) {
+		$ext = strtolower( '.' . pathinfo( $filename, PATHINFO_EXTENSION ) );
+		return in_array( $ext, self::DOC_SERV_FILL_FORM, true );
 	}
 
 	/**
