@@ -24,6 +24,12 @@ msgstr "Document server JWT secret key"
 msgid "Secret key (leave blank to disable)"
 msgstr "Secret key (leave blank to disable)"
 
+msgid "Authorization header"
+msgstr "Authorization header"
+
+msgid "Leave blank to use default header"
+msgstr "Leave blank to use default header"
+
 msgid "Settings Saved"
 msgstr "Settings Saved"
 

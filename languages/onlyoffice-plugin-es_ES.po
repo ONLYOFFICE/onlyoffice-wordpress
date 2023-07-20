@@ -24,6 +24,12 @@ msgstr "Clave secreta JWT del Servidor de documentos"
 msgid "Secret key (leave blank to disable)"
 msgstr "Clave secreta (deje en blanco o desactive)"
 
+msgid "Authorization header"
+msgstr "Encabezado de autenticaciуn"
+
+msgid "Leave blank to use default header"
+msgstr "Dejar en blanco para utilizar el encabezado predeterminado"
+
 msgid "Settings Saved"
 msgstr "Los ajustes se han guardado"
 
