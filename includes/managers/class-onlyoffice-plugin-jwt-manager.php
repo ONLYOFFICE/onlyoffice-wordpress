@@ -29,6 +29,7 @@
  */
 
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 /**
  * Set of tools for JWT.
@@ -68,7 +69,7 @@ class Onlyoffice_Plugin_JWT_Manager {
 	 * @return string
 	 */
 	public static function jwt_encode( $payload, $secret ) {
-		return JWT::encode( $payload, $secret );
+		return JWT::encode( $payload, $secret, 'HS256' );
 	}
 
 	/**
@@ -80,11 +81,7 @@ class Onlyoffice_Plugin_JWT_Manager {
 	 *
 	 * @return object|string
 	 */
-	public static function jwt_decode( $token, $secret, $for_callback = false ) {
-		if ( ! self::is_jwt_enabled() && ! $for_callback ) {
-			return '';
-		}
-
-		return JWT::decode( $token, $secret, array( 'HS256' ) );
+	public static function jwt_decode( $token, $secret) {
+		return JWT::decode( $token, new Key($secret, 'HS256') );
 	}
 }

@@ -104,6 +104,11 @@ class Onlyoffice_Plugin {
 	 * @access   private
 	 */
 	private function load_dependencies() {
+		/**
+		 * Load dependencies managed by composer.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/autoload.php';
+
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-onlyoffice-plugin-admin.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/class-onlyoffice-plugin-frontend-controller.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-i18n.php';
@@ -118,10 +123,6 @@ class Onlyoffice_Plugin {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/settings/class-onlyoffice-plugin-settings.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'onlyoffice-tinymce/onlyoffice-tinymce.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-onlyoffice-plugin-public.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . '3rdparty/JWT.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . '3rdparty/BeforeValidException.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . '3rdparty/ExpiredException.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . '3rdparty/SignatureInvalidException.php';
 
 		$this->loader = new Onlyoffice_Plugin_Loader();
 	}
