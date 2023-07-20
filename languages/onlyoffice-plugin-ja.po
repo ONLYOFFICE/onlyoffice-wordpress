@@ -24,6 +24,12 @@ msgstr "ドキュメントサーバーのJWT秘密鍵"
 msgid "Secret key (leave blank to disable)"
 msgstr "シークレットキー (ブランクで無効)"
 
+msgid "Authorization header"
+msgstr ""
+
+msgid "Leave blank to use default header"
+msgstr ""
+
 msgid "Settings Saved"
 msgstr "設定が保存されました"
 
