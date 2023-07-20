@@ -79,6 +79,14 @@ class Onlyoffice_Plugin_Files {
 	public function add_files_page() {
 		global $onlyoffice_plugin_files_list_table;
 		$onlyoffice_plugin_files_list_table = new Onlyoffice_Plugin_Files_List_Table();
+
+		global $_wp_http_referer;
+		wp_reset_vars( array( '_wp_http_referer' ) );
+	
+		if ( ! empty( $_wp_http_referer ) && isset( $_SERVER['REQUEST_URI'] ) ) {
+			wp_safe_redirect( remove_query_arg( array( '_wp_http_referer', '_wpnonce' ), esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ) );
+			exit;
+		}
 	}
 
 	/**
@@ -88,14 +96,6 @@ class Onlyoffice_Plugin_Files {
 	 * @return void
 	 */
 	public function files_page() {
-		global $_wp_http_referer;
-		wp_reset_vars( array( '_wp_http_referer' ) );
-
-		if ( ! empty( $_wp_http_referer ) && isset( $_SERVER['REQUEST_URI'] ) ) {
-			wp_safe_redirect( remove_query_arg( array( '_wp_http_referer', '_wpnonce' ), esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ) );
-			exit;
-		}
-
 		global $onlyoffice_plugin_files_list_table;
 		$onlyoffice_plugin_files_list_table->prepare_items();
 
