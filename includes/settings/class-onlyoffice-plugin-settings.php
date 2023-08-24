@@ -147,7 +147,7 @@ class Onlyoffice_Plugin_Settings {
 	 */
 	public function input_cb( array $args ) {
 		?>
-		<input id="<?php echo esc_attr( $args['label_for'] ); ?>" type="text" name="onlyoffice_settings[<?php echo esc_attr( $args['label_for'] ); ?>]" value="<?php echo esc_attr( $this->get_onlyoffice_setting( $args['label_for'] ) ); ?>">
+		<input id="<?php echo esc_attr( $args['label_for'] ); ?>" type="text" class="regular-text" name="onlyoffice_settings[<?php echo esc_attr( $args['label_for'] ); ?>]" value="<?php echo esc_attr( $this->get_onlyoffice_setting( $args['label_for'] ) ); ?>">
 		<p class="description">
 			<?php echo esc_attr( $args['desc'] ); ?>
 		</p>
@@ -177,6 +177,13 @@ class Onlyoffice_Plugin_Settings {
 			return;
 		}
 
+		wp_enqueue_style(
+			'onlyoffice-settings',
+			ONLYOFFICE_PLUGIN_URL .  'admin/css/banner/onlyoffice-cloud-banner.css',
+			array(),
+			ONLYOFFICE_PLUGIN_VERSION
+		);
+
 		global $settings_updated;
 		wp_reset_vars( array( 'settings_updated' ) );
 
@@ -195,6 +202,18 @@ class Onlyoffice_Plugin_Settings {
 				submit_button( __( 'Save Settings', 'onlyoffice-plugin' ) );
 				?>
 			</form>
+			<div id="onlyoffice-cloud-banner">
+				<div class="onlyoffice-cloud-banner-info">
+					<img src="<?php echo esc_url( ONLYOFFICE_PLUGIN_URL . 'admin/images/banner/logo.svg' ) ?>">
+					<div class="info">
+						<h3><?php esc_html_e( 'ONLYOFFICE Docs Cloud', 'onlyoffice-plugin' ); ?></h3>
+						<p><?php esc_html_e( 'Easily launch the editors in the cloud without downloading and installation', 'onlyoffice-plugin' ); ?></p>
+					</div>
+				</div>
+				<div class="onlyoffice-cloud-banner-buttons">
+					<a class="onlyoffice-cloud-banner-button"  href="https://www.onlyoffice.com/docs-registration.aspx?referer=wordpress" target="_blank"><?php esc_html_e( 'Get Now', 'onlyoffice-plugin' ); ?></a>
+				</div>
+			</div>
 		</div>
 		<?php
 	}

@@ -68,3 +68,12 @@ msgstr "未发现可在ONLYOFFICE中编辑或查看的文件。"
 
 msgid "Add ONLYOFFICE editor on page"
 msgstr "将ONLYOFFICE编辑器添加到页面上"
+
+msgid "ONLYOFFICE Docs Cloud"
+msgstr ""
+
+msgid "Easily launch the editors in the cloud without downloading and installation"
+msgstr ""
+
+msgid "Get Now"
+msgstr ""
