@@ -146,9 +146,8 @@ class Onlyoffice_Plugin_Settings {
 	 * @return void
 	 */
 	public function input_cb( array $args ) {
-		$options = get_option( 'onlyoffice_settings' );
 		?>
-		<input id="<?php echo esc_attr( $args['label_for'] ); ?>" type="text" name="onlyoffice_settings[<?php echo esc_attr( $args['label_for'] ); ?>]" value="<?php echo esc_attr( $options[ $args['label_for'] ] ); ?>">
+		<input id="<?php echo esc_attr( $args['label_for'] ); ?>" type="text" name="onlyoffice_settings[<?php echo esc_attr( $args['label_for'] ); ?>]" value="<?php echo esc_attr( $this->get_onlyoffice_setting( $args['label_for'] ) ); ?>">
 		<p class="description">
 			<?php echo esc_attr( $args['desc'] ); ?>
 		</p>
@@ -198,5 +197,20 @@ class Onlyoffice_Plugin_Settings {
 			</form>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Return ONLYOFFICE  Setting
+	 *
+	 * @param string $key Setting key.
+	 * @param string $default Default value.
+	 */
+	public static function get_onlyoffice_setting( $key, $default = '' ) {
+		$options = get_option( 'onlyoffice_settings' );
+		if ( ! empty( $options ) && array_key_exists( $key, $options ) ) {
+			return $options[ $key ];
+		}
+
+		return $default;
 	}
 }

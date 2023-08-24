@@ -59,8 +59,7 @@ class Onlyoffice_Plugin_Url_Manager {
 	 * @return string
 	 */
 	public static function get_doc_server_url() {
-		$onlyoffice_settings = get_option( 'onlyoffice_settings' );
-		return $onlyoffice_settings[ Onlyoffice_Plugin_Settings::DOCSERVER_URL ];
+		return  Onlyoffice_Plugin_Settings::get_onlyoffice_setting( Onlyoffice_Plugin_Settings::DOCSERVER_URL );
 	}
 
 	/**

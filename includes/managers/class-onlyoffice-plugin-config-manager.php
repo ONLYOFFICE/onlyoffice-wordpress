@@ -101,8 +101,7 @@ class Onlyoffice_Plugin_Config_Manager {
 		}
 
 		if ( Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled() ) {
-			$options         = get_option( 'onlyoffice_settings' );
-			$secret          = $options[ Onlyoffice_Plugin_Settings::DOCSERVER_JWT ];
+			$secret          = Onlyoffice_Plugin_Settings::get_onlyoffice_setting( Onlyoffice_Plugin_Settings::DOCSERVER_JWT );
 			$config['token'] = Onlyoffice_Plugin_JWT_Manager::jwt_encode( $config, $secret );
 		}
 

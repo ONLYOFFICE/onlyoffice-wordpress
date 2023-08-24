@@ -43,21 +43,19 @@ class Onlyoffice_Plugin_JWT_Manager {
 	 * Returns true if jwt enabled.
 	 */
 	public static function is_jwt_enabled() {
-		$options = get_option( 'onlyoffice_settings' );
-		return ! empty( $options[ Onlyoffice_Plugin_Settings::DOCSERVER_JWT ] );
+		return ! empty( Onlyoffice_Plugin_Settings::get_onlyoffice_setting( Onlyoffice_Plugin_Settings::DOCSERVER_JWT ) );
 	}
 
 	/**
 	 * Returns jwt header.
 	 */
 	public static function get_jwt_header() {
-		$options    = get_option( 'onlyoffice_settings' );
-		$jwt_header = 'Authorization';
-		if ( ! empty( $options[ Onlyoffice_Plugin_Settings::JWT_HEADER ] ) ) {
-			$jwt_header = $options[ Onlyoffice_Plugin_Settings::JWT_HEADER ];
+		$jwt_header = Onlyoffice_Plugin_Settings::get_onlyoffice_setting( Onlyoffice_Plugin_Settings::JWT_HEADER );
+		if ( ! empty( $jwt_header ) ) {
+			return $jwt_header;
 		}
 
-		return $jwt_header;
+		return 'Authorization';
 	}
 
 	/**
