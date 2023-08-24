@@ -58,3 +58,12 @@ msgstr ""
 
 msgid "Add ONLYOFFICE editor on page"
 msgstr ""
+
+msgid "ONLYOFFICE Docs Cloud"
+msgstr ""
+
+msgid "Easily launch the editors in the cloud without downloading and installation"
+msgstr ""
+
+msgid "Get Now"
+msgstr ""

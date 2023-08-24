@@ -68,3 +68,12 @@ msgstr "Не найдены файлы для редактирования ил�
 
 msgid "Add ONLYOFFICE editor on page"
 msgstr "Добавить редактор ONLYOFFICE на страницу"
+
+msgid "ONLYOFFICE Docs Cloud"
+msgstr "ONLYOFFICE Docs Cloud"
+
+msgid "Easily launch the editors in the cloud without downloading and installation"
+msgstr "Легко запускайте редакторы в облаке без скачивания и установки"
+
+msgid "Get Now"
+msgstr "Получить сейчас"

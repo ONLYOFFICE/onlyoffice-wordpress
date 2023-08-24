@@ -68,3 +68,12 @@ msgstr "No files found for editing or viewing in ONLYOFFICE."
 
 msgid "Add ONLYOFFICE editor on page"
 msgstr "Add ONLYOFFICE editor on page"
+
+msgid "ONLYOFFICE Docs Cloud"
+msgstr "ONLYOFFICE Docs Cloud"
+
+msgid "Easily launch the editors in the cloud without downloading and installation"
+msgstr "Easily launch the editors in the cloud without downloading and installation"
+
+msgid "Get Now"
+msgstr "Get Now"

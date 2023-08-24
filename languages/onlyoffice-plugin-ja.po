@@ -25,10 +25,10 @@ msgid "Secret key (leave blank to disable)"
 msgstr "シークレットキー (ブランクで無効)"
 
 msgid "Authorization header"
-msgstr ""
+msgstr "認証ヘッダー"
 
 msgid "Leave blank to use default header"
-msgstr ""
+msgstr "デフォルトのヘッダーを使用したい場合は空白にしてください"
 
 msgid "Settings Saved"
 msgstr "設定が保存されました"
@@ -68,3 +68,12 @@ msgstr "ONLYOFFICEで編集または表示するファイルが見つかりま�
 
 msgid "Add ONLYOFFICE editor on page"
 msgstr "ページにONLYOFFICEエディターを追加する"
+
+msgid "ONLYOFFICE Docs Cloud"
+msgstr "ONLYOFFICE Docs Cloud"
+
+msgid "Easily launch the editors in the cloud without downloading and installation"
+msgstr "ダウンロードやインストールをすることなく、クラウド上で簡単にエディタを起動することができます"
+
+msgid "Get Now"
+msgstr "今すぐ使ってみる"
