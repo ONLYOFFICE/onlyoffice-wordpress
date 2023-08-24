@@ -41,6 +41,7 @@
  * Currently plugin version.
  */
 define( 'ONLYOFFICE_PLUGIN_VERSION', '1.0.2' );
+define( 'ONLYOFFICE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 
 /**
