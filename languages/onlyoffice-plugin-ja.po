@@ -25,10 +25,10 @@ msgid "Secret key (leave blank to disable)"
 msgstr "シークレットキー (ブランクで無効)"
 
 msgid "Authorization header"
-msgstr ""
+msgstr "認証ヘッダー"
 
 msgid "Leave blank to use default header"
-msgstr ""
+msgstr "デフォルトのヘッダーを使用したい場合は空白にしてください"
 
 msgid "Settings Saved"
 msgstr "設定が保存されました"
