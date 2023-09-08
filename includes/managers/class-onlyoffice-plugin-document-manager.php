@@ -82,7 +82,7 @@ class Onlyoffice_Plugin_Document_Manager {
 
 		foreach ( $formats as $format ) {
 			if ( $format['name'] === $ext ) {
-				return in_array( 'edit', $format['actions'] );
+				return in_array( 'edit', $format['actions'], true );
 			}
 		}
 
@@ -101,8 +101,8 @@ class Onlyoffice_Plugin_Document_Manager {
 		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 
 		foreach ( $formats as $format ) {
-			if ( $format['name']  === $ext ) {
-				return in_array( 'fill', $format['actions'] );
+			if ( $format['name'] === $ext ) {
+				return in_array( 'fill', $format['actions'], true );
 			}
 		}
 
@@ -122,7 +122,7 @@ class Onlyoffice_Plugin_Document_Manager {
 
 		foreach ( $formats as $format ) {
 			if ( $format['name'] === $ext ) {
-				return in_array( 'view', $format['actions'] );
+				return in_array( 'view', $format['actions'], true );
 			}
 		}
 
@@ -134,10 +134,10 @@ class Onlyoffice_Plugin_Document_Manager {
 	 */
 	public static function get_viewable_extensions() {
 		$formats    = self::get_onlyoffice_formats();
-		$extensions = [];
+		$extensions = array();
 
 		foreach ( $formats as $format ) {
-			if ( in_array( 'view', $format['actions'] ) ) {
+			if ( in_array( 'view', $format['actions'], true ) ) {
 				array_push( $extensions, $format['name'] );
 			}
 		}
@@ -174,18 +174,17 @@ class Onlyoffice_Plugin_Document_Manager {
 
 		return false === $mime['type'] ? 'application/octet-stream' : $mime['type'];
 	}
-	
+
 	/**
 	 * Return option onlyoffice-formats.
-	 *
 	 */
-	public static function get_onlyoffice_formats( ) {
+	public static function get_onlyoffice_formats() {
 		$formats = get_option( 'onlyoffice-formats' );
 		if ( ! empty( $formats ) ) {
 			return $formats;
 		}
 
-		return [];
+		return array();
 	}
 
 }

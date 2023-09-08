@@ -46,7 +46,7 @@ class Onlyoffice_Plugin_Config_Manager {
 	 * @param boolean $perm_edit The permission for editing.
 	 * @param string  $callback_url The callback url.
 	 * @param string  $go_back_url The go back URL.
-	 * @param boolean  $unic_key The flag generate unic key.
+	 * @param boolean $unic_key The flag generate unic key.
 	 * @return array
 	 */
 	public static function get_config( $attachment_id, $type, $mode, $perm_edit, $callback_url, $go_back_url, $unic_key ) {
@@ -84,7 +84,7 @@ class Onlyoffice_Plugin_Config_Manager {
 		);
 
 		if ( $unic_key ) {
-			$config['document']['key'] .= "_" . wp_generate_uuid4();
+			$config['document']['key'] .= '_' . wp_generate_uuid4();
 		}
 
 		if ( $go_back_url ) {

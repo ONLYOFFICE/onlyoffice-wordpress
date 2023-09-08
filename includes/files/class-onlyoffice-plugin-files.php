@@ -82,7 +82,7 @@ class Onlyoffice_Plugin_Files {
 
 		global $_wp_http_referer;
 		wp_reset_vars( array( '_wp_http_referer' ) );
-	
+
 		if ( ! empty( $_wp_http_referer ) && isset( $_SERVER['REQUEST_URI'] ) ) {
 			wp_safe_redirect( remove_query_arg( array( '_wp_http_referer', '_wpnonce' ), esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ) );
 			exit;

@@ -55,12 +55,12 @@ class Onlyoffice_Plugin_Activator {
 		}
 
 		if ( empty( get_option( 'onlyoffice-formats' ) ) ) {
-			$formats = [];
+			$formats = array();
 
-			$pathToFormatsJSON = plugin_dir_path( dirname( __FILE__ ) ) . '/public/assets/document-formats/onlyoffice-docs-formats.json';
+			$path_to_formats_json = plugin_dir_path( dirname( __FILE__ ) ) . '/public/assets/document-formats/onlyoffice-docs-formats.json';
 
-			if ( file_exists( $pathToFormatsJSON ) === true ) {
-				$formats = json_decode( file_get_contents( $pathToFormatsJSON ), true );
+			if ( file_exists( $path_to_formats_json ) === true ) {
+				$formats = json_decode( file_get_contents( $path_to_formats_json ), true );
 				add_option( 'onlyoffice-formats', $formats );
 			}
 		}

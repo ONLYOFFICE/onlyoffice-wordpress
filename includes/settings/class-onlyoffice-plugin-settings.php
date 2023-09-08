@@ -177,7 +177,7 @@ class Onlyoffice_Plugin_Settings {
 
 		wp_enqueue_style(
 			'onlyoffice-settings',
-			ONLYOFFICE_PLUGIN_URL .  'admin/css/banner/onlyoffice-cloud-banner.css',
+			ONLYOFFICE_PLUGIN_URL . 'admin/css/banner/onlyoffice-cloud-banner.css',
 			array(),
 			ONLYOFFICE_PLUGIN_VERSION
 		);
@@ -199,7 +199,7 @@ class Onlyoffice_Plugin_Settings {
 			</form>
 			<div id="onlyoffice-cloud-banner">
 				<div class="onlyoffice-cloud-banner-info">
-					<img src="<?php echo esc_url( ONLYOFFICE_PLUGIN_URL . 'admin/images/banner/logo.svg' ) ?>">
+					<img src="<?php echo esc_url( ONLYOFFICE_PLUGIN_URL . 'admin/images/banner/logo.svg' ); ?>">
 					<div class="info">
 						<h3><?php esc_html_e( 'ONLYOFFICE Docs Cloud', 'onlyoffice-plugin' ); ?></h3>
 						<p><?php esc_html_e( 'Easily launch the editors in the cloud without downloading and installation', 'onlyoffice-plugin' ); ?></p>

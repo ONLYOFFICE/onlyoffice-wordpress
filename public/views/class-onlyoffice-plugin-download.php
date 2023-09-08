@@ -56,7 +56,7 @@ class Onlyoffice_Plugin_Download {
 				wp_die( 'The request token is missing.', '', array( 'response' => 401 ) );
 			}
 
-			$secret  = Onlyoffice_Plugin_Settings::get_onlyoffice_setting( Onlyoffice_Plugin_Settings::DOCSERVER_JWT );
+			$secret = Onlyoffice_Plugin_Settings::get_onlyoffice_setting( Onlyoffice_Plugin_Settings::DOCSERVER_JWT );
 
 			try {
 				Onlyoffice_Plugin_JWT_Manager::jwt_decode( $token, $secret );

@@ -75,11 +75,10 @@ class Onlyoffice_Plugin_JWT_Manager {
 	 *
 	 * @param string $token The JWT.
 	 * @param string $secret The secret key.
-	 * @param bool   $for_callback The for callback.
 	 *
 	 * @return object|string
 	 */
-	public static function jwt_decode( $token, $secret) {
-		return JWT::decode( $token, new Key($secret, 'HS256') );
+	public static function jwt_decode( $token, $secret ) {
+		return JWT::decode( $token, new Key( $secret, 'HS256' ) );
 	}
 }
