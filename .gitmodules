@@ -1,0 +1,4 @@
+[submodule "public/assets/document-formats"]
+	path = public/assets/document-formats
+	url = https://github.com/ONLYOFFICE/document-formats
+	branch = master

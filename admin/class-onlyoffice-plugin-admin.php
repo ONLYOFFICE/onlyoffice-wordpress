@@ -96,7 +96,7 @@ final class Onlyoffice_Plugin_Admin {
 			$this->plugin_name . '-media-script',
 			'oo_media',
 			array(
-				'formats'   => Onlyoffice_Plugin_Document_Manager::all_formats(),
+				'formats'   => Onlyoffice_Plugin_Document_Manager::get_viewable_extensions(),
 				'mimeTypes' => get_allowed_mime_types(),
 			)
 		);

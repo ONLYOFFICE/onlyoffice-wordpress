@@ -53,6 +53,17 @@ class Onlyoffice_Plugin_Activator {
 			$iv    = openssl_random_pseudo_bytes( $ivlen );
 			add_option( 'onlyoffice-plugin-bytes', bin2hex( $iv ) );
 		}
+
+		if ( empty( get_option( 'onlyoffice-formats' ) ) ) {
+			$formats = [];
+
+			$pathToFormatsJSON = plugin_dir_path( dirname( __FILE__ ) ) . '/public/assets/document-formats/onlyoffice-docs-formats.json';
+
+			if ( file_exists( $pathToFormatsJSON ) === true ) {
+				$formats = json_decode( file_get_contents( $pathToFormatsJSON ), true );
+				add_option( 'onlyoffice-formats', $formats );
+			}
+		}
 	}
 
 }
