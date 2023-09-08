@@ -30,28 +30,30 @@ import {
 import { onlyofficeIcon } from "./index";
 import { blockStyle } from "./index";
 import { __ } from '@wordpress/i18n';
-const mime = require('mime');
 
 const Edit = ({attributes, setAttributes}) => {
     const onlyofficeAllowedExts = oo_media.formats;
     let onlyofficeAllowedMimes = [];
 
-    for (let ext of onlyofficeAllowedExts) {
-        let mimeType = null;
-        switch (ext) {
-            case '.docxf': {
-                mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.docxf';
-                break;
-            }
-            case '.oform': {
-                mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.oform';
-                break;
-            }
-            default: {
-                mimeType = mime.getType(ext);
-                break;
+    const getMimeType = function( name ) {
+        console.log( oo_media.mimeTypes);
+        var allTypes = oo_media.mimeTypes;
+
+        if (allTypes[name] !== undefined) {
+            return allTypes[name];
+        }
+
+        for(var key in allTypes) {
+            if(key.indexOf(name) !== -1) {
+                return allTypes[key];
             }
         }
+
+        return false;
+    };
+
+    for (let ext of onlyofficeAllowedExts) {
+        let mimeType = getMimeType(ext);
 
         if (mimeType) {
             onlyofficeAllowedMimes.push(mimeType);

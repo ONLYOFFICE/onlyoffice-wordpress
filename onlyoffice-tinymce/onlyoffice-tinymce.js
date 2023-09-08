@@ -32,21 +32,7 @@
                 let onlyofficeAllowedMimes = [];
 
                 for (let ext of onlyofficeAllowedExts) {
-                    var mimeType = null;
-                    switch (ext) {
-                        case '.docxf': {
-                            mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.docxf';
-                            break;
-                        }
-                        case '.oform': {
-                            mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.oform';
-                            break;
-                        }
-                        default: {
-                            mimeType = getMimeType(ext);
-                            break;
-                        }
-                    }
+                    var mimeType = getMimeType(ext);
 
                     if (mimeType){
                         onlyofficeAllowedMimes.push(mimeType);
