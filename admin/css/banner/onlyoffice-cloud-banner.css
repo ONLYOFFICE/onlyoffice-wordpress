@@ -49,10 +49,13 @@
 }
 
 #onlyoffice-cloud-banner .onlyoffice-cloud-banner-button {
-  background: #F6F7F7;
-  border-radius: 3px;
-  border: 1px solid #2271B1;
-  font-weight: 600;
-  padding: 10px 25px;
-  text-decoration: none;
+	background: #F6F7F7;
+	border-radius: 3px;
+	border: 1px solid #2271B1;
+	font-weight: 600;
+	padding: 10px 5px;
+	text-decoration: none;
+	display: inline-block;
+	width: 100%;
+	box-sizing: border-box;
 }
