@@ -103,6 +103,8 @@ class Onlyoffice_Plugin_Frontend_Controller {
 		$attachment_id = $atts['id'];
 		$type          = 'embedded';
 		$mode          = 'view';
+		$perm_edit     = null;
+		$callback      = null;
 		$filepath      = get_attached_file( $attachment_id );
 		$filename      = wp_basename( $filepath );
 
