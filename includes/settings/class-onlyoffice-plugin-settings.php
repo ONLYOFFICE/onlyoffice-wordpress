@@ -169,8 +169,6 @@ class Onlyoffice_Plugin_Settings {
 
 	/**
 	 * General section callback.
-	 *
-	 * @global string $settings_updated
 	 */
 	public function options_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -184,10 +182,7 @@ class Onlyoffice_Plugin_Settings {
 			ONLYOFFICE_PLUGIN_VERSION
 		);
 
-		global $settings_updated;
-		wp_reset_vars( array( 'settings_updated' ) );
-
-		if ( ! empty( $settings_updated ) && sanitize_key( $settings_updated ) === 'true' ) {
+		if ( ! empty( $_GET['settings-updated'] ) && sanitize_key( $_GET['settings-updated'] ) === 'true' ) {
 			add_settings_error( 'onlyoffice_settings_messages', 'onlyoffice_message', __( 'Settings Saved', 'onlyoffice-plugin' ), 'updated' ); // ToDo: can also check if settings are valid e.g. make connection to docServer.
 		}
 
