@@ -38,66 +38,6 @@
  * @author     Ascensio System SIA <integration@onlyoffice.com>
  */
 class Onlyoffice_Plugin_Document_Manager {
-
-	const DOC_SERV_VIEWD     = array( '.pdf', '.djvu', '.xps', '.oxps' );
-	const DOC_SERV_EDITED    = array( '.docx', '.xlsx', '.pptx', '.docxf' );
-	const DOC_SERV_FILL_FORM = array( '.oform' );
-	const DOC_SERV_CONVERT   = array( '.docm', '.doc', '.dotx', '.dotm', '.dot', '.odt', '.fodt', '.ott', '.xlsm', '.xls', '.xltx', '.xltm', '.xlt', '.ods', '.fods', '.ots', '.pptm', '.ppt', '.ppsx', '.ppsm', '.pps', '.potx', '.potm', '.pot', '.odp', '.fodp', '.otp', '.rtf', '.mht', '.html', '.htm', '.xml', '.epub', '.fb2' );
-
-	const EXTS_CELL = array(
-		'.xls',
-		'.xlsx',
-		'.xlsm',
-		'.xlt',
-		'.xltx',
-		'.xltm',
-		'.ods',
-		'.fods',
-		'.ots',
-		'.csv',
-	);
-
-	const EXTS_SLIDE = array(
-		'.pps',
-		'.ppsx',
-		'.ppsm',
-		'.ppt',
-		'.pptx',
-		'.pptm',
-		'.pot',
-		'.potx',
-		'.potm',
-		'.odp',
-		'.fodp',
-		'.otp',
-	);
-
-	const EXTS_WORD = array(
-		'.doc',
-		'.docx',
-		'.docm',
-		'.dot',
-		'.dotx',
-		'.dotm',
-		'.odt',
-		'.fodt',
-		'.ott',
-		'.rtf',
-		'.txt',
-		'.html',
-		'.htm',
-		'.mht',
-		'.xml',
-		'.pdf',
-		'.djvu',
-		'.fb2',
-		'.epub',
-		'.xps',
-		'.oxps',
-		'.docxf',
-		'.oform',
-	);
-
 	const EDIT_CAPS = array(
 		'edit_others_pages',
 		'edit_others_posts',
@@ -117,18 +57,16 @@ class Onlyoffice_Plugin_Document_Manager {
 	 * @return string
 	 */
 	public static function get_document_type( $filename ) {
-		$ext = strtolower( '.' . pathinfo( $filename, PATHINFO_EXTENSION ) );
+		$formats = self::get_onlyoffice_formats();
+		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 
-		if ( in_array( $ext, self::EXTS_WORD, true ) ) {
-			return 'word';
+		foreach ( $formats as $format ) {
+			if ( $format['name'] === $ext ) {
+				return $format['type'];
+			}
 		}
-		if ( in_array( $ext, self::EXTS_CELL, true ) ) {
-			return 'cell';
-		}
-		if ( in_array( $ext, self::EXTS_SLIDE, true ) ) {
-			return 'slide';
-		}
-		return 'word';
+
+		return null;
 	}
 
 	/**
@@ -139,8 +77,16 @@ class Onlyoffice_Plugin_Document_Manager {
 	 * @return bool
 	 */
 	public static function is_editable( $filename ) {
-		$ext = strtolower( '.' . pathinfo( $filename, PATHINFO_EXTENSION ) );
-		return in_array( $ext, self::DOC_SERV_EDITED, true );
+		$formats = self::get_onlyoffice_formats();
+		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
+
+		foreach ( $formats as $format ) {
+			if ( $format['name'] === $ext ) {
+				return in_array( 'edit', $format['actions'] );
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -151,8 +97,16 @@ class Onlyoffice_Plugin_Document_Manager {
 	 * @return bool
 	 */
 	public static function is_fillable( $filename ) {
-		$ext = strtolower( '.' . pathinfo( $filename, PATHINFO_EXTENSION ) );
-		return in_array( $ext, self::DOC_SERV_FILL_FORM, true );
+		$formats = self::get_onlyoffice_formats();
+		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
+
+		foreach ( $formats as $format ) {
+			if ( $format['name']  === $ext ) {
+				return in_array( 'fill', $format['actions'] );
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -162,16 +116,33 @@ class Onlyoffice_Plugin_Document_Manager {
 	 *
 	 * @return bool
 	 */
-	public static function is_openable( $filename ) {
-		$ext = strtolower( '.' . pathinfo( $filename, PATHINFO_EXTENSION ) );
-		return in_array( $ext, array_merge( self::EXTS_WORD, self::EXTS_SLIDE, self::EXTS_CELL ), true );
+	public static function is_viewable( $filename ) {
+		$formats = self::get_onlyoffice_formats();
+		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
+
+		foreach ( $formats as $format ) {
+			if ( $format['name'] === $ext ) {
+				return in_array( 'view', $format['actions'] );
+			}
+		}
+
+		return false;
 	}
 
 	/**
-	 * Returns all supported formats.
+	 * Returns all supported on view extensions.
 	 */
-	public static function all_formats() {
-		return array_merge( self::EXTS_WORD, self::EXTS_SLIDE, self::EXTS_CELL );
+	public static function get_viewable_extensions() {
+		$formats    = self::get_onlyoffice_formats();
+		$extensions = [];
+
+		foreach ( $formats as $format ) {
+			if ( in_array( 'view', $format['actions'] ) ) {
+				array_push( $extensions, $format['name'] );
+			}
+		}
+
+		return $extensions;
 	}
 
 	/**
@@ -202,6 +173,19 @@ class Onlyoffice_Plugin_Document_Manager {
 		}
 
 		return false === $mime['type'] ? 'application/octet-stream' : $mime['type'];
+	}
+	
+	/**
+	 * Return option onlyoffice-formats.
+	 *
+	 */
+	public static function get_onlyoffice_formats( ) {
+		$formats = get_option( 'onlyoffice-formats' );
+		if ( ! empty( $formats ) ) {
+			return $formats;
+		}
+
+		return [];
 	}
 
 }

@@ -189,7 +189,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 			if ( ( '' !== $s ) && ! str_contains( strtolower( $filename ), strtolower( $s ) ) ) {
 				continue;
 			}
-			if ( Onlyoffice_Plugin_Document_Manager::is_editable( $filename ) || Onlyoffice_Plugin_Document_Manager::is_openable( $filename ) ) {
+			if ( Onlyoffice_Plugin_Document_Manager::is_editable( $filename ) || Onlyoffice_Plugin_Document_Manager::is_viewable( $filename ) ) {
 				array_push(
 					$attachments,
 					array(
