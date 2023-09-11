@@ -78,11 +78,7 @@ class Onlyoffice_Plugin_Url_Manager {
 			$route = self::PATH_CALLBACK;
 		}
 
-		if ( get_option( 'permalink_structure' ) ) {
-			return get_option( 'siteurl' ) . '/index.php?rest_route=' . $route . $hidden_id;
-		} else {
-			return get_option( 'siteurl' ) . '/wp-json' . $route . $hidden_id;
-		}
+		return get_rest_url( null, $route . $hidden_id );
 	}
 
 	/**
@@ -101,11 +97,7 @@ class Onlyoffice_Plugin_Url_Manager {
 
 		$hidden_id = self::encode_openssl_data( $data );
 
-		if ( get_option( 'permalink_structure' ) ) {
-			return get_option( 'siteurl' ) . '/index.php?rest_route=' . self::PATH_DOWNLOAD . $hidden_id;
-		} else {
-			return get_option( 'siteurl' ) . '/wp-json' . self::PATH_DOWNLOAD . $hidden_id;
-		}
+		return get_rest_url( null, self::PATH_DOWNLOAD . $hidden_id );
 	}
 
 	/**
@@ -117,11 +109,7 @@ class Onlyoffice_Plugin_Url_Manager {
 	public static function get_editor_url( $attachment_id ) {
 		$hidden_id = self::encode_openssl_data( $attachment_id );
 
-		if ( get_option( 'permalink_structure' ) ) {
-			return get_option( 'siteurl' ) . '/index.php?rest_route=' . self::PATH_EDITOR . $hidden_id;
-		} else {
-			return get_option( 'siteurl' ) . '/wp-json' . self::PATH_EDITOR . $hidden_id;
-		}
+		return get_rest_url( null, self::PATH_EDITOR . $hidden_id );
 	}
 
 	/**
