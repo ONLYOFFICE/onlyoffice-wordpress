@@ -244,7 +244,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 		$title    = wp_basename( $attached );
 
 		$wp_nonce   = wp_create_nonce( 'wp_rest' );
-		$editor_url = Onlyoffice_Plugin_Url_Manager::get_editor_url( $item['id'] ) . '&_wpnonce=' . $wp_nonce
+		$editor_url = add_query_arg( '_wpnonce', $wp_nonce, Onlyoffice_Plugin_Url_Manager::get_editor_url( $item['id'] ) );
 
 		?>
 		<strong>
