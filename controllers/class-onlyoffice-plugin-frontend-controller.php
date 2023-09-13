@@ -68,7 +68,7 @@ class Onlyoffice_Plugin_Frontend_Controller {
 	 * @return string Resulting HTML code for the table.
 	 */
 	public function onlyoffice_block_render_callback( array $block_attributes ) {
-		if ( '' === $block_attributes['id'] ) {
+		if ( !array_key_exists( 'id', $block_attributes ) || '' === $block_attributes['id'] ) {
 			return;
 		}
 

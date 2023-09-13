@@ -36,7 +36,6 @@ const Edit = ({attributes, setAttributes}) => {
     let onlyofficeAllowedMimes = [];
 
     const getMimeType = function( name ) {
-        console.log( oo_media.mimeTypes);
         var allTypes = oo_media.mimeTypes;
 
         if (allTypes[name] !== undefined) {
@@ -80,7 +79,9 @@ const Edit = ({attributes, setAttributes}) => {
                         allowedTypes={ onlyofficeAllowedMimes }
                         accept={ onlyofficeAllowedMimes.join() }
                         onSelect={ (el) => {
-                            setAttributes({ id: el.id, fileName: el.filename || el.title + "." + mime.getExtension(el.mime_type) });
+                            if (el && el.hasOwnProperty('id')) {
+                                setAttributes({ id: el.id, fileName: el.filename || el.guid.raw.substring(el.guid.raw.lastIndexOf('/') + 1) });
+                            }
                         }}
                         name={__('Replace')}
                     />
@@ -92,7 +93,9 @@ const Edit = ({attributes, setAttributes}) => {
                 allowedTypes={onlyofficeAllowedMimes}
                 accept={onlyofficeAllowedMimes.join()}
                 onSelect={(el) => {
-                    setAttributes({ id: el.id, fileName: el.filename || el.title + "." + mime.getExtension(el.mime_type) });
+                    if (el && el.hasOwnProperty('id')) {
+                        setAttributes({ id: el.id, fileName: el.filename || el.guid.raw.substring(el.guid.raw.lastIndexOf('/') + 1) });
+                    }
                 }}
             />
     )
