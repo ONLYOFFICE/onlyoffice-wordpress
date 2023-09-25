@@ -1,6 +1,6 @@
 # Change Log
 
-
+## 1.1.0
 ## Added
 - extended list of supported formats
 - support docxf and oform formats
