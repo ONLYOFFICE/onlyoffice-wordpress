@@ -100,5 +100,4 @@ class Onlyoffice_Plugin_Download {
 		flush();
 		exit;
 	}
-
 }

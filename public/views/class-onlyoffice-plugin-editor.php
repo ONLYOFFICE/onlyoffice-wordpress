@@ -103,7 +103,7 @@ class Onlyoffice_Plugin_Editor {
 		$mode          = 'view';
 		$has_edit_cap  = Onlyoffice_Plugin_Document_Manager::has_edit_capability( $attachment_id );
 		$edit_perm     = $has_edit_cap && ( Onlyoffice_Plugin_Document_Manager::is_editable( $filename ) || Onlyoffice_Plugin_Document_Manager::is_fillable( $filename ) );
-		$callback_url   = null;
+		$callback_url  = null;
 
 		if ( $edit_perm ) {
 			$mode         = 'edit';
@@ -188,5 +188,4 @@ class Onlyoffice_Plugin_Editor {
 		</html>
 		<?php
 	}
-
 }

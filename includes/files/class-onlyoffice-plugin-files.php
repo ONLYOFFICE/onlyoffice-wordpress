@@ -45,7 +45,7 @@ class Onlyoffice_Plugin_Files {
 	 */
 	public function init_menu() {
 		$hook             = null;
-		$logo_svg         = file_get_contents( plugin_dir_path( plugin_dir_path( dirname( __FILE__ ) ) ) . '/public/images/logo.svg' );
+		$logo_svg         = file_get_contents( plugin_dir_path( plugin_dir_path( __DIR__ ) ) . '/public/images/logo.svg' );
 		$can_upload_files = current_user_can( 'upload_files' );
 
 		if ( $can_upload_files ) {

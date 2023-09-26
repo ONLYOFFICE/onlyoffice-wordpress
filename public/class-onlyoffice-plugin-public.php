@@ -142,7 +142,6 @@ class Onlyoffice_Plugin_Public {
 				'permission_callback' => array( $this, 'check_attachment_id' ),
 			)
 		);
-
 	}
 
 	/**

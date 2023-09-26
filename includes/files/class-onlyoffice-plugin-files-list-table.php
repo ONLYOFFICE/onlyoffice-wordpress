@@ -301,7 +301,5 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 		}
 
 		parent::search_box( $text, $input_id );
-
 	}
-
 }

@@ -107,5 +107,4 @@ class Onlyoffice_Plugin_Config_Manager {
 
 		return $config;
 	}
-
 }

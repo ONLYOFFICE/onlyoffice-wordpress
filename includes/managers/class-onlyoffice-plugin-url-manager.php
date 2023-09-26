@@ -152,5 +152,4 @@ class Onlyoffice_Plugin_Url_Manager {
 	private static function append_slash( $url ) {
 		return str_ends_with( $url, '/' ) ? $url : $url . '/';
 	}
-
 }

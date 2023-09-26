@@ -68,7 +68,7 @@ class Onlyoffice_Plugin_Frontend_Controller {
 	 * @return string Resulting HTML code for the table.
 	 */
 	public function onlyoffice_block_render_callback( array $block_attributes ) {
-		if ( !array_key_exists( 'id', $block_attributes ) || '' === $block_attributes['id'] ) {
+		if ( ! array_key_exists( 'id', $block_attributes ) || '' === $block_attributes['id'] ) {
 			return;
 		}
 
@@ -83,7 +83,7 @@ class Onlyoffice_Plugin_Frontend_Controller {
 	 */
 	public function wp_onlyoffice_shortcode( $attr ) {
 		static $instance = 0;
-		$instance++;
+		++$instance;
 
 		$defaults_atts = array(
 			'id'       => '',
@@ -124,5 +124,4 @@ class Onlyoffice_Plugin_Frontend_Controller {
 
 		return apply_filters( 'wp_onlyoffice_shortcode', $output, $atts );
 	}
-
 }

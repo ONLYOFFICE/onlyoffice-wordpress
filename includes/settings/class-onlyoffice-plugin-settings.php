@@ -60,7 +60,7 @@ class Onlyoffice_Plugin_Settings {
 	 * @return void
 	 */
 	public function init_menu() {
-		$logo_svg            = file_get_contents( plugin_dir_path( plugin_dir_path( dirname( __FILE__ ) ) ) . '/public/images/logo.svg' );
+		$logo_svg            = file_get_contents( plugin_dir_path( plugin_dir_path( __DIR__ ) ) . '/public/images/logo.svg' );
 		$can_manage_settings = current_user_can( 'manage_options' );
 		$can_upload_files    = current_user_can( 'upload_files' );
 
@@ -217,14 +217,14 @@ class Onlyoffice_Plugin_Settings {
 	 * Return ONLYOFFICE  Setting
 	 *
 	 * @param string $key Setting key.
-	 * @param string $default Default value.
+	 * @param string $def Default value.
 	 */
-	public static function get_onlyoffice_setting( $key, $default = '' ) {
+	public static function get_onlyoffice_setting( $key, $def = '' ) {
 		$options = get_option( 'onlyoffice_settings' );
 		if ( ! empty( $options ) && array_key_exists( $key, $options ) ) {
 			return $options[ $key ];
 		}
 
-		return $default;
+		return $def;
 	}
 }

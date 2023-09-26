@@ -186,5 +186,4 @@ class Onlyoffice_Plugin_Document_Manager {
 
 		return array();
 	}
-
 }

@@ -165,11 +165,9 @@ class Onlyoffice_Plugin_Callback {
 	/**
 	 * Callback for public forms.
 	 *
-	 * @param array $req Request.
-	 *
 	 * @return WP_REST_Response
 	 */
-	public function callback_public_forms( $req ) {
+	public function callback_public_forms() {
 		$response = new WP_REST_Response();
 
 		$response->data = array(

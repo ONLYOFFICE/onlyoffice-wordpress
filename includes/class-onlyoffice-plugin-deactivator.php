@@ -46,5 +46,4 @@ class Onlyoffice_Plugin_Deactivator {
 	 */
 	public static function deactivate() {
 	}
-
 }

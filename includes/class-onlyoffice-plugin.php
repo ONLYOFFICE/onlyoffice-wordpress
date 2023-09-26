@@ -107,22 +107,22 @@ class Onlyoffice_Plugin {
 		/**
 		 * Load dependencies managed by composer.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/autoload.php';
+		require_once plugin_dir_path( __DIR__ ) . 'vendor/autoload.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-onlyoffice-plugin-admin.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'controllers/class-onlyoffice-plugin-frontend-controller.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-i18n.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-onlyoffice-plugin-loader.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/files/class-onlyoffice-plugin-files.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/files/class-onlyoffice-plugin-files-list-table.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-callback-manager.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-config-manager.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-document-manager.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-jwt-manager.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/managers/class-onlyoffice-plugin-url-manager.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/settings/class-onlyoffice-plugin-settings.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'onlyoffice-tinymce/onlyoffice-tinymce.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-onlyoffice-plugin-public.php';
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-onlyoffice-plugin-admin.php';
+		require_once plugin_dir_path( __DIR__ ) . 'controllers/class-onlyoffice-plugin-frontend-controller.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-onlyoffice-plugin-i18n.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-onlyoffice-plugin-loader.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/files/class-onlyoffice-plugin-files.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/files/class-onlyoffice-plugin-files-list-table.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/managers/class-onlyoffice-plugin-callback-manager.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/managers/class-onlyoffice-plugin-config-manager.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/managers/class-onlyoffice-plugin-document-manager.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/managers/class-onlyoffice-plugin-jwt-manager.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/managers/class-onlyoffice-plugin-url-manager.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/settings/class-onlyoffice-plugin-settings.php';
+		require_once plugin_dir_path( __DIR__ ) . 'onlyoffice-tinymce/onlyoffice-tinymce.php';
+		require_once plugin_dir_path( __DIR__ ) . 'public/class-onlyoffice-plugin-public.php';
 
 		$this->loader = new Onlyoffice_Plugin_Loader();
 	}

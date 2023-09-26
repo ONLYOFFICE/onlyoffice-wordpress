@@ -93,8 +93,8 @@ function run_plugin_name() {
 
 	$plugin = new Onlyoffice_Plugin();
 	$plugin->run();
-
 }
+
 run_plugin_name();
 
 /**
@@ -117,15 +117,13 @@ function onlyoffice_forms_mime_types( $mimes ) {
  *
  * @since    2.0.0
  *
- * @param array        $data      Values for the extension, mime type, and corrected filename.
- * @param string       $file      Full path to the file.
- * @param string       $filename  The name of the file (may differ from $file due to $file being in a tmp directory).
- * @param string[]     $mimes     Array of mime types keyed by their file extension regex.
- * @param string|false $real_mime The actual mime type or false if the type cannot be determined.
+ * @param array  $data      Values for the extension, mime type, and corrected filename.
+ * @param string $file      Full path to the file.
+ * @param string $filename  The name of the file (may differ from $file due to $file being in a tmp directory).
  *
  * @return array
  */
-function onlyoffice_add_allow_upload_extension_exception( $data, $file, $filename, $mimes, $real_mime = null ) {
+function onlyoffice_add_allow_upload_extension_exception( $data, $file, $filename ) {
 	$ext = pathinfo( $filename, PATHINFO_EXTENSION );
 	switch ( $ext ) {
 		case 'oform':
