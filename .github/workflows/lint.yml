@@ -47,9 +47,6 @@ jobs:
       - name: Run phpcs
         run: |
           composer self-update --1
-          curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
-          composer create-project wp-coding-standards/wpcs --no-dev
-          composer global show -P
-          php phpcs.phar --config-set ignore_warnings_on_exit 1
-          php phpcs.phar --config-set installed_paths /home/runner/work/onlyoffice-wordpress/onlyoffice-wordpress/wpcs
-          php phpcs.phar --standard=Wordpress --ignore=3rdparty,onlyoffice-wordpress-block,admin/js,onlyoffice-tinymce/*.js,vendor,wpcs ./
+          composer install
+          vendor/bin/phpcs --config-set ignore_warnings_on_exit 1
+          vendor/bin/phpcs --standard=Wordpress --ignore=3rdparty,onlyoffice-wordpress-block,admin/js,onlyoffice-tinymce/*.js,vendor,wpcs ./
