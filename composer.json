@@ -1,0 +1,9 @@
+{   
+    "require": {
+        "firebase/php-jwt": "^6.3"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.7.2",
+        "wp-coding-standards/wpcs": "^3.0.1"
+    }
+}
