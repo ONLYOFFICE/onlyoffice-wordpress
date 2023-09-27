@@ -28,6 +28,7 @@ jobs:
         run: sudo apt-get install zip
       - name: Build Plugin
         run: |
+          git submodule update --init --recursive
           composer install --no-dev
           cd ${{ github.workspace }}/onlyoffice-wordpress-block
           npm install
