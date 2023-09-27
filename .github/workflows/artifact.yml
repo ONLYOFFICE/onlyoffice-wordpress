@@ -18,6 +18,7 @@ jobs:
           node-version: 16
       - name: Build Artifact
         run: |
+          git submodule update --init --recursive
           composer install --no-dev
           cd ${{ github.workspace }}/onlyoffice-wordpress-block
           npm install
