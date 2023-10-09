@@ -24,6 +24,12 @@ msgstr "文档服务器JWT秘钥"
 msgid "Secret key (leave blank to disable)"
 msgstr "秘钥(留空为关闭)"
 
+msgid "Authorization header"
+msgstr "授权标头"
+
+msgid "Leave blank to use default header"
+msgstr "留空以使用默认的标头"
+
 msgid "Settings Saved"
 msgstr "设置已保存"
 
@@ -62,3 +68,12 @@ msgstr "未发现可在ONLYOFFICE中编辑或查看的文件。"
 
 msgid "Add ONLYOFFICE editor on page"
 msgstr "将ONLYOFFICE编辑器添加到页面上"
+
+msgid "ONLYOFFICE Docs Cloud"
+msgstr "ONLYOFFICE 文档云"
+
+msgid "Easily launch the editors in the cloud without downloading and installation"
+msgstr "无需下载和安装即可轻松启动云端编辑器"
+
+msgid "Get Now"
+msgstr "立即获取"

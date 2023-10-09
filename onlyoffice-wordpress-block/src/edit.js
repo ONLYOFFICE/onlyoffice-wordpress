@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Ascensio System SIA 2022
+ * (c) Copyright Ascensio System SIA 2023
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,49 +16,89 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import { MediaPlaceholder, useBlockProps } from '@wordpress/block-editor';
-import { useState } from '@wordpress/element';
-import {onlyofficeIcon} from "./index";
-import {blockStyle} from "./index";
-const mime = require('mime');
+import { 
+    MediaPlaceholder,
+    useBlockProps,
+    BlockControls,
+    MediaReplaceFlow,
+    InspectorControls,
+} from '@wordpress/block-editor';
+import {
+    PanelBody,
+    __experimentalInputControl as InputControl
+} from '@wordpress/components';
+import { onlyofficeIcon } from "./index";
+import { blockStyle } from "./index";
+import { __ } from '@wordpress/i18n';
 
 const Edit = ({attributes, setAttributes}) => {
-    const [url, setUrl] = useState(attributes.url);
-
-    const onlyofficeAllowedExts = attributes.formats || oo_media.formats;
+    const onlyofficeAllowedExts = oo_media.formats;
     let onlyofficeAllowedMimes = [];
 
+    const getMimeType = function( name ) {
+        var allTypes = oo_media.mimeTypes;
+
+        if (allTypes[name] !== undefined) {
+            return allTypes[name];
+        }
+
+        for(var key in allTypes) {
+            if(key.indexOf(name) !== -1) {
+                return allTypes[key];
+            }
+        }
+
+        return false;
+    };
+
     for (let ext of onlyofficeAllowedExts) {
-        onlyofficeAllowedMimes.push(mime.getType(ext));
-    }
+        let mimeType = getMimeType(ext);
 
-    if (!url && attributes.selectedAttachment && attributes.selectedAttachment.id) {
-        const editorUrl = attributes.getEditorUrl + attributes.selectedAttachment.id;
-
-        fetch(editorUrl).then((r) => r.json()).then((data) => {
-            setUrl(data.url);
-            setAttributes({ url: data.url });
-        });
+        if (mimeType) {
+            onlyofficeAllowedMimes.push(mimeType);
+        }
     }
 
     const blockProps = useBlockProps( { style: blockStyle } );
     return (
-        attributes.selectedAttachment && attributes.selectedAttachment.id ?
+        attributes.id ?
             <div {...blockProps}>
+                <InspectorControls key="setting">
+                    <PanelBody title={__('Settings')}>
+                        <InputControl label={__('Name')} value={attributes.fileName} onChange={ ( value ) => setAttributes({ fileName: value }) } />
+                    </PanelBody>
+                </InspectorControls>
+
                 <p style={{display: 'flex'}}>
                     {onlyofficeIcon}
-                    <p style={{marginLeft: '25px'}}> {attributes.selectedAttachment.filename || `${attributes.selectedAttachment.title}.${mime.getExtension(attributes.selectedAttachment.mime_type)}`}</p>
+                    <p style={{marginLeft: '25px'}}> {attributes.fileName || ""}</p>
                 </p>
+                <BlockControls>
+                    <MediaReplaceFlow
+                        mediaId={ attributes.id }
+                        allowedTypes={ onlyofficeAllowedMimes }
+                        accept={ onlyofficeAllowedMimes.join() }
+                        onSelect={ (el) => {
+                            if (el && el.hasOwnProperty('id')) {
+                                setAttributes({ id: el.id, fileName: el.filename || el.guid.raw.substring(el.guid.raw.lastIndexOf('/') + 1) });
+                            }
+                        }}
+                        name={__('Replace')}
+                    />
+                </BlockControls>
             </div>
             :
             <MediaPlaceholder
                 labels={{title: 'ONLYOFFICE'}}
                 allowedTypes={onlyofficeAllowedMimes}
+                accept={onlyofficeAllowedMimes.join()}
                 onSelect={(el) => {
-                    setAttributes({selectedAttachment: el, getEditorUrl: oo_media.getEditorUrl, formats: oo_media.formats});
+                    if (el && el.hasOwnProperty('id')) {
+                        setAttributes({ id: el.id, fileName: el.filename || el.guid.raw.substring(el.guid.raw.lastIndexOf('/') + 1) });
+                    }
                 }}
             />
-    );
+    )
 };
 
 export default Edit;

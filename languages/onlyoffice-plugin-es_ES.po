@@ -24,6 +24,12 @@ msgstr "Clave secreta JWT del Servidor de documentos"
 msgid "Secret key (leave blank to disable)"
 msgstr "Clave secreta (deje en blanco o desactive)"
 
+msgid "Authorization header"
+msgstr "Encabezado de autenticaciуn"
+
+msgid "Leave blank to use default header"
+msgstr "Dejar en blanco para utilizar el encabezado predeterminado"
+
 msgid "Settings Saved"
 msgstr "Los ajustes se han guardado"
 
@@ -62,3 +68,12 @@ msgstr "No se han encontrado archivos para editar o ver en ONLYOFFICE."
 
 msgid "Add ONLYOFFICE editor on page"
 msgstr "Añadir el editor de ONLYOFFICE en la página"
+
+msgid "ONLYOFFICE Docs Cloud"
+msgstr "ONLYOFFICE Docs Cloud"
+
+msgid "Easily launch the editors in the cloud without downloading and installation"
+msgstr "Inicie fácilmente los editores en la nube sin tener que descargarlos ni instalarlos"
+
+msgid "Get Now"
+msgstr "Obtener ahora"

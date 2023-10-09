@@ -24,6 +24,12 @@ msgstr "Document server JWT secret key"
 msgid "Secret key (leave blank to disable)"
 msgstr "Secret key (leave blank to disable)"
 
+msgid "Authorization header"
+msgstr "Authorization header"
+
+msgid "Leave blank to use default header"
+msgstr "Leave blank to use default header"
+
 msgid "Settings Saved"
 msgstr "Settings Saved"
 
@@ -62,3 +68,12 @@ msgstr "No files found for editing or viewing in ONLYOFFICE."
 
 msgid "Add ONLYOFFICE editor on page"
 msgstr "Add ONLYOFFICE editor on page"
+
+msgid "ONLYOFFICE Docs Cloud"
+msgstr "ONLYOFFICE Docs Cloud"
+
+msgid "Easily launch the editors in the cloud without downloading and installation"
+msgstr "Easily launch the editors in the cloud without downloading and installation"
+
+msgid "Get Now"
+msgstr "Get Now"

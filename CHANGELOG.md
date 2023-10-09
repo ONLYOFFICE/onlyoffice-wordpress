@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.1.0
+## Added
+- extended list of supported formats
+- support docxf and oform formats
+- support for the connector to work in conjunction with the plugin "Force Lowercase URLs" (https://wordpress.org/plugins/force-lowercase-urls)
+- setting authorization header
+- compatible with classic editor TinyMCE
+- Link to docs cloud
+
 ## 1.0.2
 ## Changed
 - fixed issues for the marketplace release

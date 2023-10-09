@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Ascensio System SIA 2022
+ * (c) Copyright Ascensio System SIA 2023
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,11 +16,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import { RawHTML } from '@wordpress/element';
+
 const Save = ( { attributes } ) => {
-    return (
-        <div style={{height: '650px', maxWidth: 'inherit', padding: '20px'}}>
-            { attributes.url && <iframe width="100%" height="100%" src={ attributes.url }/>}
-         </div>
-    );
+    return <RawHTML>{ `[onlyoffice id=${ attributes.id } /]` }</RawHTML>;
 };
 export default Save;
