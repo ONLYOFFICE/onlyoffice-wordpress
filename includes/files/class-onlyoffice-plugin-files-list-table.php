@@ -196,6 +196,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 						'id'     => $attachment->ID,
 						'title'  => pathinfo( $attached_file, PATHINFO_FILENAME ),
 						'format' => strtoupper( pathinfo( $attached_file, PATHINFO_EXTENSION ) ),
+						'date'   => $attachment->post_modified,
 						'size'   => size_format( filesize( $attached_file ) ),
 					)
 				);
