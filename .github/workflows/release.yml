@@ -31,6 +31,9 @@ jobs:
           npm install
           npm run build
           rm -rf node_modules
+          rm package.json
+          rm package-lock.json
+          rm .eslintrc
           cd ${{ github.workspace }}
           mkdir -p ./onlyoffice
           rsync -av --exclude='onlyoffice' ./ ./onlyoffice
@@ -38,6 +41,8 @@ jobs:
           rm -rf .github/
           rm -rf .git/
           rm .gitignore
+          rm composer.json
+          rm composer.lock
       - name: Build Artifact
         run: zip -r onlyoffice.zip onlyoffice/
       - name: Generate Changelog
