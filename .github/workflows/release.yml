@@ -17,9 +17,6 @@ jobs:
         run: |
           echo "::set-output name=version::$(grep -Eo '[0-9]+(\.[0-9]+)+' CHANGELOG.md)"
         id: info
-      - name: Generate Changelog
-        run: |
-          awk '/## [0-9]/{p++} p; /## [0-9]/{if (p > 1) exit}' CHANGELOG.md | awk 'NR>2 {print last} {last=$0}' > RELEASE.md
       - name: Install Node
         uses: actions/setup-node@v3
         with:
@@ -34,6 +31,9 @@ jobs:
           npm install
           npm run build
           rm -rf node_modules
+          rm package.json
+          rm package-lock.json
+          rm .eslintrc
           cd ${{ github.workspace }}
           mkdir -p ./onlyoffice
           rsync -av --exclude='onlyoffice' ./ ./onlyoffice
@@ -41,8 +41,13 @@ jobs:
           rm -rf .github/
           rm -rf .git/
           rm .gitignore
+          rm composer.json
+          rm composer.lock
       - name: Build Artifact
         run: zip -r onlyoffice.zip onlyoffice/
+      - name: Generate Changelog
+        run: |
+          awk '/## [0-9]/{p++} p; /## [0-9]/{if (p > 1) exit}' CHANGELOG.md | awk 'NR>2 {print last} {last=$0}' > RELEASE.md
       - name: Create Release
         uses: ncipollo/release-action@v1
         id: create_release
