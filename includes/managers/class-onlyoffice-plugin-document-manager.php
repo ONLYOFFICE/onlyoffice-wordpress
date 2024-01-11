@@ -146,20 +146,6 @@ class Onlyoffice_Plugin_Document_Manager {
 	}
 
 	/**
-	 * Returns true if user can edit attachment.
-	 *
-	 * @param string $attachment_id The request.
-	 * @return bool
-	 */
-	public static function has_edit_capability( $attachment_id ) {
-		$has_edit_cap = false;
-		foreach ( self::EDIT_CAPS as $capability ) {
-			$has_edit_cap = $has_edit_cap || current_user_can( $capability, $attachment_id );
-		}
-		return $has_edit_cap;
-	}
-
-	/**
 	 * Returns true if user can view attachment.
 	 *
 	 * @param string $attachment_id The attachment id.
