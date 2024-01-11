@@ -160,6 +160,71 @@ class Onlyoffice_Plugin_Document_Manager {
 	}
 
 	/**
+	 * Returns true if user can view attachment.
+	 *
+	 * @param string $attachment_id The attachment id.
+	 * @return bool
+	 */
+	public static function can_user_view_attachment( $attachment_id ) {
+		$attachment = get_post( $attachment_id );
+
+		if ( ! $attachment || 'attachment' !== $attachment->post_type ) {
+			return false;
+		}
+
+		return current_user_can( 'read_post', $attachment_id );
+	}
+
+	/**
+	 * Returns true if anonymous user can view attachment.
+	 *
+	 * @param string $attachment_id The attachment id.
+	 * @return bool
+	 */
+	public static function can_anonymous_user_view_attachment( $attachment_id ) {
+		$attachment = get_post( $attachment_id );
+
+		if ( ! $attachment || 'attachment' !== $attachment->post_type ) {
+			return false;
+		}
+
+		$is_public = get_post_meta( $attachment_id, '_wp_attachment_metadata', true );
+
+		if ( ! $is_public ) {
+			return false;
+		}
+
+		$parent_post_id = $attachment->post_parent;
+		$parent_post    = get_post( $parent_post_id );
+
+		if ( ! $parent_post ) {
+			return false;
+		}
+
+		if ( 'publish' !== $parent_post->post_status ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Returns true if user can edit attachment.
+	 *
+	 * @param string $attachment_id The attachment id.
+	 * @return bool
+	 */
+	public static function can_user_edit_attachment( $attachment_id ) {
+		$attachment = get_post( $attachment_id );
+
+		if ( ! $attachment ) {
+			return false;
+		}
+
+		return current_user_can( 'edit_post', $attachment_id );
+	}
+
+	/**
 	 * Return mime type by file name.
 	 *
 	 * @param string $filename The file name.
