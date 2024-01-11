@@ -135,7 +135,7 @@ class Onlyoffice_Plugin_Callback {
 			case 'Editing':
 				break;
 			case 'MustSave':
-				$can_edit = Onlyoffice_Plugin_Document_Manager::has_edit_capability( $attachemnt_id );
+				$can_edit = Onlyoffice_Plugin_Document_Manager::can_user_edit_attachment( $attachemnt_id );
 				if ( ! $can_edit ) {
 					wp_die( 'No edit capability', '', array( 'response' => 403 ) );
 				}

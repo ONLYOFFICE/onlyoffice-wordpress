@@ -70,7 +70,7 @@ if ( ! Onlyoffice_Plugin_Document_Manager::can_user_view_attachment( $attachment
 $filepath           = get_attached_file( $attachment_id );
 $filename           = wp_basename( $filepath );
 $editor_config_mode = 'view';
-$has_edit_cap       = Onlyoffice_Plugin_Document_Manager::has_edit_capability( $attachment_id );
+$has_edit_cap       = Onlyoffice_Plugin_Document_Manager::can_user_edit_attachment( $attachment_id );
 $edit_perm          = $has_edit_cap && ( Onlyoffice_Plugin_Document_Manager::is_editable( $filename ) || Onlyoffice_Plugin_Document_Manager::is_fillable( $filename ) );
 $callback_url       = null;
 $go_back_url        = ! empty( $_SERVER['HTTP_REFERER'] )
