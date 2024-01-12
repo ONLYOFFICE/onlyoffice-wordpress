@@ -1,5 +1,8 @@
 # Change Log
 
+## Changed
+- editor url
+
 ## 1.1.0
 ## Added
 - extended list of supported formats

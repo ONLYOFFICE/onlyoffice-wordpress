@@ -39,7 +39,6 @@ class Onlyoffice_Plugin_Url_Manager {
 	private const PATH_CALLBACK              = '/onlyoffice/oo.callback/';
 	private const PATH_CALLBACK_PUBLIC_FORMS = '/onlyoffice/oo.callback-public-forms/';
 	private const PATH_DOWNLOAD              = '/onlyoffice/oo.getfile/';
-	private const PATH_EDITOR                = '/onlyoffice/oo.editor/';
 	private const PATH_API_JS                = 'web-apps/apps/api/documents/api.js';
 
 	/**
@@ -107,9 +106,7 @@ class Onlyoffice_Plugin_Url_Manager {
 	 * @return string
 	 */
 	public static function get_editor_url( $attachment_id ) {
-		$hidden_id = self::encode_openssl_data( $attachment_id );
-
-		return get_rest_url( null, self::PATH_EDITOR . $hidden_id );
+		return ONLYOFFICE_PLUGIN_URL . 'editor.php?attachment_id=' . $attachment_id;
 	}
 
 	/**

@@ -189,7 +189,9 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 			if ( ( '' !== $s ) && ! str_contains( strtolower( $filename ), strtolower( $s ) ) ) {
 				continue;
 			}
-			if ( Onlyoffice_Plugin_Document_Manager::is_editable( $filename ) || Onlyoffice_Plugin_Document_Manager::is_viewable( $filename ) ) {
+			if ( ( Onlyoffice_Plugin_Document_Manager::is_editable( $filename )
+						|| Onlyoffice_Plugin_Document_Manager::is_viewable( $filename ) )
+					&& Onlyoffice_Plugin_Document_Manager::can_user_view_attachment( $attachment->ID ) ) {
 				array_push(
 					$attachments,
 					array(
@@ -244,8 +246,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 		$attached = get_attached_file( $item['id'] );
 		$title    = wp_basename( $attached );
 
-		$wp_nonce   = wp_create_nonce( 'wp_rest' );
-		$editor_url = add_query_arg( '_wpnonce', $wp_nonce, Onlyoffice_Plugin_Url_Manager::get_editor_url( $item['id'] ) );
+		$editor_url = Onlyoffice_Plugin_Url_Manager::get_editor_url( $item['id'] );
 
 		?>
 		<strong>
