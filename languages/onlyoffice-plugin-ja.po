@@ -77,3 +77,11 @@ msgstr "ダウンロードやインストールをすることなく、クラウ
 
 msgid "Get Now"
 msgstr "今すぐ使ってみる"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Embedded"
+msgstr "Embedded"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Document view"
+msgstr "Document view"
