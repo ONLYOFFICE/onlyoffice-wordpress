@@ -22,9 +22,12 @@ import {
     BlockControls,
     MediaReplaceFlow,
     InspectorControls,
+    RichText
 } from '@wordpress/block-editor';
 import {
     PanelBody,
+    ToggleControl,
+    SelectControl,
     __experimentalInputControl as InputControl
 } from '@wordpress/components';
 import { onlyofficeIcon } from "./index";
@@ -34,6 +37,16 @@ import { __ } from '@wordpress/i18n';
 const Edit = ({attributes, setAttributes}) => {
     const onlyofficeAllowedExts = oo_media.formats;
     let onlyofficeAllowedMimes = [];
+    const viewOptions = [
+        {
+            label: __('Embedded', 'onlyoffice-plugin'),
+            value: 'embedded'
+        },
+        {
+            label: __('Link'),
+            value: 'link'
+        }
+    ]
 
     const getMimeType = function( name ) {
         var allTypes = oo_media.mimeTypes;
@@ -59,21 +72,48 @@ const Edit = ({attributes, setAttributes}) => {
         }
     }
 
-    const blockProps = useBlockProps( { style: blockStyle } );
+    const blockProps = attributes.documentView === 'link' ?  useBlockProps( { style: null } ) : useBlockProps( { style: blockStyle } );
     return (
         attributes.id ?
             <div {...blockProps}>
                 <InspectorControls key="setting">
                     <PanelBody title={__('Settings')}>
                         <InputControl label={__('Name')} value={attributes.fileName} onChange={ ( value ) => setAttributes({ fileName: value }) } />
+                        <SelectControl
+                            label={__('Document view', 'onlyoffice-plugin')}
+                            value={attributes.documentView}
+                            options={viewOptions}
+                            onChange={(value) => {setAttributes({ documentView: value })}}
+                            />
+                        {
+                            attributes.documentView === 'link' ?
+                                <ToggleControl
+                                    checked={attributes.inNewTab}
+                                    label={__('Open in new tab')}
+                                    onChange={(value) => setAttributes({ inNewTab: value })} 
+                                    />
+                                :
+                                ""
+                        }
                     </PanelBody>
                 </InspectorControls>
 
-                <p style={{display: 'flex'}}>
-                    {onlyofficeIcon}
-                    <p style={{marginLeft: '25px'}}> {attributes.fileName || ""}</p>
-                </p>
-                <BlockControls>
+                {
+                    attributes.documentView === 'link' ?
+                        <RichText
+                            tagName="a"
+                            allowedFormats={ [ 'core/bold', 'core/image', 'core/italic', 'core/strikethrough', 'core/text-color', 'core/code', 'core/keyboard' , 'core/subscript', 'core/superscript' ] } 
+                            onChange={ ( value ) => setAttributes({ fileName: value }) }
+                            value={ attributes.fileName }
+                        />
+                        :
+                        <p style={{display: 'flex'}}>
+                            {onlyofficeIcon}
+                            <p style={{marginLeft: '25px'}}> {attributes.fileName || ""}</p>
+                        </p>
+                }
+
+                <BlockControls group="other">
                     <MediaReplaceFlow
                         mediaId={ attributes.id }
                         allowedTypes={ onlyofficeAllowedMimes }
