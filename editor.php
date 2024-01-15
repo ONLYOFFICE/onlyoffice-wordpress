@@ -26,6 +26,13 @@
 
 require_once '../../../wp-load.php';
 
+add_filter(
+	'locale',
+	function () {
+		return get_user_locale( get_current_user_id() );
+	}
+);
+
 // phpcs:disable WordPress.Security.NonceVerification
 
 if ( ! isset( $_GET['attachment_id'] ) ) {
