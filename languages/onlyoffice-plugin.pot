@@ -75,3 +75,11 @@ msgstr ""
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Document view"
 msgstr ""
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Open in ONLYOFFICE"
+msgstr ""
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Show Open in ONLYOFFICE button"
+msgstr ""

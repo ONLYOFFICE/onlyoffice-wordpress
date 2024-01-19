@@ -49,6 +49,14 @@ const Save = ( { attributes } ) => {
         parameters += 'height=' + attributes.height + ' ';
     }
 
+    if ( attributes.hasOwnProperty('showOpenButton') ) {
+        parameters += 'showOpenButton=' + attributes.showOpenButton + ' ';
+    }
+
+    if ( attributes.hasOwnProperty('openButtonText') && attributes.openButtonText.length > 0 ) {
+        parameters += 'openButtonText=' + attributes.openButtonText + ' ';
+    }
+
     return <RawHTML>{ `[onlyoffice ${ parameters } /]` }</RawHTML>;
 };
 export default Save;

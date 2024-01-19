@@ -90,13 +90,15 @@ class Onlyoffice_Plugin_Frontend_Controller {
 		++$instance;
 
 		$defaults_atts = array(
-			'id'           => '',
-			'fileName'     => '',
-			'documentView' => 'embedded',
-			'inNewTab'     => 'true',
-			'align'        => '',
-			'width'        => '100%',
-			'height'       => '500px',
+			'id'             => '',
+			'fileName'       => '',
+			'documentView'   => 'embedded',
+			'inNewTab'       => true,
+			'align'          => '',
+			'width'          => '100%',
+			'height'         => '500px',
+			'showOpenButton' => 'true',
+			'openButtonText' => __( 'Open in ONLYOFFICE', 'onlyoffice-plugin' ),
 		);
 
 		$atts = shortcode_atts( $defaults_atts, $attr, 'onlyoffice' );
@@ -108,6 +110,13 @@ class Onlyoffice_Plugin_Frontend_Controller {
 		if ( empty( $atts['height'] ) ) {
 			$atts['height'] = $defaults_atts['height'];
 		}
+
+		wp_enqueue_style(
+			'wp-block-onlyoffice-wordpress-styles',
+			ONLYOFFICE_PLUGIN_URL . 'onlyoffice-wordpress-block/src/styles.css',
+			array(),
+			ONLYOFFICE_PLUGIN_VERSION
+		);
 
 		if ( 'link' === $atts['documentView'] ) {
 			return $this->render_link( $atts, $instance );
@@ -153,7 +162,7 @@ class Onlyoffice_Plugin_Frontend_Controller {
 		$size  = ! empty( $atts['width'] ) && ! ( 'full' === $atts['align'] ) ? 'width: ' . $atts['width'] . ';' : '';
 		$size .= ! empty( $atts['height'] ) ? 'height: ' . $atts['height'] . ';' : '';
 
-		$output  = '<div class="wp-block-onlyoffice-wordpress ' . $align . ' size-full" style="' . $size . '">';
+		$output  = '<div class="wp-block-onlyoffice-wordpress-onlyoffice ' . $align . ' size-full" style="' . $size . '">';
 		$output .= '<div id="editorOnlyoffice-' . $instance . '"></div>';
 		$output .= '<script type="text/javascript">new DocsAPI.DocEditor("editorOnlyoffice-' . $instance . '", ' . wp_json_encode( $config ) . '); </script>';
 		$output .= '</div>';
@@ -172,8 +181,9 @@ class Onlyoffice_Plugin_Frontend_Controller {
 		$target = true === $atts['inNewTab'] ? 'target="_blank"' : '';
 		$align  = ! empty( $atts['align'] ) ? 'align' . $atts['align'] : '';
 
-		$output  = '<div class="wp-block-onlyoffice-wordpress ' . $align . '">';
+		$output  = '<div class="wp-block-onlyoffice-wordpress-onlyoffice ' . $align . '">';
 		$output .= '<a id="linkToOnlyofficeEditor-' . $instance . '" href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . '>' . $atts['fileName'] . '</a>';
+		$output .= '<a href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . ' class="wp-block-onlyoffice-wordpress__button wp-element-button">' . $atts['openButtonText'] . '</a>';
 		$output .= '</div>';
 
 		return apply_filters( 'wp_onlyoffice_shortcode', $output, $atts );

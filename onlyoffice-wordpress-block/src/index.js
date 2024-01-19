@@ -18,6 +18,8 @@
 
 import { registerBlockType } from '@wordpress/blocks';
 
+import "./styles.css"
+
 import block from '../block.json';
 import edit from './edit';
 import save from './save';

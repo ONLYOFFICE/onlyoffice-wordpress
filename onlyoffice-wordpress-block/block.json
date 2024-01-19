@@ -5,6 +5,7 @@
 	"title": "ONLYOFFICE",
 	"category": "media",
 	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:build/index.css",
 	"keywords": ["onlyoffice"],
 	"textdomain": "onlyoffice-plugin",
 	"attributes": {
@@ -25,6 +26,13 @@
 			"type": "string"
 		},
 		"height":{
+			"type": "string"
+		},
+		"showOpenButton":{
+			"type": "boolean",
+			"default": true
+		},
+		"openButtonText":{
 			"type": "string"
 		}
 	},
