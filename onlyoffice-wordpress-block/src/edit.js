@@ -22,7 +22,8 @@ import {
     BlockControls,
     MediaReplaceFlow,
     InspectorControls,
-    RichText
+    RichText,
+    HeightControl
 } from '@wordpress/block-editor';
 import {
     PanelBody,
@@ -46,7 +47,22 @@ const Edit = ({attributes, setAttributes}) => {
             label: __('Link'),
             value: 'link'
         }
-    ]
+    ];
+
+    if (attributes.hasOwnProperty('width') && attributes.width.length > 0) {
+        blockStyle.width = attributes.width;
+    }
+
+    if (attributes.hasOwnProperty('height') && attributes.height.length > 0) {
+        blockStyle.height = attributes.height;
+    }
+
+    let showWidthControl = true;
+
+    if (attributes.align === "full") {
+        delete blockStyle.width;
+        showWidthControl = false;
+    }
 
     const getMimeType = function( name ) {
         var allTypes = oo_media.mimeTypes;
@@ -93,7 +109,15 @@ const Edit = ({attributes, setAttributes}) => {
                                     onChange={(value) => setAttributes({ inNewTab: value })} 
                                     />
                                 :
-                                ""
+                                <div>
+                                    {
+                                        showWidthControl ?
+                                            <HeightControl label={ __("Width", "onlyoffice-docspace-plugin") } value={attributes.width} onChange={ ( value ) => setAttributes({ width: value }) }/>
+                                            :
+                                            ''
+                                        }
+                                    <HeightControl label={ __("Height", "onlyoffice-docspace-plugin") } value={attributes.height} onChange={ ( value ) => setAttributes({ height: value }) }/>
+                                </div>
                         }
                     </PanelBody>
                 </InspectorControls>

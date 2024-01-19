@@ -23,7 +23,8 @@ import edit from './edit';
 import save from './save';
 
 export const blockStyle = {
-    padding: '20px',
+    height: '500px',
+    background: '#a2ccef'
 };
 
 export const onlyofficeIcon = (

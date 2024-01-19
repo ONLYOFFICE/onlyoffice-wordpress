@@ -20,6 +20,15 @@
 		"inNewTab": {
 			"type": "boolean",
 			"default": true
+		},
+		"width":  {
+			"type": "string"
+		},
+		"height":{
+			"type": "string"
 		}
+	},
+	"supports": {
+		"align": true
 	}
 }

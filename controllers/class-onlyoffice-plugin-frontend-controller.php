@@ -94,9 +94,20 @@ class Onlyoffice_Plugin_Frontend_Controller {
 			'fileName'     => '',
 			'documentView' => 'embedded',
 			'inNewTab'     => 'true',
+			'align'        => '',
+			'width'        => '100%',
+			'height'       => '500px',
 		);
 
 		$atts = shortcode_atts( $defaults_atts, $attr, 'onlyoffice' );
+
+		if ( empty( $atts['width'] ) ) {
+			$atts['width'] = $defaults_atts['width'];
+		}
+
+		if ( empty( $atts['height'] ) ) {
+			$atts['height'] = $defaults_atts['height'];
+		}
 
 		if ( 'link' === $atts['documentView'] ) {
 			return $this->render_link( $atts, $instance );
@@ -138,7 +149,11 @@ class Onlyoffice_Plugin_Frontend_Controller {
 
 		$config = Onlyoffice_Plugin_Config_Manager::get_config( $attachment_id, $type, $mode, $perm_edit, $callback, null, true );
 
-		$output  = '<div class="wp-block-onlyoffice-wordpress" style="height: 650px; maxWidth: inherit, padding: 20px">';
+		$align = ! empty( $atts['align'] ) ? 'align' . $atts['align'] : '';
+		$size  = ! empty( $atts['width'] ) && ! ( 'full' === $atts['align'] ) ? 'width: ' . $atts['width'] . ';' : '';
+		$size .= ! empty( $atts['height'] ) ? 'height: ' . $atts['height'] . ';' : '';
+
+		$output  = '<div class="wp-block-onlyoffice-wordpress ' . $align . ' size-full" style="' . $size . '">';
 		$output .= '<div id="editorOnlyoffice-' . $instance . '"></div>';
 		$output .= '<script type="text/javascript">new DocsAPI.DocEditor("editorOnlyoffice-' . $instance . '", ' . wp_json_encode( $config ) . '); </script>';
 		$output .= '</div>';
@@ -155,8 +170,9 @@ class Onlyoffice_Plugin_Frontend_Controller {
 	 */
 	private function render_link( $atts, $instance ) {
 		$target = true === $atts['inNewTab'] ? 'target="_blank"' : '';
+		$align  = ! empty( $atts['align'] ) ? 'align' . $atts['align'] : '';
 
-		$output  = '<div class="wp-block-onlyoffice-wordpress">';
+		$output  = '<div class="wp-block-onlyoffice-wordpress ' . $align . '">';
 		$output .= '<a id="linkToOnlyofficeEditor-' . $instance . '" href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . '>' . $atts['fileName'] . '</a>';
 		$output .= '</div>';
 
