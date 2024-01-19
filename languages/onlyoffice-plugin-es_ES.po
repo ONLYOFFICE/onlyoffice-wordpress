@@ -85,3 +85,12 @@ msgstr "Embedded"
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Document view"
 msgstr "Document view"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Open in ONLYOFFICE"
+msgstr "Open in ONLYOFFICE"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Show Open in ONLYOFFICE button"
+msgstr "Show Open in ONLYOFFICE button"
+

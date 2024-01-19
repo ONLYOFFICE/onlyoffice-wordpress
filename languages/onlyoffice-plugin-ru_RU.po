@@ -85,3 +85,11 @@ msgstr "Встроенный"
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Document view"
 msgstr "Просмотр документа"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Open in ONLYOFFICE"
+msgstr "Открыть в ONLYOFFICE"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Show Open in ONLYOFFICE button"
+msgstr "Показать кнопку Открыть в ONLYOFFICE"
