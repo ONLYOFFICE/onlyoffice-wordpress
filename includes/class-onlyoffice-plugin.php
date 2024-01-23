@@ -189,6 +189,7 @@ class Onlyoffice_Plugin {
 		$plugin_frontend_controller = new Onlyoffice_Plugin_Frontend_Controller();
 		$this->loader->add_action( 'init', $plugin_frontend_controller, 'init_shortcodes' );
 		$this->loader->add_action( 'init', $plugin_frontend_controller, 'onlyoffice_custom_block' );
+		$this->loader->add_action( 'wp_footer', $plugin_frontend_controller, 'onlyoffice_error_template', 30 );
 	}
 
 	/**

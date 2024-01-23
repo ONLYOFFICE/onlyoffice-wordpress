@@ -1,0 +1,36 @@
+.wp-block-onlyoffice-wordpress-onlyoffice__target {
+	align-items: center;
+	font-size: 20px;
+	height: inherit;
+	display: flex;
+	margin: 0;
+	max-width: inherit;
+	text-align: center;
+	vertical-align: middle;
+	width: inherit;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.wp-block-onlyoffice-wordpress-onlyoffice__target .onlyoffice-error {
+	overflow: auto;
+	width: 100%;
+	height: 100%;
+}
+
+.wp-block-onlyoffice-wordpress-onlyoffice__target .onlyoffice-error-body {
+	width: 100%;
+	height: 100%;
+	display: table;
+	max-width: 600px;
+	min-width: 300px;
+	min-height: 250px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.wp-block-onlyoffice-wordpress-onlyoffice__target .onlyoffice-error-table {
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+}
