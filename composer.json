@@ -5,5 +5,13 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.7.2",
         "wp-coding-standards/wpcs": "^3.0.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "scripts": {
+        "phpcs": "phpcs --standard=Wordpress --ignore=*/onlyoffice-wordpress-block/*,*/public/assets/*,*/vendor/* ./"
     }
 }
