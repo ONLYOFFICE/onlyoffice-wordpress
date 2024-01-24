@@ -151,6 +151,14 @@ class Onlyoffice_Plugin_Frontend_Controller {
 					array(),
 					ONLYOFFICE_PLUGIN_VERSION
 				);
+
+				if ( function_exists( 'wp_set_script_translations' ) ) {
+					wp_set_script_translations(
+						'wp-block-onlyoffice-wordpress-js',
+						'onlyoffice-plugin',
+						plugin_dir_path( ONLYOFFICE_PLUGIN_FILE ) . 'languages/'
+					);
+				}
 			}
 		);
 

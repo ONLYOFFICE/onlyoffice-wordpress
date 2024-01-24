@@ -50,7 +50,12 @@ class Onlyoffice_Plugin_Config_Manager {
 	 * @return array
 	 */
 	public static function get_config( $attachment_id, $type, $mode, $perm_edit, $callback_url, $go_back_url, $unic_key ) {
-		$post     = get_post( $attachment_id );
+		$post = get_post( $attachment_id );
+
+		if ( ! $post ) {
+			return null;
+		}
+
 		$user     = wp_get_current_user();
 		$author   = get_user_by( 'id', $post->post_author )->display_name;
 		$filepath = get_attached_file( $attachment_id );

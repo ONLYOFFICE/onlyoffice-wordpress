@@ -33,7 +33,18 @@
 				function () {
 					const config   = $( this ).data( 'config' );
 					const instance = $( this ).data( 'instance' );
-					new DocsAPI.DocEditor( 'editorOnlyoffice-' + instance, config );
+					if ( ! config || config === "" ) {
+						const onlyofficeErrorTemplate = wp.template( 'onlyoffice-error' );
+						$( this ).html(
+							onlyofficeErrorTemplate(
+								{
+									email: __( 'File not found!', 'onlyoffice-plugin' )
+								}
+							)
+						);
+					} else {
+						new DocsAPI.DocEditor( 'editorOnlyoffice-' + instance, config );
+					}
 				}
 			);
 		}
