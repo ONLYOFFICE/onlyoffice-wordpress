@@ -1,6 +1,7 @@
 # Change Log
 
 ## Added
+- ability to insert a link to the editor on the page
 - access for an anonymous user, open the document for viewing in the editor if the document is attached to a public post
 
 ## Changed
