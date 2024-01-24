@@ -71,7 +71,7 @@ class Onlyoffice_Plugin_Settings {
 				'manage_options',
 				'onlyoffice-settings',
 				array( $this, 'options_page' ),
-				'data:image/svg+xml;base64,' . base64_encode( $logo_svg )
+				'data:image/svg+xml;base64,' . base64_encode( $logo_svg ) // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 			);
 		}
 		if ( $can_manage_settings && $can_upload_files ) {
@@ -182,7 +182,7 @@ class Onlyoffice_Plugin_Settings {
 			ONLYOFFICE_PLUGIN_VERSION
 		);
 
-		if ( ! empty( $_GET['settings-updated'] ) && sanitize_key( $_GET['settings-updated'] ) === 'true' ) {
+		if ( ! empty( $_GET['settings-updated'] ) && sanitize_key( $_GET['settings-updated'] ) === 'true' ) { // phpcs:ignore WordPress.Security.NonceVerification
 			add_settings_error( 'onlyoffice_settings_messages', 'onlyoffice_message', __( 'Settings Saved', 'onlyoffice-plugin' ), 'updated' ); // ToDo: can also check if settings are valid e.g. make connection to docServer.
 		}
 

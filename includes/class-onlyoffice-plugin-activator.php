@@ -60,7 +60,7 @@ class Onlyoffice_Plugin_Activator {
 			$path_to_formats_json = plugin_dir_path( __DIR__ ) . '/public/assets/document-formats/onlyoffice-docs-formats.json';
 
 			if ( file_exists( $path_to_formats_json ) === true ) {
-				$formats = json_decode( file_get_contents( $path_to_formats_json ), true );
+				$formats = wp_json_file_decode( $path_to_formats_json );
 				add_option( 'onlyoffice-formats', $formats );
 			}
 		}

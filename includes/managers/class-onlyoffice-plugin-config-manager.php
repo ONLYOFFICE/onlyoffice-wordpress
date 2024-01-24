@@ -66,7 +66,7 @@ class Onlyoffice_Plugin_Config_Manager {
 				'title'       => $filename,
 				'url'         => $file_url,
 				'fileType'    => $filetype,
-				'key'         => base64_encode( $post->post_modified ) . $attachment_id,
+				'key'         => base64_encode( $post->post_modified ) . $attachment_id, // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 				'info'        => array(
 					'owner'    => $author,
 					'uploaded' => $post->post_date,
