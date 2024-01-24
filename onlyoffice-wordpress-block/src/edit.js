@@ -172,7 +172,7 @@ const Edit = ({attributes, setAttributes}) => {
                         <div className={ `wp-block-onlyoffice-wordpress-onlyoffice__embedded ${documentType}`}>
                             <div>
                                 {getLogoByDocumentType(documentType)}
-                                <p> {attributes.fileName || ""}</p>
+                                <p> {documentType ? attributes.fileName || "" : __('File not found!', 'onlyoffice-plugin')}</p>
                             </div>
                         </div>
                 }

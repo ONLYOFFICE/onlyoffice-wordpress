@@ -85,6 +85,7 @@ msgstr ""
 msgid "Show Open in ONLYOFFICE button"
 msgstr ""
 
+#: onlyoffice-wordpress-block/build/index.js
 #: controllers/js/frontend-controller.js
 msgid "File not found!"
 msgstr ""
