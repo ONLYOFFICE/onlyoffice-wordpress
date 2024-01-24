@@ -57,6 +57,7 @@ msgstr "Dateien"
 msgid "Configure ONLYOFFICE connector settings"
 msgstr "ONLYOFFICE-Konnektor konfigurieren"
 
+#: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE cannot be reached. Please contact admin"
 msgstr "ONLYOFFICE ist nicht zugänglich. Bitte wende Dich an Deinen Administrator"
 
@@ -93,3 +94,7 @@ msgstr "Open in ONLYOFFICE"
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Show Open in ONLYOFFICE button"
 msgstr "Show Open in ONLYOFFICE button"
+
+#: controllers/js/frontend-controller.js
+msgid "File not found!"
+msgstr "File not found!"

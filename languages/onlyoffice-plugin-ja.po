@@ -57,6 +57,7 @@ msgstr "ファイル"
 msgid "Configure ONLYOFFICE connector settings"
 msgstr "ONLYOFFICEコネクタ設定を構成する"
 
+#: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE cannot be reached. Please contact admin"
 msgstr "ONLYOFFICE に接続できません。管理者にお問い合わせください"
 
@@ -93,3 +94,7 @@ msgstr "Open in ONLYOFFICE"
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Show Open in ONLYOFFICE button"
 msgstr "Show Open in ONLYOFFICE button"
+
+#: controllers/js/frontend-controller.js
+msgid "File not found!"
+msgstr "File not found!"
