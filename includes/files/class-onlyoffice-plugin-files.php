@@ -55,7 +55,7 @@ class Onlyoffice_Plugin_Files {
 				'upload_files',
 				'onlyoffice-files',
 				array( $this, 'files_page' ),
-				'data:image/svg+xml;base64,' . base64_encode( $logo_svg )
+				'data:image/svg+xml;base64,' . base64_encode( $logo_svg ) // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 			);
 
 			$hook = add_submenu_page(
