@@ -55,24 +55,23 @@ if ( ! $attachment || 'attachment' !== $attachment->post_type ) {
 }
 
 if ( ! is_user_logged_in() ) {
-	$redirect_to = '';
+	if ( ! Onlyoffice_Plugin_Document_Manager::can_anonymous_user_view_attachment( $attachment_id ) ) {
+		$redirect_to = '';
 
-	if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-		$redirect_to = esc_url( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
+		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+			$redirect_to = esc_url( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
+		}
+
+		$login_url = wp_login_url( $redirect_to );
+		wp_safe_redirect( $login_url );
+		exit;
 	}
-
-	$login_url = wp_login_url( $redirect_to );
-	wp_safe_redirect( $login_url );
-	exit;
-}
-
-if ( ! Onlyoffice_Plugin_Document_Manager::can_user_view_attachment( $attachment_id ) ) {
+} elseif ( ! Onlyoffice_Plugin_Document_Manager::can_user_view_attachment( $attachment_id ) ) {
 	wp_die(
 		esc_attr_e( 'Sorry, you are not allowed to view this item.' ),
 		403
 	);
 }
-
 
 $filepath           = get_attached_file( $attachment_id );
 $filename           = wp_basename( $filepath );
@@ -80,11 +79,15 @@ $editor_config_mode = 'view';
 $has_edit_cap       = Onlyoffice_Plugin_Document_Manager::can_user_edit_attachment( $attachment_id );
 $edit_perm          = $has_edit_cap && ( Onlyoffice_Plugin_Document_Manager::is_editable( $filename ) || Onlyoffice_Plugin_Document_Manager::is_fillable( $filename ) );
 $callback_url       = null;
-$go_back_url        = ! empty( $_SERVER['HTTP_REFERER'] )
+$go_back_url        = null;
+
+if ( is_user_logged_in() ) {
+	$go_back_url = ! empty( $_SERVER['HTTP_REFERER'] )
 			&& str_contains( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ), get_option( 'siteurl' ) )
 			&& str_contains( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ), 'onlyoffice-files' )
 			? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) )
 			: get_option( 'siteurl' ) . '/wp-admin/admin.php?page=onlyoffice-files';
+}
 
 if ( $edit_perm ) {
 	$editor_config_mode = 'edit';

@@ -1,5 +1,8 @@
 # Change Log
 
+## Added
+- access for an anonymous user, open the document for viewing in the editor if the document is attached to a public post
+
 ## Changed
 - editor url
 
