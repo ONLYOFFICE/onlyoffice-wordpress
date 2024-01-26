@@ -1,6 +1,7 @@
 # Change Log
 
 ## Added
+- button copy link to editor, in the table with files
 - access for an anonymous user, open the document for viewing in the editor if the document is attached to a public post
 
 ## Changed
