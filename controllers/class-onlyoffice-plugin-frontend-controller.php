@@ -57,7 +57,11 @@ class Onlyoffice_Plugin_Frontend_Controller {
 		);
 
 		if ( function_exists( 'wp_set_script_translations' ) ) {
-			wp_set_script_translations( 'onlyoffice-plugin', 'onlyoffice-plugin' );
+			wp_set_script_translations(
+				'onlyoffice-wordpress-onlyoffice-editor-script',
+				'onlyoffice-plugin',
+				plugin_dir_path( ONLYOFFICE_PLUGIN_FILE ) . 'languages/'
+			);
 		}
 	}
 
@@ -86,12 +90,29 @@ class Onlyoffice_Plugin_Frontend_Controller {
 		++$instance;
 
 		$defaults_atts = array(
-			'id'       => '',
-			'fileName' => '',
+			'id'           => '',
+			'fileName'     => '',
+			'documentView' => 'embedded',
+			'inNewTab'     => 'true',
 		);
 
 		$atts = shortcode_atts( $defaults_atts, $attr, 'onlyoffice' );
 
+		if ( 'link' === $atts['documentView'] ) {
+			return $this->render_link( $atts, $instance );
+		}
+
+		return $this->render_embedded( $atts, $instance );
+	}
+
+	/**
+	 * ONLYOFFICE Embedded Template.
+	 *
+	 * @param array $atts List of attributes that where included in the Shortcode.
+	 * @param int   $instance Element number on page.
+	 * @return string Link Template.
+	 */
+	private function render_embedded( $atts, $instance ) {
 		add_action(
 			'wp_enqueue_scripts',
 			function () {
@@ -117,9 +138,26 @@ class Onlyoffice_Plugin_Frontend_Controller {
 
 		$config = Onlyoffice_Plugin_Config_Manager::get_config( $attachment_id, $type, $mode, $perm_edit, $callback, null, true );
 
-		$output  = '<div style="height: 650px; maxWidth: inherit, padding: 20px">';
+		$output  = '<div class="wp-block-onlyoffice-wordpress" style="height: 650px; maxWidth: inherit, padding: 20px">';
 		$output .= '<div id="editorOnlyoffice-' . $instance . '"></div>';
 		$output .= '<script type="text/javascript">new DocsAPI.DocEditor("editorOnlyoffice-' . $instance . '", ' . wp_json_encode( $config ) . '); </script>';
+		$output .= '</div>';
+
+		return apply_filters( 'wp_onlyoffice_shortcode', $output, $atts );
+	}
+
+	/**
+	 * ONLYOFFICE Link Template.
+	 *
+	 * @param array $atts List of attributes that where included in the Shortcode.
+	 * @param int   $instance Element number on page.
+	 * @return string Link Template.
+	 */
+	private function render_link( $atts, $instance ) {
+		$target = true === $atts['inNewTab'] ? 'target="_blank"' : '';
+
+		$output  = '<div class="wp-block-onlyoffice-wordpress">';
+		$output .= '<a id="linkToOnlyofficeEditor-' . $instance . '" href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . '>' . $atts['fileName'] . '</a>';
 		$output .= '</div>';
 
 		return apply_filters( 'wp_onlyoffice_shortcode', $output, $atts );

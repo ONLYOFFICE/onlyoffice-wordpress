@@ -77,3 +77,11 @@ msgstr "Inicie fácilmente los editores en la nube sin tener que descargarlos ni
 
 msgid "Get Now"
 msgstr "Obtener ahora"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Embedded"
+msgstr "Embedded"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Document view"
+msgstr "Document view"

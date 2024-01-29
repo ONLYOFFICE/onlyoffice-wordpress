@@ -19,6 +19,24 @@
 import { RawHTML } from '@wordpress/element';
 
 const Save = ( { attributes } ) => {
-    return <RawHTML>{ `[onlyoffice id=${ attributes.id } /]` }</RawHTML>;
+    if ( !attributes.id ) {
+        return '';
+    }
+
+    let parameters = '';
+
+    if ( attributes.hasOwnProperty('id')) {
+        parameters += 'id=' + attributes.id + ' ';
+    }
+
+    if ( attributes.hasOwnProperty('documentView') && attributes.documentView.length > 0 ) {
+        parameters += 'documentView=' + attributes.documentView + ' ';
+    }
+
+    if ( attributes.hasOwnProperty('inNewTab')) {
+        parameters += 'inNewTab=' + attributes.inNewTab + ' ';
+    }
+
+    return <RawHTML>{ `[onlyoffice ${ parameters } /]` }</RawHTML>;
 };
 export default Save;
