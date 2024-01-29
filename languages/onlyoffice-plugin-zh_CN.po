@@ -77,3 +77,11 @@ msgstr "无需下载和安装即可轻松启动云端编辑器"
 
 msgid "Get Now"
 msgstr "立即获取"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Embedded"
+msgstr "Embedded"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Document view"
+msgstr "Document view"

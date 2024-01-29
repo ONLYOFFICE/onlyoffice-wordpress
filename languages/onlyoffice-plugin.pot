@@ -67,3 +67,11 @@ msgstr ""
 
 msgid "Get Now"
 msgstr ""
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Embedded"
+msgstr ""
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Document view"
+msgstr ""

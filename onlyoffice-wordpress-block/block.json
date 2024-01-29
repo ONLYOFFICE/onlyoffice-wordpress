@@ -13,6 +13,13 @@
 		},
 		"fileName": {
 			"type": "string"
+		},
+		"documentView": {
+			"type": "string"
+		},
+		"inNewTab": {
+			"type": "boolean",
+			"default": true
 		}
 	}
 }

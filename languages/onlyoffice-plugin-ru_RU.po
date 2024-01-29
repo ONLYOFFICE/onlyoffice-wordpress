@@ -77,3 +77,11 @@ msgstr "Легко запускайте редакторы в облаке бе�
 
 msgid "Get Now"
 msgstr "Получить сейчас"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Embedded"
+msgstr "Встроенный"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Document view"
+msgstr "Просмотр документа"
