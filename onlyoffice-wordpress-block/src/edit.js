@@ -22,7 +22,8 @@ import {
     BlockControls,
     MediaReplaceFlow,
     InspectorControls,
-    RichText
+    RichText,
+    HeightControl
 } from '@wordpress/block-editor';
 import {
     PanelBody,
@@ -35,6 +36,7 @@ import { blockStyle } from "./index";
 import { __ } from '@wordpress/i18n';
 
 const Edit = ({attributes, setAttributes}) => {
+    const richTextAllowedFormats = [ 'core/bold', 'core/image', 'core/italic', 'core/strikethrough', 'core/text-color', 'core/code', 'core/keyboard' , 'core/subscript', 'core/superscript' ];
     const onlyofficeAllowedExts = oo_media.formats;
     let onlyofficeAllowedMimes = [];
     const viewOptions = [
@@ -46,7 +48,22 @@ const Edit = ({attributes, setAttributes}) => {
             label: __('Link'),
             value: 'link'
         }
-    ]
+    ];
+
+    if (attributes.hasOwnProperty('width') && attributes.width.length > 0) {
+        blockStyle.width = attributes.width;
+    }
+
+    if (attributes.hasOwnProperty('height') && attributes.height.length > 0) {
+        blockStyle.height = attributes.height;
+    }
+
+    let showWidthControl = true;
+
+    if (attributes.align === "full") {
+        delete blockStyle.width;
+        showWidthControl = false;
+    }
 
     const getMimeType = function( name ) {
         var allTypes = oo_media.mimeTypes;
@@ -87,25 +104,58 @@ const Edit = ({attributes, setAttributes}) => {
                             />
                         {
                             attributes.documentView === 'link' ?
-                                <ToggleControl
-                                    checked={attributes.inNewTab}
-                                    label={__('Open in new tab')}
-                                    onChange={(value) => setAttributes({ inNewTab: value })} 
-                                    />
+                                <div>
+                                    <ToggleControl
+                                        checked={attributes.inNewTab}
+                                        label={__('Open in new tab')}
+                                        onChange={(value) => setAttributes({ inNewTab: value })} 
+                                        />
+                                    <ToggleControl
+                                        checked={attributes.showOpenButton}
+                                        label={__('Show Open in ONLYOFFICE button', 'onlyoffice-plugin')}
+                                        onChange={(value) => setAttributes({ showOpenButton: value })} 
+                                        />
+                                </div>
                                 :
-                                ""
+                                <div>
+                                    {
+                                        showWidthControl ?
+                                            <HeightControl label={ __("Width", "onlyoffice-docspace-plugin") } value={attributes.width} onChange={ ( value ) => setAttributes({ width: value }) }/>
+                                            :
+                                            ''
+                                        }
+                                    <HeightControl label={ __("Height", "onlyoffice-docspace-plugin") } value={attributes.height} onChange={ ( value ) => setAttributes({ height: value }) }/>
+                                </div>
                         }
                     </PanelBody>
                 </InspectorControls>
 
                 {
                     attributes.documentView === 'link' ?
-                        <RichText
-                            tagName="a"
-                            allowedFormats={ [ 'core/bold', 'core/image', 'core/italic', 'core/strikethrough', 'core/text-color', 'core/code', 'core/keyboard' , 'core/subscript', 'core/superscript' ] } 
-                            onChange={ ( value ) => setAttributes({ fileName: value }) }
-                            value={ attributes.fileName }
-                        />
+                        <div>
+                            <RichText
+                                tagName="a"
+                                allowedFormats={ richTextAllowedFormats } 
+                                onChange={ ( value ) => setAttributes({ fileName: value }) }
+                                value={ attributes.fileName }
+                            />
+                            {
+                                attributes.showOpenButton ?
+                                    <div class="wp-block-onlyoffice-wordpress-onlyoffice__button-richtext-wrapper">
+                                        <RichText
+                                            tagName="div"
+                                            className = {'wp-element-button'}
+                                            value= { attributes.openButtonText || __('Open in ONLYOFFICE', 'onlyoffice-plugin') }
+                                            allowedFormats={ richTextAllowedFormats }
+                                            onChange={ ( openButtonText ) => setAttributes( { openButtonText } ) }
+                                            placeholder={ __('Add text...') }
+                                        />
+                                    </div>
+                                    :
+                                    ''
+                            }
+                        </div>
+
                         :
                         <p style={{display: 'flex'}}>
                             {onlyofficeIcon}

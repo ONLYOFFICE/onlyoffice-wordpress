@@ -37,6 +37,26 @@ const Save = ( { attributes } ) => {
         parameters += 'inNewTab=' + attributes.inNewTab + ' ';
     }
 
+    if ( attributes.hasOwnProperty('align') && attributes.align.length > 0 ) {
+        parameters += 'align=' + attributes.align + ' ';
+    }
+
+    if ( attributes.hasOwnProperty('width') && attributes.width.length > 0 ) {
+        parameters += 'width=' + attributes.width + ' ';
+    }
+
+    if ( attributes.hasOwnProperty('height') && attributes.height.length > 0 ) {
+        parameters += 'height=' + attributes.height + ' ';
+    }
+
+    if ( attributes.hasOwnProperty('showOpenButton') ) {
+        parameters += 'showOpenButton=' + attributes.showOpenButton + ' ';
+    }
+
+    if ( attributes.hasOwnProperty('openButtonText') && attributes.openButtonText.length > 0 ) {
+        parameters += 'openButtonText=' + attributes.openButtonText + ' ';
+    }
+
     return <RawHTML>{ `[onlyoffice ${ parameters } /]` }</RawHTML>;
 };
 export default Save;
