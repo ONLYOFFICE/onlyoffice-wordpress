@@ -85,18 +85,18 @@ final class Onlyoffice_Plugin_Admin {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script(
-			$this->plugin_name . '-media-script',
-			plugin_dir_url( __FILE__ ) . 'js/onlyoffice-admin-media.js',
-			array( 'jquery' ),
+			$this->plugin_name . '-formats-utils',
+			ONLYOFFICE_PLUGIN_URL . 'assets-onlyoffice/js/formatsUtils.js',
+			array(),
 			$this->version,
 			true
 		);
 
 		wp_localize_script(
-			$this->plugin_name . '-media-script',
-			'oo_media',
+			$this->plugin_name . '-formats-utils',
+			'ONLYOFFICE',
 			array(
-				'formats'   => Onlyoffice_Plugin_Document_Manager::get_viewable_extensions(),
+				'formats'   => Onlyoffice_Plugin_Document_Manager::get_onlyoffice_formats(),
 				'mimeTypes' => get_allowed_mime_types(),
 			)
 		);

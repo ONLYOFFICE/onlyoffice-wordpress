@@ -34,10 +34,13 @@ import {
 import { onlyofficeIcon } from "./index";
 import { blockStyle } from "./index";
 import { __ } from '@wordpress/i18n';
+import { useState, useEffect } from 'react';
+import { getLogoByDocumentType } from "./logos";
 
 const Edit = ({attributes, setAttributes}) => {
+    const [documentType, setDocumentType] = useState(null);
+
     const richTextAllowedFormats = [ 'core/bold', 'core/image', 'core/italic', 'core/strikethrough', 'core/text-color', 'core/code', 'core/keyboard' , 'core/subscript', 'core/superscript' ];
-    const onlyofficeAllowedExts = oo_media.formats;
     let onlyofficeAllowedMimes = [];
     const viewOptions = [
         {
@@ -49,6 +52,15 @@ const Edit = ({attributes, setAttributes}) => {
             value: 'link'
         }
     ];
+
+    useEffect(() => {
+        if (attributes.id) {
+            ONLYOFFICE.formatsUtils.getFileName(attributes.id).then((fileName) => {
+                const documentType = ONLYOFFICE.formatsUtils.getDocumentType(fileName);
+                setDocumentType(documentType);
+            });
+        }
+    }, [attributes.id]);
 
     if (attributes.hasOwnProperty('width') && attributes.width.length > 0) {
         blockStyle.width = attributes.width;
@@ -66,7 +78,7 @@ const Edit = ({attributes, setAttributes}) => {
     }
 
     const getMimeType = function( name ) {
-        var allTypes = oo_media.mimeTypes;
+        var allTypes = ONLYOFFICE.mimeTypes;
 
         if (allTypes[name] !== undefined) {
             return allTypes[name];
@@ -81,7 +93,7 @@ const Edit = ({attributes, setAttributes}) => {
         return false;
     };
 
-    for (let ext of onlyofficeAllowedExts) {
+    for (let ext of ONLYOFFICE.formatsUtils.getViewableExtensions()) {
         let mimeType = getMimeType(ext);
 
         if (mimeType) {
@@ -157,10 +169,12 @@ const Edit = ({attributes, setAttributes}) => {
                         </div>
 
                         :
-                        <p style={{display: 'flex'}}>
-                            {onlyofficeIcon}
-                            <p style={{marginLeft: '25px'}}> {attributes.fileName || ""}</p>
-                        </p>
+                        <div className={ `wp-block-onlyoffice-wordpress-onlyoffice__embedded ${documentType}`}>
+                            <div>
+                                {getLogoByDocumentType(documentType)}
+                                <p> {attributes.fileName || ""}</p>
+                            </div>
+                        </div>
                 }
 
                 <BlockControls group="other">

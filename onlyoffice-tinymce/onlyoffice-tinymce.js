@@ -20,11 +20,10 @@
 							return;
 						}
 
-						const onlyofficeAllowedExts = oo_media.formats.toString().split( " " ).join( "" ).split( "." ).join( "" ).split( "," );
-						let onlyofficeAllowedMimes  = [];
+						let onlyofficeAllowedMimes = [];
 
-						for (let ext of onlyofficeAllowedExts) {
-							var mimeType = getMimeType( ext );
+						for (let ext of ONLYOFFICE.formatsUtils.getViewableExtensions()) {
+							var mimeType = getMimeType(ext);
 
 							if ( mimeType ) {
 								onlyofficeAllowedMimes.push( mimeType );
@@ -67,8 +66,8 @@
 		}
 	);
 
-	var getMimeType = function ( name ) {
-		var allTypes = oo_media.mimeTypes;
+	var getMimeType = function( name ) {
+		var allTypes = ONLYOFFICE.mimeTypes;
 
 		if ( allTypes[name] !== undefined ) {
 			return allTypes[name];

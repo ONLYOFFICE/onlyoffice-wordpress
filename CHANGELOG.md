@@ -8,6 +8,7 @@
 
 ## Changed
 - editor url
+- displaying the onlyoffice-wordpress-block component in the Gutenberg editor
 
 ## 1.1.0
 ## Added
