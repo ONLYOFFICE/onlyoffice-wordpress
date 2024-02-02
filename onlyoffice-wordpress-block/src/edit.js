@@ -101,10 +101,11 @@ const Edit = ({attributes, setAttributes}) => {
         }
     }
 
-    const blockProps = attributes.documentView === 'link' ?  useBlockProps( { style: null } ) : useBlockProps( { style: blockStyle } );
+    const blockProps = attributes.documentView === 'link' || ! attributes.id ?  useBlockProps( { style: null } ) : useBlockProps( { style: blockStyle } );
     return (
-        attributes.id ?
-            <div {...blockProps}>
+        <div {...blockProps}>
+        {attributes.id ?
+            <>
                 <InspectorControls key="setting">
                     <PanelBody title={__('Settings')}>
                         <InputControl label={__('Name')} value={attributes.fileName} onChange={ ( value ) => setAttributes({ fileName: value }) } />
@@ -190,7 +191,7 @@ const Edit = ({attributes, setAttributes}) => {
                         name={__('Replace')}
                     />
                 </BlockControls>
-            </div>
+            </>
             :
             <MediaPlaceholder
                 labels={{title: 'ONLYOFFICE'}}
@@ -202,6 +203,8 @@ const Edit = ({attributes, setAttributes}) => {
                     }
                 }}
             />
+        }
+        </div>
     )
 };
 
