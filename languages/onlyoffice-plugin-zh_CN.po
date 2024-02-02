@@ -57,6 +57,7 @@ msgstr "文件"
 msgid "Configure ONLYOFFICE connector settings"
 msgstr "配置ONLYOFFICE连接器设置"
 
+#: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE cannot be reached. Please contact admin"
 msgstr "无法联系到ONLYOFFICE。请联系管理员"
 
@@ -93,3 +94,8 @@ msgstr "Open in ONLYOFFICE"
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Show Open in ONLYOFFICE button"
 msgstr "Show Open in ONLYOFFICE button"
+
+#: onlyoffice-wordpress-block/build/index.js
+#: controllers/js/frontend-controller.js
+msgid "File not found!"
+msgstr "File not found!"

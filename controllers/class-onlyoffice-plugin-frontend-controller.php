@@ -138,6 +138,27 @@ class Onlyoffice_Plugin_Frontend_Controller {
 			function () {
 				$api_js_url = Onlyoffice_Plugin_Url_Manager::get_api_js_url();
 				wp_enqueue_script( 'onlyoffice_editor_api', $api_js_url, array(), ONLYOFFICE_PLUGIN_VERSION, false );
+				wp_enqueue_script(
+					'wp-block-onlyoffice-wordpress-js',
+					ONLYOFFICE_PLUGIN_URL . 'controllers/js/frontend-controller.js',
+					array( 'wp-util', 'wp-i18n' ),
+					ONLYOFFICE_PLUGIN_VERSION,
+					false
+				);
+				wp_enqueue_style(
+					'wp-block-onlyoffice-wordpress-css',
+					ONLYOFFICE_PLUGIN_URL . 'controllers/css/frontend-controller.css',
+					array(),
+					ONLYOFFICE_PLUGIN_VERSION
+				);
+
+				if ( function_exists( 'wp_set_script_translations' ) ) {
+					wp_set_script_translations(
+						'wp-block-onlyoffice-wordpress-js',
+						'onlyoffice-plugin',
+						plugin_dir_path( ONLYOFFICE_PLUGIN_FILE ) . 'languages/'
+					);
+				}
 			}
 		);
 
@@ -163,8 +184,7 @@ class Onlyoffice_Plugin_Frontend_Controller {
 		$size .= ! empty( $atts['height'] ) ? 'height: ' . $atts['height'] . ';' : '';
 
 		$output  = '<div class="wp-block-onlyoffice-wordpress-onlyoffice ' . $align . ' size-full" style="' . $size . '">';
-		$output .= '<div id="editorOnlyoffice-' . $instance . '"></div>';
-		$output .= '<script type="text/javascript">new DocsAPI.DocEditor("editorOnlyoffice-' . $instance . '", ' . wp_json_encode( $config ) . '); </script>';
+		$output .= '<div id="editorOnlyoffice-' . $instance . '" data-config="' . htmlspecialchars( wp_json_encode( $config ), ENT_QUOTES, 'UTF-8' ) . '" data-instance="' . $instance . '" class="wp-block-onlyoffice-wordpress-onlyoffice__target" ></div>';
 		$output .= '</div>';
 
 		return apply_filters( 'wp_onlyoffice_shortcode', $output, $atts );
@@ -187,5 +207,30 @@ class Onlyoffice_Plugin_Frontend_Controller {
 		$output .= '</div>';
 
 		return apply_filters( 'wp_onlyoffice_shortcode', $output, $atts );
+	}
+
+	/**
+	 *  ONLYOFFICE error template.
+	 *
+	 * @return void
+	 */
+	public function onlyoffice_error_template() {
+		?>
+		<script type="text/html" id="tmpl-onlyoffice-error">
+			<div class="onlyoffice-error" >
+				<div class="onlyoffice-error-body">
+					<div class="onlyoffice-error-table js">
+						<div>
+							<img src="<?php echo esc_url( ONLYOFFICE_PLUGIN_URL . 'controllers/images/onlyoffice.svg' ); ?>" style="width: 50%" />
+						</div>
+						<div style="padding: 16px;">
+							<img src="<?php echo esc_url( ONLYOFFICE_PLUGIN_URL . 'controllers/images/error.svg' ); ?>" style="width: 100%"/>
+						</div>
+						<div>{{{data.email}}}</div>
+					</div>
+				</div>
+			</div>
+		</script>
+		<?php
 	}
 }

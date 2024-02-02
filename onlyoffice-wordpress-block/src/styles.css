@@ -44,6 +44,11 @@
 	background: #dd682b;
 }
 
+.wp-block-onlyoffice-wordpress-onlyoffice__embedded.null {
+	background: #F8F8F8;
+	color: black;
+}
+
 .wp-block-onlyoffice-wordpress-onlyoffice__embedded p {
 	margin: 0;
 }
