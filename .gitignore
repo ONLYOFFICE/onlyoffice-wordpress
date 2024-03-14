@@ -15,3 +15,5 @@ node_modules
 /vendor
 /wpcs
 /composer.lock
+/languages/*.json
+/languages/*.mo
