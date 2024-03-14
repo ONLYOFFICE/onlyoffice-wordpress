@@ -1,10 +1,10 @@
 /**
  * JS for ONLYOFFICE TinyMCE.
  *
- * @package Onlyoffice_Docspace_Wordpress
+ * @package Onlyoffice_Wordpress
  */
 
-(function () {
+( function ( ) {
 	tinymce.PluginManager.add(
 		"onlyoffice-tinymce",
 		function ( editor ) {
@@ -23,7 +23,7 @@
 						let onlyofficeAllowedMimes = [];
 
 						for (let ext of ONLYOFFICE.formatsUtils.getViewableExtensions()) {
-							var mimeType = getMimeType(ext);
+							var mimeType = getMimeType( ext );
 
 							if ( mimeType ) {
 								onlyofficeAllowedMimes.push( mimeType );
@@ -66,7 +66,7 @@
 		}
 	);
 
-	var getMimeType = function( name ) {
+	var getMimeType = function ( name ) {
 		var allTypes = ONLYOFFICE.mimeTypes;
 
 		if ( allTypes[name] !== undefined ) {
