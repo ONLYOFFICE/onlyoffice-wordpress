@@ -13,6 +13,10 @@
         }
     },
     "scripts": {
-        "phpcs": "phpcs --standard=Wordpress --ignore=*/onlyoffice-wordpress-block/*,*/public/assets/*,*/vendor/* ./"
+        "phpcs": "phpcs --standard=Wordpress --ignore=*/onlyoffice-wordpress-block/*,*/public/assets/*,*/vendor/* ./",
+        "translations": [
+            "wp i18n make-mo languages",
+            "wp i18n make-json languages --no-purge"
+        ]
     }
 }
