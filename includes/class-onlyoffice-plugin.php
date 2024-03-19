@@ -85,7 +85,7 @@ class Onlyoffice_Plugin {
 	 */
 	public function __construct() {
 		$this->version     = ONLYOFFICE_PLUGIN_VERSION;
-		$this->plugin_name = 'onlyoffice-plugin';
+		$this->plugin_name = ONLYOFFICE_PLUGIN_NAME;
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -150,7 +150,7 @@ class Onlyoffice_Plugin {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-		$plugin_admin = new Onlyoffice_Plugin_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Onlyoffice_Plugin_Admin();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -164,7 +164,7 @@ class Onlyoffice_Plugin {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-		$plugin_public = new Onlyoffice_Plugin_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Onlyoffice_Plugin_Public();
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );

@@ -41,36 +41,6 @@
 final class Onlyoffice_Plugin_Admin {
 
 	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string $plugin_name       The name of this plugin.
-	 * @param      string $version    The version of this plugin.
-	 */
-	public function __construct( $plugin_name, $version ) {
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-	}
-
-	/**
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @since    1.0.0
@@ -85,15 +55,15 @@ final class Onlyoffice_Plugin_Admin {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script(
-			$this->plugin_name . '-formats-utils',
+			ONLYOFFICE_PLUGIN_NAME . '-formats-utils',
 			ONLYOFFICE_PLUGIN_URL . 'assets-onlyoffice/js/formatsUtils.js',
 			array(),
-			$this->version,
+			ONLYOFFICE_PLUGIN_VERSION,
 			true
 		);
 
 		wp_localize_script(
-			$this->plugin_name . '-formats-utils',
+			ONLYOFFICE_PLUGIN_NAME . '-formats-utils',
 			'ONLYOFFICE',
 			array(
 				'formats'   => Onlyoffice_Plugin_Document_Manager::get_onlyoffice_formats(),

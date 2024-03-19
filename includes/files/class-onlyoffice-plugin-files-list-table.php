@@ -63,10 +63,10 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 			'admin_enqueue_scripts',
 			function () {
 				wp_enqueue_script(
-					$this->plugin_name . '-media-script',
+					ONLYOFFICE_PLUGIN_NAME . '-media-script',
 					plugin_dir_url( __FILE__ ) . 'js/onlyoffice-files-list-table.js',
 					array( 'jquery', 'clipboard', 'wp-a11y' ),
-					$this->version,
+					ONLYOFFICE_PLUGIN_FILE,
 					true
 				);
 
