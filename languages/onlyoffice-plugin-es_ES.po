@@ -27,9 +27,6 @@ msgstr "Encabezado de autenticaciуn"
 msgid "Leave blank to use default header"
 msgstr "Dejar en blanco para utilizar el encabezado predeterminado"
 
-msgid "Settings Saved"
-msgstr "Los ajustes se han guardado"
-
 msgid "Open in ONLYOFFICE"
 msgstr "Abrir en ONLYOFFICE"
 
