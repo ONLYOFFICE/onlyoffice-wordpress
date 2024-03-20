@@ -1,5 +1,5 @@
 /**
- * JS for ONLYOFFICE TinyMCE.
+ * JS for ONLYOFFICE Docs TinyMCE.
  *
  * @package Onlyoffice_Wordpress
  */

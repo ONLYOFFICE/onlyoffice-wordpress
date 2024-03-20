@@ -12,9 +12,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-msgid "General Settings"
-msgstr "Основные настройки"
-
 msgid "Document Editing Service address"
 msgstr "Адрес службы редактирования документов"
 
@@ -48,27 +45,27 @@ msgstr "Пост не является вложением"
 msgid "Settings"
 msgstr "Настройки"
 
-msgid "General settings section"
-msgstr "Раздел основных настроек"
-
 msgid "Files"
 msgstr "Файлы"
 
-msgid "Configure ONLYOFFICE connector settings"
-msgstr "Настройка параметров коннектора ONLYOFFICE"
+msgid "ONLYOFFICE Docs Settings"
+msgstr "Настройки ONLYOFFICE Docs"
+
+msgid "Configure ONLYOFFICE Docs plugin settings"
+msgstr "Настройте параметры плагина ONLYOFFICE Docs"
 
 #: controllers/js/frontend-controller.js
-msgid "ONLYOFFICE cannot be reached. Please contact admin"
-msgstr "Приложение ONLYOFFICE недоступно. Пожалуйста, свяжитесь с администратором"
+msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
+msgstr "Приложение ONLYOFFICE Docs недоступно. Пожалуйста, свяжитесь с администратором."
 
-msgid "Files that can be edited and opened in ONLYOFFICE will be displayed here"
-msgstr "Здесь будут отражены файлы, которые можно редактировать и открывать в ONLYOFFICE"
+msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
+msgstr ""
 
-msgid "No files found for editing or viewing in ONLYOFFICE."
-msgstr "Не найдены файлы для редактирования или просмотра в ONLYOFFICE."
+msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
+msgstr "Здесь отображаются файлы, которые можно редактировать и открывать в редакторе документов ONLYOFFICE."
 
-msgid "Add ONLYOFFICE editor on page"
-msgstr "Добавить редактор ONLYOFFICE на страницу"
+msgid "Add ONLYOFFICE Docs editor on page"
+msgstr "Добавить редактор ONLYOFFICE Docs на страницу"
 
 msgid "ONLYOFFICE Docs Cloud"
 msgstr "ONLYOFFICE Docs Cloud"

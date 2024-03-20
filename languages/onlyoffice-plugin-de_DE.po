@@ -12,9 +12,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-msgid "General Settings"
-msgstr "Allgemeine Einstellungen"
-
 msgid "Document Editing Service address"
 msgstr "die Adresse des Dokumentenbearbeitungsservices"
 
@@ -48,27 +45,27 @@ msgstr "Beitrag ist kein Anhang"
 msgid "Settings"
 msgstr "Einstellungen"
 
-msgid "General settings section"
-msgstr "Allgemeine Einstellungen"
-
 msgid "Files"
 msgstr "Dateien"
 
-msgid "Configure ONLYOFFICE connector settings"
-msgstr "ONLYOFFICE-Konnektor konfigurieren"
+msgid "ONLYOFFICE Docs Settings"
+msgstr ""
+
+msgid "Configure ONLYOFFICE Docs plugin settings"
+msgstr ""
 
 #: controllers/js/frontend-controller.js
-msgid "ONLYOFFICE cannot be reached. Please contact admin"
-msgstr "ONLYOFFICE ist nicht zugänglich. Bitte wende Dich an Deinen Administrator"
+msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
+msgstr ""
 
-msgid "Files that can be edited and opened in ONLYOFFICE will be displayed here"
-msgstr "Hier werden die Dateien zugänglich, die Sie in ONLYOFFICE öffnen und bearbeiten können"
+msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
+msgstr ""
 
-msgid "No files found for editing or viewing in ONLYOFFICE."
-msgstr "Keine Dateien zum Öffnen oder Bearbeiten in ONLYOFFICE gefunden."
+msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
+msgstr ""
 
-msgid "Add ONLYOFFICE editor on page"
-msgstr "ONLYOFFICE-Editor zur Seite hinzufügen"
+msgid "Add ONLYOFFICE Docs editor on page"
+msgstr ""
 
 msgid "ONLYOFFICE Docs Cloud"
 msgstr "ONLYOFFICE Docs Cloud"
