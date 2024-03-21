@@ -67,9 +67,9 @@ function deactivate_plugin_name() {
  * Uninstall hook.
  */
 function uninstall_onlyoffice_wordpress_plugin() {
-	delete_option( 'onlyoffice_settings' );
-	delete_option( 'onlyoffice-plugin-uuid' );
-	delete_option( 'onlyoffice-plugin-bytes' );
+	delete_site_option( 'onlyoffice_settings' );
+	delete_site_option( 'onlyoffice-plugin-uuid' );
+	delete_site_option( 'onlyoffice-plugin-bytes' );
 }
 
 register_activation_hook( __FILE__, 'activate_plugin_name' );

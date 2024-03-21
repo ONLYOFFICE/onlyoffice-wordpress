@@ -257,7 +257,7 @@ class Onlyoffice_Plugin_Settings {
 					self::JWT_HEADER    => $jwt_header,
 				);
 
-				update_option( 'onlyoffice_settings', $value );
+				update_site_option( 'onlyoffice_settings', $value );
 
 				add_settings_error( 'general', 'settings_updated', __( 'Settings saved.' ), 'success' );
 				set_transient( 'settings_errors', get_settings_errors(), 30 );
@@ -274,7 +274,7 @@ class Onlyoffice_Plugin_Settings {
 	 * @param string $def Default value.
 	 */
 	public static function get_onlyoffice_setting( $key, $def = '' ) {
-		$options = get_option( 'onlyoffice_settings' );
+		$options = get_site_option( 'onlyoffice_settings' );
 		if ( ! empty( $options ) && array_key_exists( $key, $options ) ) {
 			return $options[ $key ];
 		}

@@ -45,23 +45,23 @@ class Onlyoffice_Plugin_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-		if ( empty( get_option( 'onlyoffice-plugin-uuid' ) ) ) {
-			add_option( 'onlyoffice-plugin-uuid', wp_generate_uuid4() );
+		if ( empty( get_site_option( 'onlyoffice-plugin-uuid' ) ) ) {
+			update_site_option( 'onlyoffice-plugin-uuid', wp_generate_uuid4() );
 		}
-		if ( empty( get_option( 'onlyoffice-plugin-bytes' ) ) ) {
+		if ( empty( get_site_option( 'onlyoffice-plugin-bytes' ) ) ) {
 			$ivlen = openssl_cipher_iv_length( 'aes-256-ctr' );
 			$iv    = openssl_random_pseudo_bytes( $ivlen );
-			add_option( 'onlyoffice-plugin-bytes', bin2hex( $iv ) );
+			update_site_option( 'onlyoffice-plugin-bytes', bin2hex( $iv ) );
 		}
 
-		if ( empty( get_option( 'onlyoffice-formats' ) ) ) {
+		if ( empty( get_site_option( 'onlyoffice-formats' ) ) ) {
 			$formats = array();
 
 			$path_to_formats_json = plugin_dir_path( __DIR__ ) . '/public/assets/document-formats/onlyoffice-docs-formats.json';
 
 			if ( file_exists( $path_to_formats_json ) === true ) {
 				$formats = wp_json_file_decode( $path_to_formats_json );
-				add_option( 'onlyoffice-formats', $formats );
+				update_site_option( 'onlyoffice-formats', $formats );
 			}
 		}
 	}
