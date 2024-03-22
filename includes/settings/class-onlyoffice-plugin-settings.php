@@ -132,7 +132,7 @@ class Onlyoffice_Plugin_Settings {
 			if ( ! is_network_admin() ) {
 				add_settings_field(
 					self::INHERIT_NETWORK_SETTINGS,
-					__( 'Connections Settings', 'onlyoffice-plugin' ),
+					__( 'Connection Settings', 'onlyoffice-plugin' ),
 					array( $this, 'input_checkbox' ),
 					'onlyoffice_settings_group',
 					'onlyoffice_settings_general_section',

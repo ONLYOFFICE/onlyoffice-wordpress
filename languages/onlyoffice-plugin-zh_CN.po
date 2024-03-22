@@ -93,3 +93,18 @@ msgstr "Show Open in ONLYOFFICE button"
 #: controllers/js/frontend-controller.js
 msgid "File not found!"
 msgstr "File not found!"
+
+msgid "Settings update"
+msgstr ""
+
+#: admin/js/settings.js
+msgid "Do you want to allow sites administrators to configure the plugin themselves?"
+msgstr ""
+
+#: admin/js/settings.js
+msgid "Do you want to apply these settings to all sites?"
+msgstr ""
+
+#: admin/js/settings.js
+msgid "Do you want to apply the network settings?"
+msgstr ""

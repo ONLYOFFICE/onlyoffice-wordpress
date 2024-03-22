@@ -52,22 +52,22 @@ msgid "Configure ONLYOFFICE Docs plugin settings."
 msgstr ""
 
 msgid "Configure ONLYOFFICE Docs plugin settings for the whole network."
-msgstr""
+msgstr ""
 
 msgid "Configure ONLYOFFICE Docs plugin settings for %s site."
-msgstr""
+msgstr ""
 
 msgid "Blocked from changing settings by the Network administrator"
-msgstr""
+msgstr ""
 
 msgid "Allow site administrators to configure plugin for their sites"
-msgstr""
+msgstr ""
 
 msgid "Inherit Network Settings"
-msgstr""
+msgstr ""
 
-msgid "Connections Settings"
-msgstr""
+msgid "Connection Settings"
+msgstr ""
 
 #: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
