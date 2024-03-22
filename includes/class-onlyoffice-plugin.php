@@ -184,6 +184,7 @@ class Onlyoffice_Plugin {
 
 		$plugin_settings = new Onlyoffice_Plugin_Settings();
 		$this->loader->add_action( 'admin_menu', $plugin_settings, 'init_menu' );
+		$this->loader->add_action( 'network_admin_menu', $plugin_settings, 'init_menu' );
 		$this->loader->add_action( 'admin_init', $plugin_settings, 'init' );
 
 		$plugin_frontend_controller = new Onlyoffice_Plugin_Frontend_Controller();

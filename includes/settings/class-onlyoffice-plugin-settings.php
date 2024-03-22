@@ -55,6 +55,16 @@ class Onlyoffice_Plugin_Settings {
 	const JWT_HEADER = 'jwt_header';
 
 	/**
+	 * ID setting allowed_owerwrite_network_settings.
+	 */
+	const ALLOWED_OWERWRITE_NETWORK_SETTINGS = 'allowed_owerwrite_network_settings';
+
+	/**
+	 * ID setting inherit_network_settings.
+	 */
+	const INHERIT_NETWORK_SETTINGS = 'inherit_network_settings';
+
+	/**
 	 * Init menu.
 	 *
 	 * @return void
@@ -63,25 +73,38 @@ class Onlyoffice_Plugin_Settings {
 		$logo_svg            = file_get_contents( plugin_dir_path( plugin_dir_path( __DIR__ ) ) . '/public/images/logo.svg' );
 		$can_manage_settings = current_user_can( 'manage_options' );
 		$can_upload_files    = current_user_can( 'upload_files' );
+		$can_manage_network  = current_user_can( 'manage_network' );
 
-		if ( $can_manage_settings && ! $can_upload_files ) {
+		if ( $can_manage_settings ) {
+			if ( $can_upload_files ) {
+				$hook = add_submenu_page(
+					'onlyoffice-files',
+					__( 'ONLYOFFICE Docs Settings', 'onlyoffice-plugin' ),
+					__( 'Settings', 'onlyoffice-plugin' ),
+					'manage_options',
+					'onlyoffice-settings',
+					array( $this, 'options_page' )
+				);
+			} else {
+				$hook = add_menu_page(
+					__( 'ONLYOFFICE Docs Settings', 'onlyoffice-plugin' ),
+					'ONLYOFFICE Docs',
+					'manage_options',
+					'onlyoffice-settings',
+					array( $this, 'options_page' ),
+					'data:image/svg+xml;base64,' . base64_encode( $logo_svg ) // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+				);
+			}
+		}
+
+		if ( $can_manage_network && is_network_admin() ) {
 			$hook = add_menu_page(
-				__( 'ONLYOFFICE Docs', 'onlyoffice-plugin' ),
+				__( 'ONLYOFFICE Docs Settings', 'onlyoffice-plugin' ),
 				'ONLYOFFICE Docs',
-				'manage_options',
+				'manage_network',
 				'onlyoffice-settings',
 				array( $this, 'options_page' ),
 				'data:image/svg+xml;base64,' . base64_encode( $logo_svg ) // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
-			);
-		}
-		if ( $can_manage_settings && $can_upload_files ) {
-			$hook = add_submenu_page(
-				'onlyoffice-files',
-				__( 'ONLYOFFICE Docs Settings', 'onlyoffice-plugin' ),
-				__( 'Settings', 'onlyoffice-plugin' ),
-				'manage_options',
-				'onlyoffice-settings',
-				array( $this, 'options_page' )
 			);
 		}
 
@@ -105,6 +128,24 @@ class Onlyoffice_Plugin_Settings {
 			'onlyoffice_settings_group'
 		);
 
+		if ( is_multisite() ) {
+			if ( ! is_network_admin() ) {
+				add_settings_field(
+					self::INHERIT_NETWORK_SETTINGS,
+					__( 'Connections Settings', 'onlyoffice-plugin' ),
+					array( $this, 'input_checkbox' ),
+					'onlyoffice_settings_group',
+					'onlyoffice_settings_general_section',
+					array(
+						'id'          => self::INHERIT_NETWORK_SETTINGS,
+						'checked'     => self::inherit_network_settings(),
+						'disabled'    => ! $this->allowed_owerwrite_network_settings(),
+						'description' => __( 'Inherit Network Settings', 'onlyoffice-plugin' ),
+					),
+				);
+			}
+		}
+
 		add_settings_field(
 			self::DOCSERVER_URL,
 			__( 'Document Editing Service address', 'onlyoffice-plugin' ),
@@ -113,8 +154,8 @@ class Onlyoffice_Plugin_Settings {
 			'onlyoffice_settings_general_section',
 			array(
 				'id'          => self::DOCSERVER_URL,
-				'value'       => $this->get_onlyoffice_setting( self::DOCSERVER_URL ),
-				'disabled'    => '',
+				'value'       => $this->get_onlyoffice_current_value_setting( self::DOCSERVER_URL ),
+				'disabled'    => is_multisite() && ! is_network_admin() && ( ! $this->allowed_owerwrite_network_settings() || self::inherit_network_settings() ),
 				'description' => '',
 			)
 		);
@@ -127,8 +168,8 @@ class Onlyoffice_Plugin_Settings {
 			'onlyoffice_settings_general_section',
 			array(
 				'id'          => self::DOCSERVER_JWT,
-				'value'       => $this->get_onlyoffice_setting( self::DOCSERVER_JWT ),
-				'disabled'    => '',
+				'value'       => $this->get_onlyoffice_current_value_setting( self::DOCSERVER_JWT ),
+				'disabled'    => is_multisite() && ! is_network_admin() && ( ! $this->allowed_owerwrite_network_settings() || self::inherit_network_settings() ),
 				'description' => __( 'Secret key (leave blank to disable)', 'onlyoffice-plugin' ),
 			)
 		);
@@ -141,11 +182,28 @@ class Onlyoffice_Plugin_Settings {
 			'onlyoffice_settings_general_section',
 			array(
 				'id'          => self::JWT_HEADER,
-				'value'       => $this->get_onlyoffice_setting( self::JWT_HEADER ),
-				'disabled'    => '',
+				'value'       => $this->get_onlyoffice_current_value_setting( self::JWT_HEADER ),
+				'disabled'    => is_multisite() && ! is_network_admin() && ( ! $this->allowed_owerwrite_network_settings() || self::inherit_network_settings() ),
 				'description' => __( 'Secret key (leave blank to disable)', 'onlyoffice-plugin' ),
 			)
 		);
+
+		if ( is_multisite() ) {
+			if ( is_network_admin() ) {
+				add_settings_field(
+					self::ALLOWED_OWERWRITE_NETWORK_SETTINGS,
+					'',
+					array( $this, 'input_checkbox' ),
+					'onlyoffice_settings_group',
+					'onlyoffice_settings_general_section',
+					array(
+						'id'          => self::ALLOWED_OWERWRITE_NETWORK_SETTINGS,
+						'checked'     => self::allowed_owerwrite_network_settings(),
+						'description' => __( 'Allow site administrators to configure plugin for their sites', 'onlyoffice-plugin' ),
+					)
+				);
+			}
+		}
 	}
 
 	/**
@@ -184,9 +242,44 @@ class Onlyoffice_Plugin_Settings {
 	 * @return void
 	 */
 	public function general_section_callback( $args ) {
+		settings_errors();
 		?>
-		<?php settings_errors(); ?>
-		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure ONLYOFFICE Docs plugin settings', 'onlyoffice-plugin' ); ?></p>
+		<p id="<?php echo esc_attr( $args['id'] ); ?>">
+		<?php
+		if ( is_multisite() ) {
+			if ( is_network_admin() ) {
+				esc_html_e( 'Configure ONLYOFFICE Docs plugin settings for the whole network.', 'onlyoffice-plugin' );
+			} else {
+				printf(
+					wp_kses(
+						/* translators: %s: Title WP Site. */
+						__( 'Configure ONLYOFFICE Docs plugin settings for %s site.', 'onlyoffice-plugin' ),
+						array(
+							'strong' => array(
+								'class' => array(),
+							),
+						),
+					),
+					'<a href="' . esc_attr( get_bloginfo( 'url' ) ) . '">' . esc_attr( get_bloginfo() ) . '</a>'
+				);
+
+				if ( ! $this->allowed_owerwrite_network_settings() ) {
+					?>
+					<div class="onlyoffice-settings-notice">
+						<p>
+							<?php esc_html_e( 'Blocked from changing settings by the Network administrator', 'onlyoffice-plugin' ); ?>
+						</p>
+					</div>
+					<?php
+				}
+			}
+		} else {
+			?>
+			<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure ONLYOFFICE Docs plugin settings.', 'onlyoffice-plugin' ); ?></p>
+			<?php
+		}
+		?>
+		</p>
 		<?php
 	}
 
@@ -199,10 +292,25 @@ class Onlyoffice_Plugin_Settings {
 		}
 
 		wp_enqueue_style(
-			'onlyoffice-settings',
+			ONLYOFFICE_PLUGIN_NAME . '-settings',
+			ONLYOFFICE_PLUGIN_URL . 'admin/css/settings.css',
+			array(),
+			ONLYOFFICE_PLUGIN_VERSION
+		);
+
+		wp_enqueue_style(
+			ONLYOFFICE_PLUGIN_NAME . '-cloud-banner',
 			ONLYOFFICE_PLUGIN_URL . 'admin/css/banner/onlyoffice-cloud-banner.css',
 			array(),
 			ONLYOFFICE_PLUGIN_VERSION
+		);
+
+		wp_enqueue_script(
+			ONLYOFFICE_PLUGIN_URL . '-settings',
+			ONLYOFFICE_PLUGIN_URL . 'admin/js/settings.js',
+			array( 'jquery' ),
+			ONLYOFFICE_PLUGIN_VERSION,
+			true
 		);
 
 		?>
@@ -212,7 +320,21 @@ class Onlyoffice_Plugin_Settings {
 				<?php
 				settings_fields( 'onlyoffice_settings_group' );
 				do_settings_sections( 'onlyoffice_settings_group' );
-				submit_button( __( 'Save Settings', 'onlyoffice-plugin' ) );
+
+				$submit_button_args = array();
+				if ( is_multisite() && ! is_network_admin() && ! $this->allowed_owerwrite_network_settings() ) {
+					$submit_button_args = array(
+						'disabled' => '',
+					);
+				}
+
+				submit_button(
+					__( 'Save Settings', 'onlyoffice-plugin' ),
+					'primary',
+					'submit',
+					true,
+					$submit_button_args
+				);
 				?>
 			</form>
 			<div id="onlyoffice-cloud-banner">
@@ -239,29 +361,69 @@ class Onlyoffice_Plugin_Settings {
 			case 'update':
 				check_admin_referer( 'onlyoffice_settings_group-options' );
 
+				if ( is_multisite() && ! is_network_admin() && ! $this->allowed_owerwrite_network_settings() ) {
+					wp_die( 'Blocked from changing settings by the Network administrator!', '', array( 'response' => 403 ) );
+				}
+
+				$value = array();
+
 				if ( isset( $_POST[ self::DOCSERVER_URL ] ) ) {
-					$docserver_url = sanitize_text_field( wp_unslash( $_POST[ self::DOCSERVER_URL ] ) );
+					$value[ self::DOCSERVER_URL ] = sanitize_text_field( wp_unslash( $_POST[ self::DOCSERVER_URL ] ) );
 				}
 
 				if ( isset( $_POST[ self::DOCSERVER_JWT ] ) ) {
-					$docserver_jwt = sanitize_text_field( wp_unslash( $_POST[ self::DOCSERVER_JWT ] ) );
+					$value[ self::DOCSERVER_JWT ] = sanitize_text_field( wp_unslash( $_POST[ self::DOCSERVER_JWT ] ) );
 				}
 
 				if ( isset( $_POST[ self::JWT_HEADER ] ) ) {
-					$jwt_header = sanitize_text_field( wp_unslash( $_POST[ self::JWT_HEADER ] ) );
+					$value[ self::JWT_HEADER ] = sanitize_text_field( wp_unslash( $_POST[ self::JWT_HEADER ] ) );
 				}
 
-				$value = array(
-					self::DOCSERVER_URL => $docserver_url,
-					self::DOCSERVER_JWT => $docserver_jwt,
-					self::JWT_HEADER    => $jwt_header,
-				);
+				if ( is_multisite() ) {
+					if ( is_network_admin() ) {
+						if ( isset( $_POST[ self::ALLOWED_OWERWRITE_NETWORK_SETTINGS ] ) ) {
+							$value[ self::ALLOWED_OWERWRITE_NETWORK_SETTINGS ] = sanitize_text_field( wp_unslash( $_POST[ self::ALLOWED_OWERWRITE_NETWORK_SETTINGS ] ) );
+						} else {
+							$value[ self::ALLOWED_OWERWRITE_NETWORK_SETTINGS ] = 0;
+						}
 
-				update_site_option( 'onlyoffice_settings', $value );
+						$current_options = get_site_option( 'onlyoffice_settings' );
+						$new_options     = array_merge( $current_options, $value );
+
+						update_site_option( 'onlyoffice_settings', $new_options );
+					} else {
+						if ( isset( $_POST[ self::INHERIT_NETWORK_SETTINGS ] ) ) {
+							$value[ self::INHERIT_NETWORK_SETTINGS ] = sanitize_text_field( wp_unslash( $_POST[ self::INHERIT_NETWORK_SETTINGS ] ) );
+
+							if ( $value[ self::INHERIT_NETWORK_SETTINGS ] ) {
+								$value = array(
+									self::INHERIT_NETWORK_SETTINGS => $value[ self::INHERIT_NETWORK_SETTINGS ],
+								);
+							}
+						} else {
+							$value[ self::INHERIT_NETWORK_SETTINGS ] = 0;
+						}
+
+						$current_options = get_option( 'onlyoffice_settings' );
+						$new_options     = array_merge( $current_options, $value );
+
+						update_option( 'onlyoffice_settings', $new_options );
+					}
+				} else {
+					$current_options = get_site_option( 'onlyoffice_settings' );
+					$new_options     = array_merge( $current_options, $value );
+
+					update_site_option( 'onlyoffice_settings', $new_options );
+				}
 
 				add_settings_error( 'general', 'settings_updated', __( 'Settings saved.' ), 'success' );
 				set_transient( 'settings_errors', get_settings_errors(), 30 );
-				wp_safe_redirect( admin_url( 'admin.php?page=onlyoffice-settings&settings-updated=true' ) );
+
+				if ( is_network_admin() ) {
+					wp_safe_redirect( network_admin_url( 'admin.php?page=onlyoffice-settings&settings-updated=true' ) );
+				} else {
+					wp_safe_redirect( admin_url( 'admin.php?page=onlyoffice-settings&settings-updated=true' ) );
+				}
 
 				exit;
 		}
@@ -274,7 +436,40 @@ class Onlyoffice_Plugin_Settings {
 	 * @param string $def Default value.
 	 */
 	public static function get_onlyoffice_setting( $key, $def = '' ) {
-		$options = get_site_option( 'onlyoffice_settings' );
+		if ( is_multisite() ) {
+			if ( ! self::allowed_owerwrite_network_settings() || self::inherit_network_settings() ) {
+				$options = get_site_option( 'onlyoffice_settings' );
+			} else {
+				$options = get_option( 'onlyoffice_settings' );
+			}
+		} else {
+			$options = get_site_option( 'onlyoffice_settings' );
+		}
+
+		if ( ! empty( $options ) && array_key_exists( $key, $options ) ) {
+			return $options[ $key ];
+		}
+
+		return $def;
+	}
+
+	/**
+	 * Return ONLYOFFICE Docs plugin settings value
+	 *
+	 * @param string $key Setting key.
+	 * @param string $def Default value.
+	 */
+	private function get_onlyoffice_current_value_setting( $key, $def = '' ) {
+		if ( is_multisite() ) {
+			if ( is_network_admin() ) {
+				$options = get_site_option( 'onlyoffice_settings' );
+			} else {
+				$options = get_option( 'onlyoffice_settings' );
+			}
+		} else {
+			$options = get_site_option( 'onlyoffice_settings' );
+		}
+
 		if ( ! empty( $options ) && array_key_exists( $key, $options ) ) {
 			return $options[ $key ];
 		}
@@ -298,5 +493,29 @@ class Onlyoffice_Plugin_Settings {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Return setting allowed_owerwrite_network_settings.
+	 */
+	private static function allowed_owerwrite_network_settings() {
+		$options = get_site_option( 'onlyoffice_settings' );
+		if ( ! empty( $options ) && array_key_exists( self::ALLOWED_OWERWRITE_NETWORK_SETTINGS, $options ) ) {
+			return $options[ self::ALLOWED_OWERWRITE_NETWORK_SETTINGS ];
+		}
+
+		return false;
+	}
+
+	/**
+	 * Return setting inherit_network_settings.
+	 */
+	private static function inherit_network_settings() {
+		$options = get_option( 'onlyoffice_settings' );
+		if ( ! empty( $options ) && array_key_exists( self::INHERIT_NETWORK_SETTINGS, $options ) ) {
+			return $options[ self::INHERIT_NETWORK_SETTINGS ];
+		}
+
+		return true;
 	}
 }
