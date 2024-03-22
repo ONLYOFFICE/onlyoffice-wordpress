@@ -399,7 +399,7 @@ class Onlyoffice_Plugin_Settings {
 							$value[ self::ALLOWED_OWERWRITE_NETWORK_SETTINGS ] = 0;
 						}
 
-						$current_options = get_site_option( 'onlyoffice_settings' );
+						$current_options = get_site_option( 'onlyoffice_settings', array() );
 						$new_options     = array_merge( $current_options, $value );
 
 						update_site_option( 'onlyoffice_settings', $new_options );
@@ -416,13 +416,13 @@ class Onlyoffice_Plugin_Settings {
 							$value[ self::INHERIT_NETWORK_SETTINGS ] = 0;
 						}
 
-						$current_options = get_option( 'onlyoffice_settings' );
+						$current_options = get_option( 'onlyoffice_settings', array() );
 						$new_options     = array_merge( $current_options, $value );
 
 						update_option( 'onlyoffice_settings', $new_options );
 					}
 				} else {
-					$current_options = get_site_option( 'onlyoffice_settings' );
+					$current_options = get_site_option( 'onlyoffice_settings', array() );
 					$new_options     = array_merge( $current_options, $value );
 
 					update_site_option( 'onlyoffice_settings', $new_options );
