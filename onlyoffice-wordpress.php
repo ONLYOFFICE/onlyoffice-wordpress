@@ -70,6 +70,7 @@ function uninstall_onlyoffice_wordpress_plugin() {
 	delete_site_option( 'onlyoffice_settings' );
 	delete_site_option( 'onlyoffice-plugin-uuid' );
 	delete_site_option( 'onlyoffice-plugin-bytes' );
+	delete_site_option( 'onlyoffice-formats' );
 }
 
 register_activation_hook( __FILE__, 'activate_plugin_name' );
