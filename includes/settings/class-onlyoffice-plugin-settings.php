@@ -306,22 +306,32 @@ class Onlyoffice_Plugin_Settings {
 		);
 
 		wp_enqueue_script(
-			ONLYOFFICE_PLUGIN_URL . '-settings',
+			ONLYOFFICE_PLUGIN_NAME . '-settings',
 			ONLYOFFICE_PLUGIN_URL . 'admin/js/settings.js',
 			array( 'jquery' ),
 			ONLYOFFICE_PLUGIN_VERSION,
 			true
 		);
 
+		if ( function_exists( 'wp_set_script_translations' ) ) {
+			wp_set_script_translations(
+				ONLYOFFICE_PLUGIN_NAME . '-settings',
+				'onlyoffice-plugin',
+				plugin_dir_path( ONLYOFFICE_PLUGIN_FILE ) . 'languages/'
+			);
+		}
+
 		?>
 		<div class="wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-			<form action="admin.php?page=onlyoffice-settings" method="post">
+			<form id="onlyoffice-settings-form" action="admin.php?page=onlyoffice-settings" method="post">
 				<?php
 				settings_fields( 'onlyoffice_settings_group' );
 				do_settings_sections( 'onlyoffice_settings_group' );
 
-				$submit_button_args = array();
+				$submit_button_args = array(
+					'id' => 'onlyoffice-settings-submit-button',
+				);
 				if ( is_multisite() && ! is_network_admin() && ! $this->allowed_owerwrite_network_settings() ) {
 					$submit_button_args = array(
 						'disabled' => '',
@@ -331,7 +341,7 @@ class Onlyoffice_Plugin_Settings {
 				submit_button(
 					__( 'Save Settings', 'onlyoffice-plugin' ),
 					'primary',
-					'submit',
+					'',
 					true,
 					$submit_button_args
 				);
@@ -351,6 +361,7 @@ class Onlyoffice_Plugin_Settings {
 			</div>
 		</div>
 		<?php
+		$this->wp_print_onlyoffice_setting_confirm_dialog();
 	}
 
 	/**
@@ -517,5 +528,26 @@ class Onlyoffice_Plugin_Settings {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Return confirm update settings dialog.
+	 */
+	private function wp_print_onlyoffice_setting_confirm_dialog() {
+		?>
+		<div id="onlyoffice-setting-confirm-dialog" class="notification-dialog-wrap hidden">
+			<div class="notification-dialog-background"></div>
+			<div class="notification-dialog" role="dialog" tabindex="0">
+				<div class="onlyoffice-setting-confirm-dialog-content">
+					<h1><?php esc_html_e( 'Settings update', 'onlyoffice-plugin' ); ?></h1>
+					<div class="onlyoffice-setting-confirm-message"></div>
+					<p>
+						<a class="button onlyoffice-setting-confirm-dialog-cancel"><?php esc_html_e( 'Cancel' ); ?></a>
+						<button type="button" class="onlyoffice-setting-confirm-dialog-ok button button-primary"><?php esc_html_e( 'OK' ); ?></button>
+					</p>
+				</div>
+			</div>
+		</div>
+		<?php
 	}
 }
