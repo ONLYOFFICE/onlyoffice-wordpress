@@ -199,6 +199,7 @@ class Onlyoffice_Plugin_Settings {
 					array(
 						'id'          => self::ALLOWED_OWERWRITE_NETWORK_SETTINGS,
 						'checked'     => self::allowed_owerwrite_network_settings(),
+						'disabled'    => '',
 						'description' => __( 'Allow site administrators to configure plugin for their sites', 'onlyoffice-plugin' ),
 					)
 				);
