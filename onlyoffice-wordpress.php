@@ -109,7 +109,6 @@ run_plugin_name();
  * @return array
  */
 function onlyoffice_forms_mime_types( $mimes ) {
-	$mimes['oform'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.oform';
 	$mimes['docxf'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.docxf';
 
 	return $mimes;
@@ -129,10 +128,6 @@ function onlyoffice_forms_mime_types( $mimes ) {
 function onlyoffice_add_allow_upload_extension_exception( $data, $file, $filename ) {
 	$ext = pathinfo( $filename, PATHINFO_EXTENSION );
 	switch ( $ext ) {
-		case 'oform':
-			$data['ext']  = 'oform';
-			$data['type'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.oform';
-			break;
 		case 'docxf':
 			$data['ext']  = 'docxf';
 			$data['type'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.docxf';
