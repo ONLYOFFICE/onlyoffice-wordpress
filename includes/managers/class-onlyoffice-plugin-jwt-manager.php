@@ -79,6 +79,21 @@ class Onlyoffice_Plugin_JWT_Manager {
 	 * @return object|string
 	 */
 	public static function jwt_decode( $token, $secret ) {
-		return JWT::decode( $token, new Key( $secret, 'HS256' ) );
+		$jwt_reflection_class = new ReflectionClass( '\Firebase\JWT\JWT' );
+		$methods              = $jwt_reflection_class->getMethods();
+
+		$filtered_methods = array_filter(
+			$methods,
+			function ( $method ) {
+				return strpos( $method->getName(), 'getKey' ) === 0;
+			}
+		);
+
+		if ( empty( $filtered_methods ) ) {
+			$allowed_algs = array( 'HS256' );
+			return JWT::decode( $token, $secret, $allowed_algs );
+		} else {
+			return JWT::decode( $token, new Key( $secret, 'HS256' ) );
+		}
 	}
 }

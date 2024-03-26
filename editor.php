@@ -24,14 +24,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-require_once '../../../wp-load.php';
-
-add_filter(
-	'locale',
-	function () {
-		return get_user_locale( get_current_user_id() );
-	}
-);
+if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) ) {
+	$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+	require_once $parse_uri[0] . 'wp-load.php';
+} else {
+	require_once '../../../wp-load.php';
+}
 
 // phpcs:disable WordPress.Security.NonceVerification
 

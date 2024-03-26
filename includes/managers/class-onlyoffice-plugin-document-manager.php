@@ -61,8 +61,8 @@ class Onlyoffice_Plugin_Document_Manager {
 		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 
 		foreach ( $formats as $format ) {
-			if ( $format['name'] === $ext ) {
-				return $format['type'];
+			if ( $format->name === $ext ) {
+				return $format->type;
 			}
 		}
 
@@ -81,8 +81,8 @@ class Onlyoffice_Plugin_Document_Manager {
 		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 
 		foreach ( $formats as $format ) {
-			if ( $format['name'] === $ext ) {
-				return in_array( 'edit', $format['actions'], true );
+			if ( $format->name === $ext ) {
+				return in_array( 'edit', $format->actions, true );
 			}
 		}
 
@@ -101,8 +101,8 @@ class Onlyoffice_Plugin_Document_Manager {
 		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 
 		foreach ( $formats as $format ) {
-			if ( $format['name'] === $ext ) {
-				return in_array( 'fill', $format['actions'], true );
+			if ( $format->name === $ext ) {
+				return in_array( 'fill', $format->actions, true );
 			}
 		}
 
@@ -121,8 +121,8 @@ class Onlyoffice_Plugin_Document_Manager {
 		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 
 		foreach ( $formats as $format ) {
-			if ( $format['name'] === $ext ) {
-				return in_array( 'view', $format['actions'], true );
+			if ( $format->name === $ext ) {
+				return in_array( 'view', $format->actions, true );
 			}
 		}
 
@@ -137,8 +137,8 @@ class Onlyoffice_Plugin_Document_Manager {
 		$extensions = array();
 
 		foreach ( $formats as $format ) {
-			if ( in_array( 'view', $format['actions'], true ) ) {
-				array_push( $extensions, $format['name'] );
+			if ( in_array( 'view', $format->actions, true ) ) {
+				array_push( $extensions, $format->name );
 			}
 		}
 
