@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Document Editing Service address"
 msgstr "文書編集サービスアドレス"
@@ -49,26 +49,26 @@ msgid "Files"
 msgstr "ファイル"
 
 msgid "ONLYOFFICE Docs Settings"
-msgstr ""
+msgstr "ONLYOFFICE Docsの設定"
 
 msgid "Configure ONLYOFFICE Docs plugin settings"
-msgstr ""
+msgstr "ONLYOFFICE Docsプラグインの設定"
 
 #: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
-msgstr ""
+msgstr "ONLYOFFICE Docsにアクセスできません。管理者にお問い合わせください。"
 
 msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
-msgstr ""
+msgstr "ここではONLYOFFICE Docsエディタで編集・閲覧可能なファイルが表示されます。"
 
 msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
-msgstr ""
+msgstr "ONLYOFFICE Docsエディタで編集・閲覧可能なファイルは見つかりませんでした。"
 
 msgid "Add ONLYOFFICE Docs editor on page"
-msgstr ""
+msgstr "ONLYOFFICE Docsエディタ追加ページ"
 
 msgid "ONLYOFFICE Docs Cloud"
-msgstr "ONLYOFFICE Docs Cloud"
+msgstr "ONLYOFFICEドキュメントエディタをページに追加する"
 
 msgid "Easily launch the editors in the cloud without downloading and installation"
 msgstr "ダウンロードやインストールをすることなく、クラウド上で簡単にエディタを起動することができます"
@@ -78,21 +78,22 @@ msgstr "今すぐ使ってみる"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Embedded"
-msgstr "Embedded"
+msgstr "埋め込み"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Document view"
-msgstr "Document view"
+msgstr "ドキュメント表示"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Open in ONLYOFFICE"
-msgstr "Open in ONLYOFFICE"
+msgstr "ONLYOFFICEで開く"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Show Open in ONLYOFFICE button"
-msgstr "Show Open in ONLYOFFICE button"
+msgstr "「ONLYOFFICEで開く」ボタンを表示"
 
 #: onlyoffice-wordpress-block/build/index.js
 #: controllers/js/frontend-controller.js
 msgid "File not found!"
-msgstr "File not found!"
+msgstr "ファイルが見つかりません！"
+

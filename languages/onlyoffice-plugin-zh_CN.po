@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Document Editing Service address"
 msgstr "文件编辑服务地址"
@@ -49,23 +49,23 @@ msgid "Files"
 msgstr "文件"
 
 msgid "ONLYOFFICE Docs Settings"
-msgstr ""
+msgstr "ONLYOFFICE 文档设置"
 
 msgid "Configure ONLYOFFICE Docs plugin settings"
-msgstr ""
+msgstr "配置 ONLYOFFICE 文档插件设置"
 
 #: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
-msgstr ""
+msgstr "无法连接到 ONLYOFFICE 文档。请联系管理员。"
 
 msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
-msgstr ""
+msgstr "可在 ONLYOFFICE 文档中编辑并打开的文件在这里显示。"
 
 msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
-msgstr ""
+msgstr "未找到可在 ONLYOFFICE 文档编辑器中编辑或查看的文件。"
 
 msgid "Add ONLYOFFICE Docs editor on page"
-msgstr ""
+msgstr "将 ONLYOFFICE 文档编辑器添加到页面上"
 
 msgid "ONLYOFFICE Docs Cloud"
 msgstr "ONLYOFFICE 文档云"
@@ -78,21 +78,22 @@ msgstr "立即获取"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Embedded"
-msgstr "Embedded"
+msgstr "嵌入式"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Document view"
-msgstr "Document view"
+msgstr "文档视图"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Open in ONLYOFFICE"
-msgstr "Open in ONLYOFFICE"
+msgstr "用 ONLYOFFICE 打开"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Show Open in ONLYOFFICE button"
-msgstr "Show Open in ONLYOFFICE button"
+msgstr "显示在 ONLYOFFICE 中打开按钮"
 
 #: onlyoffice-wordpress-block/build/index.js
 #: controllers/js/frontend-controller.js
 msgid "File not found!"
-msgstr "File not found!"
+msgstr "未找到文件！"
+

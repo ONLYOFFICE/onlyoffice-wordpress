@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Document Editing Service address"
 msgstr "Адрес службы редактирования документов"
@@ -59,10 +59,10 @@ msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
 msgstr "Приложение ONLYOFFICE Docs недоступно. Пожалуйста, свяжитесь с администратором."
 
 msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
-msgstr ""
+msgstr "Здесь отображаются файлы, которые можно редактировать и открывать в редакторе ONLYOFFICE Docs."
 
 msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
-msgstr "Здесь отображаются файлы, которые можно редактировать и открывать в редакторе документов ONLYOFFICE."
+msgstr "Не найдены файлы для редактирования или просмотра в редакторе ONLYOFFICE Docs."
 
 msgid "Add ONLYOFFICE Docs editor on page"
 msgstr "Добавить редактор ONLYOFFICE Docs на страницу"
@@ -96,3 +96,4 @@ msgstr "Показать кнопку Открыть в ONLYOFFICE"
 #: controllers/js/frontend-controller.js
 msgid "File not found!"
 msgstr "Файл не найден!"
+

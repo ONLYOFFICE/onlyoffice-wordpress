@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Document Editing Service address"
 msgstr "Adresse du service de modification de documents"
@@ -49,23 +49,23 @@ msgid "Files"
 msgstr "Fichiers"
 
 msgid "ONLYOFFICE Docs Settings"
-msgstr ""
+msgstr "Paramètres d'ONLYOFFICE Docs"
 
 msgid "Configure ONLYOFFICE Docs plugin settings"
-msgstr ""
+msgstr "Configurer les paramètres du connecteur ONLYOFFICE Docs"
 
 #: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
-msgstr ""
+msgstr "Impossible de joindre ONLYOFFICE Docs. Veuillez contacter l'administrateur."
 
 msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
-msgstr ""
+msgstr "Les fichiers qui peuvent être édités et ouverts dans l'éditeur ONLYOFFICE Docs sont affichés ici."
 
 msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
-msgstr ""
+msgstr "Aucun fichier trouvé pour être édité ou affiché dans ONLYOFFICE Docs."
 
 msgid "Add ONLYOFFICE Docs editor on page"
-msgstr ""
+msgstr "Ajouter l'éditeur ONLYOFFICE Docs à la page"
 
 msgid "ONLYOFFICE Docs Cloud"
 msgstr "ONLYOFFICE Docs Cloud"
@@ -78,21 +78,22 @@ msgstr "Obtenir maintenant"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Embedded"
-msgstr "Embedded"
+msgstr "Intégré"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Document view"
-msgstr "Document view"
+msgstr "Vue du document"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Open in ONLYOFFICE"
-msgstr "Open in ONLYOFFICE"
+msgstr "Ouvrir dans ONLYOFFICE"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Show Open in ONLYOFFICE button"
-msgstr "Show Open in ONLYOFFICE button"
+msgstr "Afficher le bouton Ouvrir dans ONLYOFFICE"
 
 #: onlyoffice-wordpress-block/build/index.js
 #: controllers/js/frontend-controller.js
 msgid "File not found!"
-msgstr "File not found!"
+msgstr "Fichier non trouvé !"
+

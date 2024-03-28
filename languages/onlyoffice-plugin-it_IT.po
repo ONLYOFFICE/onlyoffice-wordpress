@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Document Editing Service address"
 msgstr "Indirizzo del servizio di modifica documenti"
@@ -49,26 +49,26 @@ msgid "Files"
 msgstr "File"
 
 msgid "ONLYOFFICE Docs Settings"
-msgstr ""
+msgstr "Impostazioni di ONLYOFFICE Docs"
 
 msgid "Configure ONLYOFFICE Docs plugin settings"
-msgstr ""
+msgstr "Configura le impostazioni del plugin di ONLYOFFICE Docs"
 
 #: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
-msgstr ""
+msgstr "Impossibile raggiungere ONLYOFFICE Docs. Ti preghiamo di contattare l'amministratore."
 
 msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
-msgstr ""
+msgstr "I file che possono essere modificati e aperti nell'editor di ONLYOFFICE Docs vengono visualizzati qui."
 
 msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
-msgstr ""
+msgstr "Nessun file trovato per la modifica o la visualizzazione nell'editor di ONLYOFFICE Docs."
 
 msgid "Add ONLYOFFICE Docs editor on page"
-msgstr ""
+msgstr "Aggiungi l'editor di ONLYOFFICE Docs alla pagina"
 
 msgid "ONLYOFFICE Docs Cloud"
-msgstr "ONLYOFFICE Docs nel Cloud"
+msgstr "ONLYOFFICE Docs Cloud"
 
 msgid "Easily launch the editors in the cloud without downloading and installation"
 msgstr "Avvia facilmente gli editor nel cloud senza scaricarli e installarli"
@@ -78,21 +78,22 @@ msgstr "Ottieni ora"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Embedded"
-msgstr "Embedded"
+msgstr "Incorporato"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Document view"
-msgstr "Document view"
+msgstr "Visualizzazione del documento"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Open in ONLYOFFICE"
-msgstr "Open in ONLYOFFICE"
+msgstr "Aprire in ONLYOFFICE"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Show Open in ONLYOFFICE button"
-msgstr "Show Open in ONLYOFFICE button"
+msgstr "Mostra il pulsante Apri in ONLYOFFICE"
 
 #: onlyoffice-wordpress-block/build/index.js
 #: controllers/js/frontend-controller.js
 msgid "File not found!"
-msgstr "File not found!"
+msgstr "File non trovato!"
+

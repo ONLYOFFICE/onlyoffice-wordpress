@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Document Editing Service address"
 msgstr "die Adresse des Dokumentenbearbeitungsservices"
@@ -49,23 +49,23 @@ msgid "Files"
 msgstr "Dateien"
 
 msgid "ONLYOFFICE Docs Settings"
-msgstr ""
+msgstr "ONLYOFFICE Docs Einstellungen "
 
 msgid "Configure ONLYOFFICE Docs plugin settings"
-msgstr ""
+msgstr "Einstellungen von ONLYOFFICE Docs konfigurieren"
 
 #: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
-msgstr ""
+msgstr "ONLYOFFICE Docs ist nicht zugänglich. Bitte wende Dich an Deinen Administrator."
 
 msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
-msgstr ""
+msgstr "Hier werden die Dateien angezeigt, die Sie in ONLYOFFICE Docs öffnen und bearbeiten können."
 
 msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
-msgstr ""
+msgstr "Keine Dateien zum Öffnen oder Bearbeiten in ONLYOFFICE Docs gefunden."
 
 msgid "Add ONLYOFFICE Docs editor on page"
-msgstr ""
+msgstr "ONLYOFFICE Docs zur Seite hinzufügen"
 
 msgid "ONLYOFFICE Docs Cloud"
 msgstr "ONLYOFFICE Docs Cloud"
@@ -78,21 +78,22 @@ msgstr "Jetzt erhalten"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Embedded"
-msgstr "Embedded"
+msgstr "Eingebettet"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Document view"
-msgstr "Document view"
+msgstr "Dokument-Ansicht"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Open in ONLYOFFICE"
-msgstr "Open in ONLYOFFICE"
+msgstr "In ONLYOFFICE öffnen"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Show Open in ONLYOFFICE button"
-msgstr "Show Open in ONLYOFFICE button"
+msgstr "Schaltfläche 'In ONLYOFFICE öffnen' anzeigen"
 
 #: onlyoffice-wordpress-block/build/index.js
 #: controllers/js/frontend-controller.js
 msgid "File not found!"
-msgstr "File not found!"
+msgstr "Datei nicht gefunden!"
+
