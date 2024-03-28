@@ -51,7 +51,7 @@ class Onlyoffice_Plugin_Frontend_Controller {
 		register_block_type(
 			__DIR__ . '/../onlyoffice-wordpress-block',
 			array(
-				'description'     => __( 'Add ONLYOFFICE editor on page', 'onlyoffice-plugin' ),
+				'description'     => __( 'Add ONLYOFFICE Docs editor on page', 'onlyoffice-plugin' ),
 				'render_callback' => array( $this, 'onlyoffice_block_render_callback' ),
 			),
 		);

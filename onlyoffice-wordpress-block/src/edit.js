@@ -194,7 +194,7 @@ const Edit = ({attributes, setAttributes}) => {
             </>
             :
             <MediaPlaceholder
-                labels={{title: 'ONLYOFFICE'}}
+                labels={{title: 'ONLYOFFICE Docs'}}
                 allowedTypes={onlyofficeAllowedMimes}
                 accept={onlyofficeAllowedMimes.join()}
                 onSelect={(el) => {

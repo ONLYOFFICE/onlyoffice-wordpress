@@ -2,8 +2,15 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
-msgid "General Settings"
-msgstr ""
+
+
+
+
+
+
+
+
+
 
 msgid "Document Editing Service address"
 msgstr ""
@@ -38,26 +45,26 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-msgid "General settings section"
-msgstr ""
-
 msgid "Files"
 msgstr ""
 
-msgid "Configure ONLYOFFICE connector settings"
+msgid "ONLYOFFICE Docs Settings"
+msgstr ""
+
+msgid "Configure ONLYOFFICE Docs plugin settings"
 msgstr ""
 
 #: controllers/js/frontend-controller.js
-msgid "ONLYOFFICE cannot be reached. Please contact admin"
+msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
 msgstr ""
 
-msgid "Files that can be edited and opened in ONLYOFFYCE will be displayed here"
+msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
 msgstr ""
 
-msgid "No files found for editing or viewing in ONLYOFFICE."
+msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
 msgstr ""
 
-msgid "Add ONLYOFFICE editor on page"
+msgid "Add ONLYOFFICE Docs editor on page"
 msgstr ""
 
 msgid "ONLYOFFICE Docs Cloud"

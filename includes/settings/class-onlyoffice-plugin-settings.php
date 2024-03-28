@@ -66,8 +66,8 @@ class Onlyoffice_Plugin_Settings {
 
 		if ( $can_manage_settings && ! $can_upload_files ) {
 			add_menu_page(
-				__( 'ONLYOFFICE', 'onlyoffice-plugin' ),
-				'ONLYOFFICE',
+				__( 'ONLYOFFICE Docs', 'onlyoffice-plugin' ),
+				'ONLYOFFICE Docs',
 				'manage_options',
 				'onlyoffice-settings',
 				array( $this, 'options_page' ),
@@ -77,7 +77,7 @@ class Onlyoffice_Plugin_Settings {
 		if ( $can_manage_settings && $can_upload_files ) {
 			add_submenu_page(
 				'onlyoffice-files',
-				'ONLYOFFICE',
+				__( 'ONLYOFFICE Docs Settings', 'onlyoffice-plugin' ),
 				__( 'Settings', 'onlyoffice-plugin' ),
 				'manage_options',
 				'onlyoffice-settings',
@@ -163,7 +163,7 @@ class Onlyoffice_Plugin_Settings {
 	 */
 	public function general_section_callback( $args ) {
 		?>
-		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure ONLYOFFICE connector settings', 'onlyoffice-plugin' ); ?></p>
+		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure ONLYOFFICE Docs plugin settings', 'onlyoffice-plugin' ); ?></p>
 		<?php
 	}
 

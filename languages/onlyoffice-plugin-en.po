@@ -10,10 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
-
-msgid "General Settings"
-msgstr "General Settings"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Document Editing Service address"
 msgstr "Document Editing Service address"
@@ -31,7 +28,7 @@ msgid "Leave blank to use default header"
 msgstr "Leave blank to use default header"
 
 msgid "Settings Saved"
-msgstr "Settings Saved"
+msgstr "Settings saved"
 
 msgid "Open in ONLYOFFICE"
 msgstr "Open in ONLYOFFICE"
@@ -40,7 +37,7 @@ msgid "Edit in ONLYOFFICE"
 msgstr "Edit in ONLYOFFICE"
 
 msgid "Save Settings"
-msgstr "Save Settings"
+msgstr "Save settings"
 
 msgid "Post is not an attachment"
 msgstr "Post is not an attachment"
@@ -48,27 +45,27 @@ msgstr "Post is not an attachment"
 msgid "Settings"
 msgstr "Settings"
 
-msgid "General settings section"
-msgstr "General settings section"
-
 msgid "Files"
 msgstr "Files"
 
-msgid "Configure ONLYOFFICE connector settings"
-msgstr "Configure ONLYOFFICE connector settings"
+msgid "ONLYOFFICE Docs Settings"
+msgstr "ONLYOFFICE Docs settings"
+
+msgid "Configure ONLYOFFICE Docs plugin settings"
+msgstr "Configure ONLYOFFICE Docs plugin settings"
 
 #: controllers/js/frontend-controller.js
-msgid "ONLYOFFICE cannot be reached. Please contact admin"
-msgstr "ONLYOFFICE cannot be reached. Please contact admin"
+msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
+msgstr "ONLYOFFICE Docs cannot be reached. Please contact admin."
 
-msgid "Files that can be edited and opened in ONLYOFFICE will be displayed here"
-msgstr "Files that can be edited and opened in ONLYOFFICE will be displayed here"
+msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
+msgstr "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
 
-msgid "No files found for editing or viewing in ONLYOFFICE."
-msgstr "No files found for editing or viewing in ONLYOFFICE."
+msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
+msgstr "No files found for editing or viewing in ONLYOFFICE Docs editor."
 
-msgid "Add ONLYOFFICE editor on page"
-msgstr "Add ONLYOFFICE editor on page"
+msgid "Add ONLYOFFICE Docs editor on page"
+msgstr "Add ONLYOFFICE Docs editor on page"
 
 msgid "ONLYOFFICE Docs Cloud"
 msgstr "ONLYOFFICE Docs Cloud"
@@ -77,7 +74,7 @@ msgid "Easily launch the editors in the cloud without downloading and installati
 msgstr "Easily launch the editors in the cloud without downloading and installation"
 
 msgid "Get Now"
-msgstr "Get Now"
+msgstr "Get now"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Embedded"
@@ -99,3 +96,4 @@ msgstr "Show Open in ONLYOFFICE button"
 #: controllers/js/frontend-controller.js
 msgid "File not found!"
 msgstr "File not found!"
+

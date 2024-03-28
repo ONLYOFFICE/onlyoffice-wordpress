@@ -1,6 +1,6 @@
 <?php
 /**
- * ONLYOFFICE Editor Page.
+ * ONLYOFFICE Docs Editor Page.
  *
  * @package Onlyoffice_Plugin
  */
@@ -144,7 +144,7 @@ $config = Onlyoffice_Plugin_Config_Manager::get_config( $attachment_id, 'desktop
 
 		var connectEditor = function() {
 			if (typeof DocsAPI === "undefined") {
-				alert("<?php esc_attr_e( 'ONLYOFFICE cannot be reached. Please contact admin', 'onlyoffice-plugin' ); ?>");
+				alert("<?php esc_attr_e( 'ONLYOFFICE Docs cannot be reached. Please contact admin.', 'onlyoffice-plugin' ); ?>");
 				return;
 			}
 
