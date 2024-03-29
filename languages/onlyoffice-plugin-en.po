@@ -28,7 +28,7 @@ msgid "Leave blank to use default header"
 msgstr "Leave blank to use default header"
 
 msgid "Settings Saved"
-msgstr "Settings saved"
+msgstr "Settings Saved"
 
 msgid "Open in ONLYOFFICE"
 msgstr "Open in ONLYOFFICE"
@@ -37,7 +37,7 @@ msgid "Edit in ONLYOFFICE"
 msgstr "Edit in ONLYOFFICE"
 
 msgid "Save Settings"
-msgstr "Save settings"
+msgstr "Save Settings"
 
 msgid "Post is not an attachment"
 msgstr "Post is not an attachment"
@@ -49,7 +49,7 @@ msgid "Files"
 msgstr "Files"
 
 msgid "ONLYOFFICE Docs Settings"
-msgstr "ONLYOFFICE Docs settings"
+msgstr "ONLYOFFICE Docs Settings"
 
 msgid "Configure ONLYOFFICE Docs plugin settings"
 msgstr "Configure ONLYOFFICE Docs plugin settings"
@@ -74,7 +74,7 @@ msgid "Easily launch the editors in the cloud without downloading and installati
 msgstr "Easily launch the editors in the cloud without downloading and installation"
 
 msgid "Get Now"
-msgstr "Get now"
+msgstr "Get Now"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Embedded"
