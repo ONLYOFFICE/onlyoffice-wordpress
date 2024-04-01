@@ -117,8 +117,8 @@ class Onlyoffice_Plugin_Url_Manager {
 	 * @return false|string
 	 */
 	private static function encode_openssl_data( $data ) {
-		$passphrase = get_option( 'onlyoffice-plugin-uuid' );
-		$iv         = hex2bin( get_option( 'onlyoffice-plugin-bytes' ) );
+		$passphrase = get_site_option( 'onlyoffice-plugin-uuid' );
+		$iv         = hex2bin( get_site_option( 'onlyoffice-plugin-bytes' ) );
 
 		$encrypt = openssl_encrypt( $data, 'aes-256-ctr', $passphrase, $options = 0, $iv );
 
@@ -132,8 +132,8 @@ class Onlyoffice_Plugin_Url_Manager {
 	 * @return false|string
 	 */
 	public static function decode_openssl_data( $data ) {
-		$passphrase = get_option( 'onlyoffice-plugin-uuid' );
-		$iv         = hex2bin( get_option( 'onlyoffice-plugin-bytes' ) );
+		$passphrase = get_site_option( 'onlyoffice-plugin-uuid' );
+		$iv         = hex2bin( get_site_option( 'onlyoffice-plugin-bytes' ) );
 
 		$data = urldecode( str_replace( ',', '%', $data ) );
 

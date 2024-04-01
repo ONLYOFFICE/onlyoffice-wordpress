@@ -1,6 +1,7 @@
 # Change Log
 
 ## Added
+- multisite support
 - stub for onlyoffice-wordpress-block that displays error information if the document server is not accessible or the file is not found 
 - settings for onlyoffice block (width, height, align, show open in onlyoffice bytton)
 - button copy link to editor, in the table with files

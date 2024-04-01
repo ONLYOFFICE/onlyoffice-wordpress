@@ -230,7 +230,7 @@ class Onlyoffice_Plugin_Document_Manager {
 	 * Return option onlyoffice-formats.
 	 */
 	public static function get_onlyoffice_formats() {
-		$formats = get_option( 'onlyoffice-formats' );
+		$formats = get_site_option( 'onlyoffice-formats' );
 		if ( ! empty( $formats ) ) {
 			return $formats;
 		}

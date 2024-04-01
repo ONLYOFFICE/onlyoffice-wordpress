@@ -112,7 +112,7 @@ class Onlyoffice_Plugin_Callback {
 
 		$param = urldecode( str_replace( ',', '%', $req->get_params()['id'] ) );
 
-		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $param, get_option( 'onlyoffice-plugin-uuid' ) ) );
+		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $param, get_site_option( 'onlyoffice-plugin-uuid' ) ) );
 		$user_id       = isset( $body['actions'] ) ? $body['actions'][0]['userid'] : null;
 
 		$user = get_user_by( 'id', $user_id );
