@@ -12,9 +12,6 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.0.1\n"
 
-msgid "General Settings"
-msgstr "一般設定"
-
 msgid "Document Editing Service address"
 msgstr "文書編集サービスアドレス"
 
@@ -48,27 +45,27 @@ msgstr "記事は添付ファイルではありません"
 msgid "Settings"
 msgstr "設定"
 
-msgid "General settings section"
-msgstr "一般設定セクション"
-
 msgid "Files"
 msgstr "ファイル"
 
-msgid "Configure ONLYOFFICE connector settings"
-msgstr "ONLYOFFICEコネクタ設定を構成する"
+msgid "ONLYOFFICE Docs Settings"
+msgstr ""
+
+msgid "Configure ONLYOFFICE Docs plugin settings"
+msgstr ""
 
 #: controllers/js/frontend-controller.js
-msgid "ONLYOFFICE cannot be reached. Please contact admin"
-msgstr "ONLYOFFICE に接続できません。管理者にお問い合わせください"
+msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
+msgstr ""
 
-msgid "Files that can be edited and opened in ONLYOFFICE will be displayed here"
-msgstr "ONLYOFFICEで開いて、編集することができるファイルがここに表示されます"
+msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
+msgstr ""
 
-msgid "No files found for editing or viewing in ONLYOFFICE."
-msgstr "ONLYOFFICEで編集または表示するファイルが見つかりません。"
+msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
+msgstr ""
 
-msgid "Add ONLYOFFICE editor on page"
-msgstr "ページにONLYOFFICEエディターを追加する"
+msgid "Add ONLYOFFICE Docs editor on page"
+msgstr ""
 
 msgid "ONLYOFFICE Docs Cloud"
 msgstr "ONLYOFFICE Docs Cloud"

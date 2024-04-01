@@ -12,9 +12,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-msgid "General Settings"
-msgstr "Paramètres généraux"
-
 msgid "Document Editing Service address"
 msgstr "Adresse du service de modification de documents"
 
@@ -48,27 +45,27 @@ msgstr "Le post ne peut pas être une pièce jointe"
 msgid "Settings"
 msgstr "Paramètres"
 
-msgid "General settings section"
-msgstr "Section des paramètres généraux"
-
 msgid "Files"
 msgstr "Fichiers"
 
-msgid "Configure ONLYOFFICE connector settings"
-msgstr "Configurer les paramètres du connecteur ONLYOFFICE"
+msgid "ONLYOFFICE Docs Settings"
+msgstr ""
+
+msgid "Configure ONLYOFFICE Docs plugin settings"
+msgstr ""
 
 #: controllers/js/frontend-controller.js
-msgid "ONLYOFFICE cannot be reached. Please contact admin"
-msgstr "Impossible de joindre ONLYOFFICE. Veuillez contacter l'administrateur"
+msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
+msgstr ""
 
-msgid "Files that can be edited and opened in ONLYOFFICE will be displayed here"
-msgstr "Les fichiers qui peuvent être édités et ouverts dans ONLYOFFICE seront affichés ici"
+msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
+msgstr ""
 
-msgid "No files found for editing or viewing in ONLYOFFICE."
-msgstr "Aucun fichier trouvé pour être édité ou affiché dans ONLYOFFICE."
+msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
+msgstr ""
 
-msgid "Add ONLYOFFICE editor on page"
-msgstr "Ajouter l'éditeur ONLYOFFICE à la page"
+msgid "Add ONLYOFFICE Docs editor on page"
+msgstr ""
 
 msgid "ONLYOFFICE Docs Cloud"
 msgstr "ONLYOFFICE Docs Cloud"
@@ -86,7 +83,6 @@ msgstr "Embedded"
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Document view"
 msgstr "Document view"
-
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Open in ONLYOFFICE"

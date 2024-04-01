@@ -12,9 +12,6 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.0.1\n"
 
-msgid "General Settings"
-msgstr "一般设置"
-
 msgid "Document Editing Service address"
 msgstr "文件编辑服务地址"
 
@@ -48,27 +45,27 @@ msgstr "帖子不是附件"
 msgid "Settings"
 msgstr "设置"
 
-msgid "General settings section"
-msgstr "通用设置部分"
-
 msgid "Files"
 msgstr "文件"
 
-msgid "Configure ONLYOFFICE connector settings"
-msgstr "配置ONLYOFFICE连接器设置"
+msgid "ONLYOFFICE Docs Settings"
+msgstr ""
+
+msgid "Configure ONLYOFFICE Docs plugin settings"
+msgstr ""
 
 #: controllers/js/frontend-controller.js
-msgid "ONLYOFFICE cannot be reached. Please contact admin"
-msgstr "无法联系到ONLYOFFICE。请联系管理员"
+msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
+msgstr ""
 
-msgid "Files that can be edited and opened in ONLYOFFICE will be displayed here"
-msgstr "可在ONLYOFFICE中编辑并打开的文件将在这里显示"
+msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
+msgstr ""
 
-msgid "No files found for editing or viewing in ONLYOFFICE."
-msgstr "未发现可在ONLYOFFICE中编辑或查看的文件。"
+msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
+msgstr ""
 
-msgid "Add ONLYOFFICE editor on page"
-msgstr "将ONLYOFFICE编辑器添加到页面上"
+msgid "Add ONLYOFFICE Docs editor on page"
+msgstr ""
 
 msgid "ONLYOFFICE Docs Cloud"
 msgstr "ONLYOFFICE 文档云"
