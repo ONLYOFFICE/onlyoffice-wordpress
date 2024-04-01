@@ -27,9 +27,6 @@ msgstr "En-tête d'autorisation"
 msgid "Leave blank to use default header"
 msgstr "Laissez vide pour utiliser l'en-tête par défaut"
 
-msgid "Settings Saved"
-msgstr "Paramètres sauvegardés"
-
 msgid "Open in ONLYOFFICE"
 msgstr "Ouvrir dans ONLYOFFICE"
 

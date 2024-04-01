@@ -27,9 +27,6 @@ msgstr "Заголовок авторизации"
 msgid "Leave blank to use default header"
 msgstr "Оставьте пустым, чтобы использовать заголовок по умолчанию"
 
-msgid "Settings Saved"
-msgstr "Настройки сохранены"
-
 msgid "Open in ONLYOFFICE"
 msgstr "Открыть в ONLYOFFICE"
 

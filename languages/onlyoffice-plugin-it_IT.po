@@ -27,9 +27,6 @@ msgstr "Intestazione di autorizzazione"
 msgid "Leave blank to use default header"
 msgstr "Lascia vuoto per utilizzare l'intestazione predefinita"
 
-msgid "Settings Saved"
-msgstr "Le impostazioni sono state salvate"
-
 msgid "Open in ONLYOFFICE"
 msgstr "Aprire in ONLYOFFICE"
 

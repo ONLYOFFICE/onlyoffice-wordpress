@@ -27,9 +27,6 @@ msgstr "授权标头"
 msgid "Leave blank to use default header"
 msgstr "留空以使用默认的标头"
 
-msgid "Settings Saved"
-msgstr "设置已保存"
-
 msgid "Open in ONLYOFFICE"
 msgstr "用 ONLYOFFICE 打开"
 

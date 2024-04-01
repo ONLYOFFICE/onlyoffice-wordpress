@@ -27,9 +27,6 @@ msgstr "Authorization-Header"
 msgid "Leave blank to use default header"
 msgstr "Leer lassen, um die standardmäßige Kopfzeile zu verwenden"
 
-msgid "Settings Saved"
-msgstr "Die Einstellungen werden gespeichert"
-
 msgid "Open in ONLYOFFICE"
 msgstr "In ONLYOFFICE öffnen"
 

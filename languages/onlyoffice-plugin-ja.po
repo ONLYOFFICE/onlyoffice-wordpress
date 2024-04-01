@@ -27,9 +27,6 @@ msgstr "認証ヘッダー"
 msgid "Leave blank to use default header"
 msgstr "デフォルトのヘッダーを使用したい場合は空白にしてください"
 
-msgid "Settings Saved"
-msgstr "設定が保存されました"
-
 msgid "Open in ONLYOFFICE"
 msgstr "ONLYOFFICEで開く"
 

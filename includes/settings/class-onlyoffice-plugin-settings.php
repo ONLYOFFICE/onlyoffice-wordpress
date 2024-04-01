@@ -42,17 +42,17 @@ class Onlyoffice_Plugin_Settings {
 	/**
 	 * ID setting docserver_url.
 	 */
-	const DOCSERVER_URL = 'onlyoffice_settings_docserver_url';
+	const DOCSERVER_URL = 'docserver_url';
 
 	/**
 	 * ID setting docserver_jwt.
 	 */
-	const DOCSERVER_JWT = 'onlyoffice_settings_docserver_jwt';
+	const DOCSERVER_JWT = 'docserver_jwt';
 
 	/**
 	 * ID setting jwt_header.
 	 */
-	const JWT_HEADER = 'onlyoffice_settings_jwt_header';
+	const JWT_HEADER = 'jwt_header';
 
 	/**
 	 * Init menu.
@@ -65,7 +65,7 @@ class Onlyoffice_Plugin_Settings {
 		$can_upload_files    = current_user_can( 'upload_files' );
 
 		if ( $can_manage_settings && ! $can_upload_files ) {
-			add_menu_page(
+			$hook = add_menu_page(
 				__( 'ONLYOFFICE Docs', 'onlyoffice-plugin' ),
 				'ONLYOFFICE Docs',
 				'manage_options',
@@ -75,7 +75,7 @@ class Onlyoffice_Plugin_Settings {
 			);
 		}
 		if ( $can_manage_settings && $can_upload_files ) {
-			add_submenu_page(
+			$hook = add_submenu_page(
 				'onlyoffice-files',
 				__( 'ONLYOFFICE Docs Settings', 'onlyoffice-plugin' ),
 				__( 'Settings', 'onlyoffice-plugin' ),
@@ -83,6 +83,10 @@ class Onlyoffice_Plugin_Settings {
 				'onlyoffice-settings',
 				array( $this, 'options_page' )
 			);
+		}
+
+		if ( isset( $hook ) ) {
+			add_action( "load-$hook", array( $this, 'update_plugin_settings' ) );
 		}
 	}
 
@@ -102,55 +106,73 @@ class Onlyoffice_Plugin_Settings {
 		);
 
 		add_settings_field(
-			'onlyoffice_settings_docserver_url',
+			self::DOCSERVER_URL,
 			__( 'Document Editing Service address', 'onlyoffice-plugin' ),
-			array( $this, 'input_cb' ),
+			array( $this, 'input_text' ),
 			'onlyoffice_settings_group',
 			'onlyoffice_settings_general_section',
 			array(
-				'label_for' => self::DOCSERVER_URL,
-				'desc'      => '',
+				'id'          => self::DOCSERVER_URL,
+				'value'       => $this->get_onlyoffice_setting( self::DOCSERVER_URL ),
+				'disabled'    => '',
+				'description' => '',
 			)
 		);
 
 		add_settings_field(
-			'onlyoffice_settings_docserver_jwt',
+			self::DOCSERVER_JWT,
 			__( 'Document server JWT secret key', 'onlyoffice-plugin' ),
-			array( $this, 'input_cb' ),
+			array( $this, 'input_text' ),
 			'onlyoffice_settings_group',
 			'onlyoffice_settings_general_section',
 			array(
-				'label_for' => self::DOCSERVER_JWT,
-				'desc'      => __( 'Secret key (leave blank to disable)', 'onlyoffice-plugin' ),
+				'id'          => self::DOCSERVER_JWT,
+				'value'       => $this->get_onlyoffice_setting( self::DOCSERVER_JWT ),
+				'disabled'    => '',
+				'description' => __( 'Secret key (leave blank to disable)', 'onlyoffice-plugin' ),
 			)
 		);
 
 		add_settings_field(
-			'onlyoffice_settings_jwt_header',
+			self::JWT_HEADER,
 			__( 'Authorization header', 'onlyoffice-plugin' ),
-			array( $this, 'input_cb' ),
+			array( $this, 'input_text' ),
 			'onlyoffice_settings_group',
 			'onlyoffice_settings_general_section',
 			array(
-				'label_for' => self::JWT_HEADER,
-				'desc'      => __( 'Leave blank to use default header', 'onlyoffice-plugin' ),
+				'id'          => self::JWT_HEADER,
+				'value'       => $this->get_onlyoffice_setting( self::JWT_HEADER ),
+				'disabled'    => '',
+				'description' => __( 'Secret key (leave blank to disable)', 'onlyoffice-plugin' ),
 			)
 		);
 	}
 
 	/**
-	 * Input cb
+	 * Input text
 	 *
 	 * @param array $args Args.
 	 *
 	 * @return void
 	 */
-	public function input_cb( array $args ) {
+	public function input_text( array $args ) {
 		?>
-		<input id="<?php echo esc_attr( $args['label_for'] ); ?>" type="text" class="regular-text" name="onlyoffice_settings[<?php echo esc_attr( $args['label_for'] ); ?>]" value="<?php echo esc_attr( $this->get_onlyoffice_setting( $args['label_for'] ) ); ?>">
-		<p class="description">
-			<?php echo esc_attr( $args['desc'] ); ?>
-		</p>
+		<input id="<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( $args['id'] ); ?>" value="<?php echo esc_attr( $args['value'] ); ?>" <?php disabled( $args['disabled'] ); ?> type="text" class="regular-text">
+		<p class="description"><?php echo esc_attr( $args['description'] ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Input checkbox
+	 *
+	 * @param array $args Args.
+	 *
+	 * @return void
+	 */
+	public function input_checkbox( array $args ) {
+		?>
+		<input id="<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( $args['id'] ); ?>" <?php checked( $args['checked'] ); ?> <?php disabled( $args['disabled'] ); ?> type="checkbox" value="1">
+		<label for="<?php echo esc_attr( $args['id'] ); ?>"><?php echo esc_attr( $args['description'] ); ?></label>
 		<?php
 	}
 
@@ -163,6 +185,7 @@ class Onlyoffice_Plugin_Settings {
 	 */
 	public function general_section_callback( $args ) {
 		?>
+		<?php settings_errors(); ?>
 		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure ONLYOFFICE Docs plugin settings', 'onlyoffice-plugin' ); ?></p>
 		<?php
 	}
@@ -182,15 +205,10 @@ class Onlyoffice_Plugin_Settings {
 			ONLYOFFICE_PLUGIN_VERSION
 		);
 
-		if ( ! empty( $_GET['settings-updated'] ) && sanitize_key( $_GET['settings-updated'] ) === 'true' ) { // phpcs:ignore WordPress.Security.NonceVerification
-			add_settings_error( 'onlyoffice_settings_messages', 'onlyoffice_message', __( 'Settings Saved', 'onlyoffice-plugin' ), 'updated' ); // ToDo: can also check if settings are valid e.g. make connection to docServer.
-		}
-
-		settings_errors( 'onlyoffice_settings_messages' );
 		?>
 		<div class="wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-			<form action="options.php" method="post">
+			<form action="admin.php?page=onlyoffice-settings" method="post">
 				<?php
 				settings_fields( 'onlyoffice_settings_group' );
 				do_settings_sections( 'onlyoffice_settings_group' );
@@ -214,7 +232,43 @@ class Onlyoffice_Plugin_Settings {
 	}
 
 	/**
-	 * Return ONLYOFFICE  Setting
+	 * Update settings.
+	 */
+	public function update_plugin_settings() {
+		switch ( $this->current_action() ) {
+			case 'update':
+				check_admin_referer( 'onlyoffice_settings_group-options' );
+
+				if ( isset( $_POST[ self::DOCSERVER_URL ] ) ) {
+					$docserver_url = sanitize_text_field( wp_unslash( $_POST[ self::DOCSERVER_URL ] ) );
+				}
+
+				if ( isset( $_POST[ self::DOCSERVER_JWT ] ) ) {
+					$docserver_jwt = sanitize_text_field( wp_unslash( $_POST[ self::DOCSERVER_JWT ] ) );
+				}
+
+				if ( isset( $_POST[ self::JWT_HEADER ] ) ) {
+					$jwt_header = sanitize_text_field( wp_unslash( $_POST[ self::JWT_HEADER ] ) );
+				}
+
+				$value = array(
+					self::DOCSERVER_URL => $docserver_url,
+					self::DOCSERVER_JWT => $docserver_jwt,
+					self::JWT_HEADER    => $jwt_header,
+				);
+
+				update_option( 'onlyoffice_settings', $value );
+
+				add_settings_error( 'general', 'settings_updated', __( 'Settings saved.' ), 'success' );
+				set_transient( 'settings_errors', get_settings_errors(), 30 );
+				wp_safe_redirect( admin_url( 'admin.php?page=onlyoffice-settings&settings-updated=true' ) );
+
+				exit;
+		}
+	}
+
+	/**
+	 * Return ONLYOFFICE Docs plugin Settings
 	 *
 	 * @param string $key Setting key.
 	 * @param string $def Default value.
@@ -226,5 +280,23 @@ class Onlyoffice_Plugin_Settings {
 		}
 
 		return $def;
+	}
+
+	/**
+	 * Return current actrion.
+	 */
+	private function current_action() {
+		global $filter_action, $action;
+		wp_reset_vars( array( 'filter_action', 'action' ) );
+
+		if ( ! empty( $filter_action ) ) {
+			return false;
+		}
+
+		if ( ! empty( $action ) && -1 !== $action ) {
+			return $action;
+		}
+
+		return false;
 	}
 }
