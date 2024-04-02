@@ -56,13 +56,19 @@ class Onlyoffice_Plugin_Config_Manager {
 			return null;
 		}
 
-		$user     = wp_get_current_user();
-		$author   = get_user_by( 'id', $post->post_author )->display_name;
-		$filepath = get_attached_file( $attachment_id );
-		$filename = wp_basename( $filepath );
-		$filetype = strtolower( pathinfo( $filepath, PATHINFO_EXTENSION ) );
-		$file_url = Onlyoffice_Plugin_Url_Manager::get_download_url( $attachment_id );
-		$lang     = get_user_locale( $user->ID );
+		$user      = wp_get_current_user();
+		$author    = get_user_by( 'id', $post->post_author )->display_name;
+		$filepath  = get_attached_file( $attachment_id );
+		$filename  = wp_basename( $filepath );
+		$filetype  = strtolower( pathinfo( $filepath, PATHINFO_EXTENSION ) );
+		$file_url  = Onlyoffice_Plugin_Url_Manager::get_download_url( $attachment_id );
+		$lang      = get_user_locale( $user->ID );
+		$perm_fill = false;
+
+		if ( Onlyoffice_Plugin_Document_Manager::is_fillable( $filename ) ) {
+			$perm_fill = true;
+			$perm_edit = false;
+		}
 
 		$config = array(
 			'type'         => $type,
@@ -77,8 +83,9 @@ class Onlyoffice_Plugin_Config_Manager {
 					'uploaded' => $post->post_date,
 				),
 				'permissions' => array(
-					'download' => true,
-					'edit'     => $perm_edit,
+					'download'  => true,
+					'edit'      => $perm_edit,
+					'fillForms' => $perm_fill,
 				),
 			),
 			'editorConfig' => array(

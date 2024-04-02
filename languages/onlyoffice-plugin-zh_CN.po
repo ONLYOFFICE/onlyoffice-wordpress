@@ -27,9 +27,6 @@ msgstr "授权标头"
 msgid "Leave blank to use default header"
 msgstr "留空以使用默认的标头"
 
-msgid "Settings Saved"
-msgstr "设置已保存"
-
 msgid "Open in ONLYOFFICE"
 msgstr "用 ONLYOFFICE 打开"
 
@@ -97,3 +94,17 @@ msgstr "显示在 ONLYOFFICE 中打开按钮"
 msgid "File not found!"
 msgstr "未找到文件！"
 
+msgid "Settings update"
+msgstr ""
+
+#: admin/js/settings.js
+msgid "Do you want to allow sites administrators to configure the plugin themselves?"
+msgstr ""
+
+#: admin/js/settings.js
+msgid "Do you want to apply these settings to all sites?"
+msgstr ""
+
+#: admin/js/settings.js
+msgid "Do you want to apply the network settings?"
+msgstr ""

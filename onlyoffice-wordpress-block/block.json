@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
 	"name": "onlyoffice-wordpress/onlyoffice",
-	"title": "ONLYOFFICE",
+	"title": "ONLYOFFICE Docs",
 	"category": "media",
 	"editorScript": "file:./build/index.js",
 	"editorStyle": "file:build/index.css",

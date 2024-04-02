@@ -27,9 +27,6 @@ msgstr "Authorization-Header"
 msgid "Leave blank to use default header"
 msgstr "Leer lassen, um die standardmäßige Kopfzeile zu verwenden"
 
-msgid "Settings Saved"
-msgstr "Die Einstellungen werden gespeichert"
-
 msgid "Open in ONLYOFFICE"
 msgstr "In ONLYOFFICE öffnen"
 
@@ -51,8 +48,26 @@ msgstr "Dateien"
 msgid "ONLYOFFICE Docs Settings"
 msgstr "ONLYOFFICE Docs Einstellungen "
 
-msgid "Configure ONLYOFFICE Docs plugin settings"
+msgid "Configure ONLYOFFICE Docs plugin settings."
 msgstr "Einstellungen von ONLYOFFICE Docs konfigurieren"
+
+msgid "Configure ONLYOFFICE Docs plugin settings for the whole network."
+msgstr ""
+
+msgid "Configure ONLYOFFICE Docs plugin settings for %s site."
+msgstr ""
+
+msgid "Blocked from changing settings by the Network administrator"
+msgstr ""
+
+msgid "Allow site administrators to configure plugin for their sites"
+msgstr ""
+
+msgid "Inherit Network Settings"
+msgstr ""
+
+msgid "Connection Settings"
+msgstr ""
 
 #: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
@@ -97,3 +112,17 @@ msgstr "Schaltfläche 'In ONLYOFFICE öffnen' anzeigen"
 msgid "File not found!"
 msgstr "Datei nicht gefunden!"
 
+msgid "Settings update"
+msgstr ""
+
+#: admin/js/settings.js
+msgid "Do you want to allow sites administrators to configure the plugin themselves?"
+msgstr ""
+
+#: admin/js/settings.js
+msgid "Do you want to apply these settings to all sites?"
+msgstr ""
+
+#: admin/js/settings.js
+msgid "Do you want to apply the network settings?"
+msgstr ""

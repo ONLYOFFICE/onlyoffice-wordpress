@@ -1,15 +1,19 @@
 # Change Log
 
 ## Added
+- multisite support
 - stub for onlyoffice-wordpress-block that displays error information if the document server is not accessible or the file is not found 
 - settings for onlyoffice block (width, height, align, show open in onlyoffice bytton)
 - button copy link to editor, in the table with files
 - ability to insert a link to the editor on the page
 - access for an anonymous user, open the document for viewing in the editor if the document is attached to a public post
+- filling pdf
 
 ## Changed
 - editor url
 - displaying the onlyoffice-wordpress-block component in the Gutenberg editor
+- remove filling for oform
+- supported formats updated
 
 ## 1.1.0
 ## Added
