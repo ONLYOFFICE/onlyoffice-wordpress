@@ -9,19 +9,22 @@ The app allows to:
 * Edit text documents, spreadsheets, and presentations.
 * Co-edit documents in real-time using two co-editing modes (Fast and Strict), Track Changes, comments, and built-in chat.
 
-Supported formats:
+## Supported formats
 
 **For viewing:**
-
-* **WORD:** DJVU, DOC, DOCM, DOCX, DOCXF, DOT, DOTM, DOTX, EPUB, FB2, FODT, HTM, HTML, MHT, ODT, OFORM, OTT, OXPS, PDF, RTF, TXT, XML, XPS
-* **CELL:** CSV, FODS, ODS, OTS, XLS, XLSM, XLSX, XLT, XLTM, XLTX
-* **SLIDE:** FODP, ODP, OTP, POT, POTM, POTX, PPS, PPSM, PPSX, PPT, PPTM, PPTX
+* **WORD**: DJVU, DOC, DOCM, DOCX, DOCXF, DOT, DOTM, DOTX, EPUB, FB2, FODT, HTM, HTML, MHT, MHTML, ODT, OFORM, OTT, OXPS, PDF, RTF, STW, SXW, TXT, WPS, WPT, XML, XPS
+* **CELL**: CSV, ET, ETT, FODS, ODS, OTS, SXC, XLS, XLSB, XLSM, XLSX, XLT, XLTM, XLTX
+* **SLIDE**: DPS, DPT, FODP, ODP, OTP, POT, POTM, POTX, PPS, PPSM, PPSX, PPT, PPTM, PPTX, SXI
 
 **For editing:**
 
-* **WORD:** DOCM, DOCX, DOCXF, DOTM, DOTX, HTM, XML
-* **CELL:** XLSM, XLSX, XLTM, XLTX
-* **SLIDE:** POTM, POTX, PPSM, PPSX, PPTM, PPTX
+* **WORD**: DOCM, DOCX, DOCXF, DOTM, DOTX
+* **CELL**: XLSM, XLSX, XLTM, XLTX
+* **SLIDE**: POTM, POTX, PPSM, PPSX, PPTM, PPTX
+
+**For filling:**
+
+* **WORD**: PDF
 
 ## Installing ONLYOFFICE Docs
 
