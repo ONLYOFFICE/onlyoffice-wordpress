@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Document Editing Service address"
 msgstr "Dirección de servicio de edición de documentos"
@@ -46,41 +46,41 @@ msgid "Files"
 msgstr "Archivos"
 
 msgid "ONLYOFFICE Docs Settings"
-msgstr ""
+msgstr "Ajustes de ONLYOFFICE Docs"
 
 msgid "Configure ONLYOFFICE Docs plugin settings."
-msgstr ""
+msgstr "Configurar los ajustes del plugin de ONLYOFFICE Docs"
 
 msgid "Configure ONLYOFFICE Docs plugin settings for the whole network."
-msgstr ""
+msgstr "Configurar los ajustes del plugin ONLYOFFICE Docs para toda la red."
 
 msgid "Configure ONLYOFFICE Docs plugin settings for %s site."
-msgstr ""
+msgstr "Configurar los ajustes del plugin ONLYOFFICE Docs para el sitio %s."
 
 msgid "Blocked from changing settings by the Network administrator"
-msgstr ""
+msgstr "El administrador de la red no le permite cambiar los ajustes"
 
 msgid "Allow site administrators to configure plugin for their sites"
-msgstr ""
+msgstr "Permitir a los administradores de los sitios configurar el plugin para sus sitios"
 
 msgid "Inherit Network Settings"
-msgstr ""
+msgstr "Aplicar los ajustes de red"
 
 msgid "Connection Settings"
-msgstr ""
+msgstr "Ajustes de conexión"
 
 #: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
-msgstr ""
+msgstr "No se puede acceder a ONLYOFFICE Docs. Por favor, contacte con el administrador."
 
 msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
-msgstr ""
+msgstr "Los archivos que se pueden editar y abrir en el editor de ONLYOFFICE Docs se mostrarán aquí."
 
 msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
-msgstr ""
+msgstr "No se han encontrado archivos para editar o ver en el editor de ONLYOFFICE Docs."
 
 msgid "Add ONLYOFFICE Docs editor on page"
-msgstr ""
+msgstr "Añadir el editor de ONLYOFFICE Docs a la página"
 
 msgid "ONLYOFFICE Docs Cloud"
 msgstr "ONLYOFFICE Docs Cloud"
@@ -93,36 +93,36 @@ msgstr "Obtener ahora"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Embedded"
-msgstr "Embedded"
+msgstr "Incorporado"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Document view"
-msgstr "Document view"
+msgstr "Visualización de documento"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Open in ONLYOFFICE"
-msgstr "Open in ONLYOFFICE"
+msgstr "Abrir en ONLYOFFICE"
 
 #: onlyoffice-wordpress-block/build/index.js
 msgid "Show Open in ONLYOFFICE button"
-msgstr "Show Open in ONLYOFFICE button"
+msgstr "Mostrar el botón Abrir en ONLYOFFICE"
 
 #: onlyoffice-wordpress-block/build/index.js
 #: controllers/js/frontend-controller.js
 msgid "File not found!"
-msgstr "File not found!"
+msgstr "¡No se ha encontrado el archivo!"
 
 msgid "Settings update"
-msgstr ""
+msgstr "Actualización de los ajustes"
 
 #: admin/js/settings.js
 msgid "Do you want to allow sites administrators to configure the plugin themselves?"
-msgstr ""
+msgstr "¿Desea permitir a los administradores de los sitios que configuren ellos mismos el plugin?"
 
 #: admin/js/settings.js
 msgid "Do you want to apply these settings to all sites?"
-msgstr ""
+msgstr "¿Desea aplicar estos ajustes a todos los sitios?"
 
 #: admin/js/settings.js
 msgid "Do you want to apply the network settings?"
-msgstr ""
+msgstr "¿Desea aplicar los ajustes de red?"
