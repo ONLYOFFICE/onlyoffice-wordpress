@@ -126,4 +126,3 @@ msgstr "これらの設定をすべてのサイトに適用しますか？"
 #: admin/js/settings.js
 msgid "Do you want to apply the network settings?"
 msgstr "ネットワーク設定を適用しますか？"
-
