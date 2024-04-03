@@ -184,7 +184,7 @@ class Onlyoffice_Plugin_Settings {
 				'id'          => self::JWT_HEADER,
 				'value'       => $this->get_onlyoffice_current_value_setting( self::JWT_HEADER ),
 				'disabled'    => is_multisite() && ! is_network_admin() && ( ! $this->allowed_owerwrite_network_settings() || self::inherit_network_settings() ),
-				'description' => __( 'Secret key (leave blank to disable)', 'onlyoffice-plugin' ),
+				'description' => __( 'Leave blank to use default header', 'onlyoffice-plugin' ),
 			)
 		);
 
