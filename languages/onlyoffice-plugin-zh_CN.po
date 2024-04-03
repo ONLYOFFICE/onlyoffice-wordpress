@@ -52,22 +52,22 @@ msgid "Configure ONLYOFFICE Docs plugin settings"
 msgstr "配置 ONLYOFFICE 文档插件设置"
 
 msgid "Configure ONLYOFFICE Docs plugin settings for the whole network."
-msgstr ""
+msgstr "为整个网络进行 ONLYOFFICE 文档插件设置。"
 
 msgid "Configure ONLYOFFICE Docs plugin settings for %s site."
-msgstr ""
+msgstr "为 %s 站点进行 ONLYOFFICE 文档插件设置。"
 
 msgid "Blocked from changing settings by the Network administrator"
-msgstr ""
+msgstr "更改设置已被网络管理员阻止"
 
 msgid "Allow site administrators to configure plugin for their sites"
-msgstr ""
+msgstr "允许站点管理员为其站点配置插件"
 
 msgid "Inherit Network Settings"
-msgstr ""
+msgstr "继承网络设置"
 
 msgid "Connection Settings"
-msgstr ""
+msgstr "连接设置"
 
 #: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
@@ -113,16 +113,17 @@ msgid "File not found!"
 msgstr "未找到文件！"
 
 msgid "Settings update"
-msgstr ""
+msgstr "设置更新"
 
 #: admin/js/settings.js
 msgid "Do you want to allow sites administrators to configure the plugin themselves?"
-msgstr ""
+msgstr "您是否允许站点管理员自己配置插件？"
 
 #: admin/js/settings.js
 msgid "Do you want to apply these settings to all sites?"
-msgstr ""
+msgstr "是否将这些设置应用到所有站点？"
 
 #: admin/js/settings.js
 msgid "Do you want to apply the network settings?"
-msgstr ""
+msgstr "是否应用网络设置？"
+
