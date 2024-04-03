@@ -52,22 +52,22 @@ msgid "Configure ONLYOFFICE Docs plugin settings."
 msgstr "Настройте параметры плагина ONLYOFFICE Docs."
 
 msgid "Configure ONLYOFFICE Docs plugin settings for the whole network."
-msgstr"Настройте параметры плагина ONLYOFFICE Docs для всей сети."
+msgstr "Настройте параметры плагина ONLYOFFICE Docs для всей сети."
 
 msgid "Configure ONLYOFFICE Docs plugin settings for %s site."
-msgstr"Настройте параметры плагина ONLYOFFICE Docs для сайта %s."
+msgstr "Настройте параметры плагина ONLYOFFICE Docs для сайта %s."
 
 msgid "Blocked from changing settings by the Network administrator"
-msgstr"Администратор сети заблокировал изменение настроек."
+msgstr "Администратор сети заблокировал изменение настроек."
 
 msgid "Allow site administrators to configure plugin for their sites"
-msgstr"Разрешить администраторам сайта настраивать плагин для своих сайтов"
+msgstr "Разрешить администраторам сайта настраивать плагин для своих сайтов"
 
 msgid "Inherit Network Settings"
-msgstr"Наследовать настройки сети"
+msgstr "Наследовать настройки сети"
 
 msgid "Connection Settings"
-msgstr"Настройки соединения"
+msgstr "Настройки соединения"
 
 #: controllers/js/frontend-controller.js
 msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."

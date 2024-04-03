@@ -58,13 +58,13 @@ msgid "Configure ONLYOFFICE Docs plugin settings for %s site."
 msgstr "Configure ONLYOFFICE Docs plugin settings for %s site."
 
 msgid "Blocked from changing settings by the Network administrator"
-msgstr"Blocked from changing settings by the Network administrator"
+msgstr "Blocked from changing settings by the Network administrator"
 
 msgid "Allow site administrators to configure plugin for their sites"
-msgstr"Allow site administrators to configure plugin for their sites"
+msgstr "Allow site administrators to configure plugin for their sites"
 
 msgid "Inherit Network Settings"
-msgstr"Inherit Network Settings"
+msgstr "Inherit Network Settings"
 
 msgid "Connection Settings"
 msgstr "Connection Settings"
