@@ -42,27 +42,27 @@ class Onlyoffice_Plugin_Settings {
 	/**
 	 * ID setting docserver_url.
 	 */
-	const DOCSERVER_URL = 'docserver_url';
+	const DOCSERVER_URL = 'onlyoffice_settings_docserver_url';
 
 	/**
 	 * ID setting docserver_jwt.
 	 */
-	const DOCSERVER_JWT = 'docserver_jwt';
+	const DOCSERVER_JWT = 'onlyoffice_settings_docserver_jwt';
 
 	/**
 	 * ID setting jwt_header.
 	 */
-	const JWT_HEADER = 'jwt_header';
+	const JWT_HEADER = 'onlyoffice_settings_jwt_header';
 
 	/**
 	 * ID setting allowed_owerwrite_network_settings.
 	 */
-	const ALLOWED_OWERWRITE_NETWORK_SETTINGS = 'allowed_owerwrite_network_settings';
+	const ALLOWED_OWERWRITE_NETWORK_SETTINGS = 'onlyoffice_settings_allowed_owerwrite_network_settings';
 
 	/**
 	 * ID setting inherit_network_settings.
 	 */
-	const INHERIT_NETWORK_SETTINGS = 'inherit_network_settings';
+	const INHERIT_NETWORK_SETTINGS = 'onlyoffice_settings_inherit_network_settings';
 
 	/**
 	 * Init menu.
@@ -425,7 +425,7 @@ class Onlyoffice_Plugin_Settings {
 					$current_options = get_site_option( 'onlyoffice_settings', array() );
 					$new_options     = array_merge( $current_options, $value );
 
-					update_site_option( 'onlyoffice_settings', $new_options );
+					update_option( 'onlyoffice_settings', $new_options );
 				}
 
 				add_settings_error( 'general', 'settings_updated', __( 'Settings saved.' ), 'success' );
@@ -455,7 +455,7 @@ class Onlyoffice_Plugin_Settings {
 				$options = get_option( 'onlyoffice_settings' );
 			}
 		} else {
-			$options = get_site_option( 'onlyoffice_settings' );
+			$options = get_option( 'onlyoffice_settings' );
 		}
 
 		if ( ! empty( $options ) && array_key_exists( $key, $options ) ) {
@@ -479,7 +479,7 @@ class Onlyoffice_Plugin_Settings {
 				$options = get_option( 'onlyoffice_settings' );
 			}
 		} else {
-			$options = get_site_option( 'onlyoffice_settings' );
+			$options = get_option( 'onlyoffice_settings' );
 		}
 
 		if ( ! empty( $options ) && array_key_exists( $key, $options ) ) {
