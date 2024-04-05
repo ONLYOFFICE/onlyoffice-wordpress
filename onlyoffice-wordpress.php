@@ -78,6 +78,32 @@ register_deactivation_hook( __FILE__, 'deactivate_plugin_name' );
 register_uninstall_hook( __FILE__, 'uninstall_onlyoffice_wordpress_plugin' );
 
 /**
+ * This function runs when WordPress completes its upgrade process
+ * It iterates through each plugin updated to see if ours is included
+ *
+ * @param array $upgrader_object Array.
+ * @param array $options Array.
+ */
+function onlyoffice_wordpress_upgrade_completed( $upgrader_object, $options ) {
+	$our_plugin = plugin_basename( __FILE__ );
+	if ( ( 'update' === $options['action'] || 'install' === $options['action'] )
+			&& 'plugin' === $options['type']
+			&& isset( $options['plugins'] ) ) {
+		foreach ( $options['plugins'] as $plugin ) {
+			if ( $plugin === $our_plugin ) {
+				$path_to_formats_json = plugin_dir_path( __DIR__ ) . '/public/assets/document-formats/onlyoffice-docs-formats.json';
+
+				if ( file_exists( $path_to_formats_json ) === true ) {
+					$formats = wp_json_file_decode( $path_to_formats_json );
+					update_site_option( 'onlyoffice-formats', $formats );
+				}
+			}
+		}
+	}
+}
+add_action( 'upgrader_process_complete', 'onlyoffice_wordpress_upgrade_completed', 10, 2 );
+
+/**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
