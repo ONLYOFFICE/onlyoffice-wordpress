@@ -54,11 +54,6 @@ class Onlyoffice_Plugin_Activator {
 			update_site_option( 'onlyoffice-plugin-bytes', bin2hex( $iv ) );
 		}
 
-		$path_to_formats_json = plugin_dir_path( __DIR__ ) . '/public/assets/document-formats/onlyoffice-docs-formats.json';
-
-		if ( file_exists( $path_to_formats_json ) === true ) {
-			$formats = wp_json_file_decode( $path_to_formats_json );
-			update_site_option( 'onlyoffice-formats', $formats );
-		}
+		Onlyoffice_Plugin_Document_Manager::init();
 	}
 }
