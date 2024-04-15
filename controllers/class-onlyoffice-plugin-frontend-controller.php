@@ -203,7 +203,11 @@ class Onlyoffice_Plugin_Frontend_Controller {
 
 		$output  = '<div class="wp-block-onlyoffice-wordpress-onlyoffice ' . $align . '">';
 		$output .= '<a id="linkToOnlyofficeEditor-' . $instance . '" href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . '>' . $atts['fileName'] . '</a>';
-		$output .= '<a href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . ' class="wp-block-onlyoffice-wordpress__button wp-element-button">' . $atts['openButtonText'] . '</a>';
+
+		if ( $atts['showOpenButton'] ) {
+			$output .= '<a href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . ' class="wp-block-onlyoffice-wordpress__button wp-element-button">' . $atts['openButtonText'] . '</a>';
+		}
+
 		$output .= '</div>';
 
 		return apply_filters( 'wp_onlyoffice_shortcode', $output, $atts );
