@@ -244,7 +244,7 @@ class Onlyoffice_Plugin_Document_Manager {
 	 */
 	public static function get_onlyoffice_formats() {
 		$onlyoffice_formats_version = get_site_option( 'onlyoffice-formats-version' );
-		if ( empty( $onlyoffice_formats_version ) || self::ONLYOFFICE_PLUGIN_VERSION !== $onlyoffice_formats_version ) {
+		if ( empty( $onlyoffice_formats_version ) || ONLYOFFICE_PLUGIN_VERSION !== $onlyoffice_formats_version ) {
 			self::init();
 		}
 
