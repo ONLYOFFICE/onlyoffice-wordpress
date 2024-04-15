@@ -11,7 +11,7 @@
 
 /**
  *
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,7 +61,15 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 
 		add_action(
 			'admin_enqueue_scripts',
-			function ( $hook ) {
+			function () {
+				wp_enqueue_script(
+					ONLYOFFICE_PLUGIN_NAME . '-media-script',
+					plugin_dir_url( __FILE__ ) . 'js/onlyoffice-files-list-table.js',
+					array( 'jquery', 'clipboard', 'wp-a11y' ),
+					ONLYOFFICE_PLUGIN_FILE,
+					true
+				);
+
 				wp_enqueue_style( 'onlyoffice_files_table', ONLYOFFICE_PLUGIN_URL . 'admin/css/onlyoffice-wordpress-admin.css', array(), ONLYOFFICE_PLUGIN_VERSION );
 			}
 		);
@@ -80,7 +88,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 	 * Output 'no files' message.
 	 */
 	public function no_items() {
-		esc_html_e( 'No files found for editing or viewing in ONLYOFFICE.', 'onlyoffice-plugin' );
+		esc_html_e( 'No files found for editing or viewing in ONLYOFFICE Docs editor.', 'onlyoffice-plugin' );
 	}
 	/**
 	 * Handles output for the default column.
@@ -96,6 +104,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 			case 'format':
 			case 'date':
 			case 'size':
+			case 'link':
 				return $item[ $column_name ];
 			default:
 				return $item['title'];
@@ -115,6 +124,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 			'format' => array( 'format', false ),
 			'date'   => array( 'date', false ),
 			'size'   => array( 'size', false ),
+			'link'   => array( 'link', false ),
 		);
 	}
 
@@ -131,6 +141,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 			'format' => __( 'Extension' ),
 			'date'   => __( 'Date' ),
 			'size'   => __( 'Size' ),
+			'link'   => __( 'Link' ),
 		);
 		return $columns;
 	}
@@ -189,14 +200,18 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 			if ( ( '' !== $s ) && ! str_contains( strtolower( $filename ), strtolower( $s ) ) ) {
 				continue;
 			}
-			if ( Onlyoffice_Plugin_Document_Manager::is_editable( $filename ) || Onlyoffice_Plugin_Document_Manager::is_viewable( $filename ) ) {
+			if ( ( Onlyoffice_Plugin_Document_Manager::is_editable( $filename )
+						|| Onlyoffice_Plugin_Document_Manager::is_viewable( $filename ) )
+					&& Onlyoffice_Plugin_Document_Manager::can_user_view_attachment( $attachment->ID ) ) {
 				array_push(
 					$attachments,
 					array(
 						'id'     => $attachment->ID,
 						'title'  => pathinfo( $attached_file, PATHINFO_FILENAME ),
 						'format' => strtoupper( pathinfo( $attached_file, PATHINFO_EXTENSION ) ),
+						'date'   => $attachment->post_modified,
 						'size'   => size_format( filesize( $attached_file ) ),
+						'link'   => Onlyoffice_Plugin_Url_Manager::get_editor_url( $attachment->ID ),
 					)
 				);
 			}
@@ -243,8 +258,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 		$attached = get_attached_file( $item['id'] );
 		$title    = wp_basename( $attached );
 
-		$wp_nonce   = wp_create_nonce( 'wp_rest' );
-		$editor_url = add_query_arg( '_wpnonce', $wp_nonce, Onlyoffice_Plugin_Url_Manager::get_editor_url( $item['id'] ) );
+		$editor_url = Onlyoffice_Plugin_Url_Manager::get_editor_url( $item['id'] );
 
 		?>
 		<strong>
@@ -276,6 +290,24 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 		}
 
 		echo esc_html( $h_time );
+	}
+
+	/**
+	 * Handles the post link column output.
+	 *
+	 * @since 1.0.0
+	 * @param array $item The item.
+	 */
+	public function column_link( $item ) {
+		$file = get_post( $item['id'] );
+		?>
+		<span class="copy-to-clipboard-container">
+			<button type="button" data-clipboard-text="<?php echo esc_url( Onlyoffice_Plugin_Url_Manager::get_editor_url( $item['id'] ) ); ?>" class="onlyoffice-editor-link button-link has-icon" title="<?php esc_attr_e( 'Copy URL' ); ?>" aria-label="<?php esc_attr_e( 'Link' ); ?>">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M15.6 7.2H14v1.5h1.6c2 0 3.7 1.7 3.7 3.7s-1.7 3.7-3.7 3.7H14v1.5h1.6c2.8 0 5.2-2.3 5.2-5.2 0-2.9-2.3-5.2-5.2-5.2zM4.7 12.4c0-2 1.7-3.7 3.7-3.7H10V7.2H8.4c-2.9 0-5.2 2.3-5.2 5.2 0 2.9 2.3 5.2 5.2 5.2H10v-1.5H8.4c-2 0-3.7-1.7-3.7-3.7zm4.6.9h5.3v-1.5H9.3v1.5z"></path></svg>
+			</button>
+			<span class="success hidden" aria-hidden="true"><?php esc_html_e( 'Copied!' ); ?>
+		</span>
+		<?php
 	}
 
 	/**

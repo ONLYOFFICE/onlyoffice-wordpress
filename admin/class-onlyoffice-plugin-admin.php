@@ -11,7 +11,7 @@
 
 /**
  *
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,36 +41,6 @@
 final class Onlyoffice_Plugin_Admin {
 
 	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string $plugin_name       The name of this plugin.
-	 * @param      string $version    The version of this plugin.
-	 */
-	public function __construct( $plugin_name, $version ) {
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-	}
-
-	/**
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @since    1.0.0
@@ -85,18 +55,18 @@ final class Onlyoffice_Plugin_Admin {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script(
-			$this->plugin_name . '-media-script',
-			plugin_dir_url( __FILE__ ) . 'js/onlyoffice-admin-media.js',
-			array( 'jquery' ),
-			$this->version,
+			ONLYOFFICE_PLUGIN_NAME . '-formats-utils',
+			ONLYOFFICE_PLUGIN_URL . 'assets-onlyoffice/js/formatsUtils.js',
+			array(),
+			ONLYOFFICE_PLUGIN_VERSION,
 			true
 		);
 
 		wp_localize_script(
-			$this->plugin_name . '-media-script',
-			'oo_media',
+			ONLYOFFICE_PLUGIN_NAME . '-formats-utils',
+			'ONLYOFFICE',
 			array(
-				'formats'   => Onlyoffice_Plugin_Document_Manager::get_viewable_extensions(),
+				'formats'   => Onlyoffice_Plugin_Document_Manager::get_onlyoffice_formats(),
 				'mimeTypes' => get_allowed_mime_types(),
 			)
 		);

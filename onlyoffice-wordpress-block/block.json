@@ -2,9 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
 	"name": "onlyoffice-wordpress/onlyoffice",
-	"title": "ONLYOFFICE",
+	"title": "ONLYOFFICE Docs",
 	"category": "media",
 	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:build/index.css",
 	"keywords": ["onlyoffice"],
 	"textdomain": "onlyoffice-plugin",
 	"attributes": {
@@ -13,6 +14,29 @@
 		},
 		"fileName": {
 			"type": "string"
+		},
+		"documentView": {
+			"type": "string"
+		},
+		"inNewTab": {
+			"type": "boolean",
+			"default": true
+		},
+		"width":  {
+			"type": "string"
+		},
+		"height":{
+			"type": "string"
+		},
+		"showOpenButton":{
+			"type": "boolean",
+			"default": true
+		},
+		"openButtonText":{
+			"type": "string"
 		}
+	},
+	"supports": {
+		"align": true
 	}
 }

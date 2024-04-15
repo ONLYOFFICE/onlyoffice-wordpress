@@ -3,13 +3,33 @@
 }
 
 .wp-list-table .column-format {
-	width: 15%;
+	width: 18%;
 }
 
 .wp-list-table .column-date {
-	width: 15%;
+	width: 18%;
 }
 
 .wp-list-table .column-size {
-	width: 15%;
+	width: 12%;
+}
+
+.wp-list-table .column-link {
+	width: 12%;
+}
+
+.onlyoffice-editor-link.button-link.has-icon:hover {
+	svg {
+		fill: #0096dd;
+	}
+}
+
+.onlyoffice_files .copy-to-clipboard-container .success {
+	position: absolute;
+	transform: translate(-36%, -115%);
+	background: #000;
+	color: #fff;
+	border-radius: 5px;
+	margin: 0;
+	padding: 2px 5px;
 }

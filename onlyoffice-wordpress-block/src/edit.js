@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,21 +22,63 @@ import {
     BlockControls,
     MediaReplaceFlow,
     InspectorControls,
+    RichText,
+    HeightControl
 } from '@wordpress/block-editor';
 import {
     PanelBody,
+    ToggleControl,
+    SelectControl,
     __experimentalInputControl as InputControl
 } from '@wordpress/components';
 import { onlyofficeIcon } from "./index";
 import { blockStyle } from "./index";
 import { __ } from '@wordpress/i18n';
+import { useState, useEffect } from 'react';
+import { getLogoByDocumentType } from "./logos";
 
 const Edit = ({attributes, setAttributes}) => {
-    const onlyofficeAllowedExts = oo_media.formats;
+    const [documentType, setDocumentType] = useState(null);
+
+    const richTextAllowedFormats = [ 'core/bold', 'core/image', 'core/italic', 'core/strikethrough', 'core/text-color', 'core/code', 'core/keyboard' , 'core/subscript', 'core/superscript' ];
     let onlyofficeAllowedMimes = [];
+    const viewOptions = [
+        {
+            label: __('Embedded', 'onlyoffice-plugin'),
+            value: 'embedded'
+        },
+        {
+            label: __('Link'),
+            value: 'link'
+        }
+    ];
+
+    useEffect(() => {
+        if (attributes.id) {
+            ONLYOFFICE.formatsUtils.getFileName(attributes.id).then((fileName) => {
+                const documentType = ONLYOFFICE.formatsUtils.getDocumentType(fileName);
+                setDocumentType(documentType);
+            });
+        }
+    }, [attributes.id]);
+
+    if (attributes.hasOwnProperty('width') && attributes.width.length > 0) {
+        blockStyle.width = attributes.width;
+    }
+
+    if (attributes.hasOwnProperty('height') && attributes.height.length > 0) {
+        blockStyle.height = attributes.height;
+    }
+
+    let showWidthControl = true;
+
+    if (attributes.align === "full") {
+        delete blockStyle.width;
+        showWidthControl = false;
+    }
 
     const getMimeType = function( name ) {
-        var allTypes = oo_media.mimeTypes;
+        var allTypes = ONLYOFFICE.mimeTypes;
 
         if (allTypes[name] !== undefined) {
             return allTypes[name];
@@ -51,7 +93,7 @@ const Edit = ({attributes, setAttributes}) => {
         return false;
     };
 
-    for (let ext of onlyofficeAllowedExts) {
+    for (let ext of ONLYOFFICE.formatsUtils.getViewableExtensions()) {
         let mimeType = getMimeType(ext);
 
         if (mimeType) {
@@ -59,21 +101,84 @@ const Edit = ({attributes, setAttributes}) => {
         }
     }
 
-    const blockProps = useBlockProps( { style: blockStyle } );
+    const blockProps = attributes.documentView === 'link' || ! attributes.id ?  useBlockProps( { style: null } ) : useBlockProps( { style: blockStyle } );
     return (
-        attributes.id ?
-            <div {...blockProps}>
+        <div {...blockProps}>
+        {attributes.id ?
+            <>
                 <InspectorControls key="setting">
                     <PanelBody title={__('Settings')}>
                         <InputControl label={__('Name')} value={attributes.fileName} onChange={ ( value ) => setAttributes({ fileName: value }) } />
+                        <SelectControl
+                            label={__('Document view', 'onlyoffice-plugin')}
+                            value={attributes.documentView}
+                            options={viewOptions}
+                            onChange={(value) => {setAttributes({ documentView: value })}}
+                            />
+                        {
+                            attributes.documentView === 'link' ?
+                                <div>
+                                    <ToggleControl
+                                        checked={attributes.inNewTab}
+                                        label={__('Open in new tab')}
+                                        onChange={(value) => setAttributes({ inNewTab: value })} 
+                                        />
+                                    <ToggleControl
+                                        checked={attributes.showOpenButton}
+                                        label={__('Show Open in ONLYOFFICE button', 'onlyoffice-plugin')}
+                                        onChange={(value) => setAttributes({ showOpenButton: value })} 
+                                        />
+                                </div>
+                                :
+                                <div>
+                                    {
+                                        showWidthControl ?
+                                            <HeightControl label={ __("Width", "onlyoffice-docspace-plugin") } value={attributes.width} onChange={ ( value ) => setAttributes({ width: value }) }/>
+                                            :
+                                            ''
+                                        }
+                                    <HeightControl label={ __("Height", "onlyoffice-docspace-plugin") } value={attributes.height} onChange={ ( value ) => setAttributes({ height: value }) }/>
+                                </div>
+                        }
                     </PanelBody>
                 </InspectorControls>
 
-                <p style={{display: 'flex'}}>
-                    {onlyofficeIcon}
-                    <p style={{marginLeft: '25px'}}> {attributes.fileName || ""}</p>
-                </p>
-                <BlockControls>
+                {
+                    attributes.documentView === 'link' ?
+                        <div>
+                            <RichText
+                                tagName="a"
+                                allowedFormats={ richTextAllowedFormats } 
+                                onChange={ ( value ) => setAttributes({ fileName: value }) }
+                                value={ attributes.fileName }
+                            />
+                            {
+                                attributes.showOpenButton ?
+                                    <div class="wp-block-onlyoffice-wordpress-onlyoffice__button-richtext-wrapper">
+                                        <RichText
+                                            tagName="div"
+                                            className = {'wp-element-button'}
+                                            value= { attributes.openButtonText || __('Open in ONLYOFFICE', 'onlyoffice-plugin') }
+                                            allowedFormats={ richTextAllowedFormats }
+                                            onChange={ ( openButtonText ) => setAttributes( { openButtonText } ) }
+                                            placeholder={ __('Add text...') }
+                                        />
+                                    </div>
+                                    :
+                                    ''
+                            }
+                        </div>
+
+                        :
+                        <div className={ `wp-block-onlyoffice-wordpress-onlyoffice__embedded ${documentType}`}>
+                            <div>
+                                {getLogoByDocumentType(documentType)}
+                                <p> {documentType ? attributes.fileName || "" : __('File not found!', 'onlyoffice-plugin')}</p>
+                            </div>
+                        </div>
+                }
+
+                <BlockControls group="other">
                     <MediaReplaceFlow
                         mediaId={ attributes.id }
                         allowedTypes={ onlyofficeAllowedMimes }
@@ -86,10 +191,10 @@ const Edit = ({attributes, setAttributes}) => {
                         name={__('Replace')}
                     />
                 </BlockControls>
-            </div>
+            </>
             :
             <MediaPlaceholder
-                labels={{title: 'ONLYOFFICE'}}
+                labels={{title: 'ONLYOFFICE Docs'}}
                 allowedTypes={onlyofficeAllowedMimes}
                 accept={onlyofficeAllowedMimes.join()}
                 onSelect={(el) => {
@@ -98,6 +203,8 @@ const Edit = ({attributes, setAttributes}) => {
                     }
                 }}
             />
+        }
+        </div>
     )
 };
 

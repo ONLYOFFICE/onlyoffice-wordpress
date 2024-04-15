@@ -11,7 +11,7 @@
 
 /**
  *
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,6 +50,19 @@ class Onlyoffice_Plugin_Document_Manager {
 	);
 
 	/**
+	 * Init Onlyoffice_Plugin_Document_Manager.
+	 */
+	public static function init() {
+		$path_to_formats_json = plugin_dir_path( ONLYOFFICE_PLUGIN_FILE ) . '/public/assets/document-formats/onlyoffice-docs-formats.json';
+
+		if ( file_exists( $path_to_formats_json ) === true ) {
+			$formats = wp_json_file_decode( $path_to_formats_json );
+			update_site_option( 'onlyoffice-formats', $formats );
+			update_site_option( 'onlyoffice-formats-version', ONLYOFFICE_PLUGIN_VERSION );
+		}
+	}
+
+	/**
 	 * Returns the type of the document (word, cell, slide).
 	 *
 	 * @param string $filename The file name.
@@ -61,8 +74,8 @@ class Onlyoffice_Plugin_Document_Manager {
 		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 
 		foreach ( $formats as $format ) {
-			if ( $format['name'] === $ext ) {
-				return $format['type'];
+			if ( $format->name === $ext ) {
+				return $format->type;
 			}
 		}
 
@@ -81,8 +94,8 @@ class Onlyoffice_Plugin_Document_Manager {
 		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 
 		foreach ( $formats as $format ) {
-			if ( $format['name'] === $ext ) {
-				return in_array( 'edit', $format['actions'], true );
+			if ( $format->name === $ext ) {
+				return in_array( 'edit', $format->actions, true );
 			}
 		}
 
@@ -101,8 +114,8 @@ class Onlyoffice_Plugin_Document_Manager {
 		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 
 		foreach ( $formats as $format ) {
-			if ( $format['name'] === $ext ) {
-				return in_array( 'fill', $format['actions'], true );
+			if ( $format->name === $ext ) {
+				return in_array( 'fill', $format->actions, true );
 			}
 		}
 
@@ -121,8 +134,8 @@ class Onlyoffice_Plugin_Document_Manager {
 		$ext     = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 
 		foreach ( $formats as $format ) {
-			if ( $format['name'] === $ext ) {
-				return in_array( 'view', $format['actions'], true );
+			if ( $format->name === $ext ) {
+				return in_array( 'view', $format->actions, true );
 			}
 		}
 
@@ -137,8 +150,8 @@ class Onlyoffice_Plugin_Document_Manager {
 		$extensions = array();
 
 		foreach ( $formats as $format ) {
-			if ( in_array( 'view', $format['actions'], true ) ) {
-				array_push( $extensions, $format['name'] );
+			if ( in_array( 'view', $format->actions, true ) ) {
+				array_push( $extensions, $format->name );
 			}
 		}
 
@@ -146,17 +159,68 @@ class Onlyoffice_Plugin_Document_Manager {
 	}
 
 	/**
-	 * Returns true if user can edit attachment.
+	 * Returns true if user can view attachment.
 	 *
-	 * @param string $attachment_id The request.
+	 * @param string $attachment_id The attachment id.
 	 * @return bool
 	 */
-	public static function has_edit_capability( $attachment_id ) {
-		$has_edit_cap = false;
-		foreach ( self::EDIT_CAPS as $capability ) {
-			$has_edit_cap = $has_edit_cap || current_user_can( $capability, $attachment_id );
+	public static function can_user_view_attachment( $attachment_id ) {
+		$attachment = get_post( $attachment_id );
+
+		if ( ! $attachment || 'attachment' !== $attachment->post_type ) {
+			return false;
 		}
-		return $has_edit_cap;
+
+		return current_user_can( 'read_post', $attachment_id );
+	}
+
+	/**
+	 * Returns true if anonymous user can view attachment.
+	 *
+	 * @param string $attachment_id The attachment id.
+	 * @return bool
+	 */
+	public static function can_anonymous_user_view_attachment( $attachment_id ) {
+		$attachment = get_post( $attachment_id );
+
+		if ( ! $attachment || 'attachment' !== $attachment->post_type ) {
+			return false;
+		}
+
+		$is_public = get_post_meta( $attachment_id, '_wp_attachment_metadata', true );
+
+		if ( ! $is_public ) {
+			return false;
+		}
+
+		$parent_post_id = $attachment->post_parent;
+		$parent_post    = get_post( $parent_post_id );
+
+		if ( ! $parent_post ) {
+			return false;
+		}
+
+		if ( 'publish' !== $parent_post->post_status ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Returns true if user can edit attachment.
+	 *
+	 * @param string $attachment_id The attachment id.
+	 * @return bool
+	 */
+	public static function can_user_edit_attachment( $attachment_id ) {
+		$attachment = get_post( $attachment_id );
+
+		if ( ! $attachment ) {
+			return false;
+		}
+
+		return current_user_can( 'edit_post', $attachment_id );
 	}
 
 	/**
@@ -176,10 +240,15 @@ class Onlyoffice_Plugin_Document_Manager {
 	}
 
 	/**
-	 * Return option onlyoffice-formats.
+	 * Return supported ONLYOFFICE formats.
 	 */
 	public static function get_onlyoffice_formats() {
-		$formats = get_option( 'onlyoffice-formats' );
+		$onlyoffice_formats_version = get_site_option( 'onlyoffice-formats-version' );
+		if ( empty( $onlyoffice_formats_version ) || self::ONLYOFFICE_PLUGIN_VERSION !== $onlyoffice_formats_version ) {
+			self::init();
+		}
+
+		$formats = get_site_option( 'onlyoffice-formats' );
 		if ( ! empty( $formats ) ) {
 			return $formats;
 		}

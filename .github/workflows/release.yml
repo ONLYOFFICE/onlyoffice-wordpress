@@ -16,28 +16,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Get Info
         run: |
-          echo "::set-output name=version::$(grep -Eo '[0-9]+(\.[0-9]+)+' CHANGELOG.md)"
+          echo "version=$(grep -Eo '[0-9]+(\.[0-9]+)+' CHANGELOG.md | head -n 1)" >> $GITHUB_OUTPUT
         id: info
-      - name: Generate Changelog
-        run: |
-          awk '/## [0-9]/{p++} p; /## [0-9]/{if (p > 1) exit}' CHANGELOG.md | awk 'NR>2 {print last} {last=$0}' > RELEASE.md
       - name: Install Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          coverage: none
+          tools: composer, cs2pr
       - name: Install Zip
         run: sudo apt-get install zip
       - name: Build Plugin
         run: |
           git submodule update --init --recursive
+          composer install
+          composer translations
+          rm -rf /vendor
           composer install --no-dev
           cd ${{ github.workspace }}/onlyoffice-wordpress-block
           npm install
           npm run build
           rm -rf node_modules
+          rm package.json
+          rm package-lock.json
+          rm .eslintrc
           cd ${{ github.workspace }}
           mkdir -p ./onlyoffice
           rsync -av --exclude='onlyoffice' ./ ./onlyoffice
@@ -45,8 +54,13 @@ jobs:
           rm -rf .github/
           rm -rf .git/
           rm .gitignore
+          rm composer.json
+          rm composer.lock
       - name: Build Artifact
         run: zip -r onlyoffice.zip onlyoffice/
+      - name: Generate Changelog
+        run: |
+          awk '/## [0-9]/{p++} p; /## [0-9]/{if (p > 1) exit}' CHANGELOG.md | awk 'NR>2 {print last} {last=$0}' > RELEASE.md
       - name: Create Release
         uses: ncipollo/release-action@v1
         id: create_release

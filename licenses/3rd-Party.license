@@ -1,4 +1,4 @@
-ONLYOFFICE WordPress plugin uses code from the following 3rd party projects.
+ONLYOFFICE Docs plugin uses code from the following 3rd party projects.
 
 JWT           - A simple library to encode and decode JSON Web Tokens (JWT) in PHP. (https://github.com/firebase/php-jwt)
 License:        BSD-3-Clause License

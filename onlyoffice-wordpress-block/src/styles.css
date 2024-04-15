@@ -1,0 +1,54 @@
+.wp-block-onlyoffice-wordpress-onlyoffice:not(.wp-element-button) {
+	font-size: .8em;
+}
+
+.wp-block-onlyoffice-wordpress-onlyoffice {
+	align-items: center;
+	flex-wrap: wrap;
+	margin-bottom: 0;
+}
+
+.wp-block-onlyoffice-wordpress-onlyoffice .wp-block-onlyoffice-wordpress-onlyoffice__button-richtext-wrapper {
+    display: inline-block;
+    margin-left: 0.75em;
+}
+
+.wp-block-onlyoffice-wordpress-onlyoffice *+.wp-block-onlyoffice-wordpress__button {
+    margin-left: 0.75em;
+}
+
+.wp-block-onlyoffice-wordpress-onlyoffice__embedded {
+	align-items: center;
+	color: white;
+	display: flex;
+	font-size: 20px;
+	height: inherit;
+	justify-content: center;
+	margin: 0;
+	max-width: inherit;
+	overflow: hidden;
+	text-align: center;
+	vertical-align: middle;
+	width: inherit;
+}
+
+.wp-block-onlyoffice-wordpress-onlyoffice__embedded.word {
+	background: #214479;;
+}
+
+.wp-block-onlyoffice-wordpress-onlyoffice__embedded.cell {
+	background: #1F7244;
+}
+
+.wp-block-onlyoffice-wordpress-onlyoffice__embedded.slide {
+	background: #dd682b;
+}
+
+.wp-block-onlyoffice-wordpress-onlyoffice__embedded.null {
+	background: #F8F8F8;
+	color: black;
+}
+
+.wp-block-onlyoffice-wordpress-onlyoffice__embedded p {
+	margin: 0;
+}

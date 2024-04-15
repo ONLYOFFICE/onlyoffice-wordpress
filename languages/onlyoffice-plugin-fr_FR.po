@@ -10,10 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0.1\n"
-
-msgid "General Settings"
-msgstr "Paramètres généraux"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Document Editing Service address"
 msgstr "Adresse du service de modification de documents"
@@ -30,9 +27,6 @@ msgstr "En-tête d'autorisation"
 msgid "Leave blank to use default header"
 msgstr "Laissez vide pour utiliser l'en-tête par défaut"
 
-msgid "Settings Saved"
-msgstr "Paramètres sauvegardés"
-
 msgid "Open in ONLYOFFICE"
 msgstr "Ouvrir dans ONLYOFFICE"
 
@@ -48,26 +42,45 @@ msgstr "Le post ne peut pas être une pièce jointe"
 msgid "Settings"
 msgstr "Paramètres"
 
-msgid "General settings section"
-msgstr "Section des paramètres généraux"
-
 msgid "Files"
 msgstr "Fichiers"
 
-msgid "Configure ONLYOFFICE connector settings"
-msgstr "Configurer les paramètres du connecteur ONLYOFFICE"
+msgid "ONLYOFFICE Docs Settings"
+msgstr "Paramètres d'ONLYOFFICE Docs"
 
-msgid "ONLYOFFICE cannot be reached. Please contact admin"
-msgstr "Impossible de joindre ONLYOFFICE. Veuillez contacter l'administrateur"
+msgid "Configure ONLYOFFICE Docs plugin settings."
+msgstr "Configurer les paramètres du connecteur ONLYOFFICE Docs"
 
-msgid "Files that can be edited and opened in ONLYOFFICE will be displayed here"
-msgstr "Les fichiers qui peuvent être édités et ouverts dans ONLYOFFICE seront affichés ici"
+msgid "Configure ONLYOFFICE Docs plugin settings for the whole network."
+msgstr "Configurez les paramètres du plugin ONLYOFFICE Docs pour l'ensemble du réseau."
 
-msgid "No files found for editing or viewing in ONLYOFFICE."
-msgstr "Aucun fichier trouvé pour être édité ou affiché dans ONLYOFFICE."
+msgid "Configure ONLYOFFICE Docs plugin settings for %s site."
+msgstr "Configurez les paramètres du plugin ONLYOFFICE Docs pour le site %s."
 
-msgid "Add ONLYOFFICE editor on page"
-msgstr "Ajouter l'éditeur ONLYOFFICE à la page"
+msgid "Blocked from changing settings by the Network administrator"
+msgstr "L'administrateur du réseau a bloqué la modification des paramètres"
+
+msgid "Allow site administrators to configure plugin for their sites"
+msgstr "Permettez aux administrateurs de sites de configurer le plugin pour leurs sites"
+
+msgid "Inherit Network Settings"
+msgstr "Appliquer les paramètres réseau"
+
+msgid "Connection Settings"
+msgstr "Paramètres de connexion"
+
+#: controllers/js/frontend-controller.js
+msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
+msgstr "Impossible de joindre ONLYOFFICE Docs. Veuillez contacter l'administrateur."
+
+msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
+msgstr "Les fichiers qui peuvent être édités et ouverts dans l'éditeur ONLYOFFICE Docs sont affichés ici."
+
+msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
+msgstr "Aucun fichier trouvé pour être édité ou affiché dans ONLYOFFICE Docs."
+
+msgid "Add ONLYOFFICE Docs editor on page"
+msgstr "Ajouter l'éditeur ONLYOFFICE Docs à la page"
 
 msgid "ONLYOFFICE Docs Cloud"
 msgstr "ONLYOFFICE Docs Cloud"
@@ -77,3 +90,39 @@ msgstr "Lancez facilement les éditeurs dans le cloud sans téléchargement ni i
 
 msgid "Get Now"
 msgstr "Obtenir maintenant"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Embedded"
+msgstr "Intégré"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Document view"
+msgstr "Vue du document"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Open in ONLYOFFICE"
+msgstr "Ouvrir dans ONLYOFFICE"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Show Open in ONLYOFFICE button"
+msgstr "Afficher le bouton Ouvrir dans ONLYOFFICE"
+
+#: onlyoffice-wordpress-block/build/index.js
+#: controllers/js/frontend-controller.js
+msgid "File not found!"
+msgstr "Fichier non trouvé !"
+
+msgid "Settings update"
+msgstr "Actualiser les paramètres"
+
+#: admin/js/settings.js
+msgid "Do you want to allow sites administrators to configure the plugin themselves?"
+msgstr "Souhaitez-vous permettre aux administrateurs de sites de configurer eux-mêmes le plugin ?"
+
+#: admin/js/settings.js
+msgid "Do you want to apply these settings to all sites?"
+msgstr "Souhaitez-vous appliquer ces paramètres à tous les sites ?"
+
+#: admin/js/settings.js
+msgid "Do you want to apply the network settings?"
+msgstr "Souhaitez-vous appliquer les paramètres du réseau ?"

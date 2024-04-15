@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,12 +18,14 @@
 
 import { registerBlockType } from '@wordpress/blocks';
 
+import "./styles.css"
+
 import block from '../block.json';
 import edit from './edit';
 import save from './save';
 
 export const blockStyle = {
-    padding: '20px',
+    height: '500px',
 };
 
 export const onlyofficeIcon = (

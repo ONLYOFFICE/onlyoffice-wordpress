@@ -4,10 +4,10 @@
  *
  * @package           Onlyoffice_Plugin
  *
- * Plugin Name:       ONLYOFFICE
+ * Plugin Name:       ONLYOFFICE Docs
  * Plugin URI:        https://github.com/ONLYOFFICE/onlyoffice-wordpress
- * Description:       Add ONLYOFFICE editor on page
- * Version:           1.1.0
+ * Description:       Add ONLYOFFICE Docs blocks to posts to allow your site visitors to view the inserted file without downloading. Edit and collaborate on office documents from the admin dashboard.
+ * Version:           2.0.0
  * Requires at least: 5.7
  * Requires PHP:      7.4
  * Author:            Ascensio System SIA
@@ -20,7 +20,7 @@
 
 /**
  *
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,8 +40,10 @@
 /**
  * Currently plugin version.
  */
-define( 'ONLYOFFICE_PLUGIN_VERSION', '1.1.0' );
+define( 'ONLYOFFICE_PLUGIN_NAME', 'onlyoffice-plugin' );
+define( 'ONLYOFFICE_PLUGIN_VERSION', '2.0.0' );
 define( 'ONLYOFFICE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'ONLYOFFICE_PLUGIN_FILE', __FILE__ );
 
 
 /**
@@ -65,9 +67,10 @@ function deactivate_plugin_name() {
  * Uninstall hook.
  */
 function uninstall_onlyoffice_wordpress_plugin() {
-	delete_option( 'onlyoffice_settings' );
-	delete_option( 'onlyoffice-plugin-uuid' );
-	delete_option( 'onlyoffice-plugin-bytes' );
+	delete_site_option( 'onlyoffice_settings' );
+	delete_site_option( 'onlyoffice-plugin-uuid' );
+	delete_site_option( 'onlyoffice-plugin-bytes' );
+	delete_site_option( 'onlyoffice-formats' );
 }
 
 register_activation_hook( __FILE__, 'activate_plugin_name' );
@@ -98,7 +101,7 @@ function run_plugin_name() {
 run_plugin_name();
 
 /**
- * Data about additional ONLYOFFICE formats.
+ * Data about additional ONLYOFFICE Docs formats.
  *
  * @since    2.0.0
  *
@@ -106,7 +109,6 @@ run_plugin_name();
  * @return array
  */
 function onlyoffice_forms_mime_types( $mimes ) {
-	$mimes['oform'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.oform';
 	$mimes['docxf'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.docxf';
 
 	return $mimes;
@@ -126,10 +128,6 @@ function onlyoffice_forms_mime_types( $mimes ) {
 function onlyoffice_add_allow_upload_extension_exception( $data, $file, $filename ) {
 	$ext = pathinfo( $filename, PATHINFO_EXTENSION );
 	switch ( $ext ) {
-		case 'oform':
-			$data['ext']  = 'oform';
-			$data['type'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.oform';
-			break;
 		case 'docxf':
 			$data['ext']  = 'docxf';
 			$data['type'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.docxf';

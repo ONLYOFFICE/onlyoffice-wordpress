@@ -11,7 +11,7 @@
 
 /**
  *
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -112,7 +112,7 @@ class Onlyoffice_Plugin_Callback {
 
 		$param = urldecode( str_replace( ',', '%', $req->get_params()['id'] ) );
 
-		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $param, get_option( 'onlyoffice-plugin-uuid' ) ) );
+		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $param, get_site_option( 'onlyoffice-plugin-uuid' ) ) );
 		$user_id       = isset( $body['actions'] ) ? $body['actions'][0]['userid'] : null;
 
 		$user = get_user_by( 'id', $user_id );
@@ -135,7 +135,7 @@ class Onlyoffice_Plugin_Callback {
 			case 'Editing':
 				break;
 			case 'MustSave':
-				$can_edit = Onlyoffice_Plugin_Document_Manager::has_edit_capability( $attachemnt_id );
+				$can_edit = Onlyoffice_Plugin_Document_Manager::can_user_edit_attachment( $attachemnt_id );
 				if ( ! $can_edit ) {
 					wp_die( 'No edit capability', '', array( 'response' => 403 ) );
 				}

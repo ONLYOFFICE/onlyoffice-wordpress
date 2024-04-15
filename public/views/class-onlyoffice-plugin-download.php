@@ -11,7 +11,7 @@
 
 /**
  *
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,9 +42,10 @@ class Onlyoffice_Plugin_Download {
 	 *
 	 * @param array $req The request.
 	 *
-	 * @return void
+	 * @return void|WP_Error
 	 */
 	public function get_file( $req ) {
+		global $wp_filesystem;
 
 		if ( Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled() ) {
 			$jwt_header           = Onlyoffice_Plugin_JWT_Manager::get_jwt_header();
@@ -90,14 +91,27 @@ class Onlyoffice_Plugin_Download {
 			ob_end_clean();
 		}
 
-		$filepath = get_attached_file( $attachment_id );
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			include ABSPATH . '/wp-admin/includes/file.php';
+		}
 
-		header( 'Content-Length: ' . filesize( $filepath ) );
-		header( 'Content-Disposition: attachment; filename*=UTF-8\'\'' . urldecode( basename( $filepath ) ) );
-		header( 'Content-Type: ' . Onlyoffice_Plugin_Document_Manager::get_mime_type( $filepath ) );
+		if ( ! WP_Filesystem() ) {
+			return new WP_Error( 'filesystem_error', 'Unable to initialize the filesystem.' );
+		}
 
-		readfile( $filepath );
-		flush();
-		exit;
+		$file_path = get_attached_file( $attachment_id );
+
+		if ( $wp_filesystem->is_file( $file_path ) ) {
+			header( 'Content-Length: ' . filesize( $file_path ) );
+			header( 'Content-Disposition: attachment; filename*=UTF-8\'\'' . urldecode( basename( $file_path ) ) );
+			header( 'Content-Type: ' . Onlyoffice_Plugin_Document_Manager::get_mime_type( $file_path ) );
+
+			$file_content = $wp_filesystem->get_contents( $file_path );
+			echo $file_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+			exit;
+		} else {
+				return new WP_Error( 'file_not_found', 'File not found.' );
+		}
 	}
 }

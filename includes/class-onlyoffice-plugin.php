@@ -14,7 +14,7 @@
 
 /**
  *
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -85,7 +85,7 @@ class Onlyoffice_Plugin {
 	 */
 	public function __construct() {
 		$this->version     = ONLYOFFICE_PLUGIN_VERSION;
-		$this->plugin_name = 'onlyoffice-plugin';
+		$this->plugin_name = ONLYOFFICE_PLUGIN_NAME;
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -150,7 +150,7 @@ class Onlyoffice_Plugin {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-		$plugin_admin = new Onlyoffice_Plugin_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Onlyoffice_Plugin_Admin();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -164,7 +164,7 @@ class Onlyoffice_Plugin {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-		$plugin_public = new Onlyoffice_Plugin_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Onlyoffice_Plugin_Public();
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -184,11 +184,13 @@ class Onlyoffice_Plugin {
 
 		$plugin_settings = new Onlyoffice_Plugin_Settings();
 		$this->loader->add_action( 'admin_menu', $plugin_settings, 'init_menu' );
+		$this->loader->add_action( 'network_admin_menu', $plugin_settings, 'init_menu' );
 		$this->loader->add_action( 'admin_init', $plugin_settings, 'init' );
 
 		$plugin_frontend_controller = new Onlyoffice_Plugin_Frontend_Controller();
 		$this->loader->add_action( 'init', $plugin_frontend_controller, 'init_shortcodes' );
 		$this->loader->add_action( 'init', $plugin_frontend_controller, 'onlyoffice_custom_block' );
+		$this->loader->add_action( 'wp_footer', $plugin_frontend_controller, 'onlyoffice_error_template', 30 );
 	}
 
 	/**

@@ -11,7 +11,7 @@
 
 /**
  *
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,14 +50,25 @@ class Onlyoffice_Plugin_Config_Manager {
 	 * @return array
 	 */
 	public static function get_config( $attachment_id, $type, $mode, $perm_edit, $callback_url, $go_back_url, $unic_key ) {
-		$post     = get_post( $attachment_id );
-		$user     = wp_get_current_user();
-		$author   = get_user_by( 'id', $post->post_author )->display_name;
-		$filepath = get_attached_file( $attachment_id );
-		$filename = wp_basename( $filepath );
-		$filetype = strtolower( pathinfo( $filepath, PATHINFO_EXTENSION ) );
-		$file_url = Onlyoffice_Plugin_Url_Manager::get_download_url( $attachment_id );
-		$lang     = get_user_locale( $user->ID );
+		$post = get_post( $attachment_id );
+
+		if ( ! $post ) {
+			return null;
+		}
+
+		$user      = wp_get_current_user();
+		$author    = get_user_by( 'id', $post->post_author )->display_name;
+		$filepath  = get_attached_file( $attachment_id );
+		$filename  = wp_basename( $filepath );
+		$filetype  = strtolower( pathinfo( $filepath, PATHINFO_EXTENSION ) );
+		$file_url  = Onlyoffice_Plugin_Url_Manager::get_download_url( $attachment_id );
+		$lang      = get_user_locale( $user->ID );
+		$perm_fill = false;
+
+		if ( Onlyoffice_Plugin_Document_Manager::is_fillable( $filename ) ) {
+			$perm_fill = true;
+			$perm_edit = false;
+		}
 
 		$config = array(
 			'type'         => $type,
@@ -66,14 +77,15 @@ class Onlyoffice_Plugin_Config_Manager {
 				'title'       => $filename,
 				'url'         => $file_url,
 				'fileType'    => $filetype,
-				'key'         => base64_encode( $post->post_modified ) . $attachment_id,
+				'key'         => base64_encode( $post->post_modified ) . $attachment_id, // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 				'info'        => array(
 					'owner'    => $author,
 					'uploaded' => $post->post_date,
 				),
 				'permissions' => array(
-					'download' => true,
-					'edit'     => $perm_edit,
+					'download'  => true,
+					'edit'      => $perm_edit,
+					'fillForms' => $perm_fill,
 				),
 			),
 			'editorConfig' => array(

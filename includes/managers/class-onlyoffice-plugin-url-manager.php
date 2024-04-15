@@ -11,7 +11,7 @@
 
 /**
  *
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,6 @@ class Onlyoffice_Plugin_Url_Manager {
 	private const PATH_CALLBACK              = '/onlyoffice/oo.callback/';
 	private const PATH_CALLBACK_PUBLIC_FORMS = '/onlyoffice/oo.callback-public-forms/';
 	private const PATH_DOWNLOAD              = '/onlyoffice/oo.getfile/';
-	private const PATH_EDITOR                = '/onlyoffice/oo.editor/';
 	private const PATH_API_JS                = 'web-apps/apps/api/documents/api.js';
 
 	/**
@@ -107,9 +106,7 @@ class Onlyoffice_Plugin_Url_Manager {
 	 * @return string
 	 */
 	public static function get_editor_url( $attachment_id ) {
-		$hidden_id = self::encode_openssl_data( $attachment_id );
-
-		return get_rest_url( null, self::PATH_EDITOR . $hidden_id );
+		return ONLYOFFICE_PLUGIN_URL . 'editor.php?attachment_id=' . $attachment_id;
 	}
 
 	/**
@@ -120,8 +117,8 @@ class Onlyoffice_Plugin_Url_Manager {
 	 * @return false|string
 	 */
 	private static function encode_openssl_data( $data ) {
-		$passphrase = get_option( 'onlyoffice-plugin-uuid' );
-		$iv         = hex2bin( get_option( 'onlyoffice-plugin-bytes' ) );
+		$passphrase = get_site_option( 'onlyoffice-plugin-uuid' );
+		$iv         = hex2bin( get_site_option( 'onlyoffice-plugin-bytes' ) );
 
 		$encrypt = openssl_encrypt( $data, 'aes-256-ctr', $passphrase, $options = 0, $iv );
 
@@ -135,8 +132,8 @@ class Onlyoffice_Plugin_Url_Manager {
 	 * @return false|string
 	 */
 	public static function decode_openssl_data( $data ) {
-		$passphrase = get_option( 'onlyoffice-plugin-uuid' );
-		$iv         = hex2bin( get_option( 'onlyoffice-plugin-bytes' ) );
+		$passphrase = get_site_option( 'onlyoffice-plugin-uuid' );
+		$iv         = hex2bin( get_site_option( 'onlyoffice-plugin-bytes' ) );
 
 		$data = urldecode( str_replace( ',', '%', $data ) );
 

@@ -10,10 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
-
-msgid "General Settings"
-msgstr "Ajustes generales"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Document Editing Service address"
 msgstr "Dirección de servicio de edición de documentos"
@@ -30,9 +27,6 @@ msgstr "Encabezado de autenticaciуn"
 msgid "Leave blank to use default header"
 msgstr "Dejar en blanco para utilizar el encabezado predeterminado"
 
-msgid "Settings Saved"
-msgstr "Los ajustes se han guardado"
-
 msgid "Open in ONLYOFFICE"
 msgstr "Abrir en ONLYOFFICE"
 
@@ -48,26 +42,45 @@ msgstr "El post no es un archivo adjunto"
 msgid "Settings"
 msgstr "Ajustes"
 
-msgid "General settings section"
-msgstr "Sección de ajustes generales"
-
 msgid "Files"
 msgstr "Archivos"
 
-msgid "Configure ONLYOFFICE connector settings"
-msgstr "Configurar los ajustes del conector de ONLYOFFICE"
+msgid "ONLYOFFICE Docs Settings"
+msgstr "Ajustes de ONLYOFFICE Docs"
 
-msgid "ONLYOFFICE cannot be reached. Please contact admin"
-msgstr "No se puede establecer contacto con ONLYOFFICE. Por favor, contacte con admin"
+msgid "Configure ONLYOFFICE Docs plugin settings."
+msgstr "Configurar los ajustes del plugin de ONLYOFFICE Docs"
 
-msgid "Files that can be edited and opened in ONLYOFFICE will be displayed here"
-msgstr "Los archivos que se pueden editar y abrir en ONLYOFFICE se mostrarán aquí"
+msgid "Configure ONLYOFFICE Docs plugin settings for the whole network."
+msgstr "Configurar los ajustes del plugin ONLYOFFICE Docs para toda la red."
 
-msgid "No files found for editing or viewing in ONLYOFFICE."
-msgstr "No se han encontrado archivos para editar o ver en ONLYOFFICE."
+msgid "Configure ONLYOFFICE Docs plugin settings for %s site."
+msgstr "Configurar los ajustes del plugin ONLYOFFICE Docs para el sitio %s."
 
-msgid "Add ONLYOFFICE editor on page"
-msgstr "Añadir el editor de ONLYOFFICE en la página"
+msgid "Blocked from changing settings by the Network administrator"
+msgstr "El administrador de la red no le permite cambiar los ajustes"
+
+msgid "Allow site administrators to configure plugin for their sites"
+msgstr "Permitir a los administradores de los sitios configurar el plugin para sus sitios"
+
+msgid "Inherit Network Settings"
+msgstr "Aplicar los ajustes de red"
+
+msgid "Connection Settings"
+msgstr "Ajustes de conexión"
+
+#: controllers/js/frontend-controller.js
+msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
+msgstr "No se puede acceder a ONLYOFFICE Docs. Por favor, contacte con el administrador."
+
+msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
+msgstr "Los archivos que se pueden editar y abrir en el editor de ONLYOFFICE Docs se mostrarán aquí."
+
+msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
+msgstr "No se han encontrado archivos para editar o ver en el editor de ONLYOFFICE Docs."
+
+msgid "Add ONLYOFFICE Docs editor on page"
+msgstr "Añadir el editor de ONLYOFFICE Docs a la página"
 
 msgid "ONLYOFFICE Docs Cloud"
 msgstr "ONLYOFFICE Docs Cloud"
@@ -77,3 +90,39 @@ msgstr "Inicie fácilmente los editores en la nube sin tener que descargarlos ni
 
 msgid "Get Now"
 msgstr "Obtener ahora"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Embedded"
+msgstr "Incorporado"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Document view"
+msgstr "Visualización de documento"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Open in ONLYOFFICE"
+msgstr "Abrir en ONLYOFFICE"
+
+#: onlyoffice-wordpress-block/build/index.js
+msgid "Show Open in ONLYOFFICE button"
+msgstr "Mostrar el botón Abrir en ONLYOFFICE"
+
+#: onlyoffice-wordpress-block/build/index.js
+#: controllers/js/frontend-controller.js
+msgid "File not found!"
+msgstr "¡No se ha encontrado el archivo!"
+
+msgid "Settings update"
+msgstr "Actualización de los ajustes"
+
+#: admin/js/settings.js
+msgid "Do you want to allow sites administrators to configure the plugin themselves?"
+msgstr "¿Desea permitir a los administradores de los sitios que configuren ellos mismos el plugin?"
+
+#: admin/js/settings.js
+msgid "Do you want to apply these settings to all sites?"
+msgstr "¿Desea aplicar estos ajustes a todos los sitios?"
+
+#: admin/js/settings.js
+msgid "Do you want to apply the network settings?"
+msgstr "¿Desea aplicar los ajustes de red?"

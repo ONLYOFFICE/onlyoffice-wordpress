@@ -11,7 +11,7 @@
 
 /**
  *
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,36 +41,6 @@
 class Onlyoffice_Plugin_Public {
 
 	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string $plugin_name       The name of the plugin.
-	 * @param      string $version    The version of this plugin.
-	 */
-	public function __construct( $plugin_name, $version ) {
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-	}
-
-	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
 	 * @since    1.0.0
@@ -94,24 +64,12 @@ class Onlyoffice_Plugin_Public {
 	public function register_routes() {
 		require_once plugin_dir_path( __FILE__ ) . 'views/class-onlyoffice-plugin-callback.php';
 		require_once plugin_dir_path( __FILE__ ) . 'views/class-onlyoffice-plugin-download.php';
-		require_once plugin_dir_path( __FILE__ ) . 'views/class-onlyoffice-plugin-editor.php';
 
 		$callback = new Onlyoffice_Plugin_Callback();
 		$download = new Onlyoffice_Plugin_Download();
-		$editor   = new Onlyoffice_Plugin_Editor();
 
 		// "oo."-prefix is needed to keep the connector working in conjunction with the plugin "Force Lowercase URLs"
 		// (https://wordpress.org/plugins/force-lowercase-urls/)
-
-		register_rest_route(
-			'onlyoffice',
-			'/oo.editor/(?P<id>[^\/\n\r]+)',
-			array(
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $editor, 'editor' ),
-				'permission_callback' => array( $this, 'check_attachment_id' ),
-			)
-		);
 
 		register_rest_route(
 			'onlyoffice',
