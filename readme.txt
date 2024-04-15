@@ -84,8 +84,3 @@ You can co-author documents using real-time or paragraph-locking co-eding modes,
 * detecting mobile browser
 * set favicon on editor page
 * added goBack url for document editor
-
-== Upgrade Notice ==
-
-= 1.0 =
-This is the first version of the plugin.
