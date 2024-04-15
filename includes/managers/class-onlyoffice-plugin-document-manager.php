@@ -50,6 +50,19 @@ class Onlyoffice_Plugin_Document_Manager {
 	);
 
 	/**
+	 * Init Onlyoffice_Plugin_Document_Manager.
+	 */
+	public static function init() {
+		$path_to_formats_json = plugin_dir_path( ONLYOFFICE_PLUGIN_FILE ) . '/public/assets/document-formats/onlyoffice-docs-formats.json';
+
+		if ( file_exists( $path_to_formats_json ) === true ) {
+			$formats = wp_json_file_decode( $path_to_formats_json );
+			update_site_option( 'onlyoffice-formats', $formats );
+			update_site_option( 'onlyoffice-formats-version', ONLYOFFICE_PLUGIN_VERSION );
+		}
+	}
+
+	/**
 	 * Returns the type of the document (word, cell, slide).
 	 *
 	 * @param string $filename The file name.
@@ -227,9 +240,14 @@ class Onlyoffice_Plugin_Document_Manager {
 	}
 
 	/**
-	 * Return option onlyoffice-formats.
+	 * Return supported ONLYOFFICE formats.
 	 */
 	public static function get_onlyoffice_formats() {
+		$onlyoffice_formats_version = get_site_option( 'onlyoffice-formats-version' );
+		if ( empty( $onlyoffice_formats_version ) || self::ONLYOFFICE_PLUGIN_VERSION !== $onlyoffice_formats_version ) {
+			self::init();
+		}
+
 		$formats = get_site_option( 'onlyoffice-formats' );
 		if ( ! empty( $formats ) ) {
 			return $formats;

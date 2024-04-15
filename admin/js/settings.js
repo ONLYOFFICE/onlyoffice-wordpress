@@ -15,15 +15,15 @@
 			if ( ! isConfirmed ) {
 				var confirmMessage;
 
-				if ( $( '#allowed_owerwrite_network_settings' ).length ) {
-					if ( $( '#allowed_owerwrite_network_settings' ).prop( 'checked' ) ) {
+				if ( $( '#onlyoffice_settings_allowed_owerwrite_network_settings' ).length ) {
+					if ( $( '#onlyoffice_settings_allowed_owerwrite_network_settings' ).prop( 'checked' ) ) {
 						confirmMessage = wp.i18n.__( 'Do you want to allow sites administrators to configure the plugin themselves?', 'onlyoffice-plugin' );
 					} else {
 						confirmMessage = wp.i18n.__( 'Do you want to apply these settings to all sites?', 'onlyoffice-plugin' );
 					}
 				}
 
-				if ( $( '#inherit_network_settings' ).length && $( '#inherit_network_settings' ).prop( 'checked' ) ) {
+				if ( $( '#onlyoffice_settings_inherit_network_settings' ).length && $( '#onlyoffice_settings_inherit_network_settings' ).prop( 'checked' ) ) {
 					confirmMessage = wp.i18n.__( 'Do you want to apply the network settings?', 'onlyoffice-plugin' );
 				}
 
@@ -51,9 +51,9 @@
 		}
 	)
 
-	$( '#inherit_network_settings' ).change(
+	$( '#onlyoffice_settings_inherit_network_settings' ).change(
 		function () {
-			$( '#docserver_url, #docserver_jwt, #jwt_header' ).prop( 'disabled', $( this ).prop( 'checked' ) );
+			$( '#onlyoffice_settings_docserver_url, #onlyoffice_settings_docserver_jwt, #onlyoffice_settings_jwt_header' ).prop( 'disabled', $( this ).prop( 'checked' ) );
 		}
 	);
 })( jQuery );
