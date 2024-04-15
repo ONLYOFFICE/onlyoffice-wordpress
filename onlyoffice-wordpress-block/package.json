@@ -1,6 +1,6 @@
 {
 	"name": "onlyoffice-wordpress",
-	"version": "1.1.0",
+	"version": "2.0.0",
 	"private": true,
 	"description": "This app enables users to edit and view office documents from WordPress pages on site and admin panel using ONLYOFFICE Docs packaged as Document Server",
 	"author": "Ascensio System SIA",
@@ -9,8 +9,8 @@
 		"WordPress",
 		"block"
 	],
-	"homepage": "",
-	"repository": "",
+	"homepage": "https://onlyoffice.com",
+	"repository": "https://github.com/ONLYOFFICE/onlyoffice-wordpress",
 	"main": "build/index.js",
 	"devDependencies": {
 		"@wordpress/block-editor": "^12.18.2",

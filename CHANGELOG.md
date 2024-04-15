@@ -1,5 +1,6 @@
 # Change Log
 
+## 2.0.0
 ## Added
 - multisite support
 - stub for onlyoffice-wordpress-block that displays error information if the document server is not accessible or the file is not found 
