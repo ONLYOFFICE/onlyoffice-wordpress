@@ -14,10 +14,10 @@
 	"main": "build/index.js",
 	"devDependencies": {
 		"@wordpress/block-editor": "^12.18.2",
+		"@wordpress/blocks": "^12.27.1",
 		"@wordpress/components": "^25.16.0",
 		"@wordpress/element": "5.27.0",
 		"@wordpress/i18n": "^4.50.0",
-		"@wordpress/blocks": "^12.27.1",
 		"@wordpress/scripts": "^27.1.0"
 	},
 	"scripts": {
@@ -26,5 +26,10 @@
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"start": "wp-scripts start"
+	},
+	"overrides": {
+		"cookie": "0.7.0",
+		"cross-spawn": "6.0.6",
+		"ws": "8.17.1"
 	}
 }
