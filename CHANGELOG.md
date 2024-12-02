@@ -1,6 +1,6 @@
 # Change Log
 
-##
+## 2.2.0
 ## Changed
 - fixed xss vulnerabilities in onlyoffice-docs page component
 
