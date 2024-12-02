@@ -179,11 +179,11 @@ class Onlyoffice_Plugin_Frontend_Controller {
 
 		$config = Onlyoffice_Plugin_Config_Manager::get_config( $attachment_id, $type, $mode, $perm_edit, $callback, null, true );
 
-		$align = ! empty( $atts['align'] ) ? 'align' . $atts['align'] : '';
-		$size  = ! empty( $atts['width'] ) && ! ( 'full' === $atts['align'] ) ? 'width: ' . $atts['width'] . ';' : '';
-		$size .= ! empty( $atts['height'] ) ? 'height: ' . $atts['height'] . ';' : '';
+		$align = ! empty( $atts['align'] ) ? 'align' . sanitize_text_field( $atts['align'] ) : '';
+		$size  = ! empty( $atts['width'] ) && ! ( 'full' === $atts['align'] ) ? 'width: ' . sanitize_text_field( $atts['width'] ) . ';' : '';
+		$size .= ! empty( $atts['height'] ) ? 'height: ' . sanitize_text_field( $atts['height'] ) . ';' : '';
 
-		$output  = '<div class="wp-block-onlyoffice-wordpress-onlyoffice ' . $align . ' size-full" style="' . $size . '">';
+		$output  = '<div class="wp-block-onlyoffice-wordpress-onlyoffice ' . esc_attr( $align ) . ' size-full" style="' . esc_attr( $size ) . '">';
 		$output .= '<div id="editorOnlyoffice-' . $instance . '" data-config="' . htmlspecialchars( wp_json_encode( $config ), ENT_QUOTES, 'UTF-8' ) . '" data-instance="' . $instance . '" class="wp-block-onlyoffice-wordpress-onlyoffice__target" ></div>';
 		$output .= '</div>';
 
@@ -198,14 +198,14 @@ class Onlyoffice_Plugin_Frontend_Controller {
 	 * @return string Link Template.
 	 */
 	private function render_link( $atts, $instance ) {
-		$target = true === $atts['inNewTab'] ? 'target="_blank"' : '';
-		$align  = ! empty( $atts['align'] ) ? 'align' . $atts['align'] : '';
+		$target = true === sanitize_text_field( $atts['inNewTab'] ) ? 'target="_blank"' : '';
+		$align  = ! empty( $atts['align'] ) ? 'align' . sanitize_text_field( $atts['align'] ) : '';
 
-		$output  = '<div class="wp-block-onlyoffice-wordpress-onlyoffice ' . $align . '">';
-		$output .= '<a id="linkToOnlyofficeEditor-' . $instance . '" href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . '>' . $atts['fileName'] . '</a>';
+		$output  = '<div class="wp-block-onlyoffice-wordpress-onlyoffice ' . esc_attr( $align ) . '">';
+		$output .= '<a id="linkToOnlyofficeEditor-' . $instance . '" href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . '>' . esc_attr( $atts['fileName'] ) . '</a>';
 
 		if ( $atts['showOpenButton'] ) {
-			$output .= '<a href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . ' class="wp-block-onlyoffice-wordpress__button wp-element-button">' . $atts['openButtonText'] . '</a>';
+			$output .= '<a href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . ' class="wp-block-onlyoffice-wordpress__button wp-element-button">' . esc_attr( $atts['openButtonText'] ) . '</a>';
 		}
 
 		$output .= '</div>';

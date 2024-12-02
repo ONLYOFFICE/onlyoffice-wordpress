@@ -1,5 +1,9 @@
 # Change Log
 
+##
+## Changed
+- fixed xss vulnerabilities in onlyoffice-docs page component
+
 ## 2.0.0
 ## Added
 - multisite support
