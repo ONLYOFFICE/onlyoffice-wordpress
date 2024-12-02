@@ -3,7 +3,7 @@ Contributors: onlyoffice
 Tags: onlyoffice, collaboration, editor, office, document, spreadsheet, presentation, forms, pdf
 Requires at least: 5.7
 Tested up to: 6.1
-Stable tag: 2.0.0
+Stable tag: 2.2.0
 Requires PHP: 7.4
 License: GPLv2
 License URI: https://github.com/ONLYOFFICE/onlyoffice-wordpress/blob/main/LICENSE
@@ -49,6 +49,9 @@ You can co-author documents using real-time or paragraph-locking co-eding modes,
 7. ONLYOFFICE file available for viewing in the Embedded mode to the WordPress site visitors.
 
 == Changelog ==
+= 2.2.0 =
+* fixed xss vulnerabilities in onlyoffice-docs page component
+
 = 2.0.0 =
 * multisite support
 * stub for onlyoffice-wordpress-block that displays error information if the document server is not accessible or the file is not found 
