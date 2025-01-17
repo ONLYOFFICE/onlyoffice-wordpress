@@ -12,7 +12,7 @@ ONLYOFFICE Docs plugin allows users to edit and view office documents from WordP
 
 == Description ==
 
-ONLYOFFICE Docs integration plugin allows WordPress administrators to open documents, spreadsheets, and presentations for collaborative editing using ONLYOFFICE Docs (online document editors). In published posts, the editors are visible to all WordPress site visitors (both authorized and unauthorized) in the Embedded mode only.
+ONLYOFFICE Docs plugin allows WordPress administrators to open documents, spreadsheets, and presentations for collaborative editing using ONLYOFFICE Docs (online document editors). In published posts, the editors are visible to all WordPress site visitors (both authorized and unauthorized) in the Embedded mode only.
 
 **Editing files uploaded to Wordpress**
 
