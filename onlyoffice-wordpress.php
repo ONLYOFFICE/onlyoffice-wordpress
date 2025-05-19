@@ -14,7 +14,7 @@
  * Author URI:        https://www.onlyoffice.com
  * License:           GNU General Public License v2.0
  * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * Text Domain:       onlyoffice-plugin
+ * Text Domain:       onlyoffice
  * Domain Path:       /languages
  */
 

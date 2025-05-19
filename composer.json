@@ -17,6 +17,8 @@
         "translations": [
             "wp i18n make-mo languages",
             "wp i18n make-json languages --no-purge"
-        ]
+        ],
+        "make-pot": "wp i18n make-pot . languages/onlyoffice.pot --exclude=\"vendor,node_modules,onlyoffice-wordpress-block/src\" --include=\"*.php,*.js\"",
+        "update-po": "wp i18n update-po languages/onlyoffice.pot languages"
     }
 }
