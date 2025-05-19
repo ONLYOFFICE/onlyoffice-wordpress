@@ -1,128 +1,191 @@
+# Copyright (C) 2025 Ascensio System SIA
+# This file is distributed under the GNU General Public License v2.0.
 msgid ""
 msgstr ""
+"Project-Id-Version: ONLYOFFICE Docs 2.2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/onlyoffice-wordpress\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-05-19T14:04:14+03:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: onlyoffice\n"
 
-
-
-
-
-
-
-
-
-
-
-msgid "Document Editing Service address"
+#. Plugin Name of the plugin
+#: onlyoffice-wordpress.php
+#: includes/files/class-onlyoffice-plugin-files.php:53
+msgid "ONLYOFFICE Docs"
 msgstr ""
 
-msgid "Document server JWT secret key"
+#. Plugin URI of the plugin
+#: onlyoffice-wordpress.php
+msgid "https://github.com/ONLYOFFICE/onlyoffice-wordpress"
 msgstr ""
 
-msgid "Secret key (leave blank to disable)"
+#. Description of the plugin
+#: onlyoffice-wordpress.php
+msgid "Add ONLYOFFICE Docs blocks to posts to allow your site visitors to view the inserted file without downloading. Edit and collaborate on office documents from the admin dashboard."
 msgstr ""
 
-msgid "Authorization header"
+#. Author of the plugin
+#: onlyoffice-wordpress.php
+msgid "Ascensio System SIA"
 msgstr ""
 
-msgid "Leave blank to use default header"
+#. Author URI of the plugin
+#: onlyoffice-wordpress.php
+msgid "https://www.onlyoffice.com"
 msgstr ""
 
-msgid "Open in ONLYOFFICE"
-msgstr ""
-
-msgid "Edit in ONLYOFFICE"
-msgstr ""
-
-msgid "Save Settings"
-msgstr ""
-
-msgid "Post is not an attachment"
-msgstr ""
-
-msgid "Settings"
-msgstr ""
-
-msgid "Files"
-msgstr ""
-
-msgid "ONLYOFFICE Docs Settings"
-msgstr ""
-
-msgid "Configure ONLYOFFICE Docs plugin settings."
-msgstr ""
-
-msgid "Configure ONLYOFFICE Docs plugin settings for the whole network."
-msgstr ""
-
-msgid "Configure ONLYOFFICE Docs plugin settings for %s site."
-msgstr ""
-
-msgid "Blocked from changing settings by the Network administrator"
-msgstr ""
-
-msgid "Allow site administrators to configure plugin for their sites"
-msgstr ""
-
-msgid "Inherit Network Settings"
-msgstr ""
-
-msgid "Connection Settings"
-msgstr ""
-
-#: controllers/js/frontend-controller.js
-msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
-msgstr ""
-
-msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
-msgstr ""
-
-msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
-msgstr ""
-
+#: controllers/class-onlyoffice-plugin-frontend-controller.php:54
 msgid "Add ONLYOFFICE Docs editor on page"
 msgstr ""
 
-msgid "ONLYOFFICE Docs Cloud"
-msgstr ""
-
-msgid "Easily launch the editors in the cloud without downloading and installation"
-msgstr ""
-
-msgid "Get Now"
-msgstr ""
-
-#: onlyoffice-wordpress-block/build/index.js
-msgid "Embedded"
-msgstr ""
-
-#: onlyoffice-wordpress-block/build/index.js
-msgid "Document view"
-msgstr ""
-
-#: onlyoffice-wordpress-block/build/index.js
+#: controllers/class-onlyoffice-plugin-frontend-controller.php:101
+#: onlyoffice-wordpress-block/build/index.js:1
 msgid "Open in ONLYOFFICE"
 msgstr ""
 
-#: onlyoffice-wordpress-block/build/index.js
-msgid "Show Open in ONLYOFFICE button"
+#: editor.php:147
+msgid "ONLYOFFICE Docs cannot be reached. Please contact admin."
 msgstr ""
 
-#: onlyoffice-wordpress-block/build/index.js
-#: controllers/js/frontend-controller.js
-msgid "File not found!"
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:91
+msgid "No files found for editing or viewing in ONLYOFFICE Docs editor."
 msgstr ""
 
+#: includes/files/class-onlyoffice-plugin-files.php:64
+msgid "Files"
+msgstr ""
+
+#: includes/files/class-onlyoffice-plugin-files.php:105
+msgid "Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here."
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:82
+#: includes/settings/class-onlyoffice-plugin-settings.php:90
+#: includes/settings/class-onlyoffice-plugin-settings.php:102
+msgid "ONLYOFFICE Docs Settings"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:83
+msgid "Settings"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:135
+msgid "Connection Settings"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:143
+msgid "Inherit Network Settings"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:151
+msgid "Document Editing Service address"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:165
+msgid "Document server JWT secret key"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:173
+msgid "Secret key (leave blank to disable)"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:179
+msgid "Authorization header"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:187
+msgid "Leave blank to use default header"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:203
+msgid "Allow site administrators to configure plugin for their sites"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:252
+msgid "Configure ONLYOFFICE Docs plugin settings for the whole network."
+msgstr ""
+
+#. translators: %s: Title WP Site.
+#: includes/settings/class-onlyoffice-plugin-settings.php:257
+#, php-format
+msgid "Configure ONLYOFFICE Docs plugin settings for %s site."
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:271
+msgid "Blocked from changing settings by the Network administrator"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:279
+msgid "Configure ONLYOFFICE Docs plugin settings."
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:343
+msgid "Save Settings"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:355
+msgid "ONLYOFFICE Docs Cloud"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:356
+msgid "Easily launch the editors in the cloud without downloading and installation"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:360
+msgid "Get Now"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:543
 msgid "Settings update"
 msgstr ""
 
-#: admin/js/settings.js
+#: public/class-onlyoffice-plugin-public.php:117
+msgid "Post is not an attachment"
+msgstr ""
+
+#: admin/js/settings.js:20
 msgid "Do you want to allow sites administrators to configure the plugin themselves?"
 msgstr ""
 
-#: admin/js/settings.js
+#: admin/js/settings.js:22
 msgid "Do you want to apply these settings to all sites?"
 msgstr ""
 
-#: admin/js/settings.js
+#: admin/js/settings.js:27
 msgid "Do you want to apply the network settings?"
+msgstr ""
+
+#: controllers/js/frontend-controller.js:22
+msgid "ONLYOFFICE cannot be reached. Please contact admin"
+msgstr ""
+
+#: controllers/js/frontend-controller.js:41
+#: onlyoffice-wordpress-block/build/index.js:1
+msgid "File not found!"
+msgstr ""
+
+#: onlyoffice-wordpress-block/build/index.js:1
+msgid "Embedded"
+msgstr ""
+
+#: onlyoffice-wordpress-block/build/index.js:1
+msgid "Document view"
+msgstr ""
+
+#: onlyoffice-wordpress-block/build/index.js:1
+msgid "Show Open in ONLYOFFICE button"
+msgstr ""
+
+#: onlyoffice-wordpress-block/build/index.js:1
+msgid "Width"
+msgstr ""
+
+#: onlyoffice-wordpress-block/build/index.js:1
+msgid "Height"
 msgstr ""
