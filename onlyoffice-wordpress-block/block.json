@@ -7,7 +7,7 @@
 	"editorScript": "file:./build/index.js",
 	"editorStyle": "file:build/index.css",
 	"keywords": ["onlyoffice"],
-	"textdomain": "onlyoffice-plugin",
+	"textdomain": "onlyoffice",
 	"attributes": {
 		"id": {
 			"type": "number"

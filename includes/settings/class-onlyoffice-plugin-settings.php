@@ -79,15 +79,15 @@ class Onlyoffice_Plugin_Settings {
 			if ( $can_upload_files ) {
 				$hook = add_submenu_page(
 					'onlyoffice-files',
-					__( 'ONLYOFFICE Docs Settings', 'onlyoffice-plugin' ),
-					__( 'Settings', 'onlyoffice-plugin' ),
+					__( 'ONLYOFFICE Docs Settings', 'onlyoffice' ),
+					__( 'Settings', 'onlyoffice' ),
 					'manage_options',
 					'onlyoffice-settings',
 					array( $this, 'options_page' )
 				);
 			} else {
 				$hook = add_menu_page(
-					__( 'ONLYOFFICE Docs Settings', 'onlyoffice-plugin' ),
+					__( 'ONLYOFFICE Docs Settings', 'onlyoffice' ),
 					'ONLYOFFICE Docs',
 					'manage_options',
 					'onlyoffice-settings',
@@ -99,7 +99,7 @@ class Onlyoffice_Plugin_Settings {
 
 		if ( $can_manage_network && is_network_admin() ) {
 			$hook = add_menu_page(
-				__( 'ONLYOFFICE Docs Settings', 'onlyoffice-plugin' ),
+				__( 'ONLYOFFICE Docs Settings', 'onlyoffice' ),
 				'ONLYOFFICE Docs',
 				'manage_network',
 				'onlyoffice-settings',
@@ -132,7 +132,7 @@ class Onlyoffice_Plugin_Settings {
 			if ( ! is_network_admin() ) {
 				add_settings_field(
 					self::INHERIT_NETWORK_SETTINGS,
-					__( 'Connection Settings', 'onlyoffice-plugin' ),
+					__( 'Connection Settings', 'onlyoffice' ),
 					array( $this, 'input_checkbox' ),
 					'onlyoffice_settings_group',
 					'onlyoffice_settings_general_section',
@@ -140,7 +140,7 @@ class Onlyoffice_Plugin_Settings {
 						'id'          => self::INHERIT_NETWORK_SETTINGS,
 						'checked'     => self::inherit_network_settings(),
 						'disabled'    => ! $this->allowed_owerwrite_network_settings(),
-						'description' => __( 'Inherit Network Settings', 'onlyoffice-plugin' ),
+						'description' => __( 'Inherit Network Settings', 'onlyoffice' ),
 					),
 				);
 			}
@@ -148,7 +148,7 @@ class Onlyoffice_Plugin_Settings {
 
 		add_settings_field(
 			self::DOCSERVER_URL,
-			__( 'Document Editing Service address', 'onlyoffice-plugin' ),
+			__( 'Document Editing Service address', 'onlyoffice' ),
 			array( $this, 'input_text' ),
 			'onlyoffice_settings_group',
 			'onlyoffice_settings_general_section',
@@ -162,7 +162,7 @@ class Onlyoffice_Plugin_Settings {
 
 		add_settings_field(
 			self::DOCSERVER_JWT,
-			__( 'Document server JWT secret key', 'onlyoffice-plugin' ),
+			__( 'Document server JWT secret key', 'onlyoffice' ),
 			array( $this, 'input_text' ),
 			'onlyoffice_settings_group',
 			'onlyoffice_settings_general_section',
@@ -170,13 +170,13 @@ class Onlyoffice_Plugin_Settings {
 				'id'          => self::DOCSERVER_JWT,
 				'value'       => $this->get_onlyoffice_current_value_setting( self::DOCSERVER_JWT ),
 				'disabled'    => is_multisite() && ! is_network_admin() && ( ! $this->allowed_owerwrite_network_settings() || self::inherit_network_settings() ),
-				'description' => __( 'Secret key (leave blank to disable)', 'onlyoffice-plugin' ),
+				'description' => __( 'Secret key (leave blank to disable)', 'onlyoffice' ),
 			)
 		);
 
 		add_settings_field(
 			self::JWT_HEADER,
-			__( 'Authorization header', 'onlyoffice-plugin' ),
+			__( 'Authorization header', 'onlyoffice' ),
 			array( $this, 'input_text' ),
 			'onlyoffice_settings_group',
 			'onlyoffice_settings_general_section',
@@ -184,7 +184,7 @@ class Onlyoffice_Plugin_Settings {
 				'id'          => self::JWT_HEADER,
 				'value'       => $this->get_onlyoffice_current_value_setting( self::JWT_HEADER ),
 				'disabled'    => is_multisite() && ! is_network_admin() && ( ! $this->allowed_owerwrite_network_settings() || self::inherit_network_settings() ),
-				'description' => __( 'Leave blank to use default header', 'onlyoffice-plugin' ),
+				'description' => __( 'Leave blank to use default header', 'onlyoffice' ),
 			)
 		);
 
@@ -200,7 +200,7 @@ class Onlyoffice_Plugin_Settings {
 						'id'          => self::ALLOWED_OWERWRITE_NETWORK_SETTINGS,
 						'checked'     => self::allowed_owerwrite_network_settings(),
 						'disabled'    => '',
-						'description' => __( 'Allow site administrators to configure plugin for their sites', 'onlyoffice-plugin' ),
+						'description' => __( 'Allow site administrators to configure plugin for their sites', 'onlyoffice' ),
 					)
 				);
 			}
@@ -249,12 +249,12 @@ class Onlyoffice_Plugin_Settings {
 		<?php
 		if ( is_multisite() ) {
 			if ( is_network_admin() ) {
-				esc_html_e( 'Configure ONLYOFFICE Docs plugin settings for the whole network.', 'onlyoffice-plugin' );
+				esc_html_e( 'Configure ONLYOFFICE Docs plugin settings for the whole network.', 'onlyoffice' );
 			} else {
 				printf(
 					wp_kses(
 						/* translators: %s: Title WP Site. */
-						__( 'Configure ONLYOFFICE Docs plugin settings for %s site.', 'onlyoffice-plugin' ),
+						__( 'Configure ONLYOFFICE Docs plugin settings for %s site.', 'onlyoffice' ),
 						array(
 							'strong' => array(
 								'class' => array(),
@@ -268,7 +268,7 @@ class Onlyoffice_Plugin_Settings {
 					?>
 					<div class="onlyoffice-settings-notice">
 						<p>
-							<?php esc_html_e( 'Blocked from changing settings by the Network administrator', 'onlyoffice-plugin' ); ?>
+							<?php esc_html_e( 'Blocked from changing settings by the Network administrator', 'onlyoffice' ); ?>
 						</p>
 					</div>
 					<?php
@@ -276,7 +276,7 @@ class Onlyoffice_Plugin_Settings {
 			}
 		} else {
 			?>
-			<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure ONLYOFFICE Docs plugin settings.', 'onlyoffice-plugin' ); ?></p>
+			<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure ONLYOFFICE Docs plugin settings.', 'onlyoffice' ); ?></p>
 			<?php
 		}
 		?>
@@ -317,7 +317,7 @@ class Onlyoffice_Plugin_Settings {
 		if ( function_exists( 'wp_set_script_translations' ) ) {
 			wp_set_script_translations(
 				ONLYOFFICE_PLUGIN_NAME . '-settings',
-				'onlyoffice-plugin',
+				'onlyoffice',
 				plugin_dir_path( ONLYOFFICE_PLUGIN_FILE ) . 'languages/'
 			);
 		}
@@ -340,7 +340,7 @@ class Onlyoffice_Plugin_Settings {
 				}
 
 				submit_button(
-					__( 'Save Settings', 'onlyoffice-plugin' ),
+					__( 'Save Settings', 'onlyoffice' ),
 					'primary',
 					'',
 					true,
@@ -352,12 +352,12 @@ class Onlyoffice_Plugin_Settings {
 				<div class="onlyoffice-cloud-banner-info">
 					<img src="<?php echo esc_url( ONLYOFFICE_PLUGIN_URL . 'admin/images/banner/logo.svg' ); ?>">
 					<div class="info">
-						<h3><?php esc_html_e( 'ONLYOFFICE Docs Cloud', 'onlyoffice-plugin' ); ?></h3>
-						<p><?php esc_html_e( 'Easily launch the editors in the cloud without downloading and installation', 'onlyoffice-plugin' ); ?></p>
+						<h3><?php esc_html_e( 'ONLYOFFICE Docs Cloud', 'onlyoffice' ); ?></h3>
+						<p><?php esc_html_e( 'Easily launch the editors in the cloud without downloading and installation', 'onlyoffice' ); ?></p>
 					</div>
 				</div>
 				<div class="onlyoffice-cloud-banner-buttons">
-					<a class="onlyoffice-cloud-banner-button"  href="https://www.onlyoffice.com/docs-registration.aspx?referer=wordpress" target="_blank"><?php esc_html_e( 'Get Now', 'onlyoffice-plugin' ); ?></a>
+					<a class="onlyoffice-cloud-banner-button"  href="https://www.onlyoffice.com/docs-registration.aspx?referer=wordpress" target="_blank"><?php esc_html_e( 'Get Now', 'onlyoffice' ); ?></a>
 				</div>
 			</div>
 		</div>
@@ -540,7 +540,7 @@ class Onlyoffice_Plugin_Settings {
 			<div class="notification-dialog-background"></div>
 			<div class="notification-dialog" role="dialog" tabindex="0">
 				<div class="onlyoffice-setting-confirm-dialog-content">
-					<h1><?php esc_html_e( 'Settings update', 'onlyoffice-plugin' ); ?></h1>
+					<h1><?php esc_html_e( 'Settings update', 'onlyoffice' ); ?></h1>
 					<div class="onlyoffice-setting-confirm-message"></div>
 					<p>
 						<a class="button onlyoffice-setting-confirm-dialog-cancel"><?php esc_html_e( 'Cancel' ); ?></a>

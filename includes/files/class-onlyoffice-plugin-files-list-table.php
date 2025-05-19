@@ -88,7 +88,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 	 * Output 'no files' message.
 	 */
 	public function no_items() {
-		esc_html_e( 'No files found for editing or viewing in ONLYOFFICE Docs editor.', 'onlyoffice-plugin' );
+		esc_html_e( 'No files found for editing or viewing in ONLYOFFICE Docs editor.', 'onlyoffice' );
 	}
 	/**
 	 * Handles output for the default column.

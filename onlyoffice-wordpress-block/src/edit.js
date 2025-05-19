@@ -44,7 +44,7 @@ const Edit = ({attributes, setAttributes}) => {
     let onlyofficeAllowedMimes = [];
     const viewOptions = [
         {
-            label: __('Embedded', 'onlyoffice-plugin'),
+            label: __('Embedded', 'onlyoffice'),
             value: 'embedded'
         },
         {
@@ -110,7 +110,7 @@ const Edit = ({attributes, setAttributes}) => {
                     <PanelBody title={__('Settings')}>
                         <InputControl label={__('Name')} value={attributes.fileName} onChange={ ( value ) => setAttributes({ fileName: value }) } />
                         <SelectControl
-                            label={__('Document view', 'onlyoffice-plugin')}
+                            label={__('Document view', 'onlyoffice')}
                             value={attributes.documentView}
                             options={viewOptions}
                             onChange={(value) => {setAttributes({ documentView: value })}}
@@ -125,7 +125,7 @@ const Edit = ({attributes, setAttributes}) => {
                                         />
                                     <ToggleControl
                                         checked={attributes.showOpenButton}
-                                        label={__('Show Open in ONLYOFFICE button', 'onlyoffice-plugin')}
+                                        label={__('Show Open in ONLYOFFICE button', 'onlyoffice')}
                                         onChange={(value) => setAttributes({ showOpenButton: value })} 
                                         />
                                 </div>
@@ -133,11 +133,11 @@ const Edit = ({attributes, setAttributes}) => {
                                 <div>
                                     {
                                         showWidthControl ?
-                                            <HeightControl label={ __("Width", "onlyoffice-docspace-plugin") } value={attributes.width} onChange={ ( value ) => setAttributes({ width: value }) }/>
+                                            <HeightControl label={ __("Width", "onlyoffice") } value={attributes.width} onChange={ ( value ) => setAttributes({ width: value }) }/>
                                             :
                                             ''
                                         }
-                                    <HeightControl label={ __("Height", "onlyoffice-docspace-plugin") } value={attributes.height} onChange={ ( value ) => setAttributes({ height: value }) }/>
+                                    <HeightControl label={ __("Height", "onlyoffice") } value={attributes.height} onChange={ ( value ) => setAttributes({ height: value }) }/>
                                 </div>
                         }
                     </PanelBody>
@@ -158,7 +158,7 @@ const Edit = ({attributes, setAttributes}) => {
                                         <RichText
                                             tagName="div"
                                             className = {'wp-element-button'}
-                                            value= { attributes.openButtonText || __('Open in ONLYOFFICE', 'onlyoffice-plugin') }
+                                            value= { attributes.openButtonText || __('Open in ONLYOFFICE', 'onlyoffice') }
                                             allowedFormats={ richTextAllowedFormats }
                                             onChange={ ( openButtonText ) => setAttributes( { openButtonText } ) }
                                             placeholder={ __('Add text...') }
@@ -173,7 +173,7 @@ const Edit = ({attributes, setAttributes}) => {
                         <div className={ `wp-block-onlyoffice-wordpress-onlyoffice__embedded ${documentType}`}>
                             <div>
                                 {getLogoByDocumentType(documentType)}
-                                <p> {documentType ? attributes.fileName || "" : __('File not found!', 'onlyoffice-plugin')}</p>
+                                <p> {documentType ? attributes.fileName || "" : __('File not found!', 'onlyoffice')}</p>
                             </div>
                         </div>
                 }

@@ -17,14 +17,14 @@
 
 				if ( $( '#onlyoffice_settings_allowed_owerwrite_network_settings' ).length ) {
 					if ( $( '#onlyoffice_settings_allowed_owerwrite_network_settings' ).prop( 'checked' ) ) {
-						confirmMessage = wp.i18n.__( 'Do you want to allow sites administrators to configure the plugin themselves?', 'onlyoffice-plugin' );
+						confirmMessage = wp.i18n.__( 'Do you want to allow sites administrators to configure the plugin themselves?', 'onlyoffice' );
 					} else {
-						confirmMessage = wp.i18n.__( 'Do you want to apply these settings to all sites?', 'onlyoffice-plugin' );
+						confirmMessage = wp.i18n.__( 'Do you want to apply these settings to all sites?', 'onlyoffice' );
 					}
 				}
 
 				if ( $( '#onlyoffice_settings_inherit_network_settings' ).length && $( '#onlyoffice_settings_inherit_network_settings' ).prop( 'checked' ) ) {
-					confirmMessage = wp.i18n.__( 'Do you want to apply the network settings?', 'onlyoffice-plugin' );
+					confirmMessage = wp.i18n.__( 'Do you want to apply the network settings?', 'onlyoffice' );
 				}
 
 				if ( confirmMessage ) {
