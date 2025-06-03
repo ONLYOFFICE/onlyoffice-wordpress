@@ -18,7 +18,7 @@
 		"@wordpress/components": "^25.16.0",
 		"@wordpress/element": "5.27.0",
 		"@wordpress/i18n": "^4.50.0",
-		"@wordpress/scripts": "^27.1.0"
+		"@wordpress/scripts": "^30.17.0"
 	},
 	"scripts": {
 		"build": "wp-scripts build",
