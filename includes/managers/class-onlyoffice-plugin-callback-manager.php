@@ -81,6 +81,12 @@ class Onlyoffice_Plugin_Callback_Manager {
 			return 1;
 		}
 
+		update_post_meta(
+			$attachemnt_id,
+			'_edit_last',
+			get_current_user_id()
+		);
+
 		return 0;
 	}
 }
