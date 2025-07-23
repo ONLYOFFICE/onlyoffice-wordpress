@@ -36,9 +36,9 @@
  * @author     Ascensio System SIA <integration@onlyoffice.com>
  */
 class Onlyoffice_Plugin_Url_Manager {
-	private const PATH_CALLBACK              = '/onlyoffice/oo.callback/';
-	private const PATH_CALLBACK_PUBLIC_FORMS = '/onlyoffice/oo.callback-public-forms/';
-	private const PATH_DOWNLOAD              = '/onlyoffice/oo.getfile/';
+	private const PATH_CALLBACK              = '/onlyoffice/oo.callback';
+	private const PATH_CALLBACK_PUBLIC_FORMS = '/onlyoffice/oo.callback-public-forms';
+	private const PATH_DOWNLOAD              = '/onlyoffice/oo.getfile';
 	private const PATH_API_JS                = 'web-apps/apps/api/documents/api.js';
 
 	/**
@@ -69,15 +69,36 @@ class Onlyoffice_Plugin_Url_Manager {
 	 * @return string
 	 */
 	public static function get_callback_url( $attachment_id, $public_forms ) {
-		$hidden_id = self::encode_openssl_data( $attachment_id );
-
 		if ( $public_forms ) {
 			$route = self::PATH_CALLBACK_PUBLIC_FORMS;
+
+			$data = wp_json_encode(
+				array(
+					'attachment_id' => $attachment_id,
+					'user_id'       => wp_get_current_user()->ID,
+					'action'        => 'public_callback',
+				)
+			);
 		} else {
 			$route = self::PATH_CALLBACK;
+
+			$data = wp_json_encode(
+				array(
+					'attachment_id' => $attachment_id,
+					'user_id'       => wp_get_current_user()->ID,
+					'action'        => 'callback',
+				)
+			);
 		}
 
-		return get_rest_url( null, $route . $hidden_id );
+		$token = self::encode_openssl_data( $data );
+
+		$url = get_rest_url( null, $route );
+
+		return add_query_arg(
+			array( 'token' => $token ),
+			$url,
+		);
 	}
 
 	/**
@@ -91,12 +112,18 @@ class Onlyoffice_Plugin_Url_Manager {
 			array(
 				'attachment_id' => $attachment_id,
 				'user_id'       => wp_get_current_user()->ID,
+				'action'        => 'download',
 			)
 		);
 
-		$hidden_id = self::encode_openssl_data( $data );
+		$token = self::encode_openssl_data( $data );
 
-		return get_rest_url( null, self::PATH_DOWNLOAD . $hidden_id );
+		$url = get_rest_url( null, self::PATH_DOWNLOAD );
+
+		return add_query_arg(
+			array( 'token' => $token ),
+			$url
+		);
 	}
 
 	/**
@@ -107,6 +134,22 @@ class Onlyoffice_Plugin_Url_Manager {
 	 */
 	public static function get_editor_url( $attachment_id ) {
 		return ONLYOFFICE_PLUGIN_URL . 'editor.php?attachment_id=' . $attachment_id;
+	}
+
+	/**
+	 * Return data from token or false if token invalid.
+	 *
+	 * @param string $token The token.
+	 * @return array|false
+	 */
+	public static function decode_url_token( $token ) {
+		$decoded_value = self::decode_openssl_data( $token );
+
+		if ( false === $decoded_value ) {
+			return false;
+		}
+
+		return json_decode( $decoded_value );
 	}
 
 	/**
