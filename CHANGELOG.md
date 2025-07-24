@@ -1,5 +1,9 @@
 # Change Log
 
+##
+## Changed
+- improved security for /download and /callback api endpoitns
+
 ## 2.2.0
 ## Changed
 - fixed xss vulnerabilities in onlyoffice-docs page component
