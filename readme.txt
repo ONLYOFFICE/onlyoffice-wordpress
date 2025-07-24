@@ -2,7 +2,7 @@
 Contributors: onlyoffice
 Tags: onlyoffice, collaboration, editor, office, document, spreadsheet, presentation, forms, pdf
 Requires at least: 5.7
-Tested up to: 6.1
+Tested up to: 6.8
 Stable tag: 2.2.0
 Requires PHP: 7.4
 License: GPLv2
