@@ -1,6 +1,6 @@
 === ONLYOFFICE Docs ===
 Contributors: onlyoffice
-Tags: onlyoffice, collaboration, editor, office, document, spreadsheet, presentation, forms, pdf
+Tags: onlyoffice, collaboration, editor, office, document
 Requires at least: 5.7
 Tested up to: 6.8
 Stable tag: 2.2.0
