@@ -73,31 +73,46 @@ class Onlyoffice_Plugin_Public {
 
 		register_rest_route(
 			'onlyoffice',
-			'/oo.callback/(?P<id>[^\/\n\r]+)',
+			'/oo.callback',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
+				'args'                => array(
+					'token' => array(
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+				),
 				'callback'            => array( $callback, 'callback' ),
-				'permission_callback' => array( $this, 'check_attachment_id' ),
+				'permission_callback' => '__return_true',
 			)
 		);
 
 		register_rest_route(
 			'onlyoffice',
-			'/oo.callback-public-forms/(?P<id>[^\/\n\r]+)',
+			'/oo.callback-public-forms',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
+				'args'                => array(
+					'token' => array(
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+				),
 				'callback'            => array( $callback, 'callback_public_forms' ),
-				'permission_callback' => array( $this, 'check_attachment_id' ),
+				'permission_callback' => '__return_true',
 			)
 		);
 
 		register_rest_route(
 			'onlyoffice',
-			'/oo.getfile/(?P<id>[^\/\n\r]+)',
+			'/oo.getfile',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
+				'args'                => array(
+					'token' => array(
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+				),
 				'callback'            => array( $download, 'get_file' ),
-				'permission_callback' => array( $this, 'check_attachment_id' ),
+				'permission_callback' => '__return_true',
 			)
 		);
 	}

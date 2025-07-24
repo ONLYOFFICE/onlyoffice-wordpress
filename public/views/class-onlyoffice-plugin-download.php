@@ -66,17 +66,23 @@ class Onlyoffice_Plugin_Download {
 			}
 		}
 
-		$decoded = json_decode( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $req->get_params()['id'] ) );
+		$token_value = Onlyoffice_Plugin_Url_Manager::decode_url_token( $req->get_query_params()['token'] );
 
-		$attachment_id = $decoded->attachment_id;
-		$user_id       = $decoded->user_id;
+		if ( false === $token_value ) {
+			wp_die( 'Invalid link token!', '', array( 'response' => 401 ) );
+		}
+
+		if ( 'download' !== $token_value->action ) {
+			wp_die( 'Forbidden!', '', array( 'response' => 403 ) );
+		}
+
+		$attachment_id = $token_value->attachment_id;
+		$user_id       = $token_value->user_id;
 
 		if ( 0 !== $user_id ) {
 			$user = get_user_by( 'id', $user_id );
 			if ( ( null !== $user_id ) && $user ) {
 				wp_set_current_user( $user_id, $user->user_login );
-				wp_set_auth_cookie( $user_id );
-				do_action( 'wp_login', $user->user_login, $user );
 			} else {
 				wp_die( 'No user information', '', array( 'response' => 403 ) );
 			}

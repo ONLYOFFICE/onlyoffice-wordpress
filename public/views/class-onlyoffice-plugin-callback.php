@@ -110,16 +110,22 @@ class Onlyoffice_Plugin_Callback {
 			}
 		}
 
-		$param = urldecode( str_replace( ',', '%', $req->get_params()['id'] ) );
+		$token_value = Onlyoffice_Plugin_Url_Manager::decode_url_token( $req->get_query_params()['token'] );
 
-		$attachemnt_id = intval( Onlyoffice_Plugin_Url_Manager::decode_openssl_data( $param, get_site_option( 'onlyoffice-plugin-uuid' ) ) );
-		$user_id       = isset( $body['actions'] ) ? $body['actions'][0]['userid'] : null;
+		if ( false === $token_value ) {
+			wp_die( 'Invalid link token!', '', array( 'response' => 401 ) );
+		}
+
+		if ( 'callback' !== $token_value->action ) {
+			wp_die( 'Forbidden!', '', array( 'response' => 403 ) );
+		}
+
+		$attachment_id = $token_value->attachment_id;
+		$user_id       = $token_value->user_id;
 
 		$user = get_user_by( 'id', $user_id );
 		if ( null !== $user_id && $user ) {
 			wp_set_current_user( $user_id, $user->user_login );
-			wp_set_auth_cookie( $user_id );
-			do_action( 'wp_login', $user->user_login, $user );
 		} else {
 			wp_die( 'No user information', '', array( 'response' => 403 ) );
 		}
@@ -135,22 +141,22 @@ class Onlyoffice_Plugin_Callback {
 			case 'Editing':
 				break;
 			case 'MustSave':
-				$can_edit = Onlyoffice_Plugin_Document_Manager::can_user_edit_attachment( $attachemnt_id );
+				$can_edit = Onlyoffice_Plugin_Document_Manager::can_user_edit_attachment( $attachment_id );
 				if ( ! $can_edit ) {
 					wp_die( 'No edit capability', '', array( 'response' => 403 ) );
 				}
 
-				$locked = wp_check_post_lock( $attachemnt_id );
+				$locked = wp_check_post_lock( $attachment_id );
 				if ( ! $locked ) {
-					wp_set_post_lock( $attachemnt_id );
+					wp_set_post_lock( $attachment_id );
 				}
 
-				$response_json['error'] = Onlyoffice_Plugin_Callback_Manager::proccess_save( $body, $attachemnt_id );
+				$response_json['error'] = Onlyoffice_Plugin_Callback_Manager::proccess_save( $body, $attachment_id );
 				break;
 			case 'Corrupted':
 			case 'Closed':
 			case 'NotFound':
-				delete_post_meta( $attachemnt_id, '_edit_lock' );
+				delete_post_meta( $attachment_id, '_edit_lock' );
 				break;
 			case 'MustForceSave':
 			case 'CorruptedForceSave':
