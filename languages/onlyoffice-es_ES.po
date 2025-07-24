@@ -42,7 +42,7 @@ msgstr "Abrir en ONLYOFFICE"
 msgid "Save Settings"
 msgstr "Guardar ajustes"
 
-#: public/class-onlyoffice-plugin-public.php:117
+#: public/class-onlyoffice-plugin-public.php:132
 msgid "Post is not an attachment"
 msgstr "El post no es un archivo adjunto"
 
@@ -152,28 +152,28 @@ msgid "Do you want to apply the network settings?"
 msgstr "¿Desea aplicar los ajustes de red?"
 
 #. Plugin Name of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 #: includes/files/class-onlyoffice-plugin-files.php:53
 msgid "ONLYOFFICE Docs"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 msgid "https://github.com/ONLYOFFICE/onlyoffice-wordpress"
 msgstr ""
 
 #. Description of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 msgid "Add ONLYOFFICE Docs blocks to posts to allow your site visitors to view the inserted file without downloading. Edit and collaborate on office documents from the admin dashboard."
 msgstr ""
 
 #. Author of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 msgid "Ascensio System SIA"
 msgstr ""
 
 #. Author URI of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 msgid "https://www.onlyoffice.com"
 msgstr ""
 
@@ -187,4 +187,77 @@ msgstr ""
 
 #: onlyoffice-wordpress-block/build/index.js:1
 msgid "Height"
+msgstr ""
+
+#: editor.php:69
+msgid "Sorry, you are not allowed to view this item."
+msgstr ""
+
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:140
+msgid "Name"
+msgstr ""
+
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:141
+msgid "Extension"
+msgstr ""
+
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:142
+msgid "Date"
+msgstr ""
+
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:143
+msgid "Size"
+msgstr ""
+
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:144
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:305
+msgid "Link"
+msgstr ""
+
+#. translators: 1: Name of most recent post author, 2: Post edited date, 3: Post edited time.
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:286
+#, php-format
+msgid "Last edited by %1$s on %2$s at %3$s"
+msgstr ""
+
+#. translators: 1: Name of most recent post author, 2: Post edited date, 3: Post edited time.
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:286
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:289
+msgid "F j, Y"
+msgstr ""
+
+#. translators: 1: Name of most recent post author, 2: Post edited date, 3: Post edited time.
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:286
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:289
+msgid "g:i a"
+msgstr ""
+
+#. translators: 1: Name of most recent post author, 2: Post edited date, 3: Post edited time.
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:289
+#, php-format
+msgid "Last edited on %1$s at %2$s"
+msgstr ""
+
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:305
+msgid "Copy URL"
+msgstr ""
+
+#: includes/files/class-onlyoffice-plugin-files-list-table.php:308
+msgid "Copied!"
+msgstr ""
+
+#: includes/files/class-onlyoffice-plugin-files.php:107
+msgid "Search"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:431
+msgid "Settings saved."
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:546
+msgid "Cancel"
+msgstr ""
+
+#: includes/settings/class-onlyoffice-plugin-settings.php:547
+msgid "OK"
 msgstr ""

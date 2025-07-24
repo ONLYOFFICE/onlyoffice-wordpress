@@ -119,7 +119,13 @@ class Onlyoffice_Plugin_Settings {
 	 * @return void
 	 */
 	public function init() {
-		register_setting( 'onlyoffice_settings_group', 'onlyoffice_settings' );
+		register_setting(
+			'onlyoffice_settings_group',
+			'onlyoffice_settings',
+			array(
+				'sanitize_callback' => array( $this, 'sanitize_onlyoffice_settings' ),
+			)
+		);
 
 		add_settings_section(
 			'onlyoffice_settings_general_section',
@@ -205,6 +211,26 @@ class Onlyoffice_Plugin_Settings {
 				);
 			}
 		}
+	}
+
+	/**
+	 * Sanitize settings
+	 *
+	 * @param array $input Input settings.
+	 *
+	 * @return array Sanitized settings.
+	 */
+	public function sanitize_onlyoffice_settings( $input ) {
+		if ( ! is_array( $input ) ) {
+			return array();
+		}
+
+		$sanitized = array();
+		foreach ( $input as $key => $value ) {
+			$sanitized[ $key ] = sanitize_text_field( $value );
+		}
+
+		return $sanitized;
 	}
 
 	/**
@@ -428,7 +454,7 @@ class Onlyoffice_Plugin_Settings {
 					update_option( 'onlyoffice_settings', $new_options );
 				}
 
-				add_settings_error( 'general', 'settings_updated', __( 'Settings saved.' ), 'success' );
+				add_settings_error( 'general', 'settings_updated', __( 'Settings saved.', 'onlyoffice' ), 'success' );
 				set_transient( 'settings_errors', get_settings_errors(), 30 );
 
 				if ( is_network_admin() ) {
@@ -543,8 +569,8 @@ class Onlyoffice_Plugin_Settings {
 					<h1><?php esc_html_e( 'Settings update', 'onlyoffice' ); ?></h1>
 					<div class="onlyoffice-setting-confirm-message"></div>
 					<p>
-						<a class="button onlyoffice-setting-confirm-dialog-cancel"><?php esc_html_e( 'Cancel' ); ?></a>
-						<button type="button" class="onlyoffice-setting-confirm-dialog-ok button button-primary"><?php esc_html_e( 'OK' ); ?></button>
+						<a class="button onlyoffice-setting-confirm-dialog-cancel"><?php esc_html_e( 'Cancel', 'onlyoffice' ); ?></a>
+						<button type="button" class="onlyoffice-setting-confirm-dialog-ok button button-primary"><?php esc_html_e( 'OK', 'onlyoffice' ); ?></button>
 					</p>
 				</div>
 			</div>
