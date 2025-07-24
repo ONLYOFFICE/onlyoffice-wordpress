@@ -1,6 +1,6 @@
 # Change Log
 
-##
+## 2.3.0
 ## Changed
 - improved security for /download and /callback api endpoitns
 
