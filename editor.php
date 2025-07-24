@@ -66,7 +66,7 @@ if ( ! is_user_logged_in() ) {
 	}
 } elseif ( ! Onlyoffice_Plugin_Document_Manager::can_user_view_attachment( $attachment_id ) ) {
 	wp_die(
-		esc_attr_e( 'Sorry, you are not allowed to view this item.' ),
+		esc_attr_e( 'Sorry, you are not allowed to view this item.', 'onlyoffice' ),
 		403
 	);
 }

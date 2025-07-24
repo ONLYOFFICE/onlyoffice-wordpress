@@ -428,7 +428,7 @@ class Onlyoffice_Plugin_Settings {
 					update_option( 'onlyoffice_settings', $new_options );
 				}
 
-				add_settings_error( 'general', 'settings_updated', __( 'Settings saved.' ), 'success' );
+				add_settings_error( 'general', 'settings_updated', __( 'Settings saved.', 'onlyoffice' ), 'success' );
 				set_transient( 'settings_errors', get_settings_errors(), 30 );
 
 				if ( is_network_admin() ) {
@@ -543,8 +543,8 @@ class Onlyoffice_Plugin_Settings {
 					<h1><?php esc_html_e( 'Settings update', 'onlyoffice' ); ?></h1>
 					<div class="onlyoffice-setting-confirm-message"></div>
 					<p>
-						<a class="button onlyoffice-setting-confirm-dialog-cancel"><?php esc_html_e( 'Cancel' ); ?></a>
-						<button type="button" class="onlyoffice-setting-confirm-dialog-ok button button-primary"><?php esc_html_e( 'OK' ); ?></button>
+						<a class="button onlyoffice-setting-confirm-dialog-cancel"><?php esc_html_e( 'Cancel', 'onlyoffice' ); ?></a>
+						<button type="button" class="onlyoffice-setting-confirm-dialog-ok button button-primary"><?php esc_html_e( 'OK', 'onlyoffice' ); ?></button>
 					</p>
 				</div>
 			</div>
