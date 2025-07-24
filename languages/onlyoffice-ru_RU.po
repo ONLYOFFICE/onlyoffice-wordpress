@@ -42,7 +42,7 @@ msgstr "Открыть в ONLYOFFICE"
 msgid "Save Settings"
 msgstr "Сохранить настройки"
 
-#: public/class-onlyoffice-plugin-public.php:117
+#: public/class-onlyoffice-plugin-public.php:132
 msgid "Post is not an attachment"
 msgstr "Пост не является вложением"
 
@@ -152,28 +152,28 @@ msgid "Do you want to apply the network settings?"
 msgstr "Хотите применить настройки сети?"
 
 #. Plugin Name of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 #: includes/files/class-onlyoffice-plugin-files.php:53
 msgid "ONLYOFFICE Docs"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 msgid "https://github.com/ONLYOFFICE/onlyoffice-wordpress"
 msgstr ""
 
 #. Description of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 msgid "Add ONLYOFFICE Docs blocks to posts to allow your site visitors to view the inserted file without downloading. Edit and collaborate on office documents from the admin dashboard."
 msgstr ""
 
 #. Author of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 msgid "Ascensio System SIA"
 msgstr ""
 
 #. Author URI of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 msgid "https://www.onlyoffice.com"
 msgstr ""
 

@@ -3,40 +3,40 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ONLYOFFICE Docs 2.2.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/onlyoffice-wordpress\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/onlyoffice\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-19T14:04:14+03:00\n"
+"POT-Creation-Date: 2025-07-24T10:58:59+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: onlyoffice\n"
 
 #. Plugin Name of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 #: includes/files/class-onlyoffice-plugin-files.php:53
 msgid "ONLYOFFICE Docs"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 msgid "https://github.com/ONLYOFFICE/onlyoffice-wordpress"
 msgstr ""
 
 #. Description of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 msgid "Add ONLYOFFICE Docs blocks to posts to allow your site visitors to view the inserted file without downloading. Edit and collaborate on office documents from the admin dashboard."
 msgstr ""
 
 #. Author of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 msgid "Ascensio System SIA"
 msgstr ""
 
 #. Author URI of the plugin
-#: onlyoffice-wordpress.php
+#: onlyoffice.php
 msgid "https://www.onlyoffice.com"
 msgstr ""
 
@@ -145,7 +145,7 @@ msgstr ""
 msgid "Settings update"
 msgstr ""
 
-#: public/class-onlyoffice-plugin-public.php:117
+#: public/class-onlyoffice-plugin-public.php:132
 msgid "Post is not an attachment"
 msgstr ""
 
