@@ -50,7 +50,7 @@ class Onlyoffice_Plugin_Files {
 
 		if ( $can_upload_files ) {
 			add_menu_page(
-				__( 'ONLYOFFICE Docs', 'onlyoffice-plugin' ),
+				__( 'ONLYOFFICE Docs', 'onlyoffice' ),
 				'ONLYOFFICE Docs',
 				'upload_files',
 				'onlyoffice-files',
@@ -61,7 +61,7 @@ class Onlyoffice_Plugin_Files {
 			$hook = add_submenu_page(
 				'onlyoffice-files',
 				'ONLYOFFICE Docs',
-				__( 'Files', 'onlyoffice-plugin' ),
+				__( 'Files', 'onlyoffice' ),
 				'upload_files',
 				'onlyoffice-files',
 				array( $this, 'files_page' )
@@ -102,9 +102,9 @@ class Onlyoffice_Plugin_Files {
 		?>
 		<div class="wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-			<p><?php esc_html_e( 'Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here.', 'onlyoffice-plugin' ); ?></p>
+			<p><?php esc_html_e( 'Files that can be edited and opened in ONLYOFFICE Docs editor are displayed here.', 'onlyoffice' ); ?></p>
 			<form method="get">
-				<?php $onlyoffice_plugin_files_list_table->search_box( __( 'Search' ), 'onlyoffice_file' ); ?>
+				<?php $onlyoffice_plugin_files_list_table->search_box( __( 'Search', 'onlyoffice' ), 'onlyoffice_file' ); ?>
 				<?php $onlyoffice_plugin_files_list_table->display(); ?>
 			</form>
 		</div>

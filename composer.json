@@ -3,13 +3,16 @@
         "firebase/php-jwt": "^6.3"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.7.2",
+        "squizlabs/php_codesniffer": "^3.13.2",
         "wp-coding-standards/wpcs": "^3.0.1",
-        "wp-cli/wp-cli-bundle": "*"
+        "wp-cli/wp-cli-bundle": "*",
+        "captainhook/plugin-composer": "^5.3.3",
+        "ramsey/conventional-commits": "^1.4.0"
     },
     "config": {
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "captainhook/plugin-composer": true
         }
     },
     "scripts": {
@@ -17,6 +20,8 @@
         "translations": [
             "wp i18n make-mo languages",
             "wp i18n make-json languages --no-purge"
-        ]
+        ],
+        "make-pot": "wp i18n make-pot . languages/onlyoffice.pot --exclude=\"vendor,node_modules,onlyoffice-wordpress-block/src\" --include=\"*.php,*.js\"",
+        "update-po": "wp i18n update-po languages/onlyoffice.pot languages"
     }
 }

@@ -19,7 +19,7 @@
 						$( this ).html(
 							onlyofficeErrorTemplate(
 								{
-									email: __( 'ONLYOFFICE cannot be reached. Please contact admin', 'onlyoffice-plugin' )
+									email: __( 'ONLYOFFICE cannot be reached. Please contact admin', 'onlyoffice' )
 								}
 							)
 						);
@@ -38,7 +38,7 @@
 						$( this ).html(
 							onlyofficeErrorTemplate(
 								{
-									email: __( 'File not found!', 'onlyoffice-plugin' )
+									email: __( 'File not found!', 'onlyoffice' )
 								}
 							)
 						);

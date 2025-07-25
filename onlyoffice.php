@@ -7,14 +7,14 @@
  * Plugin Name:       ONLYOFFICE Docs
  * Plugin URI:        https://github.com/ONLYOFFICE/onlyoffice-wordpress
  * Description:       Add ONLYOFFICE Docs blocks to posts to allow your site visitors to view the inserted file without downloading. Edit and collaborate on office documents from the admin dashboard.
- * Version:           2.2.0
+ * Version:           2.3.0
  * Requires at least: 5.7
  * Requires PHP:      7.4
  * Author:            Ascensio System SIA
  * Author URI:        https://www.onlyoffice.com
  * License:           GNU General Public License v2.0
  * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * Text Domain:       onlyoffice-plugin
+ * Text Domain:       onlyoffice
  * Domain Path:       /languages
  */
 
@@ -41,7 +41,7 @@
  * Currently plugin version.
  */
 define( 'ONLYOFFICE_PLUGIN_NAME', 'onlyoffice-plugin' );
-define( 'ONLYOFFICE_PLUGIN_VERSION', '2.2.0' );
+define( 'ONLYOFFICE_PLUGIN_VERSION', '2.3.0' );
 define( 'ONLYOFFICE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ONLYOFFICE_PLUGIN_FILE', __FILE__ );
 

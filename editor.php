@@ -66,7 +66,7 @@ if ( ! is_user_logged_in() ) {
 	}
 } elseif ( ! Onlyoffice_Plugin_Document_Manager::can_user_view_attachment( $attachment_id ) ) {
 	wp_die(
-		esc_attr_e( 'Sorry, you are not allowed to view this item.' ),
+		esc_attr_e( 'Sorry, you are not allowed to view this item.', 'onlyoffice' ),
 		403
 	);
 }
@@ -144,7 +144,7 @@ $config = Onlyoffice_Plugin_Config_Manager::get_config( $attachment_id, 'desktop
 
 		var connectEditor = function() {
 			if (typeof DocsAPI === "undefined") {
-				alert("<?php esc_attr_e( 'ONLYOFFICE Docs cannot be reached. Please contact admin.', 'onlyoffice-plugin' ); ?>");
+				alert("<?php esc_attr_e( 'ONLYOFFICE Docs cannot be reached. Please contact admin.', 'onlyoffice' ); ?>");
 				return;
 			}
 

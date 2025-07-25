@@ -51,7 +51,7 @@ class Onlyoffice_Plugin_Frontend_Controller {
 		register_block_type(
 			__DIR__ . '/../onlyoffice-wordpress-block',
 			array(
-				'description'     => __( 'Add ONLYOFFICE Docs editor on page', 'onlyoffice-plugin' ),
+				'description'     => __( 'Add ONLYOFFICE Docs editor on page', 'onlyoffice' ),
 				'render_callback' => array( $this, 'onlyoffice_block_render_callback' ),
 			),
 		);
@@ -59,7 +59,7 @@ class Onlyoffice_Plugin_Frontend_Controller {
 		if ( function_exists( 'wp_set_script_translations' ) ) {
 			wp_set_script_translations(
 				'onlyoffice-wordpress-onlyoffice-editor-script',
-				'onlyoffice-plugin',
+				'onlyoffice',
 				plugin_dir_path( ONLYOFFICE_PLUGIN_FILE ) . 'languages/'
 			);
 		}
@@ -98,7 +98,7 @@ class Onlyoffice_Plugin_Frontend_Controller {
 			'width'          => '100%',
 			'height'         => '500px',
 			'showOpenButton' => 'true',
-			'openButtonText' => __( 'Open in ONLYOFFICE', 'onlyoffice-plugin' ),
+			'openButtonText' => __( 'Open in ONLYOFFICE', 'onlyoffice' ),
 		);
 
 		$atts = shortcode_atts( $defaults_atts, $attr, 'onlyoffice' );
@@ -155,7 +155,7 @@ class Onlyoffice_Plugin_Frontend_Controller {
 				if ( function_exists( 'wp_set_script_translations' ) ) {
 					wp_set_script_translations(
 						'wp-block-onlyoffice-wordpress-js',
-						'onlyoffice-plugin',
+						'onlyoffice',
 						plugin_dir_path( ONLYOFFICE_PLUGIN_FILE ) . 'languages/'
 					);
 				}

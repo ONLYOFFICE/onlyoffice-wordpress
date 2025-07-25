@@ -1,9 +1,9 @@
 === ONLYOFFICE Docs ===
 Contributors: onlyoffice
-Tags: onlyoffice, collaboration, editor, office, document, spreadsheet, presentation, forms, pdf
+Tags: onlyoffice, collaboration, editor, office, document
 Requires at least: 5.7
-Tested up to: 6.1
-Stable tag: 2.2.0
+Tested up to: 6.8
+Stable tag: 2.3.0
 Requires PHP: 7.4
 License: GPLv2
 License URI: https://github.com/ONLYOFFICE/onlyoffice-wordpress/blob/main/LICENSE
@@ -12,7 +12,7 @@ ONLYOFFICE Docs plugin allows users to edit and view office documents from WordP
 
 == Description ==
 
-ONLYOFFICE Docs integration plugin allows WordPress administrators to open documents, spreadsheets, and presentations for collaborative editing using ONLYOFFICE Docs (online document editors). In published posts, the editors are visible to all WordPress site visitors (both authorized and unauthorized) in the Embedded mode only.
+ONLYOFFICE Docs plugin allows WordPress administrators to open documents, spreadsheets, and presentations for collaborative editing using ONLYOFFICE Docs (online document editors). In published posts, the editors are visible to all WordPress site visitors (both authorized and unauthorized) in the Embedded mode only.
 
 **Editing files uploaded to Wordpress**
 
@@ -32,7 +32,7 @@ You need to have [ONLYOFFICE Document Server](https://github.com/ONLYOFFICE/Docu
 
 Go to WordPress administrative dashboard -> ONLYOFFICE Docs -> Settings. Specify the URL of the installed ONLYOFFICE Document Server and the Secret key.
 
-Please note: Starting from version 7.2 of ONLYOFFICE Docs, JWT is enabled by default and the secret key is generated automatically to restrict the access to ONLYOFFICE Docs and for security reasons and data integrity. Specify your own secret key in the WordPress administrative configuration. In the ONLYOFFICE Docs [config file](https://api.onlyoffice.com/editors/signature/), specify the same secret key and enable the validation.
+Please note: Starting from version 7.2 of ONLYOFFICE Docs, JWT is enabled by default and the secret key is generated automatically to restrict the access to ONLYOFFICE Docs and for security reasons and data integrity. Specify your own secret key in the WordPress administrative configuration. In the ONLYOFFICE Docs [config file](https://api.onlyoffice.com/docs/docs-api/additional-api/signature/), specify the same secret key and enable the validation.
 
 = What collaborative features do the editors provide? =
 
@@ -49,6 +49,9 @@ You can co-author documents using real-time or paragraph-locking co-eding modes,
 7. ONLYOFFICE file available for viewing in the Embedded mode to the WordPress site visitors.
 
 == Changelog ==
+= 2.3.0 =
+* improved security for /download and /callback api endpoitns
+
 = 2.2.0 =
 * fixed xss vulnerabilities in onlyoffice-docs page component
 

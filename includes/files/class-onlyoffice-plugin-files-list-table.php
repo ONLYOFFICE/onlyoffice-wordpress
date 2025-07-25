@@ -88,7 +88,7 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 	 * Output 'no files' message.
 	 */
 	public function no_items() {
-		esc_html_e( 'No files found for editing or viewing in ONLYOFFICE Docs editor.', 'onlyoffice-plugin' );
+		esc_html_e( 'No files found for editing or viewing in ONLYOFFICE Docs editor.', 'onlyoffice' );
 	}
 	/**
 	 * Handles output for the default column.
@@ -137,11 +137,11 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'title'  => __( 'Name' ),
-			'format' => __( 'Extension' ),
-			'date'   => __( 'Date' ),
-			'size'   => __( 'Size' ),
-			'link'   => __( 'Link' ),
+			'title'  => __( 'Name', 'onlyoffice' ),
+			'format' => __( 'Extension', 'onlyoffice' ),
+			'date'   => __( 'Date', 'onlyoffice' ),
+			'size'   => __( 'Size', 'onlyoffice' ),
+			'link'   => __( 'Link', 'onlyoffice' ),
 		);
 		return $columns;
 	}
@@ -283,10 +283,10 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 		$last_user = get_userdata( get_post_meta( $item['id'], '_edit_last', true ) );
 		if ( $last_user ) {
 			/* translators: 1: Name of most recent post author, 2: Post edited date, 3: Post edited time. */
-			$h_time = sprintf( __( 'Last edited by %1$s on %2$s at %3$s' ), esc_html( $last_user->display_name ), mysql2date( __( 'F j, Y' ), $file->post_modified ), mysql2date( __( 'g:i a' ), $file->post_modified ) );
+			$h_time = sprintf( __( 'Last edited by %1$s on %2$s at %3$s', 'onlyoffice' ), esc_html( $last_user->display_name ), mysql2date( __( 'F j, Y', 'onlyoffice' ), $file->post_modified ), mysql2date( __( 'g:i a', 'onlyoffice' ), $file->post_modified ) );
 		} else {
-			/* translators: 1: Post edited date, 2: Post edited time. */
-			$h_time = sprintf( __( 'Last edited on %1$s at %2$s' ), mysql2date( __( 'F j, Y' ), $file->post_modified ), mysql2date( __( 'g:i a' ), $file->post_modified ) );
+			/* translators: 1: Name of most recent post author, 2: Post edited date, 3: Post edited time. */
+			$h_time = sprintf( __( 'Last edited on %1$s at %2$s', 'onlyoffice' ), mysql2date( __( 'F j, Y', 'onlyoffice' ), $file->post_modified ), mysql2date( __( 'g:i a', 'onlyoffice' ), $file->post_modified ) );
 		}
 
 		echo esc_html( $h_time );
@@ -302,10 +302,10 @@ class Onlyoffice_Plugin_Files_List_Table extends WP_List_Table {
 		$file = get_post( $item['id'] );
 		?>
 		<span class="copy-to-clipboard-container">
-			<button type="button" data-clipboard-text="<?php echo esc_url( Onlyoffice_Plugin_Url_Manager::get_editor_url( $item['id'] ) ); ?>" class="onlyoffice-editor-link button-link has-icon" title="<?php esc_attr_e( 'Copy URL' ); ?>" aria-label="<?php esc_attr_e( 'Link' ); ?>">
+			<button type="button" data-clipboard-text="<?php echo esc_url( Onlyoffice_Plugin_Url_Manager::get_editor_url( $item['id'] ) ); ?>" class="onlyoffice-editor-link button-link has-icon" title="<?php esc_attr_e( 'Copy URL', 'onlyoffice' ); ?>" aria-label="<?php esc_attr_e( 'Link', 'onlyoffice' ); ?>">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M15.6 7.2H14v1.5h1.6c2 0 3.7 1.7 3.7 3.7s-1.7 3.7-3.7 3.7H14v1.5h1.6c2.8 0 5.2-2.3 5.2-5.2 0-2.9-2.3-5.2-5.2-5.2zM4.7 12.4c0-2 1.7-3.7 3.7-3.7H10V7.2H8.4c-2.9 0-5.2 2.3-5.2 5.2 0 2.9 2.3 5.2 5.2 5.2H10v-1.5H8.4c-2 0-3.7-1.7-3.7-3.7zm4.6.9h5.3v-1.5H9.3v1.5z"></path></svg>
 			</button>
-			<span class="success hidden" aria-hidden="true"><?php esc_html_e( 'Copied!' ); ?>
+			<span class="success hidden" aria-hidden="true"><?php esc_html_e( 'Copied!', 'onlyoffice' ); ?>
 		</span>
 		<?php
 	}
