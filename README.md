@@ -47,7 +47,7 @@ Community Edition vs Enterprise Edition comparison can be found [here](#onlyoffi
 
 ### ☁️ Cloud
 
-If you prefer not to maintain your own server, use **ONLYOFFICE Docs Cloud**, which requires no installation or configuration.  
+If you prefer not to maintain your own server, use **ONLYOFFICE Docs Cloud**, which requires no installation or configuration.
 
 👉 [Get started here](https://www.onlyoffice.com/docs-registration)
 
@@ -63,7 +63,7 @@ If you prefer not to maintain your own server, use **ONLYOFFICE Docs Cloud**, wh
 6. Once the plugin is installed, click **Activate**.
 
 Alternatively, you can clone the master branch (and then activate the plugin from the WordPress administrative dashboard as well):
- 
+
 ```
 cd wp-content/plugins
 git clone https://github.com/ONLYOFFICE/onlyoffice-wordpress
