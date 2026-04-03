@@ -27,7 +27,7 @@ msgstr "Clave secreta (deje en blanco o desactive)"
 
 #: includes/settings/class-onlyoffice-plugin-settings.php:179
 msgid "Authorization header"
-msgstr "Encabezado de autenticaciуn"
+msgstr "Encabezado de autenticacion"
 
 #: includes/settings/class-onlyoffice-plugin-settings.php:187
 msgid "Leave blank to use default header"
