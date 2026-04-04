@@ -133,34 +133,29 @@ class Onlyoffice_Plugin_Frontend_Controller {
 	 * @return string Link Template.
 	 */
 	private function render_embedded( $atts, $instance ) {
-		add_action(
-			'wp_enqueue_scripts',
-			function () {
-				$api_js_url = Onlyoffice_Plugin_Url_Manager::get_api_js_url();
-				wp_enqueue_script( 'onlyoffice_editor_api', $api_js_url, array(), ONLYOFFICE_PLUGIN_VERSION, false );
-				wp_enqueue_script(
-					'wp-block-onlyoffice-wordpress-js',
-					ONLYOFFICE_PLUGIN_URL . 'controllers/js/frontend-controller.js',
-					array( 'wp-util', 'wp-i18n' ),
-					ONLYOFFICE_PLUGIN_VERSION,
-					false
-				);
-				wp_enqueue_style(
-					'wp-block-onlyoffice-wordpress-css',
-					ONLYOFFICE_PLUGIN_URL . 'controllers/css/frontend-controller.css',
-					array(),
-					ONLYOFFICE_PLUGIN_VERSION
-				);
-
-				if ( function_exists( 'wp_set_script_translations' ) ) {
-					wp_set_script_translations(
-						'wp-block-onlyoffice-wordpress-js',
-						'onlyoffice',
-						plugin_dir_path( ONLYOFFICE_PLUGIN_FILE ) . 'languages/'
-					);
-				}
-			}
+		$api_js_url = Onlyoffice_Plugin_Url_Manager::get_api_js_url();
+		wp_enqueue_script( 'onlyoffice_editor_api', $api_js_url, array(), ONLYOFFICE_PLUGIN_VERSION, false );
+		wp_enqueue_script(
+			'wp-block-onlyoffice-wordpress-js',
+			ONLYOFFICE_PLUGIN_URL . 'controllers/js/frontend-controller.js',
+			array( 'wp-util', 'wp-i18n' ),
+			ONLYOFFICE_PLUGIN_VERSION,
+			false
 		);
+		wp_enqueue_style(
+			'wp-block-onlyoffice-wordpress-css',
+			ONLYOFFICE_PLUGIN_URL . 'controllers/css/frontend-controller.css',
+			array(),
+			ONLYOFFICE_PLUGIN_VERSION
+		);
+
+		if ( function_exists( 'wp_set_script_translations' ) ) {
+			wp_set_script_translations(
+				'wp-block-onlyoffice-wordpress-js',
+				'onlyoffice',
+				plugin_dir_path( ONLYOFFICE_PLUGIN_FILE ) . 'languages/'
+			);
+		}
 
 		$attachment_id = $atts['id'];
 		$type          = 'embedded';
