@@ -70,7 +70,7 @@ class Onlyoffice_Plugin_Callback {
 		}
 
 		if ( Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled() ) {
-			$token   = $body['token'];
+			$token   = $body['token'] ?? null;
 			$in_body = true;
 
 			if ( empty( $token ) ) {
