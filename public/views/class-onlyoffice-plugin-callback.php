@@ -50,11 +50,11 @@ class Onlyoffice_Plugin_Callback {
 	/**
 	 * Callback
 	 *
-	 * @param array $req Request.
+	 * @param WP_REST_Request $req Request.
 	 *
 	 * @return WP_REST_Response
 	 */
-	public function callback( $req ) {
+	public function callback( WP_REST_Request $req ) {
 		require_once ABSPATH . 'wp-admin/includes/post.php';
 
 		$body = json_decode( $req->get_body(), true );
@@ -75,8 +75,8 @@ class Onlyoffice_Plugin_Callback {
 
 			if ( empty( $token ) ) {
 				$jwt_header           = Onlyoffice_Plugin_JWT_Manager::get_jwt_header();
-				$authorization_header = apache_request_headers()[ $jwt_header ];
-				$token                = null !== $authorization_header ? substr( $authorization_header, strlen( 'Bearer ' ) ) : $authorization_header;
+				$authorization_header = $req->get_header( $jwt_header );
+				$token                = ! empty( $authorization_header ) ? substr( $authorization_header, strlen( 'Bearer ' ) ) : null;
 				$in_body              = false;
 			}
 
