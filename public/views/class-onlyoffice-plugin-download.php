@@ -40,18 +40,18 @@ class Onlyoffice_Plugin_Download {
 	/**
 	 * Get file.
 	 *
-	 * @param array $req The request.
+	 * @param WP_REST_Request $req The request.
 	 *
 	 * @return void|WP_Error
 	 */
-	public function get_file( $req ) {
+	public function get_file( WP_REST_Request $req ) {
 		global $wp_filesystem;
 
 		if ( Onlyoffice_Plugin_JWT_Manager::is_jwt_enabled() ) {
 			$jwt_header           = Onlyoffice_Plugin_JWT_Manager::get_jwt_header();
-			$authorization_header = apache_request_headers()[ $jwt_header ];
+			$authorization_header = $req->get_header( $jwt_header );
 
-			$token = null !== $authorization_header ? substr( $authorization_header, strlen( 'Bearer ' ) ) : $authorization_header;
+			$token = ! empty( $authorization_header ) ? substr( $authorization_header, strlen( 'Bearer ' ) ) : null;
 
 			if ( empty( $token ) ) {
 				wp_die( 'The request token is missing.', '', array( 'response' => 401 ) );
