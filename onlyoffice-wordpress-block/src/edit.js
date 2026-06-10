@@ -119,14 +119,14 @@ const Edit = ({attributes, setAttributes}) => {
                             attributes.documentView === 'link' ?
                                 <div>
                                     <ToggleControl
-                                        checked={attributes.inNewTab}
+                                        checked={attributes.inNewTab ?? true}
                                         label={__('Open in new tab')}
-                                        onChange={(value) => setAttributes({ inNewTab: value })} 
+                                        onChange={(value) => setAttributes({ inNewTab: value })}
                                         />
                                     <ToggleControl
-                                        checked={attributes.showOpenButton}
+                                        checked={attributes.showOpenButton ?? true}
                                         label={__('Show Open in ONLYOFFICE button', 'onlyoffice')}
-                                        onChange={(value) => setAttributes({ showOpenButton: value })} 
+                                        onChange={(value) => setAttributes({ showOpenButton: value })}
                                         />
                                 </div>
                                 :
@@ -153,7 +153,7 @@ const Edit = ({attributes, setAttributes}) => {
                                 value={ attributes.fileName }
                             />
                             {
-                                attributes.showOpenButton ?
+                                ( attributes.showOpenButton ?? true ) ?
                                     <div class="wp-block-onlyoffice-wordpress-onlyoffice__button-richtext-wrapper">
                                         <RichText
                                             tagName="div"

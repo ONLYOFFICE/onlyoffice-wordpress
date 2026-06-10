@@ -19,8 +19,7 @@
 			"type": "string"
 		},
 		"inNewTab": {
-			"type": "boolean",
-			"default": true
+			"type": "boolean"
 		},
 		"width":  {
 			"type": "string"
@@ -29,8 +28,7 @@
 			"type": "string"
 		},
 		"showOpenButton":{
-			"type": "boolean",
-			"default": true
+			"type": "boolean"
 		},
 		"openButtonText":{
 			"type": "string"
