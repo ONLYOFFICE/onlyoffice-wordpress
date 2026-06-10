@@ -12,3 +12,12 @@
 .onlyoffice-setting-confirm-dialog-content {
 	margin: 25px;
 }
+
+.onlyoffice-password-wrapper {
+	display: inline-flex;
+	align-items: stretch;
+}
+
+.onlyoffice-password-wrapper .wp-hide-pw {
+	margin-left: 4px;
+}

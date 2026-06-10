@@ -56,4 +56,19 @@
 			$( '#onlyoffice_settings_docserver_url, #onlyoffice_settings_docserver_jwt, #onlyoffice_settings_jwt_header' ).prop( 'disabled', $( this ).prop( 'checked' ) );
 		}
 	);
+
+	$( '.onlyoffice-password-wrapper' ).on(
+		'click',
+		'.wp-hide-pw',
+		function () {
+			var $button = $( this );
+			var $input  = $button.siblings( 'input' );
+			var show    = $button.attr( 'data-toggle' ) === '0';
+
+			$button.attr( 'data-toggle', show ? 1 : 0 );
+			$button.attr( 'aria-label', show ? wp.i18n.__( 'Hide secret key', 'onlyoffice' ) : wp.i18n.__( 'Show secret key', 'onlyoffice' ) );
+			$input.attr( 'type', show ? 'text' : 'password' );
+			$button.find( '.dashicons' ).toggleClass( 'dashicons-visibility', ! show ).toggleClass( 'dashicons-hidden', show );
+		}
+	);
 })( jQuery );
