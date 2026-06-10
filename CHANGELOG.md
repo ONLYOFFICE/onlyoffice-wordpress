@@ -1,5 +1,9 @@
 # Change Log
 
+# Changed
+- fixed documents created with tinymce causing a block validation error
+- fixed inNewTab and showOpenButton attributes being ignored due to missing boolean casting.
+
 ## 2.3.0
 ## Changed
 - improved security for /download and /callback api endpoitns
