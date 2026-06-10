@@ -198,13 +198,13 @@ class Onlyoffice_Plugin_Frontend_Controller {
 	 * @return string Link Template.
 	 */
 	private function render_link( $atts, $instance ) {
-		$target = true === sanitize_text_field( $atts['inNewTab'] ) ? 'target="_blank"' : '';
+		$target = filter_var( $atts['inNewTab'], FILTER_VALIDATE_BOOLEAN ) ? 'target="_blank"' : '';
 		$align  = ! empty( $atts['align'] ) ? 'align' . sanitize_text_field( $atts['align'] ) : '';
 
 		$output  = '<div class="wp-block-onlyoffice-wordpress-onlyoffice ' . esc_attr( $align ) . '">';
 		$output .= '<a id="linkToOnlyofficeEditor-' . $instance . '" href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . '>' . esc_attr( $atts['fileName'] ) . '</a>';
 
-		if ( $atts['showOpenButton'] ) {
+		if ( filter_var( $atts['showOpenButton'], FILTER_VALIDATE_BOOLEAN ) ) {
 			$output .= '<a href="' . Onlyoffice_Plugin_Url_Manager::get_editor_url( $atts['id'] ) . '" ' . $target . ' class="wp-block-onlyoffice-wordpress__button wp-element-button">' . esc_attr( $atts['openButtonText'] ) . '</a>';
 		}
 
