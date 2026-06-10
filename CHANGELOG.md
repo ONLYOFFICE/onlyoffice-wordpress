@@ -2,6 +2,7 @@
 
 ##
 ## Changed
+- fixed editor not rendering on non-block themes 
 - fixed documents created with tinymce causing a block validation error
 - fixed inNewTab and showOpenButton attributes being ignored due to missing boolean casting.
 - changed the JWT secret key field to a password input with a show/hide toggle
