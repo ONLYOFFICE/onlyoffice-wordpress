@@ -8,7 +8,7 @@
  * Plugin URI:        https://github.com/ONLYOFFICE/onlyoffice-wordpress
  * Description:       Add ONLYOFFICE Docs blocks to posts to allow your site visitors to view the inserted file without downloading. Edit and collaborate on office documents from the admin dashboard.
  * Version:           2.3.0
- * Requires at least: 5.7
+ * Requires at least: 6.6
  * Requires PHP:      7.4
  * Author:            Ascensio System SIA
  * Author URI:        https://www.onlyoffice.com
