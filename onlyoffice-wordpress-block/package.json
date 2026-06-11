@@ -29,6 +29,6 @@
 	},
 	"overrides": {
 		"webpack-dev-server": "5.2.2",
-		"@babel/runtime": "7.28.2"
+		"@babel/runtime": "^7.26.10"
 	}
 }
