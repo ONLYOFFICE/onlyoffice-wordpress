@@ -169,7 +169,7 @@ class Onlyoffice_Plugin_Settings {
 		add_settings_field(
 			self::DOCSERVER_JWT,
 			__( 'Document server JWT secret key', 'onlyoffice' ),
-			array( $this, 'input_text' ),
+			array( $this, 'input_password' ),
 			'onlyoffice_settings_group',
 			'onlyoffice_settings_general_section',
 			array(
@@ -243,6 +243,25 @@ class Onlyoffice_Plugin_Settings {
 	public function input_text( array $args ) {
 		?>
 		<input id="<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( $args['id'] ); ?>" value="<?php echo esc_attr( $args['value'] ); ?>" <?php disabled( $args['disabled'] ); ?> type="text" class="regular-text">
+		<p class="description"><?php echo esc_attr( $args['description'] ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Input password with show/hide toggle.
+	 *
+	 * @param array $args Args.
+	 *
+	 * @return void
+	 */
+	public function input_password( array $args ) {
+		?>
+		<span class="onlyoffice-password-wrapper">
+			<input id="<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( $args['id'] ); ?>" value="<?php echo esc_attr( $args['value'] ); ?>" <?php disabled( $args['disabled'] ); ?> type="password" class="regular-text">
+			<button type="button" class="button button-secondary wp-hide-pw hide-if-no-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Show secret key', 'onlyoffice' ); ?>">
+				<span class="dashicons dashicons-visibility" aria-hidden="true"></span>
+			</button>
+		</span>
 		<p class="description"><?php echo esc_attr( $args['description'] ); ?></p>
 		<?php
 	}
