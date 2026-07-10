@@ -1,5 +1,9 @@
 # Change Log
 
+##
+## Changed
+- changed the JWT secret key field to a password input with a show/hide toggle
+
 ## 2.3.0
 ## Changed
 - improved security for /download and /callback api endpoitns
