@@ -1,163 +1,79 @@
 # CLAUDE.md
 
-Guidance for Claude Code when working in the **ONLYOFFICE Docs plugin for WordPress**
-(`onlyoffice-wordpress`, text domain `onlyoffice`).
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## What this plugin is
+## What this is
 
-A WordPress plugin that connects a WordPress site to an **ONLYOFFICE Docs / Document Server**
-instance so office files in the Media Library can be viewed, edited, co-edited and filled
-(PDF forms) without leaving the site. Two surfaces:
+The WordPress plugin "ONLYOFFICE Docs" (WordPress.org slug and text domain `onlyoffice`, main file `onlyoffice.php`). It opens Media Library files in ONLYOFFICE Docs (Document Server) for viewing and co-editing from the admin dashboard, and adds a Gutenberg block, a shortcode and a classic-editor (TinyMCE) button that embed documents in posts. ONLYOFFICE Docs is a separate server: the browser loads its editor, Docs calls back into WordPress through REST routes, and WordPress downloads saved files from Docs.
 
-- **Admin** — an *ONLYOFFICE Docs* menu with a **Files** list table (every attachment ONLYOFFICE
-  can open) and a **Settings** page.
-- **Front end** — a Gutenberg block / `[onlyoffice]` shortcode that embeds the editor (view mode,
-  or fill mode for PDF forms) in a published post, plus a standalone full-page editor
-  ([editor.php](editor.php)).
+The supported WordPress and PHP versions are the `Requires at least` / `Requires PHP` headers in `onlyoffice.php` and `readme.txt`.
 
-Requires PHP ≥ 7.4 and WordPress ≥ 5.7. Licensed GPL-2.0-or-later; every source file carries the
-Ascensio System SIA header — **keep it when creating new files**.
+Sibling ONLYOFFICE integrations on GitHub (`ONLYOFFICE/onlyoffice-drupal`, `ONLYOFFICE/onlyoffice-nextcloud`, `ONLYOFFICE/moodle-mod_onlyofficeeditor` and others) solve the same problems; check them for prior art.
 
-## Architecture
+## Branches
 
-Built on the *WordPress Plugin Boilerplate* pattern.
+- PRs target `develop`. `main` holds released code; merging into `main` tags and builds a release (see `.github/workflows/`).
+- Branch names: `<type>/<short-kebab-description>` (`feature/`, `fix/`, `bugfix/`, `chore/`, `ci/`, `docs/`).
 
-[onlyoffice.php](onlyoffice.php) defines four constants (`ONLYOFFICE_PLUGIN_NAME`, `_VERSION`,
-`_URL`, `_FILE`), registers activation/deactivation/uninstall hooks, and instantiates
-[Onlyoffice_Plugin](includes/class-onlyoffice-plugin.php). That class does **all** hook wiring:
-it `require_once`s every other class, then registers callbacks through
-[Onlyoffice_Plugin_Loader](includes/class-onlyoffice-plugin-loader.php), which only collects
-`add_action`/`add_filter` pairs and flushes them in `run()`.
+## Setup and commands
 
-> There is no autoloader for plugin classes (Composer's autoloader covers `firebase/php-jwt` only).
-> **A new class must be added to `load_dependencies()`, and its hooks to `define_*_hooks()` or
-> `init_plugin()`.** Class names are `Onlyoffice_Plugin_*`, files are `class-onlyoffice-plugin-*.php`.
+Clone with `--recurse-submodules`: `public/assets/document-formats` (the supported-formats JSON) is a git submodule and must be present.
 
-### Managers (`includes/managers/`) — the core logic
+```bash
+composer install                  # runtime dep firebase/php-jwt (vendor/ is required at runtime) + dev tools + CaptainHook git hooks
+cd onlyoffice-wordpress-block && npm ci && npm run build   # block build/ (gitignored); the block needs it
+composer phpcs                    # WordPress coding standards; see the script for ignored paths
+vendor/bin/phpcs --standard=WordPress <path>               # lint one file (phpcbf to autofix)
+cd onlyoffice-wordpress-block && npm run lint:js           # wp-scripts eslint for the block
+csscomb <path>                    # CSS order/format from .csscomb.json (npm install -g csscomb, as CI does)
+composer make-pot && composer update-po   # refresh languages/onlyoffice.pot and every .po
+composer translations             # build .mo and JS .json translations (gitignored, built at release)
+```
 
-| Class | Responsibility |
-| --- | --- |
-| `Onlyoffice_Plugin_Config_Manager` | Builds the DocsAPI editor config (document, permissions, editorConfig) and signs it when JWT is on. |
-| `Onlyoffice_Plugin_Url_Manager` | Builds the api.js / callback / download / editor URLs and encrypts-decrypts the `token` query parameter. |
-| `Onlyoffice_Plugin_JWT_Manager` | Encode/decode HS256 tokens; resolves the configured auth header name. |
-| `Onlyoffice_Plugin_Document_Manager` | Format capabilities (view/edit/fill), document type, and the per-attachment capability checks. |
-| `Onlyoffice_Plugin_Callback_Manager` | Downloads the saved file from Document Server and writes it back over the attachment. |
+CaptainHook enforces Conventional Commits on `commit-msg` and runs `composer phpcs` on `pre-commit`. CI runs the linters in `.github/workflows/lint.yml`; read it for the PHP and Node versions.
 
-### Two independent token layers — do not conflate them
+Runtime behaviour needs a live ONLYOFFICE Docs that can reach the WordPress site and vice versa, so lints don't show that a change works.
 
-1. **Link token** (`?token=…` on `/onlyoffice/oo.getfile` and `/onlyoffice/oo.callback`) —
-   an AES-256-CTR payload `{attachment_id, user_id, action}` encrypted with the site options
-   `onlyoffice-plugin-uuid` (passphrase) and `onlyoffice-plugin-bytes` (IV), both generated in
-   [Onlyoffice_Plugin_Activator](includes/class-onlyoffice-plugin-activator.php). The `action`
-   field is checked per route, so a download token can't be replayed against the callback.
-2. **ONLYOFFICE JWT** — signed with the admin-configured secret, sent by Document Server either in
-   the configured header (`Authorization: Bearer …`, header name overridable) or inside the
-   callback body. Only enforced when the secret is non-empty (`is_jwt_enabled()`).
+## Structure
 
-The REST routes all use `permission_callback => '__return_true'` **by design** — Document Server is
-unauthenticated and both token layers above are the actual authorization. After validating the link
-token the handlers call `wp_set_current_user()` with the embedded `user_id` and then re-check
-capabilities (`read`, `edit_post`). Never weaken this sequence.
+- `onlyoffice.php` — bootstrap: constants (version, URL, file), activation/uninstall hooks, extra upload MIME types.
+- `includes/class-onlyoffice-plugin.php` — wires every hook through `Onlyoffice_Plugin_Loader`.
+- `includes/managers/` — static helpers: editor config (`Config_Manager`), formats and permissions (`Document_Manager`), URLs and link tokens (`Url_Manager`), JWT (`JWT_Manager`), saving (`Callback_Manager`).
+- `includes/settings/` — settings page, multisite network/site settings, `get_onlyoffice_setting()`.
+- `includes/files/` — "ONLYOFFICE Docs → Files" admin list table.
+- `public/` — REST routes Docs calls (registered in `class-onlyoffice-plugin-public.php`) and their handlers in `public/views/`.
+- `editor.php` — standalone full-page editor, loaded directly by URL (`editor.php?attachment_id=N`), bootstraps WordPress itself.
+- `controllers/` — block render callback and the `[onlyoffice]` shortcode (front end).
+- `onlyoffice-wordpress-block/` — Gutenberg block source (`src/`) and `block.json`.
+- `onlyoffice-tinymce/` — classic editor button.
+- `public/assets/document-formats/` — submodule; never edit it here, it belongs to ONLYOFFICE/document-formats.
 
-### Request flows
+## Rules
 
-- **Embed in a post** — block `render_callback` → `wp_onlyoffice_shortcode()` in
-  [Onlyoffice_Plugin_Frontend_Controller](controllers/class-onlyoffice-plugin-frontend-controller.php)
-  → `render_embedded()` emits a `<div data-config="…">`;
-  [frontend-controller.js](controllers/js/frontend-controller.js) reads it and calls
-  `new DocsAPI.DocEditor(...)`. Embedded views use `unic_key = true` so each visitor gets a fresh
-  editing session.
-- **Full-page editor** — [editor.php](editor.php) is hit **directly** (not routed through WP), so it
-  bootstraps `wp-load.php` itself. Anonymous users are allowed only via
-  `can_anonymous_user_view_attachment()` (attachment must be attached to a *published* post),
-  otherwise they are redirected to `wp_login_url()`.
-- **Save** — Document Server POSTs to `/onlyoffice/oo.callback`; on status `MustSave` (2) the
-  callback takes a post lock, fetches `body.url`, and overwrites the file through `$wp_filesystem`.
-  Statuses come from `Onlyoffice_Plugin_Callback::CALLBACK_STATUS`.
-- **Public PDF forms** — the embedded renderer switches to `type=desktop`, `mode=edit`, and points
-  at `/onlyoffice/oo.callback-public-forms`, which deliberately **discards** the result (returns
-  `error: 0` without saving) so visitors can fill a form without mutating the attachment.
+- Docs calls the REST routes without a WordPress session, so they use `permission_callback => '__return_true'`. They are protected by the encrypted link token in the `token` query parameter (`Onlyoffice_Plugin_Url_Manager`, whose `action` must match the route) and by the Docs JWT when a secret is set. Any change to these routes must keep both checks.
+- Build every URL handed to Docs through `Onlyoffice_Plugin_Url_Manager` and every editor config through `Onlyoffice_Plugin_Config_Manager::get_config()`, so tokens and JWT signing apply.
+- Read settings only through `Onlyoffice_Plugin_Settings::get_onlyoffice_setting()`; it resolves multisite network vs site settings. A new setting needs a constant, a field in `init()`, saving in `update_plugin_settings()` (the form is handled there, not by `options.php`), the multisite disabled state, and cleanup in the uninstall hook.
+- Option keys and REST route paths are stored in user sites and saved links (including the `allowed_owerwrite` typo and the `oo.` route prefix). Don't rename them without a migration.
+- The block's saved markup (`src/save.js`) and `block.json` attributes are stored in posts. Changing either without a `deprecated` entry breaks block validation in existing posts.
+- Supported formats come only from the submodule JSON via `Onlyoffice_Plugin_Document_Manager`; don't hard-code extension lists.
+- Add user-visible changes to the top of `CHANGELOG.md` under `## Added` or `## Changed`, without a version header; the version is added at release time. Release CI takes the version from the first dotted number in that file.
 
-### Supported formats
+## Coding practices
 
-Format capabilities are **not** hard-coded. `public/assets/document-formats` is a git submodule
-(<https://github.com/ONLYOFFICE/document-formats>) whose `onlyoffice-docs-formats.json` is cached
-into the site option `onlyoffice-formats`, re-imported whenever `onlyoffice-formats-version` no
-longer matches `ONLYOFFICE_PLUGIN_VERSION`. `git submodule update --init --recursive` is required
-for a working checkout. The same list reaches JS as `window.ONLYOFFICE.formats`, localized onto
-[formatsUtils.js](assets-onlyoffice/js/formatsUtils.js) from
-[Onlyoffice_Plugin_Admin::enqueue_scripts()](admin/class-onlyoffice-plugin-admin.php) — admin-side only.
-
-### Settings and multisite
-
-All settings live in one option array, `onlyoffice_settings`, keyed by the
-`Onlyoffice_Plugin_Settings` constants. Multisite resolution is the subtle part:
-
-- Network admin writes to `update_site_option`; a single site writes to `update_option`.
-- A site falls back to the network value when `ALLOWED_OWERWRITE_NETWORK_SETTINGS` is off **or**
-  `INHERIT_NETWORK_SETTINGS` is on (which defaults to `true`).
-- `get_onlyoffice_setting()` (public, used at runtime) and `get_onlyoffice_current_value_setting()`
-  (private, used to render the form) resolve differently — pick the right one.
-
-## Block and TinyMCE editors
-
-`onlyoffice-wordpress/onlyoffice` (see [block.json](onlyoffice-wordpress-block/block.json)) is a
-**dynamic** block: [save.js](onlyoffice-wordpress-block/src/save.js) serializes attributes into an
-`[onlyoffice … /]` shortcode string, and PHP renders it. Consequences to respect:
-
-- Shortcode attributes arrive as **strings**; booleans must go through
-  `filter_var( …, FILTER_VALIDATE_BOOLEAN )`.
-- Do **not** add `default` values to boolean attributes in `block.json` — defaults are omitted from
-  serialized output and cause block validation errors on existing posts. Defaults belong in
-  `edit.js` (`attributes.x ?? true`) and in `$defaults_atts` in the shortcode handler.
-- The classic editor is supported via [onlyoffice-tinymce](onlyoffice-tinymce/onlyoffice-tinymce.php),
-  which inserts the same shortcode wrapped in block comments so both editors stay interoperable.
-
-The block's `build/` directory is gitignored; a checkout without `npm run build` has no working
-block editor script.
+- Before writing new code, check whether WordPress core already provides it (HTTP API, `WP_Filesystem`, options, REST, list tables, capabilities). Use public APIs only; avoid functions and classes marked private or `@access private`.
+- Write code for the lowest WordPress and PHP versions in the `Requires at least` / `Requires PHP` headers. Check the `@since` of every core function you use in the WordPress developer reference. Functions from newer PHP versions are fine only where WordPress core polyfills them in `wp-includes/compat.php` with a `@since` at or below the minimum WordPress version; newer PHP syntax (named arguments, union types, `match`) is not.
+- Sanitize input early (`sanitize_text_field( wp_unslash( ... ) )`), escape output late (`esc_html`, `esc_attr`, `esc_url`, `wp_kses`). Every admin action needs a nonce check and a capability check.
+- Check capabilities against the attachment (`read_post`, `edit_post`) through the helpers in `Onlyoffice_Plugin_Document_Manager`, not against roles.
+- Before relying on a Docs API option, event or callback field, check in the Docs API documentation which Docs version added it.
+- Keep `// phpcs:ignore` rare, name the exact sniff, and only where the code is deliberately non-standard.
+- The Docs document key is built from the attachment's `post_modified`. Code that replaces an attachment's file must bump it with `wp_update_post()`, as `Callback_Manager::proccess_save()` does, or Docs keeps serving the cached version.
 
 ## Conventions
 
-- **PHP follows the WordPress Coding Standard** (`composer phpcs`), enforced by a CaptainHook
-  pre-commit hook and by CI. Tabs for indent, Yoda conditions, snake_case, full docblocks with
-  `@since`, `$_GET`/`$_POST` always through `sanitize_text_field( wp_unslash( … ) )`, output always
-  escaped. Where a rule must be broken, use a targeted `// phpcs:ignore <Sniff>` as the existing
-  code does — never a blanket disable.
-- **CSS is linted with csscomb** ([.csscomb.json](.csscomb.json)) in CI before phpcs.
-- **Commits follow Conventional Commits** (`feat:`, `fix:`, `docs:`, `chore:`), validated by
-  CaptainHook via `ramsey/conventional-commits`.
-- Every user-facing string is translated with the `onlyoffice` text domain; `.pot`/`.po` live in
-  `languages/` and `.mo`/`.json` are generated at build time, not committed.
-- Work happens on `develop`; `main` is the release branch.
-
-## Commands
-
-```bash
-composer install                    # PHP deps (+ installs the CaptainHook hooks)
-composer phpcs                      # WPCS lint; excludes the block, vendor and public/assets
-composer make-pot                   # regenerate languages/onlyoffice.pot
-composer update-po                  # merge the .pot into every .po
-composer translations               # compile .mo and .json (needs wp-cli, run before packaging)
-
-cd onlyoffice-wordpress-block
-npm install
-npm run build                       # required — build/ is gitignored
-npm start                           # watch mode
-npm run lint:js
-```
-
-Version bumps must touch **three** places in step: the `Version:` header and
-`ONLYOFFICE_PLUGIN_VERSION` in [onlyoffice.php](onlyoffice.php), `version` in
-[package.json](onlyoffice-wordpress-block/package.json), and a new section in
-[CHANGELOG.md](CHANGELOG.md) — CI derives the release tag from the first version number in the
-changelog. Bumping `ONLYOFFICE_PLUGIN_VERSION` also forces a re-import of the formats JSON.
-
-## Gotchas
-
-- Changing the `onlyoffice-plugin-uuid` / `onlyoffice-plugin-bytes` options invalidates every link
-  token already handed to Document Server; sessions in flight will fail to save.
-- The REST route paths are prefixed `oo.` on purpose, to stay compatible with the
-  *Force Lowercase URLs* plugin. Don't rename them.
-- The document `key` must change whenever the file changes, or Document Server serves a stale
-  cached copy.
-- Read and write files through `$wp_filesystem`, initializing it with `WP_Filesystem()` first.
+- PHP follows the WordPress coding standards. Classes are `Onlyoffice_Plugin_*` in `class-onlyoffice-plugin-*.php` files; new global functions, options and hooks are prefixed `onlyoffice`.
+- Register new hooks in `Onlyoffice_Plugin` through the loader. The hooks in `onlyoffice.php`, `onlyoffice-tinymce/onlyoffice-tinymce.php` and the list-table constructor are older exceptions.
+- Load assets with `wp_enqueue_script` / `wp_enqueue_style`, versioned with `ONLYOFFICE_PLUGIN_VERSION`. The block loads through `block.json`, the TinyMCE button through `mce_external_plugins`, and `editor.php` prints Docs' `api.js` tag itself.
+- Non-block JavaScript is an IIFE, using jQuery where it touches the DOM; the block is React with `@wordpress/*` packages built by `wp-scripts`. Pass page-wide PHP data with `wp_localize_script`; each block or shortcode instance's editor config goes in an escaped `data-config` JSON attribute. In JS, get formats from `ONLYOFFICE.formatsUtils`, never a hard-coded list.
+- Every translatable string passes the literal text domain `onlyoffice` (PHP `__()` family, JS `wp.i18n` / `@wordpress/i18n`), except strings WordPress core already translates, which are called without a domain to reuse core's translation. Add a `translators:` comment for placeholders. Scripts with strings need `wp_set_script_translations`. After adding strings, build the block (`make-pot` reads block strings from `build/`), update the `.pot` and every `.po`, and translate them yourself; a human reviewer checks translations.
+- PHP files and the block's `src/*.js` carry the GPL license header. Copy it from an existing file of the same kind onto any new one.
+- Commit messages follow Conventional Commits: `<type>(<optional scope>): <description>` with a lowercase type (`feat`, `fix`, `refactor`, `docs`, `ci`, `style`, `build`, `chore`).
